@@ -375,10 +375,6 @@ package sound
          {
             _loc2_.volume = _loc2_.originalVolume * param1;
          }
-         if(Game.instance)
-         {
-            Playlist.play(Game.instance.solarSystem.key);
-         }
       }
       
       public function get effectVolume() : Number
