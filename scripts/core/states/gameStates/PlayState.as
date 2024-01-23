@@ -38,6 +38,8 @@ package core.states.gameStates
       
       private var fireWithHotkeys:Boolean = false;
       
+      private var temp:Number = 1;
+      
       public function PlayState(param1:Game)
       {
          container = new Sprite();
@@ -234,6 +236,7 @@ package core.states.gameStates
             return;
          }
          checkBoost();
+         checkZoom();
          checkShield();
          checkConvert();
          checkPower();
@@ -416,6 +419,25 @@ package core.states.gameStates
       protected function clearBackground(param1:Event = null) : void
       {
          blackBackground.visible = false;
+      }
+      
+      private function checkZoom() : void
+      {
+         if(input.isKeyDown(74))
+         {
+            temp *= 0.98;
+            g.camera.zoomFocus(temp,4);
+         }
+         if(input.isKeyDown(75))
+         {
+            temp /= 0.98;
+            g.camera.zoomFocus(temp,4);
+            if(input.isKeyDown(74))
+            {
+               temp = 1;
+               g.camera.zoomFocus(temp,4);
+            }
+         }
       }
    }
 }
