@@ -73,6 +73,7 @@ package core.scene
    import flash.net.URLRequestHeader;
    import flash.system.Security;
    import generics.Localize;
+   import goki.FileManager;
    import io.InputLocator;
    import joinRoom.IJoinRoomManager;
    import joinRoom.JoinRoomLocator;
@@ -437,6 +438,7 @@ package core.scene
             playerManager.initPlayer(m,0);
             initPlayerComplete = true;
             camera.focusTarget = me.ship.movieClip;
+            camera.zoomFocus(FileManager.zoomTest,1);
             controlZoneManager.init();
             updateServiceRoom();
             tryRunGameLoop();
