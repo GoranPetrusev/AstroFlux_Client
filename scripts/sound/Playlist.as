@@ -116,12 +116,20 @@ package sound
       
       public static function next(param1:Boolean = false) : void
       {
-         if(i == 0)
+         var firstTrack:String;
+         var first:Boolean = param1;
+         if(first)
          {
-            currentPlaylist.sort(randomize);
+            i = -1;
          }
-         currentTrack = currentPlaylist[i];
-         i = (i + 1) % currentPlaylist.length;
+         i++;
+         if(i == currentPlaylist.length)
+         {
+            i = 0;
+            firstTrack = currentPlaylist.shift();
+            currentPlaylist.sort(randomize);
+            currentPlaylist.unshift(firstTrack);
+         }         
          SoundLocator.getService().playMusic(currentTrack,false,true,null,function():void
          {
             next();
