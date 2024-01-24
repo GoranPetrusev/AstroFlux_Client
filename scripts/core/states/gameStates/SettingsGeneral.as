@@ -174,7 +174,7 @@ package core.states.gameStates
          {
             PlayerConfig.values.showAllEncounters = showAllEncounters.isSelected;
          });
-         addCheckbox(showAllEncounters,Localize.t("Progression Mode"));
+         addCheckbox(showAllEncounters,Localize.t("Show All Encounters"));
       }
       
       private function addLanguage() : void
