@@ -20,7 +20,10 @@ It's a little side project of mine where I'm aiming to reimplement all of the mo
 - [ ] Art upgrade prediction
 - [ ] Modifiable hp/sh bar and dmg text size
 - [ ] Move welcome text up a bit
-- [ ] Increase FPS cap on warp menu 30 -> 60
+- [x] Increase FPS cap on warp menu 30 -> 60
+- [x] Fix that annoying warp path that was always grey
+- [ ] Encouter xp to encounter menu
+- [ ] Tidy up xp bar
 
 ### Ideas
 - Autotrain for crew members
