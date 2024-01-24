@@ -11,10 +11,7 @@ It's a little side project of mine where I'm aiming to reimplement all of the mo
 - [ ] Fitness
 - [ ] Fitness Config Menu
 - [ ] Purify
-- [ ] Autofarm
 - [ ] Autorecycle
-- [ ] Stacking :P
-- [ ] Hacked Hangar
 - [ ] Autosave of custom settings
 - [x] Fix up artifacts menu button allignment
 - [x] Progress mode in encounter menu
@@ -26,7 +23,12 @@ It's a little side project of mine where I'm aiming to reimplement all of the mo
 - [x] Increase FPS cap on warp menu 30 -> 60
 - [x] Fix that annoying warp path that was always grey
 - [x] Rice up the settings menu
+- [ ] Rice up key binds menu
+- [ ] Rice up player list
 - [ ] Tidy up xp bar
+- [ ] Stacking :P
+- [ ] Hacked Hangar
+- [ ] Autofarm
 
 ### Ideas
 - Autotrain for crew members

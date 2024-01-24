@@ -14,6 +14,7 @@ package core.states.gameStates
    import feathers.controls.renderers.IListItemRenderer;
    import feathers.data.ListCollection;
    import generics.Localize;
+   import goki.PlayerConfig;
    import starling.display.Sprite;
    import starling.events.Event;
    import starling.events.TouchEvent;
@@ -23,7 +24,7 @@ package core.states.gameStates
    public class SettingsGeneral extends Sprite
    {
       
-      private static const START_HEIGHT:int = 20;
+      private static const START_HEIGHT:int = 10;
       
       private static const START_WIDTH:int = 50;
        
@@ -59,6 +60,8 @@ package core.states.gameStates
       private var iWantAllTimedMissions:Check;
       
       private var fireWithHotkeys:Check;
+      
+      private var showAllEncounters:Check;
       
       private var scrollArea:ScrollContainer;
       
@@ -162,6 +165,16 @@ package core.states.gameStates
             settings.iWantAllTimedMissions = iWantAllTimedMissions.isSelected;
          });
          addCheckbox(iWantAllTimedMissions,Localize.t("I want all timed missions."));
+         currentHeight = 10;
+         currentWidth = 380;
+         addHeader("Misc");
+         showAllEncounters = new Check();
+         showAllEncounters.isSelected = PlayerConfig.values.showAllEncounters;
+         showAllEncounters.addEventListener("change",function(param1:Event):void
+         {
+            PlayerConfig.values.showAllEncounters = showAllEncounters.isSelected;
+         });
+         addCheckbox(showAllEncounters,Localize.t("Progression Mode"));
       }
       
       private function addLanguage() : void

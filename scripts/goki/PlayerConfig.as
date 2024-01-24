@@ -7,7 +7,7 @@ package goki
          "zoomFactor":"1.0",
          "zoomInKey":"75",
          "zoomOutKey":"74",
-         "progressionMode":true
+         "showAllEncounters":true
       };
        
       
