@@ -16,6 +16,7 @@ package core.unit
    import core.text.TextParticle;
    import flash.geom.Point;
    import flash.geom.Rectangle;
+   import goki.PlayerConfig;
    import sound.ISound;
    import sound.SoundLocator;
    import starling.display.Image;
@@ -259,7 +260,7 @@ package core.unit
          {
             nextDistanceCalculation = 5000;
          }
-         if(distanceToCamera < _loc2_)
+         if(distanceToCamera * PlayerConfig.values.zoomFactor < _loc2_)
          {
             if(isAddedToCanvas)
             {

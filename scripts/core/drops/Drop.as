@@ -9,6 +9,7 @@ package core.drops
    import core.scene.Game;
    import core.ship.PlayerShip;
    import flash.geom.Point;
+   import goki.PlayerConfig;
    import playerio.Message;
    import sound.ISound;
    import sound.SoundLocator;
@@ -129,7 +130,7 @@ package core.drops
          distanceToCamera = Math.sqrt(distanceToCameraX * distanceToCameraX + distanceToCameraY * distanceToCameraY);
          var _loc1_:Number = distanceToCamera - _loc2_;
          nextDistanceCalculation = _loc1_ / 300 * 1000;
-         if(distanceToCamera < _loc2_)
+         if(distanceToCamera * PlayerConfig.values.zoomFactor < _loc2_)
          {
             if(isAddedToCanvas)
             {

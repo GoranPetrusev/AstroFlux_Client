@@ -73,7 +73,7 @@ package core.scene
    import flash.net.URLRequestHeader;
    import flash.system.Security;
    import generics.Localize;
-   import goki.FileManager;
+   import goki.PlayerConfig;
    import io.InputLocator;
    import joinRoom.IJoinRoomManager;
    import joinRoom.JoinRoomLocator;
@@ -352,6 +352,7 @@ package core.scene
          salesManager = new SalesManager(this);
          dailyManager = new DailyManager(this);
          textManager.loadHandlers();
+         PlayerConfig.loadConfig();
       }
       
       override protected function onJoinAndClockSynched(param1:starling.events.Event = null) : void
@@ -438,7 +439,7 @@ package core.scene
             playerManager.initPlayer(m,0);
             initPlayerComplete = true;
             camera.focusTarget = me.ship.movieClip;
-            camera.zoomFocus(FileManager.zoomTest,1);
+            camera.zoomFocus(PlayerConfig.values.zoomFactor,1);
             controlZoneManager.init();
             updateServiceRoom();
             tryRunGameLoop();
@@ -1161,6 +1162,7 @@ package core.scene
       
       public function exitDesktop() : void
       {
+         PlayerConfig.saveConfig();
          Starling.current.stop();
          RymdenRunt.instance.dispatchEvent(new flash.events.Event("exitgame"));
       }

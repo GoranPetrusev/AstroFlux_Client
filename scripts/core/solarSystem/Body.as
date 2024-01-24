@@ -20,6 +20,7 @@ package core.solarSystem
    import flash.geom.Point;
    import flash.utils.Dictionary;
    import generics.Random;
+   import goki.PlayerConfig;
    import sound.ISound;
    import sound.SoundLocator;
    import starling.display.Image;
@@ -296,7 +297,7 @@ package core.solarSystem
          distanceToCamera = Math.sqrt(distanceToCameraX * distanceToCameraX + distanceToCameraY * distanceToCameraY);
          var _loc1_:Number = distanceToCamera - _loc2_;
          nextDistanceCalculation = _loc1_ / 600 * 100;
-         if(distanceToCamera < _loc2_)
+         if(distanceToCamera * PlayerConfig.values.zoomFactor < _loc2_)
          {
             if(isAddedToCanvas)
             {

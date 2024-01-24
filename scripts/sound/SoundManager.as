@@ -1,7 +1,6 @@
 package sound
 {
    import com.greensock.TweenMax;
-   import core.scene.Game;
    import data.DataLocator;
    import data.IDataManager;
    import debug.Console;
@@ -55,6 +54,8 @@ package sound
       
       public function SoundManager(param1:Client)
       {
+         this._effectVolume = 0.5;
+         this._musicVolume = 0.5;
          musicObjects = new Dictionary();
          effectObjects = new Dictionary();
          soundObjects = new Dictionary();

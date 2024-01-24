@@ -31,7 +31,7 @@ package core.player
    import data.IDataManager;
    import debug.Console;
    import facebook.Action;
-   import goki.FileManager;
+   import goki.PlayerConfig;
    import movement.Heading;
    import playerio.Message;
    import sound.ISound;
@@ -976,7 +976,7 @@ package core.player
             });
             return;
          }
-         g.camera.zoomFocus(3 * FileManager.zoomTest,25);
+         g.camera.zoomFocus(3 * PlayerConfig.values.zoomFactor,25);
          TweenMax.to(ship,1.2,{
             "x":body.x,
             "y":body.y,
@@ -990,7 +990,7 @@ package core.player
                ship.land();
                TweenMax.delayedCall(0.5,function():void
                {
-                  g.camera.zoomFocus(1 * FileManager.zoomTest,1);
+                  g.camera.zoomFocus(PlayerConfig.values.zoomFactor,1);
                });
             }
          });

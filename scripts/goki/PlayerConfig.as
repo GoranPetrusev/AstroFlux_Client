@@ -22,7 +22,7 @@ package goki
       
       public static function loadConfig() : void
       {
-         values = JSON.parse(FileManager.readFromFile("FitnessConfig.txt"));
+         values = JSON.parse(FileManager.readFromFile("PlayerConfig.txt"));
       }
    }
 }

@@ -129,7 +129,7 @@ package sound
             firstTrack = currentPlaylist.shift();
             currentPlaylist.sort(randomize);
             currentPlaylist.unshift(firstTrack);
-         }         
+         }
          SoundLocator.getService().playMusic(currentTrack,false,true,null,function():void
          {
             next();

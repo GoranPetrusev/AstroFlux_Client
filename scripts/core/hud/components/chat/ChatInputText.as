@@ -7,6 +7,7 @@ package core.hud.components.chat
    import feathers.controls.TextInput;
    import feathers.data.ListCollection;
    import flash.ui.Mouse;
+   import goki.PlayerConfig;
    import sound.Playlist;
    import starling.core.Starling;
    import starling.display.Sprite;
@@ -198,6 +199,7 @@ package core.hud.components.chat
          var output:Vector.<String>;
          var tmp:Array;
          var q:int;
+         var o:*;
          var text:String = input.text;
          if(text == "")
          {
@@ -206,6 +208,12 @@ package core.hud.components.chat
          output = parseCommand(text);
          switch(output[0])
          {
+            case "test":
+               for each(o in PlayerConfig.values)
+               {
+                  MessageLog.write(o);
+               }
+               break;
             case "y":
             case "yes":
                sendConfirmInviteGroup();
@@ -332,7 +340,7 @@ package core.hud.components.chat
                g.showQuality();
                break;
             case "setquality":
-               q = parseInt(output[1]);
+               q = int(parseInt(output[1]));
                g.setQuality(q);
                break;
             case "reloadtexts":

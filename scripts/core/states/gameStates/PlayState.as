@@ -6,7 +6,7 @@ package core.states.gameStates
    import core.weapon.Weapon;
    import flash.geom.Point;
    import generics.Util;
-   import goki.FileManager;
+   import goki.PlayerConfig;
    import io.InputLocator;
    import movement.Heading;
    import sound.SoundLocator;
@@ -198,23 +198,23 @@ package core.states.gameStates
          {
             _loc3_.boostEndedLastTick = false;
             sendCommand(0,true);
-            g.camera.zoomFocus(0.85 * FileManager.zoomTest,100);
+            g.camera.zoomFocus(0.85 * PlayerConfig.values.zoomFactor,100);
          }
          if((_loc2_.accelerate || _loc3_.boostEndedLastTick) && !_loc3_.usingBoost && keybinds.isInputUp(11) && !autoCruise)
          {
             _loc3_.boostEndedLastTick = false;
             sendCommand(0,false);
-            g.camera.zoomFocus(1 * FileManager.zoomTest,100);
+            g.camera.zoomFocus(PlayerConfig.values.zoomFactor,100);
          }
          if(!_loc2_.accelerate && !_loc2_.deaccelerate && !param1 && !_loc3_.usingBoost && keybinds.isInputDown(12))
          {
             sendCommand(8,true);
-            g.camera.zoomFocus(1 * FileManager.zoomTest,100);
+            g.camera.zoomFocus(PlayerConfig.values.zoomFactor,100);
          }
          if(_loc2_.deaccelerate && !_loc3_.usingBoost && keybinds.isInputUp(12))
          {
             sendCommand(8,false);
-            g.camera.zoomFocus(1 * FileManager.zoomTest,100);
+            g.camera.zoomFocus(PlayerConfig.values.zoomFactor,100);
          }
       }
       
@@ -398,7 +398,7 @@ package core.states.gameStates
             g.commandManager.addBoostCommand();
             if(core.states.§gameStates:GameState§.me.ship.usingBoost)
             {
-               g.camera.zoomFocus(0.75 * FileManager.zoomTest,80);
+               g.camera.zoomFocus(0.75 * PlayerConfig.values.zoomFactor,80);
             }
          }
       }
@@ -426,17 +426,17 @@ package core.states.gameStates
       {
          if(input.isKeyDown(74))
          {
-            FileManager.zoomTest *= 0.98;
-            g.camera.zoomFocus(FileManager.zoomTest,4);
+            PlayerConfig.values.zoomFactor *= 0.98;
+            g.camera.zoomFocus(PlayerConfig.values.zoomFactor,4);
          }
          if(input.isKeyDown(75))
          {
-            FileManager.zoomTest /= 0.98;
-            g.camera.zoomFocus(FileManager.zoomTest,4);
+            PlayerConfig.values.zoomFactor /= 0.98;
+            g.camera.zoomFocus(PlayerConfig.values.zoomFactor,4);
             if(input.isKeyDown(74))
             {
-               FileManager.zoomTest = 1;
-               g.camera.zoomFocus(FileManager.zoomTest,4);
+               PlayerConfig.values.zoomTest = 1;
+               g.camera.zoomFocus(PlayerConfig.values.zoomFactor,4);
             }
          }
       }

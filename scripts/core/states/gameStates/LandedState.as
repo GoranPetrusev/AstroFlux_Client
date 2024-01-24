@@ -12,7 +12,7 @@ package core.states.gameStates
    import core.tutorial.Tutorial;
    import data.DataLocator;
    import data.IDataManager;
-   import goki.FileManager;
+   import goki.PlayerConfig;
    import io.InputLocator;
    import sound.SoundLocator;
    import starling.display.DisplayObject;
@@ -227,7 +227,7 @@ package core.states.gameStates
          container.removeChildren(0,-1,true);
          unloadCompleted();
          Tutorial.clear();
-         g.camera.zoomFocus(1 * FileManager.zoomTest,1);
+         g.camera.zoomFocus(PlayerConfig.values.zoomFactor,1);
          g.toggleRoamingCanvases(true);
          RymdenRunt.s.nativeStage.frameRate = 60;
          param1();
