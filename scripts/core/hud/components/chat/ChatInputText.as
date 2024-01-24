@@ -7,7 +7,7 @@ package core.hud.components.chat
    import feathers.controls.TextInput;
    import feathers.data.ListCollection;
    import flash.ui.Mouse;
-   import goki.PlayerConfig;
+   import goki.FileManager;
    import sound.Playlist;
    import starling.core.Starling;
    import starling.display.Sprite;
@@ -209,8 +209,7 @@ package core.hud.components.chat
          switch(output[0])
          {
             case "test":
-               PlayerConfig.values.progressionMode = Boolean(output[1]);
-               MessageLog.write(PlayerConfig.values.progressionMode);
+               FileManager.readFromFile("nonexistent.txt");
                break;
             case "y":
             case "yes":

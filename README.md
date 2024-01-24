@@ -25,6 +25,7 @@ It's a little side project of mine where I'm aiming to reimplement all of the mo
 - [ ] Move welcome text up a bit
 - [x] Increase FPS cap on warp menu 30 -> 60
 - [x] Fix that annoying warp path that was always grey
+- [x] Rice up the settings menu
 - [ ] Tidy up xp bar
 
 ### Ideas

@@ -1,6 +1,7 @@
 package core.states.gameStates
 {
    import core.hud.components.Button;
+   import core.hud.components.Line;
    import core.hud.components.Text;
    import core.scene.Game;
    import core.scene.SceneBase;
@@ -29,7 +30,7 @@ package core.states.gameStates
       
       private var g:Game;
       
-      private var currentHeight:Number = 20;
+      private var currentHeight:Number = 10;
       
       private var currentWidth:Number = 50;
       
@@ -82,6 +83,7 @@ package core.states.gameStates
          {
             addLanguage();
          }
+         addHeader("Sound");
          musicSlider = new Slider();
          addSlider(musicSlider,settings.musicVolume,Localize.t("Music Volume"));
          musicSlider.addEventListener("change",function(param1:Event):void
@@ -94,6 +96,7 @@ package core.states.gameStates
          {
             settings.effectVolume = effectSlider.value;
          });
+         addHeader("Graphics");
          showHud = new Check();
          showHud.isSelected = settings.showHud;
          showHud.addEventListener("change",function(param1:Event):void
@@ -115,7 +118,7 @@ package core.states.gameStates
             settings.showEffects = showEffects.isSelected;
             g.toggleHighGraphics(settings.showEffects);
          });
-         addCheckbox(showEffects,Localize.t("High graphic settings <font color=\'#a1a1a1\'>(uncheck for better performance)</font>"));
+         addCheckbox(showEffects,Localize.t("High graphic settings"));
          showBackground = new Check();
          showBackground.isSelected = settings.showBackground;
          showBackground.addEventListener("change",function(param1:Event):void
@@ -123,13 +126,15 @@ package core.states.gameStates
             settings.showBackground = showBackground.isSelected;
             g.parallaxManager.refresh();
          });
-         addCheckbox(showBackground,Localize.t("Show Background <font color=\'#a1a1a1\'>(uncheck for better performance)</font>"));
+         addCheckbox(showBackground,Localize.t("Show Background"));
          mouseAim = new Check();
          mouseAim.isSelected = !settings.mouseAim;
          mouseAim.addEventListener("change",function(param1:Event):void
          {
             settings.mouseAim = !mouseAim.isSelected;
          });
+         addQualitySlider();
+         addHeader("Controls");
          addCheckbox(mouseAim,Localize.t("Disable Mouse Aim"));
          fireWithHotkeys = new Check();
          fireWithHotkeys.isSelected = settings.fireWithHotkeys;
@@ -149,6 +154,7 @@ package core.states.gameStates
          rotationSpeedText = new Text(rotationSlider.x + 120,rotationSlider.y + 10);
          rotationSpeedText.text = settings.rotationSpeed.toFixed(2);
          scrollArea.addChild(rotationSpeedText);
+         addHeader("Gameplay");
          iWantAllTimedMissions = new Check();
          iWantAllTimedMissions.isSelected = settings.iWantAllTimedMissions;
          iWantAllTimedMissions.addEventListener("change",function(param1:Event):void
@@ -223,7 +229,7 @@ package core.states.gameStates
          labelText = new Text();
          labelText.htmlText = Localize.t("Quality");
          labelText.y = currentHeight;
-         labelText.x = currentWidth;
+         labelText.x = currentWidth + 2;
          slider.x = labelText.x + labelText.width + 10;
          slider.y = currentHeight;
          descText = new Text();
@@ -261,14 +267,14 @@ package core.states.gameStates
          }
          descText.y = currentHeight;
          descText.x = slider.x + slider.width;
-         if(slider.x < 200)
+         if(slider.x < 195)
          {
-            slider.x = 200;
+            slider.x = 195;
          }
          scrollArea.addChild(labelText);
          scrollArea.addChild(slider);
          scrollArea.addChild(descText);
-         currentHeight += 40;
+         currentHeight += 30;
          slider.addEventListener("change",function(param1:Event):void
          {
             settings.quality = slider.value;
@@ -312,12 +318,36 @@ package core.states.gameStates
          var _loc3_:Text = new Text();
          _loc3_.htmlText = param2;
          _loc3_.y = currentHeight;
-         _loc3_.x = currentWidth + 30;
-         param1.x = currentWidth;
+         _loc3_.x = currentWidth + 2;
+         param1.x = currentWidth + 286;
          param1.y = currentHeight - 4;
          param1.useHandCursor = true;
+         var _loc4_:Line = new Line();
+         _loc4_.x = _loc3_.x + _loc3_.width + 4;
+         _loc4_.y = currentHeight + 10;
+         _loc4_.lineTo(param1.x - 7,currentHeight + 10);
+         _loc4_.thickness = 3;
+         _loc4_.color = 3684408;
+         scrollArea.addChild(_loc4_);
          scrollArea.addChild(_loc3_);
          scrollArea.addChild(param1);
+         currentHeight += 30;
+      }
+      
+      private function addHeader(param1:String) : void
+      {
+         var head:Text = new Text(currentWidth - 8,currentHeight);
+         var line:Line = new Line();
+         head.text = param1;
+         head.size = 20;
+         head.color = 16689475;
+         line.x = head.x + head.width + 4;
+         line.y = currentHeight + 12;
+         line.lineTo(currentWidth + 310,currentHeight + 12);
+         line.thickness = 4;
+         line.color = 7039851;
+         scrollArea.addChild(head);
+         scrollArea.addChild(line);
          currentHeight += 40;
       }
       
@@ -332,16 +362,16 @@ package core.states.gameStates
          var _loc4_:Text;
          (_loc4_ = new Text()).htmlText = param3;
          _loc4_.y = currentHeight;
-         _loc4_.x = currentWidth;
-         param1.x = _loc4_.x + _loc4_.width + 10;
+         _loc4_.x = currentWidth + 2;
+         param1.x = _loc4_.x + _loc4_.width + 5;
          param1.y = currentHeight;
-         if(param1.x < 200)
+         if(param1.x < 195)
          {
-            param1.x = 200;
+            param1.x = 195;
          }
          scrollArea.addChild(_loc4_);
          scrollArea.addChild(param1);
-         currentHeight += 40;
+         currentHeight += 30;
       }
    }
 }
