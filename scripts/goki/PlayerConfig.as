@@ -5,8 +5,8 @@ package goki
       
       public static var values:Object = {
          "zoomFactor":"1.0",
-         "zoomInKey":"K",
-         "zoomOutKey":"J"
+         "zoomInKey":"75",
+         "zoomOutKey":"74"
       };
        
       

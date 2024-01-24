@@ -99,13 +99,15 @@ package core.states.gameStates
          addKeybind(5);
          addKeybind(8);
          addKeybind(0);
+         addKeybind(27,true);
+         addKeybind(28,true);
       }
       
-      private function addKeybind(param1:int) : void
+      private function addKeybind(param1:int, param2:Boolean = false) : void
       {
-         var _loc2_:SettingsKeybind = new SettingsKeybind(core.states.§gameStates:SettingsBindings§.keybinds,param1,currentWidth,currentHeight);
-         keybindList.push(_loc2_);
-         scrollArea.addChild(_loc2_);
+         var _loc3_:SettingsKeybind = new SettingsKeybind(keybinds,param1,currentWidth,currentHeight,param2);
+         keybindList.push(_loc3_);
+         scrollArea.addChild(_loc3_);
          currentHeight += 62;
       }
       

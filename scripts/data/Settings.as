@@ -48,6 +48,10 @@ package data
       
       public function Settings()
       {
+         this._musicVolume = 0.5;
+         this._effectVolume = 0.5;
+         this._musicVolume = 0.5;
+         this._effectVolume = 0.5;
          super();
          soundManager = SoundLocator.getService();
          keybinds = new KeyBinds();
@@ -90,12 +94,13 @@ package data
       
       public function save() : void
       {
-         if(!§data:Settings§.dirty && !keybinds.dirty)
+         if(!dirty && !keybinds.dirty)
          {
             return;
          }
          var _loc1_:Message = sb.createMessage("settings",_musicVolume,_effectVolume,_showHud,_showLatency,_showEffects,_showBackground,_mouseAim,_keyboardAim,_rotationSpeed,_mouseFire,_iWantAllTimedMissions,_fireWithHotkeys,_quality,_chatMuted);
          keybinds.populateMessage(_loc1_);
+         keybinds.saveLocalBinds();
          sb.sendMessage(_loc1_);
       }
       

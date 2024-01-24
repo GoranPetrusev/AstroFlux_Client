@@ -26,13 +26,16 @@ package core.hud.components
       
       private var currentNumber:int;
       
-      public function SettingsKeybind(param1:KeyBinds, param2:int, param3:int, param4:int)
+      private var isLocal:Boolean = false;
+      
+      public function SettingsKeybind(param1:KeyBinds, param2:int, param3:int, param4:int, param5:Boolean = false)
       {
          super();
          this.keybinds = param1;
          this.type = param2;
          this.x = param3;
          this.y = param4;
+         this.isLocal = param5;
          load();
       }
       
@@ -51,15 +54,19 @@ package core.hud.components
          description.y = 5;
          buttonOne = new Button(listenButton,keybinds.getKeyName(type,1),"positive");
          buttonOne.width = 160;
-         buttonOne.x = 240;
+         buttonOne.x = 330;
          buttonOne.y = 0;
-         buttonTwo = new Button(listenButton,keybinds.getKeyName(type,2),"positive");
-         buttonTwo.width = 160;
-         buttonTwo.x = 420;
-         buttonTwo.y = 0;
+         if(!isLocal)
+         {
+            buttonOne.x = 240;
+            buttonTwo = new Button(listenButton,keybinds.getKeyName(type,2),"positive");
+            buttonTwo.width = 160;
+            buttonTwo.x = 420;
+            buttonTwo.y = 0;
+            bg.addChild(buttonTwo);
+         }
          bg.addChild(description);
          bg.addChild(buttonOne);
-         bg.addChild(buttonTwo);
          addChild(bg);
       }
       

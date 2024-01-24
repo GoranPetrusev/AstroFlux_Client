@@ -3,6 +3,7 @@ package data
    import flash.ui.Keyboard;
    import flash.utils.Dictionary;
    import flash.utils.describeType;
+   import goki.PlayerConfig;
    import io.IInput;
    import io.InputLocator;
    import playerio.Message;
@@ -64,7 +65,11 @@ package data
       
       public static const AUTO_FORWARD:int = 26;
       
-      public static const NUMBEROFBINDS:int = 27;
+      public static const ZOOM_IN:int = 27;
+      
+      public static const ZOOM_OUT:int = 28;
+      
+      public static const NUMBEROFBINDS:int = 29;
        
       
       public var dirty:Boolean;
@@ -89,7 +94,7 @@ package data
          dirty = false;
          keyDictionary = getKeyDictionary();
          _loc1_ = 0;
-         while(_loc1_ < 27)
+         while(_loc1_ < 29)
          {
             keyOne.push(-1);
             keyTwo.push(-1);
@@ -107,6 +112,8 @@ package data
          {
             setKeyBinds(param1,param2);
          }
+         keyOne[27] = PlayerConfig.values.zoomInKey;
+         keyOne[28] = PlayerConfig.values.zoomOutKey;
       }
       
       private function initNames() : void
@@ -114,7 +121,7 @@ package data
          var _loc1_:int = 0;
          names = new Vector.<String>();
          _loc1_ = 0;
-         while(_loc1_ < 27)
+         while(_loc1_ < 29)
          {
             names.push("");
             _loc1_++;
@@ -146,6 +153,8 @@ package data
          names[22] = "Use/Select Weapon Three";
          names[23] = "Use/Select Weapon Four";
          names[24] = "Use/Select Weapon Five";
+         names[27] = "Zoom in";
+         names[28] = "Zoom out";
       }
       
       private function setDefault() : void
@@ -343,6 +352,13 @@ package data
             _loc2_++;
          }
          return param1;
+      }
+      
+      public function saveLocalBinds() : void
+      {
+         PlayerConfig.values.zoomInKey = keyOne[27];
+         PlayerConfig.values.zoomOutKey = keyOne[28];
+         PlayerConfig.saveConfig();
       }
       
       public function isInputUp(param1:int) : Boolean
