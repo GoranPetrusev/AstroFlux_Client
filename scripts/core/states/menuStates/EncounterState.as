@@ -10,6 +10,7 @@ package core.states.menuStates
    import feathers.controls.ScrollContainer;
    import flash.globalization.NumberFormatter;
    import generics.Localize;
+   import goki.PlayerConfig;
    import starling.core.Starling;
    import starling.display.Image;
    import starling.display.MovieClip;
@@ -78,6 +79,7 @@ package core.states.menuStates
          var infoText:String;
          var nf:NumberFormatter;
          var percent:TextBitmap;
+         var targetKeys:Vector.<String>;
          var encounterKeys:Vector.<String> = g.me.encounters;
          super.backButton.visible = false;
          i = 0;
@@ -104,7 +106,15 @@ package core.states.menuStates
             }
             return -1;
          });
-         for each(encounterKey in encounterKeys)
+         if(PlayerConfig.values.progressionMode == true)
+         {
+            targetKeys = encounterKeys;
+         }
+         else
+         {
+            targetKeys = allEncounterKeys;
+         }
+         for each(encounterKey in targetKeys)
          {
             if(encounterKey.search("enemy_") != -1)
             {
@@ -139,7 +149,7 @@ package core.states.menuStates
             }
             name = String(obj.name);
             name = String(name.toLowerCase().replace("lvl","_").split("_")[0]);
-            if(!obj.excludeFromEnctounter)
+            if(!obj.excludeFromEncounter)
             {
                if(occupiedNames.indexOf(name) == -1)
                {

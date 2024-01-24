@@ -209,10 +209,8 @@ package core.hud.components.chat
          switch(output[0])
          {
             case "test":
-               for each(o in PlayerConfig.values)
-               {
-                  MessageLog.write(o);
-               }
+               PlayerConfig.values.progressionMode = Boolean(output[1]);
+               MessageLog.write(PlayerConfig.values.progressionMode);
                break;
             case "y":
             case "yes":
