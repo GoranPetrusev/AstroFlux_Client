@@ -16,6 +16,7 @@ package core.scene
    import flash.display.Bitmap;
    import flash.errors.IllegalOperationError;
    import flash.utils.Dictionary;
+   import goki.PlayerConfig;
    import joinRoom.Room;
    import playerio.Client;
    import playerio.Connection;
@@ -951,6 +952,7 @@ package core.scene
       
       public function disconnect() : void
       {
+         PlayerConfig.saveConfig();
          if(connection)
          {
             connection.disconnect();

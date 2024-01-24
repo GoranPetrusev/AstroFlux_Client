@@ -1,7 +1,9 @@
 package goki
 {
-   public class PlayerConfig
+   public class PlayerConfig extends Config
    {
+      
+      private static const _filePath:String = "PlayerConfig.txt";
       
       public static var values:Object = {
          "zoomFactor":"1.0",
@@ -18,20 +20,12 @@ package goki
       
       public static function saveConfig() : void
       {
-         FileManager.saveToFile("PlayerConfig.txt",JSON.stringify(values));
+         saveConfig(_filePath,values);
       }
       
       public static function loadConfig() : void
       {
-         var data:String = FileManager.readFromFile("PlayerConfig.txt");
-         if(data == "")
-         {
-            saveConfig();
-         }
-         else
-         {
-            values = JSON.parse(data);
-         }
+         loadConfig(_filePath,values);
       }
    }
 }
