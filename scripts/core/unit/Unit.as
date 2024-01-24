@@ -285,12 +285,12 @@ package core.unit
          {
             hpBar.visible = true;
             shieldBar.visible = true;
-            hpBar.width = barMaxWidth * PlayerConfig.values.barSize * hp / _hpMax;
+            hpBar.width = barMaxWidth * hp / _hpMax;
             if(hpBar.width > barMaxWidth)
             {
                hpBar.width = barMaxWidth;
             }
-            shieldBar.width = barMaxWidth * PlayerConfig.values.barSize * shieldHp / _shieldHpMax;
+            shieldBar.width = barMaxWidth * shieldHp / _shieldHpMax;
             if(shieldBar.width > barMaxWidth)
             {
                shieldBar.width = barMaxWidth;
@@ -337,9 +337,9 @@ package core.unit
          else
          {
             barMaxWidth = 10 + 0.1 * (_hpMax + _shieldHpMax);
-            if(barMaxWidth > 20)
+            if(barMaxWidth > 11 * PlayerConfig.values.barSize)
             {
-               barMaxWidth = 20;
+               barMaxWidth = 11 * PlayerConfig.values.barSize;
             }
          }
       }
@@ -711,12 +711,12 @@ package core.unit
          }
          else if(alive && (isInjured || PlayerConfig.values.barAlwaysShow))
          {
-            hpBar.height = 2 * PlayerConfig.values.barSize;
-            hpBar.y = _loc1_ + _loc4_ + 9;
-            hpBar.x = _loc2_;
             shieldBar.height = 2 * PlayerConfig.values.barSize;
-            shieldBar.x = _loc2_;
+            shieldBar.x = _loc2_ - barMaxWidth * 0.5;
             shieldBar.y = _loc1_ + _loc4_ + 7;
+            hpBar.height = 2 * PlayerConfig.values.barSize;
+            hpBar.y = shieldBar.y + shieldBar.height;
+            hpBar.x = _loc2_ - barMaxWidth * 0.5;
             if(isAddedToCanvas && !miniBarsAreAddedToCanvas && !isBossUnit)
             {
                canvas.addChild(hpBar);

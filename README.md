@@ -3,7 +3,7 @@ It's a little side project of mine where I'm aiming to reimplement all of the mo
 After 24 hours, this has grown into quite the effort. Big thanks to everyone coming in for some help. At this pace it will soon be finished.
 
 ### Currently working on
-- Modifiable hp/sh & dmg text size
+- Fitness
 
 ### ToDo
 - [x] Zooming
@@ -19,7 +19,7 @@ After 24 hours, this has grown into quite the effort. Big thanks to everyone com
 - [ ] Encouter xp to encounter menu
 - [ ] Variable crew member skill point usage
 - [ ] Art upgrade prediction
-- [ ] Modifiable hp/sh bar and dmg text size
+- [x] Modifiable hp/sh bar and dmg text size
 - [x] Reposition welcome text
 - [x] Increase FPS cap on warp menu 30 -> 60
 - [x] Fix that annoying warp path that was always grey

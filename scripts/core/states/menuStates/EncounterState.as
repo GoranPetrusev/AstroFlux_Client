@@ -106,7 +106,7 @@ package core.states.menuStates
             }
             return -1;
          });
-         if(PlayerConfig.values.showAllEncounters == true)
+         if(PlayerConfig.values.showAllEncounters == false)
          {
             targetKeys = encounterKeys;
          }

@@ -61,6 +61,10 @@ package core.states.gameStates
       
       private var iWantAllTimedMissions:Check;
       
+      private var hpshBarSizeSlider:Slider;
+      
+      private var hpshBarsAlwaysOn:Check;
+      
       private var fireWithHotkeys:Check;
       
       private var showAllEncounters:Check;
@@ -177,11 +181,24 @@ package core.states.gameStates
             PlayerConfig.values.showAllEncounters = showAllEncounters.isSelected;
          });
          addCheckbox(showAllEncounters,Localize.t("Show All Encounters"));
+         hpshBarsAlwaysOn = new Check();
+         hpshBarsAlwaysOn.isSelected = PlayerConfig.values.barAlwaysShow;
+         hpshBarsAlwaysOn.addEventListener("change",function(param1:Event):void
+         {
+            PlayerConfig.values.barAlwaysShow = hpshBarsAlwaysOn.isSelected;
+         });
+         addCheckbox(hpshBarsAlwaysOn,Localize.t("Always Show SH/HP Bars"));
          dmgTextSizeSlider = new Slider();
-         addSlider(dmgTextSizeSlider,(PlayerConfig.values.dmgTextSize - 1) * 0.5,Localize.t("Dmg Text Size"));
+         addSlider(dmgTextSizeSlider,(PlayerConfig.values.dmgTextSize - 1) * 0.5,Localize.t("Damage Text Scale"));
          dmgTextSizeSlider.addEventListener("change",function(param1:Event):void
          {
             PlayerConfig.values.dmgTextSize = 1 + dmgTextSizeSlider.value * 2;
+         });
+         hpshBarSizeSlider = new Slider();
+         addSlider(hpshBarSizeSlider,(PlayerConfig.values.barSize - 1) * 0.25,Localize.t("SH/HP Bars Scale"));
+         hpshBarSizeSlider.addEventListener("change",function(param1:Event):void
+         {
+            PlayerConfig.values.barSize = 1 + hpshBarSizeSlider.value * 4;
          });
       }
       
