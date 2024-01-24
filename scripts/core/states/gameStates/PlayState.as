@@ -435,9 +435,13 @@ package core.states.gameStates
             g.camera.zoomFocus(PlayerConfig.values.zoomFactor,4);
             if(input.isKeyDown(74))
             {
-               PlayerConfig.values.zoomTest = 1;
+               PlayerConfig.values.zoomFactor = 1;
                g.camera.zoomFocus(PlayerConfig.values.zoomFactor,4);
             }
+         }
+         if(input.isKeyPressed(18))
+         {
+            PlayerConfig.saveConfig();
          }
       }
    }

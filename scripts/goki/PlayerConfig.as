@@ -11,7 +11,8 @@ package goki
          "zoomOutKey":"74",
          "showAllEncounters":true,
          "dmgTextSize":"1.0",
-         "hpshBarSize":"1.0"
+         "barSize":"1.0",
+         "barAlwaysShow":false
       };
        
       

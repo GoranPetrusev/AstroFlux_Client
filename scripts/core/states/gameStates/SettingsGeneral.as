@@ -57,6 +57,8 @@ package core.states.gameStates
       
       private var rotationSpeedText:Text;
       
+      private var dmgTextSizeSlider:Slider;
+      
       private var iWantAllTimedMissions:Check;
       
       private var fireWithHotkeys:Check;
@@ -175,6 +177,12 @@ package core.states.gameStates
             PlayerConfig.values.showAllEncounters = showAllEncounters.isSelected;
          });
          addCheckbox(showAllEncounters,Localize.t("Show All Encounters"));
+         dmgTextSizeSlider = new Slider();
+         addSlider(dmgTextSizeSlider,(PlayerConfig.values.dmgTextSize - 1) * 0.5,Localize.t("Dmg Text Size"));
+         dmgTextSizeSlider.addEventListener("change",function(param1:Event):void
+         {
+            PlayerConfig.values.dmgTextSize = 1 + dmgTextSizeSlider.value * 2;
+         });
       }
       
       private function addLanguage() : void
@@ -243,7 +251,7 @@ package core.states.gameStates
          labelText.htmlText = Localize.t("Quality");
          labelText.y = currentHeight;
          labelText.x = currentWidth + 2;
-         slider.x = labelText.x + labelText.width + 10;
+         slider.x = currentWidth + 140;
          slider.y = currentHeight;
          descText = new Text();
          switch(slider.value)
@@ -279,11 +287,7 @@ package core.states.gameStates
                descText.htmlText = Localize.t("Best, AAx16");
          }
          descText.y = currentHeight;
-         descText.x = slider.x + slider.width;
-         if(slider.x < 195)
-         {
-            slider.x = 195;
-         }
+         descText.x = slider.x - descText.width - 5;
          scrollArea.addChild(labelText);
          scrollArea.addChild(slider);
          scrollArea.addChild(descText);
@@ -376,12 +380,8 @@ package core.states.gameStates
          (_loc4_ = new Text()).htmlText = param3;
          _loc4_.y = currentHeight;
          _loc4_.x = currentWidth + 2;
-         param1.x = _loc4_.x + _loc4_.width + 5;
+         param1.x = currentWidth + 140;
          param1.y = currentHeight;
-         if(param1.x < 195)
-         {
-            param1.x = 195;
-         }
          scrollArea.addChild(_loc4_);
          scrollArea.addChild(param1);
          currentHeight += 30;
