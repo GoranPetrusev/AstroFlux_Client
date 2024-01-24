@@ -6,7 +6,8 @@ It's a little side project of mine where I'm aiming to reimplement all of the mo
 
 ### ToDo
 - [x] Zooming
-- [ ] PlayerConfig load/save to be improved
+- [x] Improve PlayerConfig save/load
+- [x] Improve FileManager save/read
 - [ ] Fitness
 - [ ] Fitness Config Menu
 - [ ] Purify

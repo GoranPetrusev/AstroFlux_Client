@@ -23,7 +23,15 @@ package goki
       
       public static function loadConfig() : void
       {
-         values = JSON.parse(FileManager.readFromFile("PlayerConfig.txt"));
+         var data:String = FileManager.readFromFile("PlayerConfig.txt");
+         if(data == "")
+         {
+            saveConfig();
+         }
+         else
+         {
+            values = JSON.parse(data);
+         }
       }
    }
 }

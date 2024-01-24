@@ -24,12 +24,20 @@ package goki
       
       public static function readFromFile(fileName:String) : String
       {
+         var str:String;
          var fileStream:FileStream = new FileStream();
          var file:File = File.applicationStorageDirectory.resolvePath(fileName);
-         fileStream.open(file,FileMode.READ);
-         var str:String = String(fileStream.readUTFBytes(fileStream.bytesAvailable));
-         fileStream.close();
-         return str;
+         try
+         {
+            fileStream.open(file,FileMode.READ);
+            str = String(fileStream.readUTFBytes(fileStream.bytesAvailable));
+            fileStream.close();
+            return str;
+         }
+         catch(e:Error)
+         {
+            return "";
+         }
       }
    }
 }
