@@ -9,7 +9,9 @@ package goki
          "zoomFactor":"1.0",
          "zoomInKey":"75",
          "zoomOutKey":"74",
-         "showAllEncounters":true
+         "showAllEncounters":true,
+         "dmgTextSize":"1.0",
+         "hpshBarSize":"1.0"
       };
        
       

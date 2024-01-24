@@ -8,6 +8,7 @@ package core.hud.components.chat
    import feathers.data.ListCollection;
    import flash.ui.Mouse;
    import goki.FileManager;
+   import goki.PlayerConfig;
    import sound.Playlist;
    import starling.core.Starling;
    import starling.display.Sprite;
@@ -200,6 +201,7 @@ package core.hud.components.chat
          var tmp:Array;
          var q:int;
          var o:*;
+         var p:*;
          var text:String = input.text;
          if(text == "")
          {
@@ -210,6 +212,10 @@ package core.hud.components.chat
          {
             case "test":
                FileManager.readFromFile("nonexistent.txt");
+               for(p in PlayerConfig.values)
+               {
+                  MessageLog.write(p + ":" + PlayerConfig.values[p]);
+               }
                break;
             case "y":
             case "yes":

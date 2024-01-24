@@ -1,8 +1,9 @@
 ## Quick summary as to what this is
-It's a little side project of mine where I'm aiming to reimplement all of the modified client features on top of a fresh unmodified client and clean stuff up along the way. I also have a few ideas I want to add on top of everything else that is already in the base modified clients. Currently this project is in its infancy.
+It's a little side project of mine where I'm aiming to reimplement all of the modified client features on top of a fresh unmodified client and clean stuff up along the way. I also have a few ideas I want to add on top of everything else that is already in the base modified clients. ~~Currently this project is in its infancy.~~
+After 24 hours, this has grown into quite the effort. Big thanks to everyone coming in for some help. At this pace it will soon be finished.
 
 ### Currently working on
-- Progression mode
+- Modifiable hp/sh & dmg text size
 
 ### ToDo
 - [x] Zooming
@@ -12,7 +13,7 @@ It's a little side project of mine where I'm aiming to reimplement all of the mo
 - [ ] Fitness Config Menu
 - [ ] Purify
 - [ ] Autorecycle
-- [ ] Autosave of custom settings
+- [x] Autosave of custom settings
 - [x] Fix up artifacts menu button allignment
 - [x] Progress mode in encounter menu
 - [ ] Encouter xp to encounter menu
