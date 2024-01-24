@@ -22,7 +22,6 @@ package core.artifact
    import feathers.controls.ToggleButton;
    import generics.Localize;
    import generics.Util;
-   import playerio.DatabaseObject;
    import playerio.Message;
    import sound.ISound;
    import sound.SoundLocator;
@@ -227,8 +226,12 @@ package core.artifact
          statisticSummary.y = 30;
          statsContainer.addChild(statisticSummary);
          reloadStats();
+         chooseSortingButton = new Button(chooseSorting,Localize.t("Sorting"));
+         chooseSortingButton.x = 0;
+         chooseSortingButton.y = 480;
+         addChild(chooseSortingButton);
          toggleRecycleButton = new Button(toggleRecycle,Localize.t("Recycle"));
-         toggleRecycleButton.x = 97;
+         toggleRecycleButton.x = chooseSortingButton.x + chooseSortingButton.width + 10;
          toggleRecycleButton.y = 480;
          addChild(toggleRecycleButton);
          toggleUpgradeButton = new Button(toggleUpgrade,Localize.t("Upgrade"));
@@ -270,10 +273,6 @@ package core.artifact
             i++;
          }
          onLoadUpgradeArtifactComplete(crewMembersThatCompletedUpgrade);
-         chooseSortingButton = new Button(chooseSorting,Localize.t("Sorting"));
-         chooseSortingButton.x = 0;
-         chooseSortingButton.y = 480;
-         addChild(chooseSortingButton);
          cancelRecycleButton = new Button(toggleRecycle,Localize.t("Cancel"));
          cancelRecycleButton.x = 140;
          cancelRecycleButton.y = 480;
@@ -785,7 +784,7 @@ package core.artifact
             {
                for each(var _loc2_ in _loc3_.stats)
                {
-                  if((_loc5_ = _loc2_.type).indexOf("2") != -1 || _loc5_.indexOf("3") != -1)
+                  if((_loc5_ = String(_loc2_.type)).indexOf("2") != -1 || _loc5_.indexOf("3") != -1)
                   {
                      _loc5_ = _loc5_.slice(0,_loc5_.length - 1);
                   }

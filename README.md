@@ -2,7 +2,7 @@
 It's a little side project of mine where I'm aiming to reimplement all of the modified client features on top of a fresh unmodified client and clean stuff up along the way. I also have a few ideas I want to add on top of everything else that is already in the base modified clients. Currently this project is in its infancy.
 
 ### Currently working on
-- Zooming key binds in the settings
+- Knocking easy stuff off
 
 ### ToDo
 - [x] Zooming
@@ -14,7 +14,7 @@ It's a little side project of mine where I'm aiming to reimplement all of the mo
 - [ ] Stacking :P
 - [ ] Hacked Hangar
 - [ ] Autosave of custom settings
-- [ ] Fix up artifacts menu button allignment
+- [x] Fix up artifacts menu button allignment
 - [ ] Progress mode in encounter menu
 - [ ] Variable crew member skill point usage
 - [ ] Art upgrade prediction
