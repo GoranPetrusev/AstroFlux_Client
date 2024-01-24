@@ -19,7 +19,7 @@ It's a little side project of mine where I'm aiming to reimplement all of the mo
 - [ ] Variable crew member skill point usage
 - [ ] Art upgrade prediction
 - [ ] Modifiable hp/sh bar and dmg text size
-- [ ] Move welcome text up a bit
+- [x] Reposition welcome text
 - [x] Increase FPS cap on warp menu 30 -> 60
 - [x] Fix that annoying warp path that was always grey
 - [x] Rice up the settings menu
@@ -35,3 +35,4 @@ It's a little side project of mine where I'm aiming to reimplement all of the mo
 - Max out option for crew member talents
 - Framework for custom afk farming ai
 - Dynamic updating system for the configs (should make adding content more streamlined)
+- Look into possibilities of making the welcome text a field that doesn't eat up mouse input events
