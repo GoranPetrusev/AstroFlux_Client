@@ -536,6 +536,11 @@ package
          var registerButton:LoginButton;
          var loginFB:ImageButton;
          var recover:TextField;
+         var presetUsers:*;
+         var u:*;
+         var btn:*;
+         var btnPos:*;
+         var user:*;
          Localize.setLocale(RymdenRunt.parameters.querystring_locale);
          loginContainer = new Sprite();
          addChild(loginContainer);
@@ -569,7 +574,7 @@ package
          recover.text = "<u>" + Localize.t("Forgot password?") + "</u>";
          recover.isHtmlText = true;
          recover.x = loginContainer.width / 2 - recover.width / 2;
-         recover.y = RymdenRunt.isDesktop ? registerButton.y + registerButton.height + 40 : loginFB.y + loginFB.height + 40;
+         recover.y = registerButton.y + registerButton.height + 4;
          recover.touchable = true;
          recover.useHandCursor = true;
          recover.addEventListener("touch",onRecoverTouch);
@@ -579,6 +584,40 @@ package
          {
             passwordInput.input.setFocus();
          }
+         quickLoginUsers = getQuickLoginUsers();
+         btnPos = recover.y + recover.height + 4;
+         for each(user in quickLoginUsers)
+         {
+            btn = new LoginButton(user.Name,handleQuickLogin(user));
+            btn.x = loginContainer.x + loginContainer.width / 2 - loginContainer.width / 4;
+            btn.y = btnPos;
+            btnPos += loginButton.height + 4;
+            btn.width = loginContainer.width / 2;
+            btn.height = loginButton.height;
+            loginContainer.addChild(btn);
+         }
+      }
+      
+      private function handleQuickLogin(user:Object) : Function
+      {
+         return function():void
+         {
+            emailInput.text = user.Email;
+            passwordInput.text = user.Password;
+            onConnectSimple();
+         };
+      }
+      
+      private function getQuickLoginUsers() : Array
+      {
+         // todo: it would be more user-friendly to pull these from a file or make them configurable in the game
+         var userArray:Array = [];
+         userArray.push({
+            "Name":"Example",
+            "Email":"user_email@example.com",
+            "Password":"1234"
+         });
+         return userArray;
       }
       
       private function onRecoverTouch(param1:TouchEvent) : void
