@@ -239,6 +239,7 @@ package core.unit
          {
             nextDistanceCalculation -= 33;
          }
+         adjustMiniHealthBar();
          super.update();
       }
       
@@ -337,9 +338,9 @@ package core.unit
          else
          {
             barMaxWidth = 10 + 0.1 * (_hpMax + _shieldHpMax);
-            if(barMaxWidth > 11 * PlayerConfig.values.barSize)
+            if(barMaxWidth > 20 * PlayerConfig.values.barSize)
             {
-               barMaxWidth = 11 * PlayerConfig.values.barSize;
+               barMaxWidth = 20 * PlayerConfig.values.barSize;
             }
          }
       }

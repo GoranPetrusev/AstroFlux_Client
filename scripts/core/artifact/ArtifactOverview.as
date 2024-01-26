@@ -207,10 +207,10 @@ package core.artifact
          initActiveSlots();
          setActiveArtifacts();
          drawArtifactSetups();
+         drawArtifactsInCargo();
          q = new Quad(650,1,11184810);
          q.y = 70 + 24 - 1;
          addChildAt(q,0);
-         drawArtifactsInCargo();
          statsContainer = new Sprite();
          statsContainer.x = 390;
          statsContainer.y = 100;
@@ -229,7 +229,7 @@ package core.artifact
          statsContainer.addChild(statisticSummary);
          reloadStats();
          chooseSortingButton = new Button(chooseSorting,Localize.t("Sorting"));
-         chooseSortingButton.x = 0;
+         chooseSortingButton.x = 2;
          chooseSortingButton.y = 480;
          addChild(chooseSortingButton);
          toggleRecycleButton = new Button(toggleRecycle,Localize.t("Recycle"));
@@ -245,12 +245,12 @@ package core.artifact
          purifyButton.y = 480;
          addChild(purifyButton);
          cancelUpgradeButton = new Button(toggleUpgrade,Localize.t("Cancel"));
-         cancelUpgradeButton.x = 140;
+         cancelUpgradeButton.x = 2;
          cancelUpgradeButton.y = 480;
          cancelUpgradeButton.visible = false;
          addChild(cancelUpgradeButton);
          upgradeButton = new Button(onUpgradeArtifact,Localize.t("Upgrade"),"positive");
-         upgradeButton.x = cancelUpgradeButton.x + cancelUpgradeButton.width + 30;
+         upgradeButton.x = purifyButton.x + (purifyButton.width - upgradeButton.width);
          upgradeButton.y = 480;
          upgradeButton.visible = false;
          upgradeButton.enabled = false;
@@ -280,17 +280,17 @@ package core.artifact
          }
          onLoadUpgradeArtifactComplete(crewMembersThatCompletedUpgrade);
          cancelRecycleButton = new Button(toggleRecycle,Localize.t("Cancel"));
-         cancelRecycleButton.x = 140;
+         cancelRecycleButton.x = 2;
          cancelRecycleButton.y = 480;
          cancelRecycleButton.visible = false;
          addChild(cancelRecycleButton);
          recycleButton = new Button(onRecycle,Localize.t("Recycle"),"positive");
-         recycleButton.x = cancelRecycleButton.x + cancelRecycleButton.width + 30;
+         recycleButton.x = purifyButton.x + (purifyButton.width - recycleButton.width);
          recycleButton.y = 480;
          recycleButton.visible = false;
          addChild(recycleButton);
          selectAllRecycleButton = new Button(selectAllForRecycle,Localize.t("Select Max"));
-         selectAllRecycleButton.x = cancelRecycleButton.x - selectAllRecycleButton.width - 10;
+         selectAllRecycleButton.x = cancelRecycleButton.x + cancelRecycleButton.width + 10;
          selectAllRecycleButton.y = 480;
          selectAllRecycleButton.visible = false;
          addChild(selectAllRecycleButton);
@@ -490,7 +490,7 @@ package core.artifact
          if(p.artifactCapacityLevel < Player.ARTIFACT_CAPACITY.length - 1)
          {
             (_loc6_ = new Button(onUpgradeCapacity,p.artifactCount + " / " + p.artifactLimit + " " + Localize.t("INCREASE to") + " " + Player.ARTIFACT_CAPACITY[p.artifactCapacityLevel + 1],"positive")).x = 0;
-            _loc6_.width = 340;
+            _loc6_.width = 353;
             _loc6_.y = (_loc2_.height + 8) * _loc5_;
             cargoContainer.addChild(_loc6_);
          }
@@ -803,9 +803,7 @@ package core.artifact
                      {
                         _loc1_["corrosiveResist"] = 0;
                      }
-                     var _loc6_:* = "kineticResist";
-                     var _loc7_:* = _loc1_[_loc6_] + _loc2_.value;
-                     _loc1_[_loc6_] = _loc7_;
+                     _loc1_["kineticResist"] += _loc2_.value;
                      _loc1_["energyResist"] += _loc2_.value;
                      _loc1_["corrosiveResist"] += _loc2_.value;
                   }
@@ -823,9 +821,7 @@ package core.artifact
                      {
                         _loc1_["corrosiveAdd"] = 0;
                      }
-                     _loc7_ = "kineticAdd";
-                     _loc6_ = _loc1_[_loc7_] + _loc2_.value;
-                     _loc1_[_loc7_] = _loc6_;
+                     _loc1_["kineticAdd"] += _loc2_.value;
                      _loc1_["energyAdd"] += _loc2_.value;
                      _loc1_["corrosiveAdd"] += _loc2_.value;
                   }
@@ -843,9 +839,7 @@ package core.artifact
                      {
                         _loc1_["corrosiveMulti"] = 0;
                      }
-                     _loc6_ = "kineticMulti";
-                     _loc7_ = _loc1_[_loc6_] + _loc2_.value;
-                     _loc1_[_loc6_] = _loc7_;
+                     _loc1_["kineticMulti"] += _loc2_.value;
                      _loc1_["energyMulti"] += _loc2_.value;
                      _loc1_["corrosiveMulti"] += _loc2_.value;
                   }
@@ -904,35 +898,35 @@ package core.artifact
             {
                _loc8_ += ArtifactStat.parseTextFromStatType(_loc6_,param1[_loc6_]) + "<br>";
             }
-            statisticSummary.text = "";
-            if(_loc3_ != "")
-            {
-               statisticSummary.text += _loc3_;
-            }
-            if(_loc9_ != "")
-            {
-               statisticSummary.text += _loc9_;
-            }
-            if(_loc5_ != "")
-            {
-               statisticSummary.text += _loc5_;
-            }
-            if(_loc8_ != "")
-            {
-               statisticSummary.text += _loc8_;
-            }
-            if(_loc7_ != "")
-            {
-               statisticSummary.text += _loc7_;
-            }
-            if(_loc4_ != "")
-            {
-               statisticSummary.text += _loc4_;
-            }
-            if(_loc2_ != "")
-            {
-               statisticSummary.text += _loc2_;
-            }
+         }
+         statisticSummary.text = "";
+         if(_loc3_ != "")
+         {
+            statisticSummary.text += _loc3_;
+         }
+         if(_loc9_ != "")
+         {
+            statisticSummary.text += _loc9_;
+         }
+         if(_loc5_ != "")
+         {
+            statisticSummary.text += _loc5_;
+         }
+         if(_loc7_ != "")
+         {
+            statisticSummary.text += _loc7_;
+         }
+         if(_loc4_ != "")
+         {
+            statisticSummary.text += _loc4_;
+         }
+         if(_loc2_ != "")
+         {
+            statisticSummary.text += _loc2_;
+         }
+         if(_loc8_ != "")
+         {
+            statisticSummary.text += _loc8_;
          }
       }
       
@@ -958,6 +952,7 @@ package core.artifact
          chooseSortingButton.visible = !chooseSortingButton.visible;
          toggleRecycleButton.enabled = toggleRecycleButton.visible;
          cancelRecycleButton.enabled = cancelRecycleButton.visible;
+         purifyButton.visible = !purifyButton.visible;
          recycleButton.enabled = recycleButton.visible;
          toggleUpgradeButton.visible = !toggleUpgradeButton.visible;
          statsContainer.visible = !statsContainer.visible;
@@ -990,6 +985,7 @@ package core.artifact
          toggleUpgradeButton.visible = !toggleUpgradeButton.visible;
          cancelUpgradeButton.visible = !cancelUpgradeButton.visible;
          upgradeButton.visible = !upgradeButton.visible;
+         purifyButton.visible = !purifyButton.visible;
          toggleUpgradeButton.enabled = toggleUpgradeButton.visible;
          cancelUpgradeButton.enabled = cancelUpgradeButton.visible;
          crewContainer.visible = !crewContainer.visible;
