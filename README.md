@@ -3,7 +3,7 @@ It's a little side project of mine where I'm aiming to reimplement all of the mo
 After 24 hours, this has grown into quite the effort. Big thanks to everyone coming in for some help. At this pace it will soon be finished.
 
 ### Currently working on
-- Purify functionality
+- Fitness menu
 
 ### ToDo
 - [x] Zooming
@@ -13,7 +13,7 @@ After 24 hours, this has grown into quite the effort. Big thanks to everyone com
 - [ ] Fitness sort in arts menu
 - [ ] Fitness Config Menu
 - [ ] Fitness buffed by multiple equal lines
-- [ ] Purify
+- [x] Purify
 - [ ] Autorecycle
 - [x] Autosave of custom settings
 - [x] Fix up artifacts menu button allignment
@@ -44,3 +44,4 @@ After 24 hours, this has grown into quite the effort. Big thanks to everyone com
 - Load QuickLogin options from a file
 - Refactor welcome text base class for future use
 - Updating feature
+- Why the hell is text so broken in this game? It has weird offsets and relations to the camera... look into it

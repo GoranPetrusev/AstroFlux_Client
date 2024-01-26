@@ -22,6 +22,7 @@ package core.artifact
    import feathers.controls.ToggleButton;
    import generics.Localize;
    import generics.Util;
+   import goki.FitnessConfig;
    import playerio.Message;
    import sound.ISound;
    import sound.SoundLocator;
@@ -240,7 +241,7 @@ package core.artifact
          toggleUpgradeButton.x = toggleRecycleButton.x + toggleRecycleButton.width + 10;
          toggleUpgradeButton.y = 480;
          addChild(toggleUpgradeButton);
-         purifyButton = new Button(null,"Purify","positive");
+         purifyButton = new Button(purifyArts,"Purify","positive");
          purifyButton.x = toggleUpgradeButton.x + toggleUpgradeButton.width + 10;
          purifyButton.y = 480;
          addChild(purifyButton);
@@ -1476,6 +1477,26 @@ package core.artifact
             }
          }
          selectedUpgradeBox = null;
+      }
+      
+      private function purifyArts(param1:TouchEvent = null) : void
+      {
+         var _loc3_:int = 0;
+         markedForRecycle.splice(0,markedForRecycle.length);
+         for each(var _loc2_ in cargoBoxes)
+         {
+            if(_loc2_.a != null && !_loc2_.a.revealed && _loc3_ < 40)
+            {
+               if(_loc2_.a.stats.length < int(FitnessConfig.values.lines) || _loc2_.a.fitness < int(FitnessConfig.values.fitness) || _loc2_.a.level < int(FitnessConfig.values.strength))
+               {
+                  _loc2_.setSelectedForRecycle();
+                  markedForRecycle.push(_loc2_.a);
+                  _loc3_++;
+               }
+            }
+         }
+         onRecycle(null);
+         purifyButton.enabled = true;
       }
    }
 }
