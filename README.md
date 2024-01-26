@@ -30,6 +30,7 @@ After 24 hours, this has grown into quite the effort. Big thanks to everyone com
 - [ ] Stacking :P
 - [ ] Hacked Hangar
 - [ ] Autofarm
+- [x] Quick Login
 
 ### Ideas
 - Autotrain for crew members
@@ -37,3 +38,4 @@ After 24 hours, this has grown into quite the effort. Big thanks to everyone com
 - Framework for custom afk farming ai
 - Dynamic updating system for the configs (should make adding content more streamlined)
 - Look into possibilities of making the welcome text a field that doesn't eat up mouse input events
+- Load QuickLogin options from a file
