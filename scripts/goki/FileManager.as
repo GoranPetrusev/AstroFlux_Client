@@ -15,20 +15,31 @@ package goki
       
       public static function saveToFile(fileName:String, data:String) : void
       {
-         var fileStream:FileStream = new FileStream();
-         var file:File = File.applicationStorageDirectory.resolvePath(fileName);
-         fileStream.open(file,FileMode.WRITE);
-         fileStream.writeUTFBytes(data);
-         fileStream.close();
+         var fileStream:*;
+         var file:*;
+         try
+         {
+            fileStream = new FileStream();
+            file = File.applicationStorageDirectory.resolvePath(fileName);
+            fileStream.open(file,FileMode.WRITE);
+            fileStream.writeUTFBytes(data);
+            fileStream.close();
+         }
+         catch(e:Error)
+         {
+            return;
+         }
       }
       
       public static function readFromFile(fileName:String) : String
       {
          var str:String;
-         var fileStream:FileStream = new FileStream();
-         var file:File = File.applicationStorageDirectory.resolvePath(fileName);
+         var fileStream:*;
+         var file:*;
          try
          {
+            fileStream = new FileStream();
+            file = File.applicationStorageDirectory.resolvePath(fileName);
             fileStream.open(file,FileMode.READ);
             str = String(fileStream.readUTFBytes(fileStream.bytesAvailable));
             fileStream.close();
