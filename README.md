@@ -3,7 +3,7 @@ It's a little side project of mine where I'm aiming to reimplement all of the mo
 After 24 hours, this has grown into quite the effort. Big thanks to everyone coming in for some help. At this pace it will soon be finished.
 
 ### Currently working on
-- Purify
+- Purify functionality
 
 ### ToDo
 - [x] Zooming
@@ -12,6 +12,7 @@ After 24 hours, this has grown into quite the effort. Big thanks to everyone com
 - [x] Fitness
 - [ ] Fitness sort in arts menu
 - [ ] Fitness Config Menu
+- [ ] Fitness buffed by multiple equal lines
 - [ ] Purify
 - [ ] Autorecycle
 - [x] Autosave of custom settings
@@ -42,3 +43,4 @@ After 24 hours, this has grown into quite the effort. Big thanks to everyone com
 - Look into possibilities of making the welcome text a field that doesn't eat up mouse input events
 - Load QuickLogin options from a file
 - Refactor welcome text base class for future use
+- Updating feature
