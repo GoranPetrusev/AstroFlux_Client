@@ -610,7 +610,6 @@ package
       
       private function getQuickLoginUsers() : Array
       {
-         // todo: it would be more user-friendly to pull these from a file or make them configurable in the game
          var userArray:Array = [];
          userArray.push({
             "Name":"Example",
@@ -755,12 +754,12 @@ package
       
       private function decrypt(param1:String) : String
       {
-         var _loc3_:String = "-----BEGIN RSA PRIVATE KEY-----\nMIIEowIBAAKCAQEApvkQAoRKn7x3zwotivQkeClfvnp/oFzskj/eIghYLRplHqbz\n2XJoWg4ZM9mSqQNPtToh60FhxmXwTPjWDCzQb3fbCeQuYb6cJlwRcNNva+QDpDC2\ngF1QUNOmv3mIwJw/b478YsoEu5zRhHb1/fH86w8rS7qXoztv2pUJNxkTQCpUdCP2\na+Tqkhe6qLKywUSVOqG99E2kkCBJvXvno3Cw1emnDk8ib2k595U92lxca36+oBrv\nwcVMXkwfWmsYkkZbYqoqTC8oC1siRHFLrS5otNaF3k4N8YMs6NUa8mSWy7qUvxGk\n2M5ZckUkG/P4Q+0n+s6/uelvnF8jkEjVJzaSqwIDAQABAoIBAGI1bjA8xXOss79o\nGh93uBehJjpv7K9S2KawwCO+SrbEpqNfyV+lhjEpx7MSjsuwMerDNX4c57h87tkn\nJybkGPjnQ0NPHeTJ6yg40N1Oz2NjKq0hJcbcm8fepV5Lyp6XiExCirpEXoJHG4jR\nO6DQ+1T6iBmzt0sAQ6sKK/BnZEZBat0R7wcCno4J5mjn9DiJuqWmBgCJHNf3U8qB\n+yMqpvGCVG0hvuQySnZr5r1RZwIqjAvv3K9QlUOyUGiHwFTEkoSB9Mxhv4COZLWc\n5fdoIbnAD/sn4sl3rrHX5FUFGMUWXnvLixzzn9SBSkRSzDqG/P/Ex7BqX47wtOhS\nNnwgpdkCgYEA5q9vNOhRF2sHZxoxVtI6haGjUMjTZK6PDvIwv+B423cRxpwHBrzp\n0Chqudy6VXZ/67bqi6XbiljZE/si2ZDRloOO6xe5oeNHkO06eaFOrPeTO5o3EaTn\nhVy/cc8L6CLeVK4orNWO8HxoJCMq//hWH0IYcOSx7GD9Cc7WG/AskG0CgYEAuUvG\n60f3zhMGLPPQp5uBjjr4JWoEcdRS0tHlgArrtLHKY4jrp8E7wS08o3Lo4WPvBd9h\naZ6+a4EDNIdtbm1nTipXiLii2DvQnZf+1Lo4HuugdIrtGX+aXyQQyOx0JSvfCSls\nNP71jd8fdCScNEpEVXTA9s78qHlWbSLjPaA3MHcCgYEA4srRKxPHPZ20znFa1n+i\nl2Q9Opvl8FMJRGlo8gtO5nzeVgNpiP9LY6GIo6fU7VauFuBjIN3zw8TrzhAVyA3v\nb+lxJcHSd80Ju/ruhUvIHJbeAjfwMgGMuHlhohMrIpK9QEVkqd7fQ6EbhYOpr7PH\nf72sZ7j/D2SfAPh/WUI7ndUCgYBSsb7UwgmVrmfTJ/y20G/BSg/0opvZMSjFbWc+\n/aCzw6TPRwvkkhhY3hdx2paUAEVsGYUf3fidgbYse0QbRDgWak8mdUA3wHoZ2vuf\ndHwXUJELcfTerFP4od/by6sJ68peDF5+SErORgWDj9Mmgv58JN75Rub7SSuJCUjg\n99+pgQKBgE4LB4DYXhS+PMBkxUjvGZfyViKuQLWmc7Jnu8hBYZ5olRB7NewC8v/E\ndJePzuC5KKolakLh16p7c05w9OCF/eEmXPe8kcOzzKdq2M/bF8UoMRthzeXuVcv0\n4gYM0zua4/NbG9r3DouSEjdVzHDKplZZScicZoXDO6u21aSn9quD\n-----END RSA PRIVATE KEY-----";
-         var _loc6_:RSAKey = PEM.readRSAPrivateKey(_loc3_);
-         var _loc5_:ByteArray = Hex.toArray(Hex.fromString(param1));
-         var _loc4_:ByteArray = new ByteArray();
-         _loc6_.decrypt(_loc5_,_loc4_,_loc5_.length);
-         return Hex.toString(Hex.fromArray(_loc4_));
+         var _loc2_:String = "-----BEGIN RSA PRIVATE KEY-----\nMIIEowIBAAKCAQEApvkQAoRKn7x3zwotivQkeClfvnp/oFzskj/eIghYLRplHqbz\n2XJoWg4ZM9mSqQNPtToh60FhxmXwTPjWDCzQb3fbCeQuYb6cJlwRcNNva+QDpDC2\ngF1QUNOmv3mIwJw/b478YsoEu5zRhHb1/fH86w8rS7qXoztv2pUJNxkTQCpUdCP2\na+Tqkhe6qLKywUSVOqG99E2kkCBJvXvno3Cw1emnDk8ib2k595U92lxca36+oBrv\nwcVMXkwfWmsYkkZbYqoqTC8oC1siRHFLrS5otNaF3k4N8YMs6NUa8mSWy7qUvxGk\n2M5ZckUkG/P4Q+0n+s6/uelvnF8jkEjVJzaSqwIDAQABAoIBAGI1bjA8xXOss79o\nGh93uBehJjpv7K9S2KawwCO+SrbEpqNfyV+lhjEpx7MSjsuwMerDNX4c57h87tkn\nJybkGPjnQ0NPHeTJ6yg40N1Oz2NjKq0hJcbcm8fepV5Lyp6XiExCirpEXoJHG4jR\nO6DQ+1T6iBmzt0sAQ6sKK/BnZEZBat0R7wcCno4J5mjn9DiJuqWmBgCJHNf3U8qB\n+yMqpvGCVG0hvuQySnZr5r1RZwIqjAvv3K9QlUOyUGiHwFTEkoSB9Mxhv4COZLWc\n5fdoIbnAD/sn4sl3rrHX5FUFGMUWXnvLixzzn9SBSkRSzDqG/P/Ex7BqX47wtOhS\nNnwgpdkCgYEA5q9vNOhRF2sHZxoxVtI6haGjUMjTZK6PDvIwv+B423cRxpwHBrzp\n0Chqudy6VXZ/67bqi6XbiljZE/si2ZDRloOO6xe5oeNHkO06eaFOrPeTO5o3EaTn\nhVy/cc8L6CLeVK4orNWO8HxoJCMq//hWH0IYcOSx7GD9Cc7WG/AskG0CgYEAuUvG\n60f3zhMGLPPQp5uBjjr4JWoEcdRS0tHlgArrtLHKY4jrp8E7wS08o3Lo4WPvBd9h\naZ6+a4EDNIdtbm1nTipXiLii2DvQnZf+1Lo4HuugdIrtGX+aXyQQyOx0JSvfCSls\nNP71jd8fdCScNEpEVXTA9s78qHlWbSLjPaA3MHcCgYEA4srRKxPHPZ20znFa1n+i\nl2Q9Opvl8FMJRGlo8gtO5nzeVgNpiP9LY6GIo6fU7VauFuBjIN3zw8TrzhAVyA3v\nb+lxJcHSd80Ju/ruhUvIHJbeAjfwMgGMuHlhohMrIpK9QEVkqd7fQ6EbhYOpr7PH\nf72sZ7j/D2SfAPh/WUI7ndUCgYBSsb7UwgmVrmfTJ/y20G/BSg/0opvZMSjFbWc+\n/aCzw6TPRwvkkhhY3hdx2paUAEVsGYUf3fidgbYse0QbRDgWak8mdUA3wHoZ2vuf\ndHwXUJELcfTerFP4od/by6sJ68peDF5+SErORgWDj9Mmgv58JN75Rub7SSuJCUjg\n99+pgQKBgE4LB4DYXhS+PMBkxUjvGZfyViKuQLWmc7Jnu8hBYZ5olRB7NewC8v/E\ndJePzuC5KKolakLh16p7c05w9OCF/eEmXPe8kcOzzKdq2M/bF8UoMRthzeXuVcv0\n4gYM0zua4/NbG9r3DouSEjdVzHDKplZZScicZoXDO6u21aSn9quD\n-----END RSA PRIVATE KEY-----";
+         var _loc6_:RSAKey = PEM.readRSAPrivateKey(_loc2_);
+         var _loc4_:ByteArray = Hex.toArray(Hex.fromString(param1));
+         var _loc3_:ByteArray = new ByteArray();
+         _loc6_.decrypt(_loc4_,_loc3_,_loc4_.length);
+         return Hex.toString(Hex.fromArray(_loc3_));
       }
       
       private function onConnectSimple(param1:TouchEvent = null) : void
@@ -993,6 +992,7 @@ package
       
       private function handleConnect(param1:Client) : void
       {
+         var _loc2_:DataManager;
          RymdenRunt.initTimeStamp();
          if(isLoggedIn)
          {
@@ -1003,7 +1003,7 @@ package
          connectStatus.visible = false;
          stage.removeEventListener("keyDown",onKeyPress);
          stage.removeEventListener("keyUp",onKeyUp);
-         var _loc2_:DataManager = new DataManager(param1);
+         _loc2_ = new DataManager(param1);
          DataLocator.register(_loc2_);
          textureManager = new TextureManager(param1);
          TextureLocator.register(textureManager);

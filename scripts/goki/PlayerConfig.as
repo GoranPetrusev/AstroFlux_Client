@@ -23,12 +23,12 @@ package goki
       
       public static function saveConfig() : void
       {
-         saveConfig(_filePath,values);
+         save(_filePath,values);
       }
       
       public static function loadConfig() : void
       {
-         loadConfig(_filePath,values);
+         load(_filePath,values);
       }
    }
 }

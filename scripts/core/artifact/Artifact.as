@@ -311,5 +311,15 @@ package core.artifact
       {
          return Math.ceil((levelPotential - 10) / 1.2);
       }
+      
+      public function get fitness() : int
+      {
+         var totalFitness:Number = 0;
+         for each(var s in stats)
+         {
+            totalFitness += s.statFitness;
+         }
+         return totalFitness;
+      }
    }
 }

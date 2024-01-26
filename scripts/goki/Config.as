@@ -9,17 +9,17 @@ package goki
          super();
       }
       
-      protected static function saveConfig(dest:String, currentConfig:Object) : void
+      protected static function save(dest:String, currentConfig:Object) : void
       {
          FileManager.saveToFile(dest,JSON.stringify(currentConfig));
       }
       
-      protected static function loadConfig(dest:String, currentConfig:Object) : void
+      protected static function load(dest:String, currentConfig:Object) : void
       {
          var data:String = FileManager.readFromFile(dest);
          if(data == "")
          {
-            saveConfig(dest,currentConfig);
+            save(dest,currentConfig);
             return;
          }
          var localConfig:Object = JSON.parse(data);

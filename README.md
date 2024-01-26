@@ -9,7 +9,7 @@ After 24 hours, this has grown into quite the effort. Big thanks to everyone com
 - [x] Zooming
 - [x] Improve PlayerConfig save/load
 - [x] Improve FileManager save/read
-- [ ] Fitness
+- [x] Fitness
 - [ ] Fitness Config Menu
 - [ ] Purify
 - [ ] Autorecycle
@@ -39,3 +39,4 @@ After 24 hours, this has grown into quite the effort. Big thanks to everyone com
 - Dynamic updating system for the configs (should make adding content more streamlined)
 - Look into possibilities of making the welcome text a field that doesn't eat up mouse input events
 - Load QuickLogin options from a file
+- Refactor welcome text base class for future use

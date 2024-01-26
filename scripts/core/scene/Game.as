@@ -1284,7 +1284,7 @@ package core.scene
          var pvpText:String;
          if(isSystemTypeSurvival())
          {
-            welcomeText.start([["Welcome to " + solarSystem.name + ": " + hud.uberStats.uberRank]]);
+            welcomeText.start(["Welcome to " + solarSystem.name + ": " + hud.uberStats.uberRank]);
          }
          else
          {

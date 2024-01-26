@@ -1,6 +1,7 @@
 package core.artifact
 {
    import generics.Localize;
+   import goki.FitnessConfig;
    
    public class ArtifactStat
    {
@@ -106,24 +107,10 @@ package core.artifact
                _loc5_ = _loc3_ + "+" + (0.30000000000000004 * param2).toFixed(1) + "%" + _loc4_ + " " + Localize.t("inc attack speed");
                break;
             case "convHp":
-               if(0.1 * param2 > 100)
-               {
-                  _loc5_ = _loc3_ + "-100%" + _loc4_ + " " + Localize.t("hp to 150% shield");
-               }
-               else
-               {
-                  _loc5_ = _loc3_ + "-" + (0.1 * param2).toFixed(1) + "%" + _loc4_ + " " + Localize.t("hp to 150% shield");
-               }
+               _loc5_ = _loc3_ + "-" + (0.1 * param2).toFixed(1) + "%" + _loc4_ + " " + Localize.t("hp to 150% shield");
                break;
             case "convShield":
-               if(0.1 * param2 > 100)
-               {
-                  _loc5_ = _loc3_ + "-100%" + _loc4_ + " " + Localize.t("shield to 150% hp");
-               }
-               else
-               {
-                  _loc5_ = _loc3_ + "-" + (0.1 * param2).toFixed(1) + "%" + _loc4_ + " " + Localize.t("shield to 150% hp");
-               }
+               _loc5_ = _loc3_ + "-" + (0.1 * param2).toFixed(1) + "%" + _loc4_ + " " + Localize.t("shield to 150% hp");
                break;
             case "powerReg":
             case "powerReg2":
@@ -143,17 +130,13 @@ package core.artifact
       
       public static function parseTextFromStatTypeShort(param1:String, param2:Number) : String
       {
-         var _loc3_:String = "+";
-         if(param2 < 0)
-         {
-            _loc3_ = "";
-         }
+         var _loc3_:String = param2 < 0 ? "" : "+";
          switch(param1)
          {
             case "healthAdd":
             case "healthAdd2":
             case "healthAdd3":
-               break;
+               return _loc3_ + (2 * param2).toFixed(0) + " " + Localize.t("health");
             case "healthMulti":
                return _loc3_ + (1.35 * param2).toFixed(1) + "% " + Localize.t("health");
             case "armorAdd":
@@ -237,7 +220,87 @@ package core.artifact
             default:
                return "ERROR - artifact not found";
          }
-         return _loc3_ + (2 * param2).toFixed(0) + " " + Localize.t("health");
+      }
+      
+      public function get statFitness() : Number
+      {
+         switch(this.type)
+         {
+            case "healthAdd":
+            case "healthAdd2":
+            case "healthAdd3":
+               return 2 * 0.0022 * FitnessConfig.values.healthAdd * this.value;
+            case "healthMulti":
+               return 1.35 * 0.27 * FitnessConfig.values.healthMulti * this.value;
+            case "armorAdd":
+            case "armorAdd2":
+            case "armorAdd3":
+               return 7.5 * 0.025 * FitnessConfig.values.armorAdd * this.value;
+            case "armorMulti":
+               return 1 * 0.333 * FitnessConfig.values.armorMulti * this.value;
+            case "corrosiveAdd":
+            case "corrosiveAdd2":
+            case "corrosiveAdd3":
+               return 4 * 0.077 * FitnessConfig.values.corrosiveAdd * this.value;
+            case "corrosiveMulti":
+               return 1 * 0.6666 * FitnessConfig.values.corrosiveMulti * this.value;
+            case "energyAdd":
+            case "energyAdd2":
+            case "energyAdd3":
+               return 4 * 0.09 * FitnessConfig.values.energyAdd * this.value;
+            case "energyMulti":
+               return 1 * 0.6666 * FitnessConfig.values.energyMulti * this.value;
+            case "kineticAdd":
+            case "kineticAdd2":
+            case "kineticAdd3":
+               return 4 * 0.087 * FitnessConfig.values.kineticAdd * this.value;
+            case "kineticMulti":
+               return 1 * 0.6666 * FitnessConfig.values.kineticMulti * this.value;
+            case "shieldAdd":
+            case "shieldAdd2":
+            case "shieldAdd3":
+               return 1.75 * 0.0022 * FitnessConfig.values.shieldAdd * this.value;
+            case "shieldMulti":
+               return 1.35 * 0.27 * FitnessConfig.values.shieldMulti * this.value;
+            case "shieldRegen":
+               return 1 * 0.6 * FitnessConfig.values.shieldRegen * this.value;
+            case "corrosiveResist":
+               return 1 * 0.5 * FitnessConfig.values.corrosiveResist * this.value;
+            case "kineticResist":
+            case "energyResist":
+               return 1 * 0.5 * FitnessConfig.values.kineticResist * this.value;
+            case "allResist":
+               return 1 * 1 * FitnessConfig.values.allResist * this.value;
+            case "allAdd":
+            case "allAdd2":
+            case "allAdd3":
+               return 1.6 * 0.166 * FitnessConfig.values.allAdd * this.value;
+            case "allMulti":
+               return 1.35 * 1.3 * FitnessConfig.values.allMulti * this.value;
+            case "speed":
+            case "speed2":
+            case "speed3":
+               return 0.1 * 4 * FitnessConfig.values.speed * this.value;
+            case "refire":
+            case "refire2":
+            case "refire3":
+               return 0.3 * 1.298 * FitnessConfig.values.refire * this.value;
+            case "convHp":
+            case "convShield":
+               return 0.1 * 0.5 * FitnessConfig.values.convHp * this.value;
+            case "powerReg":
+            case "powerReg2":
+            case "powerReg3":
+               return 0.1 * 4 * FitnessConfig.values.powerReg * this.value;
+            case "powerMax":
+               return 1 * 0.3333 * FitnessConfig.values.powerMax * this.value;
+            case "cooldown":
+            case "cooldown2":
+            case "cooldown3":
+               return 0.1 * 6.666 * FitnessConfig.values.cooldown * this.value;
+            default:
+               return 0;
+         }
       }
    }
 }
