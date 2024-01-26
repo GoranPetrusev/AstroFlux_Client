@@ -110,6 +110,8 @@ package core.artifact
       
       private var selectedCrewMember:CrewDisplayBoxNew;
       
+      private var purifyButton:Button;
+      
       public function ArtifactOverview(param1:Game)
       {
          activeSlots = new Vector.<ArtifactBox>();
@@ -216,7 +218,7 @@ package core.artifact
          labelArtifactStats = new TextBitmap(0,0,Localize.t("Artifact Stats"),16);
          labelArtifactStats.format.color = 16777167;
          statsContainer.addChild(labelArtifactStats);
-         statisticSummary = new TextField(200,360,"");
+         statisticSummary = new TextField(300,360,"");
          statisticSummary.isHtmlText = true;
          statisticSummary.format.horizontalAlign = "left";
          statisticSummary.format.verticalAlign = "top";
@@ -238,6 +240,10 @@ package core.artifact
          toggleUpgradeButton.x = toggleRecycleButton.x + toggleRecycleButton.width + 10;
          toggleUpgradeButton.y = 480;
          addChild(toggleUpgradeButton);
+         purifyButton = new Button(null,"Purify","positive");
+         purifyButton.x = toggleUpgradeButton.x + toggleUpgradeButton.width + 10;
+         purifyButton.y = 480;
+         addChild(purifyButton);
          cancelUpgradeButton = new Button(toggleUpgrade,Localize.t("Cancel"));
          cancelUpgradeButton.x = 140;
          cancelUpgradeButton.y = 480;
@@ -758,14 +764,9 @@ package core.artifact
       
       private function reloadArtifactStats() : void
       {
-         if(p.artifacts.length == 0)
-         {
-            statisticSummary.text = Localize.t("You do not have any artifacts.");
-            return;
-         }
          if(p.activeArtifacts.length == 0)
          {
-            statisticSummary.text = "";
+            statisticSummary.text = Localize.t("You do not have any artifacts.");
             return;
          }
          var _loc1_:Object = sortStatsForSummary();

@@ -197,7 +197,7 @@ package core.artifact
          {
             _loc2_ += Localize.t("<font color=\'#ff0000\'>Requires level [level]</font>").replace("[level]",a.requiredPlayerLevel) + "<br><br>";
          }
-         _loc2_ += Localize.t("Level [potential], strength [level]").replace("[level]",a.level).replace("[potential]",a.levelPotential) + "<br>";
+         _loc2_ += Localize.t("Level [potential]  Strength [level]").replace("[level]",a.level).replace("[potential]",a.levelPotential) + "<br>";
          if(a.upgraded >= 10)
          {
             _loc2_ += Localize.t("Max Upgraded") + "<br>";
@@ -210,7 +210,7 @@ package core.artifact
          {
             _loc2_ += Localize.t("Upgrading") + ": " + Util.getFormattedTime(a.upgradeTime - g.time) + "<br>";
          }
-         _loc2_ = _loc2_ + "Fitness: " + a.fitness + "<br>";
+         _loc2_ = _loc2_ + "Fitness " + a.fitness + "<br>";
          for each(var _loc1_ in a.stats)
          {
             _loc2_ += ArtifactStat.parseTextFromStatType(_loc1_.type,_loc1_.value) + "<br>";

@@ -145,7 +145,7 @@ package core.artifact
             }
             _loc4_++;
          }
-         _loc2_ = "<font color=\'#ffaa44\'>" + a.name + "</font><br>Level " + a.levelPotential + ", strength " + a.level + "<br>";
+         _loc2_ = "<font color=\'#ffaa44\'>" + a.name + "</font><br>Level " + a.levelPotential + "  Strength " + a.level + "<br>";
          if(a.upgraded > 0)
          {
             _loc2_ += a.upgraded + " upgrades<br>";
@@ -154,7 +154,7 @@ package core.artifact
          {
             _loc2_ += "Upgrading: " + Util.getFormattedTime(a.upgradeTime - g.time) + "<br>";
          }
-         _loc2_ = _loc2_ + "Fitness: " + a.fitness + "<br>";
+         _loc2_ = _loc2_ + "Fitness " + a.fitness + "<br>";
          for each(var _loc1_ in a.stats)
          {
             _loc2_ += ArtifactStat.parseTextFromStatType(_loc1_.type,_loc1_.value) + "<br>";

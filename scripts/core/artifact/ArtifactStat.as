@@ -26,49 +26,73 @@ package core.artifact
          switch(param1)
          {
             case "healthAdd":
-            case "healthAdd2":
-            case "healthAdd3":
                _loc5_ = _loc3_ + "+" + (2 * param2).toFixed(1) + _loc4_ + " " + Localize.t("health");
+               break;
+            case "healthAdd2":
+               _loc5_ = _loc3_ + "+" + (2 * param2).toFixed(1) + _loc4_ + " " + Localize.t("health (s)");
+               break;
+            case "healthAdd3":
+               _loc5_ = _loc3_ + "+" + (2 * param2).toFixed(1) + _loc4_ + " " + Localize.t("health (e)");
                break;
             case "healthMulti":
                _loc5_ = _loc3_ + "+" + (1.35 * param2).toFixed(1) + "%" + _loc4_ + " " + Localize.t("health");
                break;
             case "armorAdd":
-            case "armorAdd2":
-            case "armorAdd3":
                _loc5_ = _loc3_ + "+" + (7.5 * param2).toFixed(1) + _loc4_ + " " + Localize.t("armor");
+               break;
+            case "armorAdd2":
+               _loc5_ = _loc3_ + "+" + (7.5 * param2).toFixed(1) + _loc4_ + " " + Localize.t("armor (s)");
+               break;
+            case "armorAdd3":
+               _loc5_ = _loc3_ + "+" + (7.5 * param2).toFixed(1) + _loc4_ + " " + Localize.t("armor (e)");
                break;
             case "armorMulti":
                _loc5_ = _loc3_ + "+" + param2.toFixed(1) + "%" + _loc4_ + " " + Localize.t("armor");
                break;
             case "corrosiveAdd":
-            case "corrosiveAdd2":
-            case "corrosiveAdd3":
                _loc5_ = _loc3_ + "+" + (4 * param2).toFixed(1) + _loc4_ + " " + Localize.t("corrosive dmg");
+               break;
+            case "corrosiveAdd2":
+               _loc5_ = _loc3_ + "+" + (4 * param2).toFixed(1) + _loc4_ + " " + Localize.t("corrosive dmg (s)");
+               break;
+            case "corrosiveAdd3":
+               _loc5_ = _loc3_ + "+" + (4 * param2).toFixed(1) + _loc4_ + " " + Localize.t("corrosive dmg (e)");
                break;
             case "corrosiveMulti":
                _loc5_ = _loc3_ + "+" + param2.toFixed(1) + "%" + _loc4_ + " " + Localize.t("corrosive dmg");
                break;
             case "energyAdd":
-            case "energyAdd2":
-            case "energyAdd3":
                _loc5_ = _loc3_ + "+" + (4 * param2).toFixed(1) + _loc4_ + " " + Localize.t("energy dmg");
+               break;
+            case "energyAdd2":
+               _loc5_ = _loc3_ + "+" + (4 * param2).toFixed(1) + _loc4_ + " " + Localize.t("energy dmg (s)");
+               break;
+            case "energyAdd3":
+               _loc5_ = _loc3_ + "+" + (4 * param2).toFixed(1) + _loc4_ + " " + Localize.t("energy dmg (e)");
                break;
             case "energyMulti":
                _loc5_ = _loc3_ + "+" + param2.toFixed(1) + "%" + _loc4_ + " " + Localize.t("energy dmg");
                break;
             case "kineticAdd":
-            case "kineticAdd2":
-            case "kineticAdd3":
                _loc5_ = _loc3_ + "+" + (4 * param2).toFixed(1) + _loc4_ + " " + Localize.t("kinetic dmg");
+               break;
+            case "kineticAdd2":
+               _loc5_ = _loc3_ + "+" + (4 * param2).toFixed(1) + _loc4_ + " " + Localize.t("kinetic dmg (s)");
+               break;
+            case "kineticAdd3":
+               _loc5_ = _loc3_ + "+" + (4 * param2).toFixed(1) + _loc4_ + " " + Localize.t("kinetic dmg (e)");
                break;
             case "kineticMulti":
                _loc5_ = _loc3_ + "+" + param2.toFixed(1) + "%" + _loc4_ + " " + Localize.t("kinetic dmg");
                break;
             case "shieldAdd":
-            case "shieldAdd2":
-            case "shieldAdd3":
                _loc5_ = _loc3_ + "+" + (1.75 * param2).toFixed(1) + _loc4_ + " " + Localize.t("shield");
+               break;
+            case "shieldAdd2":
+               _loc5_ = _loc3_ + "+" + (1.75 * param2).toFixed(1) + _loc4_ + " " + Localize.t("shield (s)");
+               break;
+            case "shieldAdd3":
+               _loc5_ = _loc3_ + "+" + (1.75 * param2).toFixed(1) + _loc4_ + " " + Localize.t("shield (e)");
                break;
             case "shieldMulti":
                _loc5_ = _loc3_ + "+" + (1.35 * param2).toFixed(1) + "%" + _loc4_ + " " + Localize.t("shield");
@@ -89,22 +113,34 @@ package core.artifact
                _loc5_ = _loc3_ + "+" + param2.toFixed(1) + "%" + _loc4_ + " " + Localize.t("all resist");
                break;
             case "allAdd":
-            case "allAdd2":
-            case "allAdd3":
                _loc5_ = _loc3_ + "+" + (1.5 * param2).toFixed(1) + _loc4_ + " " + Localize.t("to all dmg");
+               break;
+            case "allAdd2":
+               _loc5_ = _loc3_ + "+" + (1.5 * param2).toFixed(1) + _loc4_ + " " + Localize.t("to all dmg (s)");
+               break;
+            case "allAdd3":
+               _loc5_ = _loc3_ + "+" + (1.5 * param2).toFixed(1) + _loc4_ + " " + Localize.t("to all dmg (e)");
                break;
             case "allMulti":
                _loc5_ = _loc3_ + "+" + (1.5 * param2).toFixed(1) + "%" + _loc4_ + " " + Localize.t("to all dmg");
                break;
             case "speed":
-            case "speed2":
-            case "speed3":
                _loc5_ = _loc3_ + "+" + (0.2 * param2).toFixed(2) + "%" + _loc4_ + " " + Localize.t("inc speed");
                break;
+            case "speed2":
+               _loc5_ = _loc3_ + "+" + (0.2 * param2).toFixed(2) + "%" + _loc4_ + " " + Localize.t("inc speed (s)");
+               break;
+            case "speed3":
+               _loc5_ = _loc3_ + "+" + (0.2 * param2).toFixed(2) + "%" + _loc4_ + " " + Localize.t("inc speed (e)");
+               break;
             case "refire":
+               _loc5_ = _loc3_ + "+" + (0.3 * param2).toFixed(1) + "%" + _loc4_ + " " + Localize.t("inc attack speed (s)");
+               break;
             case "refire2":
+               _loc5_ = _loc3_ + "+" + (0.3 * param2).toFixed(1) + "%" + _loc4_ + " " + Localize.t("inc attack speed");
+               break;
             case "refire3":
-               _loc5_ = _loc3_ + "+" + (0.30000000000000004 * param2).toFixed(1) + "%" + _loc4_ + " " + Localize.t("inc attack speed");
+               _loc5_ = _loc3_ + "+" + (0.3 * param2).toFixed(1) + "%" + _loc4_ + " " + Localize.t("inc attack speed (e)");
                break;
             case "convHp":
                _loc5_ = _loc3_ + "-" + (0.1 * param2).toFixed(1) + "%" + _loc4_ + " " + Localize.t("hp to 150% shield");
@@ -113,17 +149,25 @@ package core.artifact
                _loc5_ = _loc3_ + "-" + (0.1 * param2).toFixed(1) + "%" + _loc4_ + " " + Localize.t("shield to 150% hp");
                break;
             case "powerReg":
+               _loc5_ = _loc3_ + "+" + (0.15 * param2).toFixed(1) + "%" + _loc4_ + " " + Localize.t("inc power regen");
+               break;
             case "powerReg2":
+               _loc5_ = _loc3_ + "+" + (0.15 * param2).toFixed(1) + "%" + _loc4_ + " " + Localize.t("inc power regen (s)");
+               break;
             case "powerReg3":
-               _loc5_ = _loc3_ + "+" + (0.15000000000000002 * param2).toFixed(1) + "%" + _loc4_ + " " + Localize.t("inc power regen");
+               _loc5_ = _loc3_ + "+" + (0.15 * param2).toFixed(1) + "%" + _loc4_ + " " + Localize.t("inc power regen (e)");
                break;
             case "powerMax":
                _loc5_ = _loc3_ + "+" + (1.5 * param2).toFixed(1) + "%" + _loc4_ + " " + Localize.t("inc maximum power");
                break;
             case "cooldown":
-            case "cooldown2":
-            case "cooldown3":
                _loc5_ = _loc3_ + "+" + (0.1 * param2).toFixed(1) + "%" + _loc4_ + " " + Localize.t("reduced cooldown");
+               break;
+            case "cooldown2":
+               _loc5_ = _loc3_ + "+" + (0.1 * param2).toFixed(1) + "%" + _loc4_ + " " + Localize.t("reduced cooldown (s)");
+               break;
+            case "cooldown3":
+               _loc5_ = _loc3_ + "+" + (0.1 * param2).toFixed(1) + "%" + _loc4_ + " " + Localize.t("reduced cooldown (e)");
          }
          return _loc5_;
       }
