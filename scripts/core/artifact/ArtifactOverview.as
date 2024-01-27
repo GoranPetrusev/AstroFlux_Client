@@ -681,11 +681,6 @@ package core.artifact
       
       private function onSetupChange(param1:Event) : void
       {
-         if(!g.me.isLanded && !g.me.inSafeZone)
-         {
-            g.showErrorDialog(Localize.t("Artifacts can only be changed inside the safe zones."));
-            return;
-         }
          if(recycleMode)
          {
             g.showErrorDialog(Localize.t("Artifact setup can\'t be changed while recycling."));
@@ -1177,15 +1172,14 @@ package core.artifact
       {
          var _loc4_:ArtifactBox;
          var _loc3_:Artifact = (_loc4_ = param1.target as ArtifactBox).a;
-         if(!g.me.isLanded && !g.me.inSafeZone)
+         if(recycleMode)
          {
-            g.showErrorDialog(Localize.t("Artifacts can only be changed inside the safe zones."));
             return;
          }
          _loc4_.setEmpty();
          p.toggleArtifact(_loc3_);
          reloadStats();
-         if(selectedUpgradeBox != null && selectedUpgradeBox.a == _loc4_.a)
+         if(recycleMode && selectedUpgradeBox != null && selectedUpgradeBox.a == _loc4_.a)
          {
             return;
          }

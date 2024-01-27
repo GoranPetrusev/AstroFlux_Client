@@ -287,11 +287,6 @@ package core.artifact
             update();
             return;
          }
-         if(!g.me.isLanded && !g.me.inSafeZone && !recycleMode)
-         {
-            g.showErrorDialog(Localize.t("Artifacts can only be changed inside the safe zones."));
-            return;
-         }
          if(!recycleMode && !upgradeMode)
          {
             dispatchEventWith("artifactSelected",true);
