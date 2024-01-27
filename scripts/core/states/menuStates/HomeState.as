@@ -75,6 +75,7 @@ package core.states.menuStates
          var upgradeButton:Button;
          var artifactLabel:TextBitmap;
          var artifactsButton:Button;
+         var fitnessButton:Button;
          var artifactSelector:ArtifactSelector;
          var crewLabel:TextBitmap;
          var crewButton:Button;
@@ -117,6 +118,14 @@ package core.states.menuStates
          artifactsButton.x = 280 + 10 - artifactsButton.width;
          artifactsButton.y = -10;
          artifactsContainer.addChild(artifactsButton);
+         fitnessButton = new Button(function():void
+         {
+            sm.changeState(new FitnessState(g));
+         },"fitness");
+         addChild(fitnessButton);
+         artifactsContainer.addChild(fitnessButton);
+         fitnessButton.x = artifactsButton.x - fitnessButton.width - 10;
+         fitnessButton.y = artifactsButton.y;
          artifactSelector = new ArtifactSelector(g,p);
          artifactSelector.y = artifactLabel.y + artifactLabel.height + 15;
          artifactSelector.addEventListener("artifactSelected",function(param1:Event):void

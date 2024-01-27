@@ -73,6 +73,7 @@ package core.scene
    import flash.net.URLRequestHeader;
    import flash.system.Security;
    import generics.Localize;
+   import goki.FitnessConfig;
    import goki.PlayerConfig;
    import io.InputLocator;
    import joinRoom.IJoinRoomManager;
@@ -353,6 +354,7 @@ package core.scene
          dailyManager = new DailyManager(this);
          textManager.loadHandlers();
          PlayerConfig.loadConfig();
+         FitnessConfig.loadConfig();
       }
       
       override protected function onJoinAndClockSynched(param1:starling.events.Event = null) : void
