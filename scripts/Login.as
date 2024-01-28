@@ -214,6 +214,10 @@ package
       private var effects:Vector.<Image>;
       
       private var effectTweens:Vector.<TweenMax>;
+
+      private var accountsButton:LoginButton;
+
+      private var accountsContainer:Sprite;
       
       public function Login()
       {
@@ -374,6 +378,7 @@ package
             recoverForm();
             registerForm();
             addExitButton();
+            addAccountsButton();
          }
          else if(RymdenRunt.parameters.fb_access_token)
          {
@@ -507,6 +512,11 @@ package
             serviceRoomSelector.x = stage.stageWidth / 2 - serviceRoomSelector.width / 2;
             serviceRoomSelector.y = stage.stageHeight / 5;
          }
+         if(accountsButton)
+         {
+            accountsButton.x = 20;
+            accountsButton.y = stage.stageHeight - accountsButton.height - 20;
+         }
       }
       
       private function scaleBackground() : void
@@ -594,27 +604,26 @@ package
             btn.height = loginButton.height;
             loginContainer.addChild(btn);
          }
-         // var authRequest:URLRequest = new URLRequest("https://armorgames.com/service/user-auth-token-generator/15181");
-         // var authLoader:URLLoader = new URLLoader();
-         // var d:Text = new Text();
-         // d.text = "DEBUG TEST";
-         // d.x = loginContainer.x + loginContainer.width / 2 - loginContainer.width / 4;
-         // d.y = btnPos;
-         // d.size = 14;
-         // loginContainer.addChild(d);
-         // authRequest.method = "GET";
-         // authLoader.dataFormat = "text";
-         // authLoader.addEventListener("complete", (function():*
-         // {
-         //    var onLoad:Function;
-         //    return onLoad = function(param1:flash.events.Event):void
-         //    {
-         //       d.text = param1.target.data as String;
-         //    };
-         // })());
-         // authLoader.load(authRequest);
+         var authRequest:URLRequest = new URLRequest("https://armorgames.com/service/user-auth-token-generator/15181");
+         var authLoader:URLLoader = new URLLoader();
+         var d:Text = new Text();
+         d.text = "DEBUG TEST";
+         d.x = loginContainer.x + loginContainer.width / 2 - loginContainer.width / 4;
+         d.y = btnPos;
+         d.size = 14;
+         loginContainer.addChild(d);
+         authRequest.method = "GET";
+         authLoader.dataFormat = "text";
+         authLoader.addEventListener("complete", (function():*
+         {
+            var onLoad:Function;
+            return onLoad = function(param1:flash.events.Event):void
+            {
+               d.text = param1.target.data as String;
+            };
+         })());
+         authLoader.load(authRequest);
       }
-
 
       private function handleQuickLogin(user:Object) : Function
       {
@@ -637,6 +646,10 @@ package
          return userArray;
       }
       
+      private function accountForm() : void
+      {
+      }
+
       private function onRecoverTouch(param1:TouchEvent) : void
       {
          if(param1.getTouch(this,"ended"))
@@ -670,6 +683,15 @@ package
          addChild(exitButton);
       }
       
+      private function addAccountsButton() : void
+      {
+         accountsButton = new LoginButton("accounts", function():void
+         {
+            toggleLogin();
+         },16777215,4871260);
+         addChild(accountsButton);
+      }
+
       public function setState(param1:String) : void
       {
          hideLogin();
@@ -694,6 +716,20 @@ package
          recoverDialog.visible = false;
          registerDialog.visible = false;
          loginContainer.visible = false;
+      }
+
+      private function toggleLogin() : void
+      {
+         if(currentState == "site" || currentState == "accounts")
+         {
+            loginContainer.visible = !loginContainer.visible;
+         }
+         else
+         {
+            recoverDialog.visible = false;
+            registerDialog.visible = false;
+         }
+         currentState = "accounts";
       }
       
       private function handleLoginError(param1:PlayerIOError) : void
@@ -792,11 +828,11 @@ package
          mySharedObject.flush();
          if(passwordInput.text.length == 64)
          {
-            loginMethod = kongConnect(_loc2_, _loc3_);
+            PlayerIO.quickConnect.kongregateConnect(Starling.current.nativeStage,gameId,_loc2_,_loc3_,handleConnect,handleError);
          }
-         else if(passwordInput.text.length == 32)
+         else if(passwordInput.text.length == 51)
          {
-            loginMethod = armorConnect(_loc2_, _loc3_);
+            PlayerIO.connect(Starling.current.nativeStage,gameId,"public",_loc2_,_loc3_,"armorgames",handleConnect,handleError);
          }
          else
          {
@@ -804,16 +840,6 @@ package
          }
       }
 
-      private function kongConnect(uid:String, atk:String) 
-      {
-            PlayerIO.quickConnect.kongregateConnect(Starling.current.nativeStage,gameId,uid,atk,handleConnect,handleError);
-      }
-
-      private function armorConnect(uid:String, atk:String) 
-      {
-            PlayerIO.connect(Starling.current.nativeStage,gameId,"public",uid,atk,"armorgames",handleConnect,handleError);
-      }
-      
       private function addSiteRef() : void
       {
          joinData["origin"] = RymdenRunt.origin;
