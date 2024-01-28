@@ -3,10 +3,10 @@ It's a little side project of mine where I'm aiming to reimplement all of the mo
 After 24 hours, this has grown into quite the effort. Big thanks to everyone coming in for some help. At this pace it will soon be finished.
 
 ### Currently working on
-- Fitness menu
+- Login kong interface
 
 ### ToDo
-- [ ] MAKE KONGREGATE ACCOUNTS WORK ON 
+- [ ] MAKE KONGREGATE ACCOUNTS WORK ON DEKSTOP VERSION
 - [x] Zooming
 - [x] Improve PlayerConfig save/load
 - [x] Improve FileManager save/read
