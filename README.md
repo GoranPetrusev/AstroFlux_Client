@@ -6,12 +6,13 @@ After 24 hours, this has grown into quite the effort. Big thanks to everyone com
 - Fitness menu
 
 ### ToDo
+- [ ] MAKE KONGREGATE ACCOUNTS WORK ON 
 - [x] Zooming
 - [x] Improve PlayerConfig save/load
 - [x] Improve FileManager save/read
 - [x] Fitness
 - [ ] Fitness sort in arts menu
-- [ ] Fitness Config Menu
+- [x] Fitness Config Menu
 - [ ] Fitness buffed by multiple equal lines
 - [x] Purify
 - [ ] Autorecycle
