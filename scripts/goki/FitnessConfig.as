@@ -7,7 +7,7 @@ package goki
       
       public static var values:Object = {
          "fitness":"120",
-         "lines":"1",
+         "lines":"0",
          "strength":"40",
          "healthAdd":"0.6",
          "healthMulti":"1.6",

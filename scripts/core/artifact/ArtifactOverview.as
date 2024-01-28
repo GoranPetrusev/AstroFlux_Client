@@ -1481,7 +1481,7 @@ package core.artifact
          {
             if(_loc2_.a != null && !_loc2_.a.revealed && _loc3_ < 40)
             {
-               if(_loc2_.a.stats.length < int(FitnessConfig.values.lines) || _loc2_.a.fitness < int(FitnessConfig.values.fitness) || _loc2_.a.level < int(FitnessConfig.values.strength))
+               if(_loc2_.a.stats.length <= FitnessConfig.values.lines || _loc2_.a.fitness < FitnessConfig.values.fitness || _loc2_.a.level < FitnessConfig.values.strength)
                {
                   _loc2_.setSelectedForRecycle();
                   markedForRecycle.push(_loc2_.a);

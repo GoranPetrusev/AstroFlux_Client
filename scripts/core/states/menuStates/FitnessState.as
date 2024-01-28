@@ -14,6 +14,8 @@ package core.states.menuStates
    {
        
       
+      private var g:Game;
+      
       private var fitness:InputText;
       
       private var strength:InputText;
@@ -80,6 +82,7 @@ package core.states.menuStates
       
       public function FitnessState(param1:Game)
       {
+         g = param1;
          super(param1,HomeState);
          fitness = new InputText(0,0,0,0);
          strength = new InputText(0,0,0,0);
@@ -118,12 +121,33 @@ package core.states.menuStates
          currentX = 52;
          currentY = 90;
          addHeader("Purify Values",17,220);
-         addPurifyValue("Minimum Fitness",fitness,"fitness",3,"1-9");
-         addPurifyValue("Minimum Strength",strength,"strength",3,"1-9");
-         addPurifyValue("Minimum Lines",lines,"lines",3,"1-5");
+         addPurifyValue("Minimum Fitness",fitness,"fitness",3,"0-9");
+         addPurifyValue("Minimum Strength",strength,"strength",3,"0-9");
+         addPurifyValue("Minimum Lines",lines,"lines",3,"0-5");
+         currentY += 15;
+         var smallHeader:Text = new Text(currentX - 8,currentY);
+         smallHeader.text = "How does it work?";
+         smallHeader.size = 17;
+         smallHeader.color = 16777215;
+         smallHeader.width = 220;
+         addChild(smallHeader);
+         currentY += 30;
+         var description:Text = new Text(currentX,currentY,true,"Verdana");
+         description.color = 16777215;
+         description.size = 10;
+         description.width = 223;
+         description.htmlText = "Don\'t worry, it\'s quite simple and it only works on <FONT COLOR=\'#fea943\'>unrevealed arts</FONT>. You see those 3 numbers above? Think of them as the minimum requirements for an art to pass. The fitness and strength of the art <FONT COLOR=\'#fea943\'>BOTH</FONT> need to be <FONT COLOR=\'#fea943\'>at least</FONT> the same as the numbers above for it to not be recycled. The lines are a bit different. It will recycle anything <FONT COLOR=\'#fea943\'>up to</FONT> the number, including it. Say if you put 1, then all one liners will be recycled. If you put a 0 <FONT COLOR=\'#fea943\'>anywhere</FONT>, it will ignore that stat.";
+         addChild(description);
          currentX = 300;
          currentY = 45;
-         addHeader("FitnessWeights",20,380);
+         var divider:Line = new Line();
+         divider.x = currentX - 12;
+         divider.y = currentY - 2;
+         divider.lineTo(divider.x,currentY + 500);
+         divider.thickness = 3;
+         divider.color = 3684408;
+         addChild(divider);
+         addHeader("FitnessWeights",20,386);
          addFitnessWeight("Health Add",healthAdd,"healthAdd");
          addFitnessWeight("Health Multi",healthMulti,"healthMulti");
          addFitnessWeight("Armor Add",armorAdd,"armorAdd");
@@ -167,10 +191,10 @@ package core.states.menuStates
          desc.color = 9539985;
          field.x = currentX + 130;
          field.y = currentY;
-         field.width = 39;
+         field.restrict = "-9-9";
+         field.width = 45;
          field.height = 16;
-         field.restrict = "0-9";
-         field.maxChars = 3;
+         field.maxChars = 5;
          field.text = FitnessConfig.values[property];
          addFieldRim(field);
          addChild(desc);
@@ -183,7 +207,7 @@ package core.states.menuStates
          var desc:Text = new Text(currentX,currentY + 2);
          desc.text = str;
          desc.size = 15;
-         desc.color = 14935011;
+         desc.color = 14408667;
          field.x = currentX + 170;
          field.y = currentY;
          field.width = 40;
@@ -194,7 +218,7 @@ package core.states.menuStates
          addFieldRim(field);
          addChild(desc);
          addChild(field);
-         currentY += 40;
+         currentY += 35;
       }
       
       private function addFieldRim(field:InputText) : void
