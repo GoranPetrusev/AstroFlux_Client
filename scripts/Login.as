@@ -536,11 +536,9 @@ package
          var registerButton:LoginButton;
          var loginFB:ImageButton;
          var recover:TextField;
-         var presetUsers:*;
-         var u:*;
-         var btn:*;
-         var btnPos:*;
-         var user:*;
+         var btn:LoginButton;
+         var btnPos:int;
+         var user:Object;
          Localize.setLocale(RymdenRunt.parameters.querystring_locale);
          loginContainer = new Sprite();
          addChild(loginContainer);
@@ -596,8 +594,28 @@ package
             btn.height = loginButton.height;
             loginContainer.addChild(btn);
          }
+         // var authRequest:URLRequest = new URLRequest("https://armorgames.com/service/user-auth-token-generator/15181");
+         // var authLoader:URLLoader = new URLLoader();
+         // var d:Text = new Text();
+         // d.text = "DEBUG TEST";
+         // d.x = loginContainer.x + loginContainer.width / 2 - loginContainer.width / 4;
+         // d.y = btnPos;
+         // d.size = 14;
+         // loginContainer.addChild(d);
+         // authRequest.method = "GET";
+         // authLoader.dataFormat = "text";
+         // authLoader.addEventListener("complete", (function():*
+         // {
+         //    var onLoad:Function;
+         //    return onLoad = function(param1:flash.events.Event):void
+         //    {
+         //       d.text = param1.target.data as String;
+         //    };
+         // })());
+         // authLoader.load(authRequest);
       }
-      
+
+
       private function handleQuickLogin(user:Object) : Function
       {
          return function():void
@@ -772,7 +790,28 @@ package
          updateStatus(Localize.t("Connecting to Server"));
          mySharedObject.data.email = _loc2_;
          mySharedObject.flush();
-         PlayerIO.quickConnect.simpleConnect(Starling.current.nativeStage,gameId,_loc2_,_loc3_,handleConnect,handleLoginError);
+         if(passwordInput.text.length == 64)
+         {
+            loginMethod = kongConnect(_loc2_, _loc3_);
+         }
+         else if(passwordInput.text.length == 32)
+         {
+            loginMethod = armorConnect(_loc2_, _loc3_);
+         }
+         else
+         {
+            PlayerIO.quickConnect.simpleConnect(Starling.current.nativeStage,gameId,_loc2_,_loc3_,handleConnect,handleLoginError);
+         }
+      }
+
+      private function kongConnect(uid:String, atk:String) 
+      {
+            PlayerIO.quickConnect.kongregateConnect(Starling.current.nativeStage,gameId,uid,atk,handleConnect,handleError);
+      }
+
+      private function armorConnect(uid:String, atk:String) 
+      {
+            PlayerIO.connect(Starling.current.nativeStage,gameId,"public",uid,atk,"armorgames",handleConnect,handleError);
       }
       
       private function addSiteRef() : void
