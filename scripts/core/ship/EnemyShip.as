@@ -269,12 +269,12 @@ package core.ship
             "alpha":0.25,
             "onComplete":function():void
             {
-               course.pos.x = 2411242;
-               course.pos.y = 8942522;
+               // course.pos.x = 2411242;
+               // course.pos.y = 8942522;
                clearConvergeTarget();
-               aiCloak = false;
             }
          });
+         aiCloak = false;
       }
       
       public function cloakEnd(param1:Heading) : void

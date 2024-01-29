@@ -74,6 +74,8 @@ package core.states.gameStates
       private var scrollArea:ScrollContainer;
 
       private var nMessagesInput:InputText;
+
+      private var censorChat:Check;
       
       public function SettingsGeneral(param1:Game)
       {
@@ -146,7 +148,6 @@ package core.states.gameStates
          {
             settings.mouseAim = !mouseAim.isSelected;
          });
-         addQualitySlider();
          addHeader("Controls");
          addCheckbox(mouseAim,Localize.t("Disable Mouse Aim"));
          fireWithHotkeys = new Check();
@@ -210,17 +211,25 @@ package core.states.gameStates
             PlayerConfig.values.maxChatMessages = nMessagesInput.text;
          });
          addInputField("Max Chat Messages", nMessagesInput);
+         censorChat = new Check();
+         censorChat.isSelected = PlayerConfig.values.censorChat;
+         censorChat.addEventListener("change",function(param1:Event):void
+         {
+            PlayerConfig.values.censorChat = censorChat.isSelected;
+         });
+         addCheckbox(censorChat, "Censor Profanities");
       }
 
       private function addInputField(str:String, field:InputText) : void
       {
          field.text = PlayerConfig.values.maxChatMessages;
-         var desc:Text = new Text(currentWidth + 2, currentHeight);
+         var desc:Text = new Text(currentWidth + 2, currentHeight, false, "Verdana");
          desc.text = str;
          addFieldRim(field);
-         addLine(desc.x + desc.width + 4, field.x - 7);
+         addLine(desc.x + desc.width + 4, field.x - 5);
          scrollArea.addChild(desc);
          scrollArea.addChild(field);
+         currentHeight += 30;
       }
 
       private function addFieldRim(field:InputText) : void
@@ -238,14 +247,12 @@ package core.states.gameStates
       
       private function addCheckbox(param1:Check, param2:String) : void
       {
-         var _loc3_:Text = new Text();
-         _loc3_.htmlText = param2;
-         _loc3_.y = currentHeight;
-         _loc3_.x = currentWidth + 2;
+         var _loc3_:Text = new Text(currentWidth + 2, currentHeight, false, "Verdana");
+         _loc3_.text = param2;
          param1.x = currentWidth + 286;
          param1.y = currentHeight - 4;
          param1.useHandCursor = true;
-         addLine(_loc3_.x + _loc3_.width + 4, param1.x - 7);
+         addLine(_loc3_.x + _loc3_.width + 4, param1.x - 5);
          scrollArea.addChild(_loc3_);
          scrollArea.addChild(param1);
          currentHeight += 30;
@@ -287,109 +294,13 @@ package core.states.gameStates
          param1.value = param2;
          param1.direction = "horizontal";
          param1.useHandCursor = true;
-         var _loc4_:Text;
-         (_loc4_ = new Text()).htmlText = param3;
-         _loc4_.y = currentHeight;
-         _loc4_.x = currentWidth + 2;
+         var _loc4_:Text = new Text(currentWidth + 2, currentHeight, false, "Verdana");
+         _loc4_.text = param3;
          param1.x = currentWidth + 140;
          param1.y = currentHeight;
          scrollArea.addChild(_loc4_);
          scrollArea.addChild(param1);
          currentHeight += 30;
-      }
-
-      private function addQualitySlider() : void
-      {
-         var labelText:Text;
-         var descText:Text;
-         var slider:Slider = new Slider();
-         slider.minimum = 0;
-         slider.maximum = 5;
-         slider.step = 1;
-         slider.value = settings.quality;
-         slider.direction = "horizontal";
-         slider.useHandCursor = true;
-         labelText = new Text();
-         labelText.htmlText = Localize.t("Quality");
-         labelText.y = currentHeight;
-         labelText.x = currentWidth + 2;
-         slider.x = currentWidth + 140;
-         slider.y = currentHeight;
-         descText = new Text();
-         switch(slider.value)
-         {
-            case 0:
-               RymdenRunt.s.nativeStage.quality = "low";
-               RymdenRunt.s.antiAliasing = 0;
-               descText.htmlText = Localize.t("Low");
-               break;
-            case 1:
-               RymdenRunt.s.nativeStage.quality = "medium";
-               RymdenRunt.s.antiAliasing = 2;
-               descText.htmlText = Localize.t("Medium");
-               break;
-            case 2:
-               RymdenRunt.s.nativeStage.quality = "high";
-               RymdenRunt.s.antiAliasing = 4;
-               descText.htmlText = Localize.t("High, AAx4");
-               break;
-            case 3:
-               RymdenRunt.s.nativeStage.quality = "8x8";
-               RymdenRunt.s.antiAliasing = 8;
-               descText.htmlText = Localize.t("High, AAx8");
-               break;
-            case 4:
-               RymdenRunt.s.nativeStage.quality = "16x16";
-               RymdenRunt.s.antiAliasing = 16;
-               descText.htmlText = Localize.t("High, AAx16");
-               break;
-            case 5:
-               RymdenRunt.s.nativeStage.quality = "best";
-               RymdenRunt.s.antiAliasing = 16;
-               descText.htmlText = Localize.t("Best, AAx16");
-         }
-         descText.y = currentHeight;
-         descText.x = slider.x - 70;
-         scrollArea.addChild(labelText);
-         scrollArea.addChild(slider);
-         scrollArea.addChild(descText);
-         currentHeight += 30;
-         slider.addEventListener("change",function(param1:Event):void
-         {
-            settings.quality = slider.value;
-            switch(slider.value)
-            {
-               case 0:
-                  RymdenRunt.s.nativeStage.quality = "low";
-                  RymdenRunt.s.antiAliasing = 0;
-                  descText.htmlText = Localize.t("Low");
-                  break;
-               case 1:
-                  RymdenRunt.s.nativeStage.quality = "medium";
-                  RymdenRunt.s.antiAliasing = 2;
-                  descText.htmlText = Localize.t("Medium");
-                  break;
-               case 2:
-                  RymdenRunt.s.nativeStage.quality = "high";
-                  RymdenRunt.s.antiAliasing = 4;
-                  descText.htmlText = Localize.t("High, AAx4");
-                  break;
-               case 3:
-                  RymdenRunt.s.nativeStage.quality = "8x8";
-                  RymdenRunt.s.antiAliasing = 8;
-                  descText.htmlText = Localize.t("High, AAx8");
-                  break;
-               case 4:
-                  RymdenRunt.s.nativeStage.quality = "16x16";
-                  RymdenRunt.s.antiAliasing = 16;
-                  descText.htmlText = Localize.t("High, AAx16");
-                  break;
-               case 5:
-                  RymdenRunt.s.nativeStage.quality = "best";
-                  RymdenRunt.s.antiAliasing = 16;
-                  descText.htmlText = Localize.t("Best, AAx16");
-            }
-         });
       }
    }
 }

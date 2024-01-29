@@ -13,7 +13,8 @@ package goki
          "dmgTextSize":"1.0",
          "barSize":"1.0",
          "barAlwaysShow":false,
-         "maxChatMessages":"100"
+         "maxChatMessages":"100",
+         "censorChat":false
       };
        
       

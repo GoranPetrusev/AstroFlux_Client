@@ -514,17 +514,20 @@ package core.hud.components.chat
                param1 = "team";
             }
          }
-         for(var _loc10_ in profanities)
+         if(PlayerConfig.values.censorChat)
          {
-            _loc7_ = "";
-            _loc12_ = 0;
-            while(_loc12_ < _loc10_.length)
+            for(var _loc10_ in profanities)
             {
-               _loc7_ += "*";
-               _loc12_++;
+               _loc7_ = "";
+               _loc12_ = 0;
+               while(_loc12_ < _loc10_.length)
+               {
+                  _loc7_ += "*";
+                  _loc12_++;
+               }
+               _loc11_ = new RegExp(_loc10_,"gi");
+               param2 = param2.replace(_loc11_,_loc7_);
             }
-            _loc11_ = new RegExp(_loc10_,"gi");
-            param2 = param2.replace(_loc11_,_loc7_);
          }
          var _loc14_:String = colorCoding("[" + param1 + "]");
          var _loc8_:* = param2;
