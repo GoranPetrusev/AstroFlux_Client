@@ -13,6 +13,7 @@ package core.states.gameStates
    import feathers.controls.renderers.DefaultListItemRenderer;
    import feathers.controls.renderers.IListItemRenderer;
    import feathers.data.ListCollection;
+   import core.hud.components.InputText;
    import generics.Localize;
    import goki.PlayerConfig;
    import starling.display.Sprite;
@@ -20,6 +21,7 @@ package core.states.gameStates
    import starling.events.TouchEvent;
    import textures.ITextureManager;
    import textures.TextureLocator;
+   import starling.display.Quad;
    
    public class SettingsGeneral extends Sprite
    {
@@ -70,6 +72,8 @@ package core.states.gameStates
       private var showAllEncounters:Check;
       
       private var scrollArea:ScrollContainer;
+
+      private var nMessagesInput:InputText;
       
       public function SettingsGeneral(param1:Game)
       {
@@ -200,57 +204,34 @@ package core.states.gameStates
          {
             PlayerConfig.values.barSize = 1 + hpshBarSizeSlider.value * 4;
          });
-      }
-      
-      private function addLanguage() : void
-      {
-         var selectedIndex:int;
-         var i:int;
-         var item:Object;
-         var b:Button;
-         var list:PickerList = new PickerList();
-         var textureManager:ITextureManager = TextureLocator.getService();
-         list.dataProvider = new ListCollection([{"text":"en"},{"text":"de"},{"text":"fr"},{"text":"es"},{"text":"ru"},{"text":"uk"},{"text":"nl"},{"text":"sv"},{"text":"pe"}]);
-         selectedIndex = 0;
-         i = 0;
-         while(i < list.dataProvider.length)
+         nMessagesInput = new InputText(currentWidth + 120, currentHeight, 40, 20);
+         nMessagesInput.addEventListener("change",function(param1:Event):void
          {
-            item = list.dataProvider.getItemAt(i);
-            if(item.text == Localize.language)
-            {
-               selectedIndex = i;
-            }
-            i++;
-         }
-         list.selectedIndex = selectedIndex;
-         list.listProperties.itemRendererFactory = function():IListItemRenderer
-         {
-            var _loc1_:DefaultListItemRenderer = new DefaultListItemRenderer();
-            _loc1_.labelField = "text";
-            _loc1_.height = 25;
-            return _loc1_;
-         };
-         list.prompt = "Select language";
-         list.typicalItem = {"text":"Select an Item"};
-         list.labelField = "text";
-         list.addEventListener("change",function(param1:Event):void
-         {
-            var _loc3_:PickerList = PickerList(param1.currentTarget);
-            var _loc2_:Object = _loc3_.selectedItem;
-            Localize.language = _loc2_.text;
+            PlayerConfig.values.maxChatMessages = nMessagesInput.text;
          });
-         list.x = currentWidth;
-         list.y = currentHeight;
-         scrollArea.addChild(list);
-         b = new Button(function(param1:TouchEvent):void
-         {
-            Localize.activateLanguageSelection = true;
-            g.reloadTexts();
-         },"Reload texts");
-         b.x = currentWidth + 150;
-         b.y = currentHeight + 3;
-         scrollArea.addChild(b);
-         currentHeight += 60;
+         addInputField("Max Chat Message", nMessagesInput);
+      }
+
+      private function addInputField(str:String, field:InputText)
+      {
+         field.text = PlayerConfig.values.maxChatMessages;
+         var desc:String = new Text(currentWidth, currentHeight);
+         desc.text = str;
+         addFieldRim(field);
+         scrollArea.addChild(desc);
+         scrollArea.addChild(field);
+      }
+
+      private function addFieldRim(field:InputText) : void
+      {
+         var topFill:Quad = new Quad(field.width + 2,field.height * 0.5 + 1,13948116);
+         var botFill:Quad = new Quad(field.width + 2,field.height * 0.5 + 1,11053224);
+         topFill.x = field.x - 1;
+         topFill.y = field.y - 1;
+         botFill.x = field.x - 1;
+         botFill.y = field.y + field.height * 0.5;
+         scrollArea.addChild(topFill);
+         scrollArea.addChild(botFill);
       }
       
       private function addQualitySlider() : void
@@ -304,7 +285,7 @@ package core.states.gameStates
                descText.htmlText = Localize.t("Best, AAx16");
          }
          descText.y = currentHeight;
-         descText.x = slider.x - descText.width - 5;
+         descText.x = slider.x - 60;
          scrollArea.addChild(labelText);
          scrollArea.addChild(slider);
          scrollArea.addChild(descText);

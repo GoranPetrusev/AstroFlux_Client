@@ -12,7 +12,8 @@ package goki
          "showAllEncounters":true,
          "dmgTextSize":"1.0",
          "barSize":"1.0",
-         "barAlwaysShow":false
+         "barAlwaysShow":false,
+         "maxChatMessages":"100"
       };
        
       
