@@ -214,9 +214,9 @@ package
       private var effects:Vector.<Image>;
       
       private var effectTweens:Vector.<TweenMax>;
-
+      
       private var accountsButton:LoginButton;
-
+      
       private var accountsContainer:Sprite;
       
       public function Login()
@@ -604,27 +604,8 @@ package
             btn.height = loginButton.height;
             loginContainer.addChild(btn);
          }
-         var authRequest:URLRequest = new URLRequest("https://armorgames.com/service/user-auth-token-generator/15181");
-         var authLoader:URLLoader = new URLLoader();
-         var d:Text = new Text();
-         d.text = "DEBUG TEST";
-         d.x = loginContainer.x + loginContainer.width / 2 - loginContainer.width / 4;
-         d.y = btnPos;
-         d.size = 14;
-         loginContainer.addChild(d);
-         authRequest.method = "GET";
-         authLoader.dataFormat = "text";
-         authLoader.addEventListener("complete", (function():*
-         {
-            var onLoad:Function;
-            return onLoad = function(param1:flash.events.Event):void
-            {
-               d.text = param1.target.data as String;
-            };
-         })());
-         authLoader.load(authRequest);
       }
-
+      
       private function handleQuickLogin(user:Object) : Function
       {
          return function():void
@@ -649,7 +630,7 @@ package
       private function accountForm() : void
       {
       }
-
+      
       private function onRecoverTouch(param1:TouchEvent) : void
       {
          if(param1.getTouch(this,"ended"))
@@ -685,13 +666,13 @@ package
       
       private function addAccountsButton() : void
       {
-         accountsButton = new LoginButton("accounts", function():void
+         accountsButton = new LoginButton("accounts",function():void
          {
             toggleLogin();
          },16777215,4871260);
          addChild(accountsButton);
       }
-
+      
       public function setState(param1:String) : void
       {
          hideLogin();
@@ -717,7 +698,7 @@ package
          registerDialog.visible = false;
          loginContainer.visible = false;
       }
-
+      
       private function toggleLogin() : void
       {
          if(currentState == "site" || currentState == "accounts")
@@ -826,20 +807,47 @@ package
          updateStatus(Localize.t("Connecting to Server"));
          mySharedObject.data.email = _loc2_;
          mySharedObject.flush();
-         if(passwordInput.text.length == 64)
+         if(_loc2_.length == 8 && _loc3_.length == 64)
          {
             PlayerIO.quickConnect.kongregateConnect(Starling.current.nativeStage,gameId,_loc2_,_loc3_,handleConnect,handleError);
          }
-         else if(passwordInput.text.length == 51)
+         else if(_loc2_.length == 32 && _loc3_.length == 32)
          {
-            PlayerIO.connect(Starling.current.nativeStage,gameId,"public",_loc2_,_loc3_,"armorgames",handleConnect,handleError);
+            armorConnect(_loc2_,_loc3_);
          }
          else
          {
             PlayerIO.quickConnect.simpleConnect(Starling.current.nativeStage,gameId,_loc2_,_loc3_,handleConnect,handleLoginError);
          }
       }
-
+      
+      private function armorConnect(ID:String, TOKEN:String) : *
+      {
+         var authRequest:URLRequest;
+         var authLoader:URLLoader;
+         var d:Text;
+         var url:String = "http://api.playerio.com/clientintegrations/armorgames/auth?gameid=rymdenrunt-k9qmg7cvt0ylialudmldvg&userid=" + ID;
+         "&authtoken=" + TOKEN;
+         authRequest = new URLRequest(url);
+         authLoader = new URLLoader();
+         d = new Text();
+         authRequest.method = "GET";
+         authLoader.dataFormat = "text";
+         authLoader.addEventListener("complete",(function():*
+         {
+            var onLoad:Function;
+            return onLoad = function(param1:flash.events.Event):void
+            {
+               loader.removeEventListener("complete",onLoad);
+               var _loc2_:Array = (param1.target.data as String).split("\n");
+               var _loc3_:String = String(_loc2_[0]);
+               joinData["name"] = _loc3_.slice(5);
+               PlayerIO.connect(Starling.current.nativeStage,gameId,"public",_loc3_,_loc2_[1],"armorgames",handleConnect,handleError);
+            };
+         })());
+         authLoader.load(authRequest);
+      }
+      
       private function addSiteRef() : void
       {
          joinData["origin"] = RymdenRunt.origin;
