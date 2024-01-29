@@ -821,7 +821,7 @@ package
          }
       }
       
-      private function armorConnect(ID:String, TOKEN:String) : *
+      private function armorConnect(ID:String, TOKEN:String) : void
       {
          var authRequest:URLRequest;
          var authLoader:URLLoader;

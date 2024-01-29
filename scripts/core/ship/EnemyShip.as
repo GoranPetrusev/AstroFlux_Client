@@ -266,13 +266,13 @@ package core.ship
       public function cloakStart() : void
       {
          TweenMax.to(_mc,1,{
-            "alpha":0,
+            "alpha":0.25,
             "onComplete":function():void
             {
                course.pos.x = 2411242;
                course.pos.y = 8942522;
                clearConvergeTarget();
-               aiCloak = true;
+               aiCloak = false;
             }
          });
       }
