@@ -10,6 +10,7 @@ package core.hud.components.chat
    import starling.textures.Texture;
    import textures.ITextureManager;
    import textures.TextureLocator;
+   import goki.PlayerConfig;
    
    public class MessageLog extends DisplayObjectContainer
    {
@@ -18,7 +19,7 @@ package core.hud.components.chat
       
       private static var g:Game;
       
-      public static var extendedMaxLines:int = 60;
+      public static var extendedMaxLines:int = PlayerConfig.values.maxChatMessages;
       
       private static var profanities:Object = {
          "4r5e":1,

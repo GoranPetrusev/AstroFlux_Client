@@ -204,20 +204,21 @@ package core.states.gameStates
          {
             PlayerConfig.values.barSize = 1 + hpshBarSizeSlider.value * 4;
          });
-         nMessagesInput = new InputText(currentWidth + 120, currentHeight, 40, 20);
+         nMessagesInput = new InputText(currentWidth + 256, currentHeight - 4, 40, 20);
          nMessagesInput.addEventListener("change",function(param1:Event):void
          {
             PlayerConfig.values.maxChatMessages = nMessagesInput.text;
          });
-         addInputField("Max Chat Message", nMessagesInput);
+         addInputField("Max Chat Messages", nMessagesInput);
       }
 
-      private function addInputField(str:String, field:InputText)
+      private function addInputField(str:String, field:InputText) : void
       {
          field.text = PlayerConfig.values.maxChatMessages;
-         var desc:String = new Text(currentWidth, currentHeight);
+         var desc:Text = new Text(currentWidth + 2, currentHeight);
          desc.text = str;
          addFieldRim(field);
+         addLine(desc.x + desc.width + 4, field.x - 7);
          scrollArea.addChild(desc);
          scrollArea.addChild(field);
       }
@@ -234,6 +235,69 @@ package core.states.gameStates
          scrollArea.addChild(botFill);
       }
       
+      
+      private function addCheckbox(param1:Check, param2:String) : void
+      {
+         var _loc3_:Text = new Text();
+         _loc3_.htmlText = param2;
+         _loc3_.y = currentHeight;
+         _loc3_.x = currentWidth + 2;
+         param1.x = currentWidth + 286;
+         param1.y = currentHeight - 4;
+         param1.useHandCursor = true;
+         addLine(_loc3_.x + _loc3_.width + 4, param1.x - 7);
+         scrollArea.addChild(_loc3_);
+         scrollArea.addChild(param1);
+         currentHeight += 30;
+      }
+
+      private function addLine(start:int, end:int) : void
+      {
+         var line:Line = new Line();
+         line.x = start;
+         line.y = currentHeight + 10;
+         line.lineTo(end,currentHeight + 10);
+         line.thickness = 3;
+         line.color = 3684408;
+         scrollArea.addChild(line);
+      }
+      
+      private function addHeader(param1:String) : void
+      {
+         var head:Text = new Text(currentWidth - 8,currentHeight);
+         var line:Line = new Line();
+         head.text = param1;
+         head.size = 20;
+         head.color = 16689475;
+         line.x = head.x + head.width + 4;
+         line.y = currentHeight + 12;
+         line.lineTo(currentWidth + 310,currentHeight + 12);
+         line.thickness = 4;
+         line.color = 7039851;
+         scrollArea.addChild(head);
+         scrollArea.addChild(line);
+         currentHeight += 40;
+      }
+      
+      private function addSlider(param1:Slider, param2:Number, param3:String) : void
+      {
+         param1.minimum = 0;
+         param1.maximum = 1;
+         param1.step = 0.1;
+         param1.value = param2;
+         param1.direction = "horizontal";
+         param1.useHandCursor = true;
+         var _loc4_:Text;
+         (_loc4_ = new Text()).htmlText = param3;
+         _loc4_.y = currentHeight;
+         _loc4_.x = currentWidth + 2;
+         param1.x = currentWidth + 140;
+         param1.y = currentHeight;
+         scrollArea.addChild(_loc4_);
+         scrollArea.addChild(param1);
+         currentHeight += 30;
+      }
+
       private function addQualitySlider() : void
       {
          var labelText:Text;
@@ -285,7 +349,7 @@ package core.states.gameStates
                descText.htmlText = Localize.t("Best, AAx16");
          }
          descText.y = currentHeight;
-         descText.x = slider.x - 60;
+         descText.x = slider.x - 70;
          scrollArea.addChild(labelText);
          scrollArea.addChild(slider);
          scrollArea.addChild(descText);
@@ -326,63 +390,6 @@ package core.states.gameStates
                   descText.htmlText = Localize.t("Best, AAx16");
             }
          });
-      }
-      
-      private function addCheckbox(param1:Check, param2:String) : void
-      {
-         var _loc3_:Text = new Text();
-         _loc3_.htmlText = param2;
-         _loc3_.y = currentHeight;
-         _loc3_.x = currentWidth + 2;
-         param1.x = currentWidth + 286;
-         param1.y = currentHeight - 4;
-         param1.useHandCursor = true;
-         var _loc4_:Line = new Line();
-         _loc4_.x = _loc3_.x + _loc3_.width + 4;
-         _loc4_.y = currentHeight + 10;
-         _loc4_.lineTo(param1.x - 7,currentHeight + 10);
-         _loc4_.thickness = 3;
-         _loc4_.color = 3684408;
-         scrollArea.addChild(_loc4_);
-         scrollArea.addChild(_loc3_);
-         scrollArea.addChild(param1);
-         currentHeight += 30;
-      }
-      
-      private function addHeader(param1:String) : void
-      {
-         var head:Text = new Text(currentWidth - 8,currentHeight);
-         var line:Line = new Line();
-         head.text = param1;
-         head.size = 20;
-         head.color = 16689475;
-         line.x = head.x + head.width + 4;
-         line.y = currentHeight + 12;
-         line.lineTo(currentWidth + 310,currentHeight + 12);
-         line.thickness = 4;
-         line.color = 7039851;
-         scrollArea.addChild(head);
-         scrollArea.addChild(line);
-         currentHeight += 40;
-      }
-      
-      private function addSlider(param1:Slider, param2:Number, param3:String) : void
-      {
-         param1.minimum = 0;
-         param1.maximum = 1;
-         param1.step = 0.1;
-         param1.value = param2;
-         param1.direction = "horizontal";
-         param1.useHandCursor = true;
-         var _loc4_:Text;
-         (_loc4_ = new Text()).htmlText = param3;
-         _loc4_.y = currentHeight;
-         _loc4_.x = currentWidth + 2;
-         param1.x = currentWidth + 140;
-         param1.y = currentHeight;
-         scrollArea.addChild(_loc4_);
-         scrollArea.addChild(param1);
-         currentHeight += 30;
       }
    }
 }
