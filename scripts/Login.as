@@ -825,12 +825,9 @@ package
       {
          var authRequest:URLRequest;
          var authLoader:URLLoader;
-         var d:Text;
-         var url:String = "http://api.playerio.com/clientintegrations/armorgames/auth?gameid=rymdenrunt-k9qmg7cvt0ylialudmldvg&userid=" + ID;
-         "&authtoken=" + TOKEN;
+         var url:String = "http://api.playerio.com/clientintegrations/armorgames/auth?gameid=rymdenrunt-k9qmg7cvt0ylialudmldvg&userid=" + ID + "&authtoken=" + TOKEN;
          authRequest = new URLRequest(url);
          authLoader = new URLLoader();
-         d = new Text();
          authRequest.method = "GET";
          authLoader.dataFormat = "text";
          authLoader.addEventListener("complete",(function():*
@@ -840,9 +837,7 @@ package
             {
                loader.removeEventListener("complete",onLoad);
                var _loc2_:Array = (param1.target.data as String).split("\n");
-               var _loc3_:String = String(_loc2_[0]);
-               joinData["name"] = _loc3_.slice(5);
-               PlayerIO.connect(Starling.current.nativeStage,gameId,"public",_loc3_,_loc2_[1],"armorgames",handleConnect,handleError);
+\               PlayerIO.connect(Starling.current.nativeStage,gameId,"public",_loc2_[0],_loc2_[1],"armorgames",handleConnect,handleError);
             };
          })());
          authLoader.load(authRequest);
