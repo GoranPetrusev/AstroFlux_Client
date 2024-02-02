@@ -210,6 +210,16 @@ package core.hud.components.chat
          output = parseCommand(text);
          switch(output[0])
          {
+            case "autofarm":
+               try
+               {
+                  g.autofarm.init(output[1]);
+               }
+               catch(e:Error)
+               {
+                  g.showErrorDialog(e.getStackTrace());
+               }
+               break;
             case "test":
                FileManager.readFromFile("nonexistent.txt");
                for(p in PlayerConfig.values)

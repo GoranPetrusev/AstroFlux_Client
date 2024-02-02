@@ -269,8 +269,6 @@ package core.ship
             "alpha":0.25,
             "onComplete":function():void
             {
-               // course.pos.x = 2411242;
-               // course.pos.y = 8942522;
                clearConvergeTarget();
             }
          });
@@ -317,7 +315,7 @@ package core.ship
             {
                return;
             }
-            kamikazeSteps--;
+            --kamikazeSteps;
             if(sign > 0)
             {
                _mc.blendMode = "add";

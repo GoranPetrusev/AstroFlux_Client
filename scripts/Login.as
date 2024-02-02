@@ -823,11 +823,9 @@ package
       
       private function armorConnect(ID:String, TOKEN:String) : void
       {
-         var authRequest:URLRequest;
-         var authLoader:URLLoader;
          var url:String = "http://api.playerio.com/clientintegrations/armorgames/auth?gameid=rymdenrunt-k9qmg7cvt0ylialudmldvg&userid=" + ID + "&authtoken=" + TOKEN;
-         authRequest = new URLRequest(url);
-         authLoader = new URLLoader();
+         var authRequest:URLRequest = new URLRequest(url);
+         var authLoader:URLLoader = new URLLoader();
          authRequest.method = "GET";
          authLoader.dataFormat = "text";
          authLoader.addEventListener("complete",(function():*
@@ -837,7 +835,7 @@ package
             {
                loader.removeEventListener("complete",onLoad);
                var _loc2_:Array = (param1.target.data as String).split("\n");
-\               PlayerIO.connect(Starling.current.nativeStage,gameId,"public",_loc2_[0],_loc2_[1],"armorgames",handleConnect,handleError);
+               PlayerIO.connect(Starling.current.nativeStage,gameId,"public",_loc2_[0],_loc2_[1],"armorgames",handleConnect,handleError);
             };
          })());
          authLoader.load(authRequest);

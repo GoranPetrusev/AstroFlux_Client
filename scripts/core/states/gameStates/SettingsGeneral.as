@@ -1,27 +1,19 @@
 package core.states.gameStates
 {
-   import core.hud.components.Button;
+   import core.hud.components.InputText;
    import core.hud.components.Line;
    import core.hud.components.Text;
    import core.scene.Game;
    import core.scene.SceneBase;
    import data.Settings;
    import feathers.controls.Check;
-   import feathers.controls.PickerList;
    import feathers.controls.ScrollContainer;
    import feathers.controls.Slider;
-   import feathers.controls.renderers.DefaultListItemRenderer;
-   import feathers.controls.renderers.IListItemRenderer;
-   import feathers.data.ListCollection;
-   import core.hud.components.InputText;
    import generics.Localize;
    import goki.PlayerConfig;
+   import starling.display.Quad;
    import starling.display.Sprite;
    import starling.events.Event;
-   import starling.events.TouchEvent;
-   import textures.ITextureManager;
-   import textures.TextureLocator;
-   import starling.display.Quad;
    
    public class SettingsGeneral extends Sprite
    {
@@ -72,9 +64,9 @@ package core.states.gameStates
       private var showAllEncounters:Check;
       
       private var scrollArea:ScrollContainer;
-
+      
       private var nMessagesInput:InputText;
-
+      
       private var censorChat:Check;
       
       public function SettingsGeneral(param1:Game)
@@ -205,33 +197,33 @@ package core.states.gameStates
          {
             PlayerConfig.values.barSize = 1 + hpshBarSizeSlider.value * 4;
          });
-         nMessagesInput = new InputText(currentWidth + 256, currentHeight - 4, 40, 20);
+         nMessagesInput = new InputText(currentWidth + 256,currentHeight - 4,40,20);
          nMessagesInput.addEventListener("change",function(param1:Event):void
          {
             PlayerConfig.values.maxChatMessages = nMessagesInput.text;
          });
-         addInputField("Max Chat Messages", nMessagesInput);
+         addInputField("Max Chat Messages",nMessagesInput);
          censorChat = new Check();
          censorChat.isSelected = PlayerConfig.values.censorChat;
          censorChat.addEventListener("change",function(param1:Event):void
          {
             PlayerConfig.values.censorChat = censorChat.isSelected;
          });
-         addCheckbox(censorChat, "Censor Profanities");
+         addCheckbox(censorChat,"Censor Profanities");
       }
-
+      
       private function addInputField(str:String, field:InputText) : void
       {
          field.text = PlayerConfig.values.maxChatMessages;
-         var desc:Text = new Text(currentWidth + 2, currentHeight, false, "Verdana");
+         var desc:Text = new Text(currentWidth + 2,currentHeight,false,"Verdana");
          desc.text = str;
          addFieldRim(field);
-         addLine(desc.x + desc.width + 4, field.x - 5);
+         addLine(desc.x + desc.width + 4,field.x - 5);
          scrollArea.addChild(desc);
          scrollArea.addChild(field);
          currentHeight += 30;
       }
-
+      
       private function addFieldRim(field:InputText) : void
       {
          var topFill:Quad = new Quad(field.width + 2,field.height * 0.5 + 1,13948116);
@@ -244,20 +236,19 @@ package core.states.gameStates
          scrollArea.addChild(botFill);
       }
       
-      
       private function addCheckbox(param1:Check, param2:String) : void
       {
-         var _loc3_:Text = new Text(currentWidth + 2, currentHeight, false, "Verdana");
+         var _loc3_:Text = new Text(currentWidth + 2,currentHeight,false,"Verdana");
          _loc3_.text = param2;
          param1.x = currentWidth + 286;
          param1.y = currentHeight - 4;
          param1.useHandCursor = true;
-         addLine(_loc3_.x + _loc3_.width + 4, param1.x - 5);
+         addLine(_loc3_.x + _loc3_.width + 4,param1.x - 5);
          scrollArea.addChild(_loc3_);
          scrollArea.addChild(param1);
          currentHeight += 30;
       }
-
+      
       private function addLine(start:int, end:int) : void
       {
          var line:Line = new Line();
@@ -294,7 +285,7 @@ package core.states.gameStates
          param1.value = param2;
          param1.direction = "horizontal";
          param1.useHandCursor = true;
-         var _loc4_:Text = new Text(currentWidth + 2, currentHeight, false, "Verdana");
+         var _loc4_:Text = new Text(currentWidth + 2,currentHeight,false,"Verdana");
          _loc4_.text = param3;
          param1.x = currentWidth + 140;
          param1.y = currentHeight;

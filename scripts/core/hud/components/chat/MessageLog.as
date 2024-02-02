@@ -5,12 +5,12 @@ package core.hud.components.chat
    import core.player.Player;
    import core.scene.Game;
    import core.scene.SceneBase;
+   import goki.PlayerConfig;
    import starling.display.DisplayObjectContainer;
    import starling.events.Event;
    import starling.textures.Texture;
    import textures.ITextureManager;
    import textures.TextureLocator;
-   import goki.PlayerConfig;
    
    public class MessageLog extends DisplayObjectContainer
    {
