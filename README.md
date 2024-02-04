@@ -3,7 +3,11 @@ It's a little side project of mine where I'm aiming to reimplement all of the mo
 After 24 hours, this has grown into quite the effort. Big thanks to everyone coming in for some help. At this pace it will soon be finished.
 
 ### Currently working on
-- Quick login screen
+- Fixing bugs lmao
+
+## Known bugs
+- Quick login basically not working. It somehow logs you in to the previously selected account no matter if you clear the fields or not
+- Armor games login broken :sob:
 
 ### ToDo
 - [x] MAKE KONGREGATE ACCOUNTS WORK ON DEKSTOP VERSION
