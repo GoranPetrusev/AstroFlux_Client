@@ -58,6 +58,7 @@ package
    import starling.text.TextField;
    import starling.text.TextFormat;
    import starling.textures.Texture;
+   import core.login.AccountEdit;
    import starling.utils.AssetManager;
    import startSetup.IStartSetup;
    import startSetup.StartSetup;
@@ -219,9 +220,11 @@ package
       private var effectTweens:Vector.<TweenMax>;
       
       private var accountsButton:LoginButton;
-
+      
       private var accountsDialog:AccountsDialog;
-            
+
+      private var editDialog:AccountEdit;
+      
       public function Login()
       {
          bar2 = "Verdana_ttf$767177d9989c7323c60db8a483bd906b-639850078";
@@ -382,6 +385,7 @@ package
             registerForm();
             addExitButton();
             addAccountsButton();
+            editForm();
             accountForm();
          }
          else if(RymdenRunt.parameters.fb_access_token)
@@ -437,6 +441,7 @@ package
             loginForm();
             recoverForm();
             registerForm();
+            editForm();
             accountForm();
          }
          Game.trackPageView("preload");
@@ -526,6 +531,11 @@ package
          {
             accountsDialog.x = stage.stageWidth / 2 - accountsDialog.width / 2;
             accountsDialog.y = logoContainer.y + logoContainer.height + 80 + _loc1_;
+         }
+         if(editDialog)
+         {
+            editDialog.x = stage.stageWidth / 2 - editDialog.width / 2;
+            editDialog.y = logoContainer.y + logoContainer.height + 80 + _loc1_;
          }
       }
       
@@ -639,11 +649,18 @@ package
       
       private function accountForm() : void
       {
-         accountsDialog = new AccountsDialog();
+         accountsDialog = new AccountsDialog(this);
          accountsDialog.visible = false;
          addChild(accountsDialog);
       }
       
+      private function editForm() : void
+      {
+         editDialog = new AccountEdit(this);
+         editDialog.visible = false;
+         addChild(editDialog);
+      }
+
       private function onRecoverTouch(param1:TouchEvent) : void
       {
          if(param1.getTouch(this,"ended"))
@@ -681,7 +698,14 @@ package
       {
          accountsButton = new LoginButton("accounts",function():void
          {
-            toggleLogin();
+            if(currentState == "accounts" || currentState == "edit")
+            {
+               setState("site");
+            }
+            else
+            {
+               setState("accounts");
+            }
          },16777215,4871260);
          addChild(accountsButton);
       }
@@ -703,6 +727,14 @@ package
          {
             recoverDialog.visible = true;
          }
+         else if(param1 === "edit")
+         {
+            editDialog.visible = true;
+         }
+         else if(param1 === "accounts")
+         {
+            accountsDialog.visible = true;
+         }
       }
       
       private function hideLogin() : void
@@ -710,32 +742,10 @@ package
          recoverDialog.visible = false;
          registerDialog.visible = false;
          loginContainer.visible = false;
+         accountsDialog.visible = false;
+         editDialog.visible = false;
       }
-      
-      private function toggleLogin() : void
-      {
-         switch(currentState)
-         {
-            case "site":
-               loginContainer.visible = false;
-               accountsDialog.visible = true;
-               currentState = "accounts"
-               break;
-            case "accounts":
-               loginContainer.visible = true;
-               accountsDialog.visible = false;
-               currentState = "site"
-               break;
-            default:
-               recoverDialog.visible = false;
-               registerDialog.visible = false;
-               loginContainer.visible = true;
-               accountsDialog.visible = false;
-               currentState = "site"
-               break;
-         }
-      }
-      
+            
       private function handleLoginError(param1:PlayerIOError) : void
       {
          if(param1.message.indexOf("password") != -1)
