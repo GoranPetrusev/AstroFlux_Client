@@ -221,7 +221,7 @@ package
       
       private var accountsButton:LoginButton;
       
-      private var accountsDialog:AccountsDialog;
+      public var accountsDialog:AccountsDialog;
 
       public var editDialog:AccountEdit;
       
