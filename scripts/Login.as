@@ -15,6 +15,7 @@ package
    import core.hud.components.SaleSticker;
    import core.hud.components.Text;
    import core.hud.components.dialogs.PopupMessage;
+   import core.login.AccountsDialog;
    import core.login.ConnectEvent;
    import core.login.ConnectStatus;
    import core.login.GuestName;
@@ -174,6 +175,8 @@ package
       private var registerDialog:RegisterDialog2;
       
       private var recoverDialog:RecoverDialog;
+      
+      private var acccountsDialog:AccountsDialog;
       
       private var exitButton:LoginButton;
       
@@ -629,6 +632,7 @@ package
       
       private function accountForm() : void
       {
+         accountsDialog = new AccountsDialog();
       }
       
       private function onRecoverTouch(param1:TouchEvent) : void
