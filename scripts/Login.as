@@ -619,11 +619,15 @@ package
          {
             passwordInput.input.setFocus();
          }
-         quickLoginUsers = getQuickLoginUsers();
          btnPos = recover.y + recover.height + 4;
-         for each(user in quickLoginUsers)
+         for(var user in QuickloginAccounts.accounts)
          {
-            btn = new LoginButton(user.Name,handleQuickLogin(user));
+            btn = new LoginButton(user,function():void
+            {
+               emailInput.text = QuickloginAccounts.accounts[user][0];
+               passwordInput.text = QuickloginAccounts.accounts[user][1];
+               onConnectSimple();
+            });
             btn.x = loginContainer.x + loginContainer.width / 2 - loginContainer.width / 4;
             btn.y = btnPos;
             btnPos += loginButton.height + 4;
@@ -632,28 +636,7 @@ package
             loginContainer.addChild(btn);
          }
       }
-      
-      private function handleQuickLogin(user:Object) : Function
-      {
-         return function():void
-         {
-            emailInput.text = user.Email;
-            passwordInput.text = user.Password;
-            onConnectSimple();
-         };
-      }
-      
-      private function getQuickLoginUsers() : Array
-      {
-         var userArray:Array = [];
-         userArray.push({
-            "Name":"Example",
-            "Email":"user_email@example.com",
-            "Password":"1234"
-         });
-         return userArray;
-      }
-      
+               
       private function accountForm() : void
       {
          accountsDialog = new AccountsDialog(this);
