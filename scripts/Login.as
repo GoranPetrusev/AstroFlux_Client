@@ -67,6 +67,9 @@ package
    import startSetup.StartSetupLocator;
    import textures.TextureLocator;
    import textures.TextureManager;
+   import feathers.controls.ScrollContainer;
+   import feathers.layout.VerticalLayout;
+
    
    public class Login extends Sprite
    {
@@ -225,6 +228,8 @@ package
       public var accountsDialog:AccountsDialog;
 
       public var editDialog:AccountEdit;
+
+      public var accsContainer:ScrollContainer;
       
       public function Login()
       {
@@ -574,8 +579,6 @@ package
          var loginFB:ImageButton;
          var recover:TextField;
          var btn:LoginButton;
-         var btnPos:int;
-         var user:Object;
          Localize.setLocale(RymdenRunt.parameters.querystring_locale);
          loginContainer = new Sprite();
          addChild(loginContainer);
@@ -619,7 +622,20 @@ package
          {
             passwordInput.input.setFocus();
          }
-         btnPos = recover.y + recover.height + 4;
+         accsContainer = new ScrollContainer();
+         var layout = new VerticalLayout();
+         layout.gap = 8;
+         accsContainer.layout = layout;
+         accsContainer.height = 300;
+         accsContainer.x = loginContainer.width/2 - loginContainer.width/4;
+         accsContainer.y = recover.y + recover.height + 4;
+         updateAccounts();
+         loginContainer.addChild(accsContainer);
+      }
+
+      private function updateAccounts() : void
+      {
+         accsContainer.removeChildren(0,-1,true);
          for(var user in QuickloginAccounts.accounts)
          {
             btn = new LoginButton(user,function():void
@@ -628,12 +644,7 @@ package
                passwordInput.text = QuickloginAccounts.accounts[user][1];
                onConnectSimple();
             });
-            btn.x = loginContainer.x + loginContainer.width / 2 - loginContainer.width / 4;
-            btn.y = btnPos;
-            btnPos += loginButton.height + 4;
-            btn.width = loginContainer.width / 2;
-            btn.height = loginButton.height;
-            loginContainer.addChild(btn);
+            accsContainer.addChild(btn);
          }
       }
                
@@ -690,6 +701,7 @@ package
          {
             if(currentState == "accounts" || currentState == "edit")
             {
+               updateAccounts();
                setState("site");
             }
             else
