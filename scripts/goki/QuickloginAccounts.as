@@ -5,7 +5,10 @@ package goki
       
       private static const _filePath:String = "QuickloginAccounts.txt";
       
-      public static var accounts:Object = {}
+      public static var accounts:Object = {
+         "Pancake":["youthought@lmao.com","cmontryit:P"],
+         "Example":["example123@somethis.com","pass"]
+      }
        
       
       public function QuickloginAccounts()

@@ -223,7 +223,7 @@ package
       
       private var accountsDialog:AccountsDialog;
 
-      private var editDialog:AccountEdit;
+      public var editDialog:AccountEdit;
       
       public function Login()
       {
@@ -532,10 +532,15 @@ package
             accountsDialog.x = stage.stageWidth / 2 - accountsDialog.width / 2;
             accountsDialog.y = logoContainer.y + logoContainer.height + 80 + _loc1_;
          }
+         centerEditDialog();
+      }
+
+      private function centerEditDialog() : void
+      {
          if(editDialog)
          {
             editDialog.x = stage.stageWidth / 2 - editDialog.width / 2;
-            editDialog.y = logoContainer.y + logoContainer.height + 80 + _loc1_;
+            editDialog.y = logoContainer.y + logoContainer.height + 120;
          }
       }
       
@@ -730,6 +735,7 @@ package
          else if(param1 === "edit")
          {
             editDialog.visible = true;
+            centerEditDialog();
          }
          else if(param1 === "accounts")
          {

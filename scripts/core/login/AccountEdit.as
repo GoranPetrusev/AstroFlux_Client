@@ -17,18 +17,20 @@ package core.login
 
         private var cancelButton:LoginButton;
 
-        public function AccountEdit(param1:Login)
+        public function AccountEdit(login:Login, name:String = "", email:String = "", pass:String = "")
         {
             super();
-            var login:Login = param1;
             nameInput = new LoginInput("Name");
+            nameInput.text = name;
             addChild(nameInput);
             emailInput = new LoginInput("Email / UserID");
             emailInput.setPrevious(nameInput);
+            emailInput.text = email;
             addChild(emailInput);
             passwordInput = new LoginInput("Password / Auth Token");
             passwordInput.setPrevious(emailInput);
             passwordInput.input.displayAsPassword = true;
+            passwordInput.text = pass;
             addChild(passwordInput);
 
             saveButton = new LoginButton("Save", null);
@@ -39,9 +41,8 @@ package core.login
                 login.setState("accounts");
             });
             cancelButton.y = saveButton.y;
-            cancelButton.x = passwordInput.width/2 + cancelButton.width + 5;
+            cancelButton.x = passwordInput.width/2 + 5;
             addChild(cancelButton);
         }
-
     }
 }

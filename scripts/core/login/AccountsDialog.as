@@ -19,18 +19,21 @@ package core.login
 
       private var addButton:LoginButton;
 
+      private var login:Login
+
       public function AccountsDialog(param1:Login)
       {
-         var login:Login = param1;
          super();
+         login = param1;
          width = 360;
          height = 340;
-         initComponents(login);
+         initComponents();
       }
 
-      private function initComponents(login:Login) : void
+      private function initComponents() : void
       {
-         addButton = new LoginButton("add",function():void{
+         addButton = new LoginButton("add",function():void
+         {
             login.setState("edit");
          });
          addButton.x = width/2 - addButton.width/2;
@@ -43,11 +46,9 @@ package core.login
 
       private function populateContainer() : void
       {
-         var i:int = 0;
-         while(i <= 20)
+         for(var acc in QuickloginAccounts.accounts)
          {
-            addAccountEntry("test");
-            i++;
+            addAccountEntry(acc);
          }
       }
 
@@ -58,7 +59,7 @@ package core.login
          background.alpha = 0.5;
          c.addChild(background);
          var name:Text = new Text();
-         name.text = "DEBUG " + s;
+         name.text = s;
          name.size = 16;
          name.y = background.height/2 - name.height/2 + 3;
          name.x = 5;
@@ -68,7 +69,14 @@ package core.login
          deleteButton.y = background.height/2 - deleteButton.height/2;
          deleteButton.enabled = true;
          c.addChild(deleteButton);
-         var editButton:Button = new Button(null, "edit");
+         var editButton:Button = new Button(function():void
+         {
+            login.removeChild(login.editDialog);
+            login.editDialog = new AccountEdit(login, "name", "QuickloginAccounts.accounts[name][0]", "QuickloginAccounts.accounts[name][1]");
+            login.addChild(login.editDialog);
+            login.setState("edit");
+            editButton.enabled = true;
+         }, "edit");
          editButton.x = accountsContainer.width - editButton.width - deleteButton.width - 10;
          editButton.y = background.height/2 - editButton.height/2;
          editButton.enabled = true;
