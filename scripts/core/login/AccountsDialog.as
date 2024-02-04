@@ -36,6 +36,9 @@ package core.login
       {
          addButton = new LoginButton("add",function():void
          {
+            login.removeChild(login.editDialog);
+            login.editDialog = new AccountEdit(login);
+            login.addChild(login.editDialog);
             login.setState("edit");
          });
          addButton.x = width / 2 - addButton.width / 2;
@@ -78,6 +81,7 @@ package core.login
          deleteButton = new Button(function():void
          {
             QuickloginAccounts.removeAccount(s);
+            QuickloginAccounts.saveConfig();
             repopulateContainer();
          },"delete","negative");
          deleteButton.x = accountsContainer.width - deleteButton.width - 5;

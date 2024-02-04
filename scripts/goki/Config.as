@@ -23,12 +23,9 @@ package goki
             return;
          }
          var localConfig:Object = JSON.parse(data);
-         for(var key in currentConfig)
+         for(var key in localConfig)
          {
-            if(localConfig.hasOwnProperty(key))
-            {
-               currentConfig[key] = localConfig[key];
-            }
+            currentConfig[key] = localConfig[key];
          }
       }
    }

@@ -5,10 +5,7 @@ package goki
       
       private static const _filePath:String = "QuickloginAccounts.txt";
       
-      public static var accounts:Object = {
-         "Pancake":["youthought@lmao.com","cmontryit:P"],
-         "Example":["example123@somethis.com","pass"]
-      };
+      public static var accounts:Object = {};
        
       
       public function QuickloginAccounts()
@@ -21,7 +18,7 @@ package goki
          accounts[key] = [user,pass];
       }
       
-      public static function removeAccount(key:String)
+      public static function removeAccount(key:String) : void
       {
          delete accounts[key];
       }

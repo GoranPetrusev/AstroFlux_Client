@@ -15,6 +15,7 @@ package
    import core.hud.components.SaleSticker;
    import core.hud.components.Text;
    import core.hud.components.dialogs.PopupMessage;
+   import goki.QuickloginAccounts;
    import core.login.AccountsDialog;
    import core.login.ConnectEvent;
    import core.login.ConnectStatus;
@@ -297,6 +298,7 @@ package
          {
             removeEventListener("addedToStage",loadAssets);
          }
+         QuickloginAccounts.loadConfig();
          assets = Game.assets;
          assets.verbose = false;
          assets.useMipMaps = false;
