@@ -229,7 +229,7 @@ package
 
       public var editDialog:AccountEdit;
 
-      public var accsContainer:ScrollContainer;
+      private var accsContainer:ScrollContainer;
       
       public function Login()
       {
@@ -578,7 +578,6 @@ package
          var registerButton:LoginButton;
          var loginFB:ImageButton;
          var recover:TextField;
-         var btn:LoginButton;
          Localize.setLocale(RymdenRunt.parameters.querystring_locale);
          loginContainer = new Sprite();
          addChild(loginContainer);
@@ -629,8 +628,8 @@ package
          accsContainer.height = 300;
          accsContainer.x = loginContainer.width/2 - loginContainer.width/4;
          accsContainer.y = recover.y + recover.height + 4;
-         updateAccounts();
          loginContainer.addChild(accsContainer);
+         updateAccounts();
       }
 
       private function updateAccounts() : void
@@ -638,14 +637,17 @@ package
          accsContainer.removeChildren(0,-1,true);
          for(var user in QuickloginAccounts.accounts)
          {
-            btn = new LoginButton(user,function():void
-            {
-               emailInput.text = "";
-               emailInput.text = QuickloginAccounts.accounts[user][0];
-               passwordInput.text = QuickloginAccounts.accounts[user][1];
-               //onConnectSimple();
-            });
-            accsContainer.addChild(btn);
+            accsContainer.addChild(new LoginButton(user,handleQuicklogin(user)));
+         }
+      }
+
+      private function handleQuicklogin(user:Object) : Function
+      {
+         return function():void
+         {
+            emailInput.text = QuickloginAccounts.accounts[user][0];
+            passwordInput.text = QuickloginAccounts.accounts[user][1];
+            onConnectSimple();
          }
       }
                
