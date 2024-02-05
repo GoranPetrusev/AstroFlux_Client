@@ -640,9 +640,10 @@ package
          {
             btn = new LoginButton(user,function():void
             {
+               emailInput.text = "";
                emailInput.text = QuickloginAccounts.accounts[user][0];
                passwordInput.text = QuickloginAccounts.accounts[user][1];
-               onConnectSimple();
+               //onConnectSimple();
             });
             accsContainer.addChild(btn);
          }
@@ -869,7 +870,7 @@ package
             var onLoad:Function;
             return onLoad = function(param1:flash.events.Event):void
             {
-               loader.removeEventListener("complete",onLoad);
+               authLoader.removeEventListener("complete",onLoad);
                var _loc2_:Array = (param1.target.data as String).split("\n");
                PlayerIO.connect(Starling.current.nativeStage,gameId,"public",_loc2_[0],_loc2_[1],"armorgames",handleConnect,handleError);
             };
