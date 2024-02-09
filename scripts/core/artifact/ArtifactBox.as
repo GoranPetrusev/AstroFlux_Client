@@ -155,9 +155,13 @@ package core.artifact
             _loc2_ += "Upgrading: " + Util.getFormattedTime(a.upgradeTime - g.time) + "<br>";
          }
          _loc2_ = _loc2_ + "Fitness " + a.fitness + "<br>";
+         var lineNumber:int = 0;
          for each(var _loc1_ in a.stats)
          {
-            _loc2_ += ArtifactStat.parseTextFromStatType(_loc1_.type,_loc1_.value) + "<br>";
+            var distribution:Number = ArtifactStat.statDistribution(_loc1_.type, _loc1_.value, a.stats.length, lineNumber, a.level).toFixed(2);
+            var sign:String = distribution >= 0 ? "+" : ""
+            _loc2_ += ArtifactStat.parseTextFromStatType(_loc1_.type,_loc1_.value) + "  " + sign + distribution + " str<br>";
+            lineNumber++;
          }
          toolTip.text = _loc2_;
          toolTip.color = a.getColor();

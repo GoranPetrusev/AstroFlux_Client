@@ -3,11 +3,7 @@ It's a little side project of mine where I'm aiming to reimplement all of the mo
 After 24 hours, this has grown into quite the effort. Big thanks to everyone coming in for some help. At this pace it will soon be finished.
 
 ### Currently working on
-- Fixing bugs lmao
-
-## Known bugs
-- Quick login basically not working. It somehow logs you in to the previously selected account no matter if you clear the fields or not
-- Armor games login broken :sob:
+- Crew autotrain
 
 ### ToDo
 - [x] MAKE KONGREGATE ACCOUNTS WORK ON DEKSTOP VERSION
@@ -15,6 +11,7 @@ After 24 hours, this has grown into quite the effort. Big thanks to everyone com
 - [x] Improve PlayerConfig save/load
 - [x] Improve FileManager save/read
 - [x] Fitness
+- [x] Stat distribution in Artifact tooltip
 - [ ] Fitness sort in arts menu
 - [x] Fitness Config Menu
 - [ ] Fitness buffed by multiple equal lines
@@ -50,3 +47,10 @@ After 24 hours, this has grown into quite the effort. Big thanks to everyone com
 - Refactor welcome text base class for future use
 - Updating feature
 - Why the hell is text so broken in this game? It has weird offsets and relations to the camera... look into it
+
+Stat Distribution Color Coding
+57bb8a
+abc978
+ffd666
+f3a96d
+e67c73

@@ -2,6 +2,7 @@ package core.artifact
 {
    import generics.Localize;
    import goki.FitnessConfig;
+   import core.hud.components.chat.MessageLog;
    
    public class ArtifactStat
    {
@@ -154,7 +155,7 @@ package core.artifact
             case "energyResist":
                return _loc3_ + param2.toFixed(1) + "% " + Localize.t("energy resist");
             case "kineticResist":
-               return param2.toFixed(1) + "% " + Localize.t("kinetic resist");
+               return _loc3_ + param2.toFixed(1) + "% " + Localize.t("kinetic resist");
             case "allResist":
                return _loc3_ + param2.toFixed(1) + "% " + Localize.t("all resist");
             case "allAdd":
@@ -172,19 +173,9 @@ package core.artifact
             case "refire3":
                return _loc3_ + (0.30000000000000004 * param2).toFixed(1) + "% " + Localize.t("attack speed");
             case "convHp":
-               if(0.1 * param2 > 100)
-               {
-                  return "-100% " + Localize.t("hp to 150% shield");
-               }
                return _loc3_ + (0.1 * param2).toFixed(1) + "% " + Localize.t("hp to 150% shield");
-               break;
             case "convShield":
-               if(0.1 * param2 > 100)
-               {
-                  return "-100% " + Localize.t("shield to 150% hp");
-               }
                return _loc3_ + (0.1 * param2).toFixed(1) + "% " + Localize.t("shield to 150% hp");
-               break;
             case "powerReg":
             case "powerReg2":
             case "powerReg3":
@@ -198,6 +189,11 @@ package core.artifact
             default:
                return "ERROR - artifact not found";
          }
+      }
+
+      public static function statDistribution(statType:String, statValue:Number, lines:int, lineNumber:int, str:int) : Number
+      {
+         return str - (statValue * FitnessConfig.statDistribution[statType][2] - FitnessConfig.statDistribution[statType][1] * FitnessConfig.lineDistribution[lines.toString()][lineNumber]) / FitnessConfig.statDistribution[statType][0] / FitnessConfig.lineDistribution[lines.toString()][lineNumber];
       }
       
       public function get statFitness() : Number

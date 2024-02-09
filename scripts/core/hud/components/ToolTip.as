@@ -36,7 +36,7 @@ package core.hud.components
       
       public var type:String;
       
-      public function ToolTip(param1:SceneBase, param2:DisplayObject, param3:String, param4:Array = null, param5:String = "", param6:int = 200)
+      public function ToolTip(param1:SceneBase, param2:DisplayObject, param3:String, param4:Array = null, param5:String = "", param6:int = 400)
       {
          super();
          g = param1;
