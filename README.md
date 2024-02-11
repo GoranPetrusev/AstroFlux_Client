@@ -3,7 +3,7 @@ It's a little side project of mine where I'm aiming to reimplement all of the mo
 After 24 hours, this has grown into quite the effort. Big thanks to everyone coming in for some help. At this pace it will soon be finished.
 
 ### Currently working on
-- Crew autotrain
+- Stacking
 
 ### ToDo
 - [x] MAKE KONGREGATE ACCOUNTS WORK ON DEKSTOP VERSION
@@ -22,7 +22,8 @@ After 24 hours, this has grown into quite the effort. Big thanks to everyone com
 - [x] Progress mode in encounter menu
 - [ ] Encouter xp to encounter menu
 - [ ] Variable crew member skill point usage
-- [ ] Art upgrade prediction
+- [x] Crew Autotrain
+- [x] Art upgrade prediction
 - [x] Modifiable hp/sh bar and dmg text size
 - [x] Reposition welcome text
 - [x] Increase FPS cap on warp menu 30 -> 60

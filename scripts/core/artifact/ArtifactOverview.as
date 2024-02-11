@@ -36,7 +36,8 @@ package core.artifact
    import starling.text.TextFormat;
    import textures.ITextureManager;
    import textures.TextureLocator;
-   
+   import core.hud.components.chat.MessageLog;
+
    public class ArtifactOverview extends Sprite
    {
       
@@ -112,6 +113,10 @@ package core.artifact
       private var selectedCrewMember:CrewDisplayBoxNew;
       
       private var purifyButton:Button;
+
+      private var autoTrainButton:Button;
+
+      private var isAutoTrainOn:Boolean;
       
       public function ArtifactOverview(param1:Game)
       {
@@ -122,6 +127,7 @@ package core.artifact
          super();
          this.g = param1;
          this.p = param1.me;
+         this.isAutoTrainOn = false;
          addEventListener("artifactSelected",onSelect);
          addEventListener("artifactRecycleSelected",onRecycleSelect);
          addEventListener("artifactUpgradeSelected",onUpgradeSelect);
@@ -256,6 +262,11 @@ package core.artifact
          upgradeButton.visible = false;
          upgradeButton.enabled = false;
          addChild(upgradeButton);
+         autoTrainButton = new Button(autoTrain, "Auto Train");
+         autoTrainButton.x = upgradeButton.x - autoTrainButton.width - 10;
+         autoTrainButton.y = 480;
+         autoTrainButton.visible = false;
+         addChild(autoTrainButton);
          crewContainer = new Sprite();
          crewContainer.x = 390;
          crewContainer.y = 100;
@@ -983,6 +994,7 @@ package core.artifact
          upgradeButton.visible = !upgradeButton.visible;
          purifyButton.visible = !purifyButton.visible;
          toggleUpgradeButton.enabled = toggleUpgradeButton.visible;
+         autoTrainButton.visible = !autoTrainButton.visible;
          cancelUpgradeButton.enabled = cancelUpgradeButton.visible;
          crewContainer.visible = !crewContainer.visible;
          upgradeButton.enabled = false;
@@ -1232,7 +1244,7 @@ package core.artifact
          g.showConfirmDialog(Localize.t("The upgrade will be finished in") + ": \n\n<font color=\'#ffaa88\'>" + Util.getFormattedTime(_loc4_) + "</font>",confirmUpgrade);
          upgradeButton.enabled = true;
       }
-      
+
       private function confirmUpgrade() : void
       {
          if(selectedUpgradeBox == null)
@@ -1267,7 +1279,7 @@ package core.artifact
          }
          else if(param1.length > 1)
          {
-            g.showErrorDialog(param1.getString(1));
+            g.showErrorDialog(param1.toString());
          }
          selectedUpgradeBox.touchable = true;
          selectedCrewMember.touchable = true;
@@ -1357,7 +1369,10 @@ package core.artifact
                a.upgraded += 1;
                a.upgrading = false;
                container = new Sprite();
-               g.addChildToOverlay(container);
+               if(!isAutoTrainOn)
+               {
+                  g.addChildToOverlay(container);
+               }
                overlay = new Quad(g.stage.stageWidth,g.stage.stageHeight,0);
                overlay.alpha = 0.4;
                container.addChild(overlay);
@@ -1457,6 +1472,13 @@ package core.artifact
                   }
                }
                reloadStats();
+               if(isAutoTrainOn)
+               {
+                  if(finishedCallback != null)
+                  {
+                     finishedCallback();
+                  }
+               }
             });
          }
          else
@@ -1471,6 +1493,10 @@ package core.artifact
             }
          }
          selectedUpgradeBox = null;
+         if(isAutoTrainOn)
+         {
+            runAutoTrain();
+         }
       }
       
       private function purifyArts(param1:TouchEvent = null) : void
@@ -1491,6 +1517,53 @@ package core.artifact
          }
          onRecycle(null);
          purifyButton.enabled = true;
+         toggleRecycle();
+      }
+
+      private function autoTrain(param1:TouchEvent = null) : void
+      {
+         autoTrainButton.enabled = true;
+         if (isAutoTrainOn)
+         {
+            g.showErrorDialog("Auto Train is already on. If you wish to turn it off just close the arts menu.");
+            return;
+         }
+         runAutoTrain();
+         isAutoTrainOn = true;
+      }
+
+      private function runAutoTrain(depth:int = 0) : void
+      {
+         if(depth >= p.crewMembers.length)
+         {
+            return;
+         }
+
+         if(p.crewMembers[depth].isUpgrading)
+         {
+            TweenMax.delayedCall(3, function():void
+            {
+               runAutoTrain(depth + 1);
+            });
+            return;
+         }
+
+         for each(var artBox in cargoBoxes)
+         {
+            if(artBox.a != null && !artBox.a.revealed && artBox.a.levelPotential <= 10 && artBox.a.upgraded <= 3)
+            {
+               selectedUpgradeBox = artBox;
+               selectedCrewMember = new CrewDisplayBoxNew(g, p.crewMembers[depth], 2);
+               confirmUpgrade();
+
+               TweenMax.delayedCall(3, function():void
+               {
+                  runAutoTrain(depth + 1);
+               });
+
+               return;
+            }
+         }
       }
    }
 }
