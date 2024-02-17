@@ -661,7 +661,10 @@ package core.scene
             send("segment","campaign: " + RymdenRunt.parameters.querystring_c);
          }
          lastActive = new Date().time;
-         disconnectIfInactive();
+         if(!PlayerConfig.values.dontKick)
+         {
+            disconnectIfInactive();
+         }
          addEventListener("enterFrame",update);
          initTrackFPS();
          startSystemMusic();

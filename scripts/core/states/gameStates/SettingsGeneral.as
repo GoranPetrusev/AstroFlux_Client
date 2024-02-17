@@ -68,6 +68,8 @@ package core.states.gameStates
       private var nMessagesInput:InputText;
       
       private var censorChat:Check;
+
+      private var dontKick:Check;
       
       public function SettingsGeneral(param1:Game)
       {
@@ -210,6 +212,13 @@ package core.states.gameStates
             PlayerConfig.values.censorChat = censorChat.isSelected;
          });
          addCheckbox(censorChat,"Censor Profanities");
+         dontKick = new Check();
+         dontKick.isSelected = PlayerConfig.values.dontKick;
+         dontKick.addEventListener("change",function(param1:Event):void
+         {
+            PlayerConfig.values.dontKick = dontKick.isSelected;
+         });
+         addCheckbox(dontKick, "Don't Kick");
       }
       
       private function addInputField(str:String, field:InputText) : void

@@ -14,7 +14,8 @@ package goki
          "barSize":"1.0",
          "barAlwaysShow":false,
          "maxChatMessages":"100",
-         "censorChat":false
+         "censorChat":false,
+         "dontKick":false
       };
        
       
