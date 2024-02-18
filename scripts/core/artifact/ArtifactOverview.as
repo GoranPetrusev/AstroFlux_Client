@@ -1517,7 +1517,6 @@ package core.artifact
          }
          onRecycle(null);
          purifyButton.enabled = true;
-         toggleRecycle();
       }
 
       private function autoTrain(param1:TouchEvent = null) : void

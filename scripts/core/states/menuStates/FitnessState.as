@@ -171,8 +171,8 @@ package core.states.menuStates
          addFitnessWeight("All Multi",allMulti,"allMulti");
          addFitnessWeight("Speed",speed,"speed");
          addFitnessWeight("Refire",refire,"refire");
-         addFitnessWeight("Conv HP",convHp,"convHp");
-         addFitnessWeight("Conv Shield",convShield,"convShield");
+         addFitnessWeight("Health to Shield",convHp,"convHp");
+         addFitnessWeight("Shield to Health",convShield,"convShield");
          addFitnessWeight("Power Reg",powerReg,"powerReg");
          addFitnessWeight("Power Max",powerMax,"powerMax");
          addFitnessWeight("Cooldown",cooldown,"cooldown");

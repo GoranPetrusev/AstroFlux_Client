@@ -3,6 +3,7 @@ package core.artifact
    import generics.Localize;
    import goki.FitnessConfig;
    import core.hud.components.chat.MessageLog;
+   import flash.utils;
    
    public class ArtifactStat
    {
@@ -22,7 +23,7 @@ package core.artifact
       public static function parseTextFromStatType(param1:String, param2:Number) : String
       {
          var _loc3_:String = "<FONT COLOR=\'#ffffff\'>";
-         var _loc4_:String = "</FONT>";
+         var _loc4_:String = "</FONT>";   
          var modifier:String = param1 == "refire" ? " (s)" : "";
          modifier += param1.indexOf("2") != -1 && param1 != "refier2" ? " (s)" : "";
          modifier += param1.indexOf("3") != -1 ? " (e)" : "";
@@ -260,8 +261,9 @@ package core.artifact
             case "refire3":
                return 0.3 * 1.298 * FitnessConfig.values.refire * this.value;
             case "convHp":
+               return 0.1 * 0.5 * FitnessConfig.values.convHp * clamp(this.value, 0, 990);
             case "convShield":
-               return 0.1 * 0.5 * FitnessConfig.values.convHp * this.value;
+               return 0.1 * 0.5 * FitnessConfig.values.convShield * clamp(this.value, 0, 990);
             case "powerReg":
             case "powerReg2":
             case "powerReg3":
@@ -275,6 +277,11 @@ package core.artifact
             default:
                return 0;
          }
+      }
+
+      private function clamp(val:Number, min:Number, max:Number) : Number
+      {
+         return Math.max(Math.min(val, max), min);
       }
    }
 }

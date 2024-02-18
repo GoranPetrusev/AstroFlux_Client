@@ -230,6 +230,8 @@ package
       public var editDialog:AccountEdit;
 
       private var accsContainer:ScrollContainer;
+
+      private var connectSteamButton:LoginButton;
       
       public function Login()
       {
@@ -378,13 +380,7 @@ package
          connectStatus.y = 290;
          container.addChild(connectStatus);
          FocusManager.setEnabledForStage(stage,true);
-         if(RymdenRunt.isDesktop && RymdenRunt.info.origin == "steam")
-         {
-            currentState = "steam";
-            connectSteam();
-            addExitButton();
-         }
-         else if(RymdenRunt.isDesktop && RymdenRunt.info.origin == "desktop")
+         if(RymdenRunt.isDesktop && RymdenRunt.info.origin == "desktop" || RymdenRunt.info.origin == "steam")
          {
             currentState = "site";
             loginForm();
@@ -394,6 +390,12 @@ package
             addAccountsButton();
             editForm();
             accountForm();
+         }
+         else if(RymdenRunt.isDesktop && RymdenRunt.info.origin == "steam")
+         {
+            currentState = "steam";
+            connectSteam();
+            addExitButton();
          }
          else if(RymdenRunt.parameters.fb_access_token)
          {
@@ -448,6 +450,7 @@ package
             loginForm();
             recoverForm();
             registerForm();
+            addAccountsButton();
             editForm();
             accountForm();
          }
@@ -621,13 +624,22 @@ package
          {
             passwordInput.input.setFocus();
          }
+         var posY:int = recover.y + recover.height + 4;
+         if(RymdenRunt.info.origin == "steam")
+         {
+            connectSteamButton = new LoginButton("Steam", connectSteam);
+            connectSteamButton.x = loginContainer.width/2 - loginContainer.width/4;
+            connectSteamButton.y = posY;
+            posY += connectSteamButton.height + 8;
+            loginContainer.addChild(connectSteamButton);
+         }
          accsContainer = new ScrollContainer();
          var layout = new VerticalLayout();
          layout.gap = 8;
          accsContainer.layout = layout;
-         accsContainer.height = 300;
+         accsContainer.height = 250;
          accsContainer.x = loginContainer.width/2 - loginContainer.width/4;
-         accsContainer.y = recover.y + recover.height + 4;
+         accsContainer.y = posY;
          loginContainer.addChild(accsContainer);
          updateAccounts();
       }
@@ -1035,6 +1047,7 @@ package
       
       private function connectSteam() : void
       {
+         hideLogin();
          updateStatus(Localize.t("Connecting to") + " Steam");
          try
          {
