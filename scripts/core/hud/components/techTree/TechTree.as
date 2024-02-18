@@ -1005,7 +1005,7 @@ package core.hud.components.techTree
                   ts.addEliteTechData(eliteTech,level);
                   eliteTechSelectedForUpgrade.update(level);
                }
-               tween = TweenMax.from(eti,1,{
+               tween = TweenMax.from(eti,0.25,{
                   "scaleX":3,
                   "scaleY":3,
                   "rotation":3.141592653589793 * 8,
@@ -1069,7 +1069,7 @@ package core.hud.components.techTree
             {
                var tween:TweenMax;
                upgradeInfo.visible = false;
-               tween = TweenMax.from(techSelectedForUpgrade,1,{
+               tween = TweenMax.from(techSelectedForUpgrade,0.25,{
                   "scaleX":3,
                   "scaleY":3,
                   "rotation":3.141592653589793 * 8,
