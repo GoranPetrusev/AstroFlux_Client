@@ -200,9 +200,8 @@ package core.hud.components.chat
          var output:Vector.<String>;
          var tmp:Array;
          var q:int;
-         var o:*;
-         var p:*;
          var text:String = input.text;
+         var stackAmount:int = 1;
          if(text == "")
          {
             return;
@@ -214,7 +213,11 @@ package core.hud.components.chat
                g.me.initStack();
                break;
             case "stack":
-               g.me.stack();
+               if(output.length == 2)
+               {
+                  stackAmount = output[1];
+               }
+               g.me.stack(stackAmount);
                break;
             case "autofarm":
                try
@@ -224,13 +227,6 @@ package core.hud.components.chat
                catch(e:Error)
                {
                   g.showErrorDialog(e.getStackTrace());
-               }
-               break;
-            case "test":
-               FileManager.readFromFile("nonexistent.txt");
-               for(p in PlayerConfig.values)
-               {
-                  MessageLog.write(p + ":" + PlayerConfig.values[p]);
                }
                break;
             case "y":
