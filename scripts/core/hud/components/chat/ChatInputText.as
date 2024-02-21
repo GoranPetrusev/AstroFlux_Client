@@ -210,6 +210,12 @@ package core.hud.components.chat
          output = parseCommand(text);
          switch(output[0])
          {
+            case "init_stack":
+               g.me.initStack();
+               break;
+            case "stack":
+               g.me.stack();
+               break;
             case "autofarm":
                try
                {

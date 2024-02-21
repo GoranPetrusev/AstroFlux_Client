@@ -2525,5 +2525,73 @@ package core.player
          encounters = null;
          clanLogo = null;
       }
+
+      public function initStack() : void
+      {
+         var currentShip:String = activeSkin;
+         g.send("changeSkin", "26D6095B-CAE9-0836-C135-EE930F7F23D1");
+         g.send("leaveBody");
+         g.send("changeArtifactSetup", 1);
+         g.send("changeSkin", "8MF0AISMwUiETtnF1GJO6g");
+         g.send("leaveBody");
+         g.send("changeArtifactSetup", 1);
+         g.send("changeSkin", "C5weu3O-OUqW-W2zuKbKXQ");
+         g.send("leaveBody");
+         g.send("changeArtifactSetup", 1);
+         g.send("changeSkin", currentShip);
+         g.send("leaveBody");
+      }
+
+      public function stack() : void
+      {
+         var currentShip:String = activeSkin;
+         var currentSet:int = activeArtifactSetup;
+         var currentArts:Array = artifactSetups[currentSet];
+
+         g.send("changeSkin", "26D6095B-CAE9-0836-C135-EE930F7F23D1");
+         g.send("leaveBody");
+         g.send("changeArtifactSetup", currentSet);
+         g.send("changeSkin", "8MF0AISMwUiETtnF1GJO6g");
+         g.send("leaveBody");
+         g.send("changeArtifactSetup", currentSet);
+         g.send("changeSkin", "C5weu3O-OUqW-W2zuKbKXQ");
+         g.send("leaveBody");
+         g.send("changeArtifactSetup", currentSet);
+         g.send("changeSkin", currentShip);
+         g.send("leaveBody");
+         g.send("toggleArtifact", currentArts[0]);
+         g.send("toggleArtifact", currentArts[1]);
+         g.send("toggleArtifact", currentArts[2]);
+         g.send("toggleArtifact", currentArts[3]);
+         g.send("toggleArtifact", currentArts[4]);
+         g.send("changeArtifactSetup", 1);
+         g.send("toggleArtifact", currentArts[0]);
+         g.send("toggleArtifact", currentArts[1]);
+         g.send("toggleArtifact", currentArts[2]);
+         g.send("toggleArtifact", currentArts[3]);
+         g.send("toggleArtifact", currentArts[4]);
+         g.send("changeSkin", "26D6095B-CAE9-0836-C135-EE930F7F23D1");
+         g.send("leaveBody");
+         g.send("changeArtifactSetup", 1);
+         g.send("changeSkin", "8MF0AISMwUiETtnF1GJO6g");
+         g.send("leaveBody");
+         g.send("changeArtifactSetup", 1);
+         g.send("changeSkin", "C5weu3O-OUqW-W2zuKbKXQ");
+         g.send("leaveBody");
+         g.send("changeArtifactSetup", 1);
+         g.send("changeSkin", currentShip);
+         g.send("leaveBody");
+         g.send("toggleArtifact", currentArts[0]);
+         g.send("toggleArtifact", currentArts[1]);
+         g.send("toggleArtifact", currentArts[2]);
+         g.send("toggleArtifact", currentArts[3]);
+         g.send("toggleArtifact", currentArts[4]);
+         g.send("changeArtifactSetup", currentSet);
+         g.send("toggleArtifact", currentArts[0]);
+         g.send("toggleArtifact", currentArts[1]);
+         g.send("toggleArtifact", currentArts[2]);
+         g.send("toggleArtifact", currentArts[3]);
+         g.send("toggleArtifact", currentArts[4]);
+      }
    }
 }
