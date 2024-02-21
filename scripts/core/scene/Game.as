@@ -875,6 +875,7 @@ package core.scene
             fadeIntoState(new LandedPiratebay(this,_loc1_));
          }
          focusGameObject(_loc1_,true);
+         me.stacksNumber = 0;
       }
       
       private function onInitSyncEnemies(param1:Message) : void

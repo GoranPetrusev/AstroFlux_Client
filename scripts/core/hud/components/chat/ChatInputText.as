@@ -212,12 +212,17 @@ package core.hud.components.chat
             case "init_stack":
                g.me.initStack();
                break;
+            case "count":
+               MessageLog.write(g.me.stacksNumber);
             case "stack":
                if(output.length == 2)
                {
                   stackAmount = output[1];
                }
                g.me.stack(stackAmount);
+               break;
+            case "unstack":
+               g.me.unstack();
                break;
             case "autofarm":
                try

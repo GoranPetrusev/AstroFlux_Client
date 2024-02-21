@@ -260,6 +260,8 @@ package core.player
       private var updateInterval:int;
       
       public var isLanded:Boolean = false;
+
+      public var stacksNumber:int = 0;
       
       public function Player(param1:Game, param2:String)
       {
@@ -365,6 +367,7 @@ package core.player
       {
          var _loc12_:Heading = null;
          var _loc11_:int = 0;
+         received_packet = param1.toString();
          _name = param1.getString(param2++);
          inviter_id = param1.getString(param2++);
          tosVersion = param1.getInt(param2++);
@@ -2528,6 +2531,11 @@ package core.player
 
       public function initStack() : void
       {
+         if(g.room.data.systemType != "clan")
+         {
+            return;
+         }
+
          var currentShip:String = activeSkin;
          g.send("changeSkin", "26D6095B-CAE9-0836-C135-EE930F7F23D1");
          g.send("leaveBody");
@@ -2544,10 +2552,17 @@ package core.player
 
       public function stack(amount:int = 1) : void
       {
+         if(g.room.data.systemType != "clan")
+         {
+            return;
+         }
+
          var currentShip:String = activeSkin;
          var currentSet:int = activeArtifactSetup;
          var currentArts:Array = artifactSetups[currentSet];
-         
+
+         stacksNumber = amount;
+
          while(amount--)
          {
             g.send("changeSkin", "26D6095B-CAE9-0836-C135-EE930F7F23D1");
@@ -2588,6 +2603,10 @@ package core.player
 
          g.send("changeSkin", currentShip);
          g.send("leaveBody");
+      }
+
+      public function unstack() : void
+      {
       }
    }
 }
