@@ -73,7 +73,6 @@ package core.scene
    import flash.net.URLRequestHeader;
    import flash.system.Security;
    import generics.Localize;
-   import goki.AutoFarm;
    import goki.FitnessConfig;
    import goki.PlayerConfig;
    import io.InputLocator;
@@ -250,8 +249,6 @@ package core.scene
       
       private var loadingFadeTween:TweenMax;
       
-      public var autofarm:AutoFarm = null;
-      
       public function Game(param1:Client, param2:Connection, param3:Connection, param4:Room)
       {
          var client:Client = param1;
@@ -355,7 +352,6 @@ package core.scene
          controlZoneManager = new ControlZoneManager(this);
          salesManager = new SalesManager(this);
          dailyManager = new DailyManager(this);
-         autofarm = new AutoFarm(this);
          textManager.loadHandlers();
          PlayerConfig.loadConfig();
          FitnessConfig.loadConfig();
@@ -929,7 +925,6 @@ package core.scene
          {
             tryOpenSaleSpinner();
          }
-         autofarm.run();
       }
       
       private function updateSync() : void
@@ -1295,7 +1290,7 @@ package core.scene
          var pvpText:String;
          if(isSystemTypeSurvival())
          {
-            welcomeText.start(["Welcome to " + solarSystem.name + ": " + hud.uberStats.uberRank]);
+            welcomeText.start([["Welcome to " + solarSystem.name + ": " + hud.uberStats.uberRank]]);
          }
          else
          {
