@@ -210,16 +210,22 @@ package core.hud.components.chat
          switch(output[0])
          {
             case "init_stack":
-               g.me.initStack();
+               if(g.room.data.systemType == "clan" || g.room.data.systemType == "survival")
+               {
+                  g.me.initStack();
+               }
                break;
             case "count":
                MessageLog.write(g.me.stacksNumber);
             case "stack":
-               if(output.length == 2)
+               if(g.room.data.systemType == "clan" || g.room.data.systemType == "survival")
                {
-                  stackAmount = output[1];
+                  if(output.length == 2)
+                  {
+                     stackAmount = output[1];
+                  }
+                  g.me.stack(stackAmount);
                }
-               g.me.stack(stackAmount);
                break;
             case "unstack":
                g.me.unstack();

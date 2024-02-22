@@ -2531,7 +2531,7 @@ package core.player
 
       public function initStack() : void
       {
-         if(g.room.data.systemType != "clan")
+         if(g.room.data.systemType != "clan" && g.room.data.systemType != "survival")
          {
             return;
          }
@@ -2552,7 +2552,7 @@ package core.player
 
       public function stack(amount:int = 1) : void
       {
-         if(g.room.data.systemType != "clan")
+         if(g.room.data.systemType != "clan" && g.room.data.systemType != "survival")
          {
             return;
          }
