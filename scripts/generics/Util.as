@@ -97,20 +97,24 @@ package generics
          return -1;
       }
       
-       public static function formatAmount(param1:Number) : String
+      public static function formatAmount(param1:Number) : String
       {
          var _loc2_:String = "";
-         if(param1 > 1000000000)
+         if(param1 >= 1000000000000)
+         {
+            return param1.toExponential(4);
+         }
+         if(param1 >= 1000000000)
          {
             param1 /= 1000000000;
             _loc2_ = "B";
          }
-         if(param1 > 1000000)
+         if(param1 >= 1000000)
          {
             param1 /= 1000000;
             _loc2_ = "M";
          }
-         if(param1 > 10000)
+         if(param1 >= 10000)
          {
             param1 /= 1000;
             _loc2_ = "K";
