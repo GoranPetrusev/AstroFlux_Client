@@ -97,7 +97,6 @@ package core.hud.components
                xpText.format.color = 13421772;
             }
             updateXpText();
-            flash();
             oldXp = p.xp;
             resize();
          }
@@ -107,26 +106,6 @@ package core.hud.components
       private function updateXpText() : void
       {
          tt.text = Localize.t("Experience: <FONT COLOR=\'#ffffff\'>[xp] / [xpMax]</FONT>\nXP Boost: <FONT COLOR=\'#ffffff\'>[xpBoost]</FONT>").replace("[xp]",p.xp).replace("[xpMax]",p.levelXpMax).replace("[xpBoost]",g.me.hasExpBoost.toString());
-      }
-      
-      private function flash() : void
-      {
-         if(tw != null)
-         {
-            tw.kill();
-            addChild(flashBar);
-         }
-         flashBar.alpha = 1;
-         tw = TweenMax.to(flashBar,3,{
-            "alpha":0,
-            "onComplete":function():void
-            {
-               if(contains(flashBar))
-               {
-                  removeChild(flashBar);
-               }
-            }
-         });
       }
       
       private function clean(param1:Event = null) : void
