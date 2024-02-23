@@ -97,15 +97,25 @@ package generics
          return -1;
       }
       
-      public static function formatAmount(param1:Number) : String
+       public static function formatAmount(param1:Number) : String
       {
          var _loc2_:String = "";
-         if(param1 > 5000)
+         if(param1 > 1000000000)
+         {
+            param1 /= 1000000000;
+            _loc2_ = "B";
+         }
+         if(param1 > 1000000)
+         {
+            param1 /= 1000000;
+            _loc2_ = "M";
+         }
+         if(param1 > 10000)
          {
             param1 /= 1000;
-            _loc2_ = "k";
+            _loc2_ = "K";
          }
-         return _loc2_ == "" ? param1.toString() : param1.toFixed(1) + _loc2_;
+         return _loc2_ == "" ? param1.toString() : param1.toPrecision(4) + _loc2_;
       }
       
       public static function dotProduct(param1:Number, param2:Number, param3:Number, param4:Number) : Number
