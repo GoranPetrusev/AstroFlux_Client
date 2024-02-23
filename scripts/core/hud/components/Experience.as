@@ -105,7 +105,7 @@ package core.hud.components
       
       private function updateXpText() : void
       {
-         tt.text = Localize.t("Experience: <FONT COLOR=\'#ffffff\'>[xp] / [xpMax]</FONT>\nXP Boost: <FONT COLOR=\'#ffffff\'>[xpBoost]</FONT>").replace("[xp]",p.xp).replace("[xpMax]",p.levelXpMax).replace("[xpBoost]",g.me.hasExpBoost.toString());
+         tt.text = Localize.t("Experience: <FONT COLOR=\'#ffffff\'>[xp] / [xpMax]</FONT>\nXP Boost: <FONT COLOR=\'#ffffff\'>[xpBoost]</FONT>").replace("[xp]",Util.formatAmount(p.xp)).replace("[xpMax]",Util.formatAmount(p.levelXpMax)).replace("[xpBoost]",g.me.hasExpBoost.toString());  
       }
       
       private function clean(param1:Event = null) : void
