@@ -2,8 +2,6 @@ package core.artifact
 {
    import generics.Localize;
    import goki.FitnessConfig;
-   import core.hud.components.chat.MessageLog;
-   import flash.utils;
    
    public class ArtifactStat
    {
@@ -23,7 +21,7 @@ package core.artifact
       public static function parseTextFromStatType(param1:String, param2:Number) : String
       {
          var _loc3_:String = "<FONT COLOR=\'#ffffff\'>";
-         var _loc4_:String = "</FONT>";   
+         var _loc4_:String = "</FONT>";
          var modifier:String = param1 == "refire" ? " (s)" : "";
          modifier += param1.indexOf("2") != -1 && param1 != "refier2" ? " (s)" : "";
          modifier += param1.indexOf("3") != -1 ? " (e)" : "";
@@ -191,10 +189,10 @@ package core.artifact
                return "ERROR - artifact not found";
          }
       }
-
+      
       public static function statDistribution(statType:String, statValue:Number, lines:int, lineNumber:int, str:int) : Number
       {
-         return str - (statValue * FitnessConfig.statDistribution[statType][2] - FitnessConfig.statDistribution[statType][1] * FitnessConfig.lineDistribution[lines.toString()][lineNumber]) / FitnessConfig.statDistribution[statType][0] / FitnessConfig.lineDistribution[lines.toString()][lineNumber];
+         return (statValue * FitnessConfig.statDistribution[statType][2] - FitnessConfig.statDistribution[statType][1] * FitnessConfig.lineDistribution[lines.toString()][lineNumber]) / FitnessConfig.statDistribution[statType][0] / FitnessConfig.lineDistribution[lines.toString()][lineNumber] - str;
       }
       
       public function get statFitness() : Number
@@ -261,9 +259,9 @@ package core.artifact
             case "refire3":
                return 0.3 * 1.298 * FitnessConfig.values.refire * this.value;
             case "convHp":
-               return 0.1 * 0.5 * FitnessConfig.values.convHp * clamp(this.value, 0, 990);
+               return 0.1 * 0.5 * FitnessConfig.values.convHp * clamp(this.value,0,990);
             case "convShield":
-               return 0.1 * 0.5 * FitnessConfig.values.convShield * clamp(this.value, 0, 990);
+               return 0.1 * 0.5 * FitnessConfig.values.convShield * clamp(this.value,0,990);
             case "powerReg":
             case "powerReg2":
             case "powerReg3":
@@ -278,10 +276,10 @@ package core.artifact
                return 0;
          }
       }
-
+      
       private function clamp(val:Number, min:Number, max:Number) : Number
       {
-         return Math.max(Math.min(val, max), min);
+         return Math.max(Math.min(val,max),min);
       }
    }
 }
