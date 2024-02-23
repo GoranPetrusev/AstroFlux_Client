@@ -5,6 +5,7 @@ package core.hud.components
    import core.scene.Game;
    import core.ship.Ship;
    import generics.Localize;
+   import generics.Util;
    import starling.display.DisplayObjectContainer;
    import starling.display.Image;
    import starling.display.Quad;
@@ -187,7 +188,7 @@ package core.hud.components
             _loc6_ = 120;
          }
          playerHPBar.width = _loc6_;
-         playerHPText.text = _loc3_.hp > 0 ? _loc3_.hp.toString() : "0";
+         playerHPText.text = Util.formatAmount(_loc3_.hp);
          var _loc4_:Number;
          if((_loc4_ = 120 * _loc3_.shieldHp / _loc3_.shieldHpMax) < 0)
          {
@@ -198,12 +199,12 @@ package core.hud.components
             _loc4_ = 120;
          }
          playerShieldBar.width = _loc4_;
-         playerShieldText.text = _loc3_.shieldHp > 0 ? _loc3_.shieldHp.toString() : "0";
+         playerShieldText.text = Util.formatAmount(_loc3_.shieldHp);
          var _loc2_:String = "<FONT COLOR=\'#8888ff\'>Shield regen:</FONT> <FONT COLOR=\'#ffffff\'>[regen]</FONT>\n";
-         _loc2_ += "Shield is good against high impact damage, if the shield holds it will reduce damage by <FONT COLOR=\'#ffffff\'>[shieldReduction]%</FONT>.\n\n";
+         _loc2_ += "Shield is good against high impact damage, if the shield holds it will reduce damage by <FONT COLOR=\'#ffffff\'>35%</FONT>.\n\n";
          _loc2_ += "<FONT COLOR=\'#44ff44\'>Armor:</FONT> <FONT COLOR=\'#ffffff\'>[armor]</FONT>\n";
-         _loc2_ += "Armor is good against rapid fire and low impact damage, the damage will be reduced by the amount of armor (max <FONT COLOR=\'#ffffff\'>[armorCapPvP]%</FONT> of damage in PvP and <FONT COLOR=\'#ffffff\'>[armorCapPvE]%</FONT> in PvE).\n";
-         toolTip.text = Localize.t(_loc2_).replace("[regen]",(1.75 * (_loc3_.shieldRegen + _loc3_.shieldRegenBonus)).toFixed(0)).replace("[armor]",_loc3_.armorThreshold).replace("[shieldReduction]",35).replace("[armorCapPvP]",75).replace("[armorCapPvE]",90);
+         _loc2_ += "Armor is good against rapid fire and low impact damage, the damage will be reduced by the amount of armor (max <FONT COLOR=\'#ffffff\'>75%</FONT> of damage in PvP and <FONT COLOR=\'#ffffff\'>90%</FONT> in PvE).\n";
+         toolTip.text = Localize.t(_loc2_).replace("[regen]",Util.formatAmount(int(1.75 * (_loc3_.shieldRegen + _loc3_.shieldRegenBonus)))).replace("[armor]",Util.formatAmount(_loc3_.armorThreshold));
       }
       
       public function startLowHpWarningEffect() : void
