@@ -722,9 +722,9 @@ package core.hud.components.starMap
          {
             animationTween.kill();
          }
-         animationTween = TweenMax.to(rect,1,{
-            "x":x - _width / 2,
-            "y":y - _height / 2,
+         animationTween = TweenMax.to(rect,0,{
+            "x":225,
+            "y":135,
             "onUpdate":function():void
             {
                container.x = -rect.x;

@@ -129,20 +129,9 @@ package core.hud.components.starMap
          forwardArrow.visible = false;
          backArrow.visible = false;
          var _loc7_:* = 1118481;
-         if(icon1.nameText.text == "Mitrilion" && icon1.discovered || icon2.nameText.text == "Mitrilion" && icon2.discovered)
+         if(_bought || icon1.nameText.text == "Mitrilion" && icon1.discovered || icon2.nameText.text == "Mitrilion" && icon2.discovered)
          {
             _loc7_ = icon1.color;
-         }
-         if(_bought)
-         {
-            if(transit)
-            {
-               _loc7_ = 10453053;
-            }
-            else
-            {
-               _loc7_ = icon1.color;
-            }
          }
          if(_selected)
          {
