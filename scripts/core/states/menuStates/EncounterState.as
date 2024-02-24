@@ -10,6 +10,7 @@ package core.states.menuStates
    import feathers.controls.ScrollContainer;
    import flash.globalization.NumberFormatter;
    import generics.Localize;
+   import generics.Util;
    import goki.PlayerConfig;
    import starling.core.Starling;
    import starling.display.Image;
@@ -216,14 +217,14 @@ package core.states.menuStates
                         if(encounterKey.search("boss_") == -1)
                         {
                            nf = new NumberFormatter("i-default");
-                           infoText += "\n\n" + Localize.t("Base") + ":" + "\n - <FONT COLOR=\'#88ff88\'>" + Localize.t("Health") + "</FONT> <FONT COLOR=\'#FFFFFF\'>" + nf.formatNumber(shipObj.hp) + "</FONT>" + "\n - <FONT COLOR=\'#88ff88\'>" + Localize.t("Armor") + "</FONT> <FONT COLOR=\'#FFFFFF\'>" + (shipObj.armor == null ? 0 : nf.formatNumber(shipObj.armor)) + "</FONT>" + "\n - <FONT COLOR=\'#8888ff\'>" + Localize.t("Shield") + "</FONT> <FONT COLOR=\'#FFFFFF\'>" + nf.formatNumber(shipObj.shieldHp) + "</FONT>" + "\n - <FONT COLOR=\'#8888ff\'>" + Localize.t("Shield Regen") + "</FONT> <FONT COLOR=\'#FFFFFF\'>" + nf.formatNumber(shipObj.shieldRegen) + "</FONT>";
+                           infoText += "\n\nBase:\n - <FONT COLOR=\'#88ff88\'>Health</FONT> <FONT COLOR=\'#FFFFFF\'>" + Util.formatAmount(shipObj.hp) + "</FONT>\n - <FONT COLOR=\'#88ff88\'>Armor</FONT> <FONT COLOR=\'#FFFFFF\'>" + (shipObj.armor == null ? 0 : Util.formatAmount(shipObj.armor)) + "</FONT>\n - <FONT COLOR=\'#8888ff\'>Shield</FONT> <FONT COLOR=\'#FFFFFF\'>" + Util.formatAmount(shipObj.shieldHp) + "</FONT>\n - <FONT COLOR=\'#8888ff\'>Shield Regen</FONT> <FONT COLOR=\'#FFFFFF\'>" + Util.formatAmount(shipObj.shieldRegen) + "</FONT>";
                         }
-                        infoText += "\n\n" + Localize.t("Resistances") + ": " + "\n - <FONT COLOR=\'#ff8888\'>" + Localize.t("Kinetic") + "</FONT> <FONT COLOR=\'#FFFFFF\'>" + (obj.kineticResist != null ? obj.kineticResist : 0) + "%</FONT>" + "\n - <FONT COLOR=\'#8888ff\'>" + Localize.t("Energy") + "</FONT> <FONT COLOR=\'#FFFFFF\'>" + (obj.energyResist != null ? obj.energyResist : 0) + "%</FONT>" + "\n - <FONT COLOR=\'#88ff88\'>" + Localize.t("Corrosive") + "</FONT> <FONT COLOR=\'#FFFFFF\'>" + (obj.corrosiveResist != null ? obj.corrosiveResist : 0) + "%</FONT>";
+                        infoText += "\n\nResistances: \n - <FONT COLOR=\'#ff8888\'>Kinetic</FONT> <FONT COLOR=\'#FFFFFF\'>" + (obj.kineticResist != null ? obj.kineticResist : 0) + "%</FONT>\n - <FONT COLOR=\'#8888ff\'>Energy</FONT> <FONT COLOR=\'#FFFFFF\'>" + (obj.energyResist != null ? obj.energyResist : 0) + "%</FONT>\n - <FONT COLOR=\'#88ff88\'>Corrosive</FONT> <FONT COLOR=\'#FFFFFF\'>" + (obj.corrosiveResist != null ? obj.corrosiveResist : 0) + "%</FONT>";
                         if(obj.kineticAbsorb || obj.energyAbsorb || obj.corrosiveAbsorb)
                         {
-                           infoText += "\n\n" + Localize.t("Absorbs") + ": " + "\n - <FONT COLOR=\'#ff8888\'>" + Localize.t("Kinetic") + "</FONT> <FONT COLOR=\'#FFFFFF\'>" + (obj.kineticAbsorb != null ? obj.kineticAbsorb : 0) + "%</FONT>" + "\n - <FONT COLOR=\'#8888ff\'>" + Localize.t("Energy") + "</FONT> <FONT COLOR=\'#FFFFFF\'>" + (obj.energyAbsorb != null ? obj.energyAbsorb : 0) + "%</FONT>" + "\n - <FONT COLOR=\'#88ff88\'>" + Localize.t("Corrosive") + "</FONT> <FONT COLOR=\'#FFFFFF\'>" + (obj.corrosiveAbsorb != null ? obj.corrosiveAbsorb : 0) + "%</FONT>";
+                           infoText += "\n\nAbsorbs: \n - <FONT COLOR=\'#ff8888\'>Kinetic</FONT> <FONT COLOR=\'#FFFFFF\'>" + (obj.kineticAbsorb != null ? obj.kineticAbsorb : 0) + "%</FONT>\n - <FONT COLOR=\'#8888ff\'>Energy</FONT> <FONT COLOR=\'#FFFFFF\'>" + (obj.energyAbsorb != null ? obj.energyAbsorb : 0) + "%</FONT>\n - <FONT COLOR=\'#88ff88\'>Corrosive</FONT> <FONT COLOR=\'#FFFFFF\'>" + (obj.corrosiveAbsorb != null ? obj.corrosiveAbsorb : 0) + "%</FONT>";
                         }
-                        new ToolTip(g,s,Localize.t("Name") + ": <FONT COLOR=\'#ffffff\'>" + obj.name.replace("Lvl","lvl").replace("lvl","_").split("_")[0] + " lvl " + obj.level + "</FONT>\n" + Localize.t("Type") + ": <FONT COLOR=\'#FFFFFF\'>" + encounterKey.split("_")[0] + "</FONT>" + infoText,null,"encounters");
+                        new ToolTip(g,s,"Name: <FONT COLOR=\'#ffffff\'>" + obj.name.replace("Lvl","lvl").replace("lvl","_").split("_")[0] + " lvl " + obj.level + "</FONT>\nType: <FONT COLOR=\'#FFFFFF\'>" + encounterKey.split("_")[0] + "</FONT>" + infoText,null,"encounters");
                         if(imgObj != null && imgObj.animate && imgObj.animateOnStart)
                         {
                            Starling.juggler.add(img);
