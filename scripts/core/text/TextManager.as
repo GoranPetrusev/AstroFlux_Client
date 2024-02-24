@@ -6,6 +6,7 @@ package core.text
    import core.scene.Game;
    import core.unit.Unit;
    import flash.geom.Point;
+   import generics.Util;
    import goki.PlayerConfig;
    import sound.ISound;
    import sound.SoundLocator;
@@ -65,7 +66,7 @@ package core.text
       {
       }
       
- public function createDmgText(param1:int, param2:Unit, param3:Boolean = false) : void
+      public function createDmgText(param1:int, param2:Unit, param3:Boolean = false) : void
       {
          var _loc6_:TextParticle = null;
          var _loc4_:Number = NaN;
@@ -82,7 +83,7 @@ package core.text
                _loc6_.ttl = 1000;
                _loc6_.speed.x *= _loc4_;
                _loc6_.speed.y *= _loc4_;
-               _loc6_.text = param2.lastDmg.toString();
+               _loc6_.text = Util.formatAmount(param2.lastDmg);
             }
          }
          else if(param2.lastHealTime > g.time - 250 && param1 < 0)
@@ -95,7 +96,7 @@ package core.text
                _loc6_.ttl = 1000;
                _loc6_.speed.x *= _loc4_;
                _loc6_.speed.y *= _loc4_;
-               _loc6_.text = param2.lastHeal.toString();
+               _loc6_.text = Util.formatAmount(param2.lastHeal);
             }
          }
          else
@@ -107,7 +108,7 @@ package core.text
             if(param1 > 0)
             {
                param2.lastDmgTime = g.time;
-               param2.lastDmgText = textHandler.add(param1.toString(),_loc8_,new Point(_loc7_,_loc5_),900,16720418,20 * PlayerConfig.values.dmgTextSize);
+               param2.lastDmgText = textHandler.add(Util.formatAmount(param1),_loc8_,new Point(_loc7_,_loc5_),900,16720418,20 * PlayerConfig.values.dmgTextSize);
                param2.lastDmg = param1;
                param2.lastDmgTextOffset = 0;
                _loc6_ = param2.lastDmgText;
@@ -115,7 +116,7 @@ package core.text
             else if(param1 < 0)
             {
                param2.lastHealTime = g.time;
-               param2.lastHealText = textHandler.add((-param1).toString(),_loc8_,new Point(_loc7_,_loc5_),900,5890137,20 * PlayerConfig.values.dmgTextSize);
+               param2.lastHealText = textHandler.add(Util.formatAmount(-param1),_loc8_,new Point(_loc7_,_loc5_),900,5890137,20 * PlayerConfig.values.dmgTextSize);
                param2.lastHeal = -param1;
                param2.lastHealTextOffset = 0;
                _loc6_ = param2.lastHealText;

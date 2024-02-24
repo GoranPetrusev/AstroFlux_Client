@@ -1,8 +1,8 @@
 package core.hud.components
 {
-   import core.boss.Boss;
    import core.scene.Game;
    import flash.geom.Point;
+   import generics.Util;
    import starling.display.Sprite;
    import textures.ITextureManager;
    import textures.TextureLocator;
@@ -111,7 +111,7 @@ package core.hud.components
                addChild(bossNameText);
             }
             bossHPBar.width = 600 * _loc3_.hp / _loc3_.hpMax;
-            bossHPText.text = _loc3_.hp + " / " + _loc3_.hpMax;
+            bossHPText.text = Util.formatAmount(_loc3_.hp) + " / " + Util.formatAmount(_loc3_.hpMax);
             bossNameText.text = _loc3_.name;
             _loc4_ = g.stage.stageWidth / 2;
             bossHPBarBgr.x = _loc4_ - 300;
