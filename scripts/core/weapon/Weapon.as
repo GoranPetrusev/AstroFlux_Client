@@ -362,22 +362,13 @@ package core.weapon
          var _loc3_:PetSpawner = null;
          _loc2_ = Localize.t("<FONT COLOR=\'#8888ff\'>[name], lvl [level]</FONT>\n").replace("[name]",name).replace("[level]",level);
          _loc2_ += dmg.damageText();
+         multiNrOfP = Math.max(multiNrOfP,1);
          if(multiNrOfP > 1)
          {
             _loc2_ += Localize.t("Fires <FONT COLOR=\'#eeeeee\'>[nrp]</FONT>x projectiles\n").replace("[nrp]",multiNrOfP);
          }
-         if(!param1 && name != "Acid Spray" && name != "Flamethrower")
-         {
-            _loc2_ += Localize.t("Fires <FONT COLOR=\'#eeeeee\'>[rps]</FONT> rounds per second.\n").replace("[rps]",(1000 * multiNrOfP / reloadTime).toFixed(1));
-         }
-         if(multiNrOfP == 0)
-         {
-            _loc2_ += Localize.t("Damage per second: <FONT COLOR=\'#eeeeee\'>[dps]</FONT>\n").replace("[dps]",(dmg.dmg() * burst * 1000 / (reloadTime + (burst - 1) * 33)).toFixed(1));
-         }
-         else
-         {
-            _loc2_ += Localize.t("Damage per second: <FONT COLOR=\'#eeeeee\'>[dps]</FONT>\n").replace("[dps]",(dmg.dmg() * burst * multiNrOfP * 1000 / (reloadTime + (burst - 1) * 33)).toFixed(1));
-         }
+         _loc2_ += Localize.t("Fires <FONT COLOR=\'#eeeeee\'>[rps]</FONT> rounds per second.\n").replace("[rps]",(1000 * multiNrOfP / reloadTime).toFixed(1));
+         _loc2_ += Localize.t("Damage per second: <FONT COLOR=\'#eeeeee\'>[dps]</FONT>\n").replace("[dps]",Util.formatAmount(dmg.dmg() * burst * multiNrOfP * 1000 / (reloadTime + (burst - 1) * 33)));
          if(shieldVamp > 0 || healthVamp > 0)
          {
             _loc2_ += "\n";
@@ -664,13 +655,13 @@ package core.weapon
          if(param2 && param1.activeWeapons < param1.unlockedWeaponSlots)
          {
             active = param2;
-            param1.activeWeapons++;
+            ++param1.activeWeapons;
             return true;
          }
          if(!param2)
          {
             active = param2;
-            param1.activeWeapons--;
+            --param1.activeWeapons;
             return true;
          }
          return false;
