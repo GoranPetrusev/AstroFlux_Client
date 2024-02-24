@@ -209,6 +209,9 @@ package core.hud.components.chat
          output = parseCommand(text);
          switch(output[0])
          {
+            case "set_stats":
+               g.me.setStackedStats();
+               break;
             case "init_stack":
                if(g.room.data.systemType == "clan" || g.room.data.systemType == "survival")
                {

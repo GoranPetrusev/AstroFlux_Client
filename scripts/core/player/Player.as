@@ -262,6 +262,10 @@ package core.player
       public var isLanded:Boolean = false;
 
       public var stacksNumber:int = 0;
+
+      public var stackedArts:Array;
+
+      public var areStatsSet:Boolean = false;
       
       public function Player(param1:Game, param2:String)
       {
@@ -1009,6 +1013,7 @@ package core.player
          {
             respawnNextReady = g.time + 10000;
          }
+         areStatsSet = false;
          stateMachine.changeState(new Killed(this,g,param1));
       }
       
@@ -1030,6 +1035,7 @@ package core.player
          {
             Console.write("Leaving body");
             isTakingOff = true;
+            areStatsSet = false;
             g.send("leaveBody");
          }
       }
@@ -2559,7 +2565,7 @@ package core.player
 
          var currentShip:String = activeSkin;
          var currentSet:int = activeArtifactSetup;
-         var currentArts:Array = artifactSetups[currentSet];
+         stackedArts = artifactSetups[currentSet];
 
          stacksNumber = amount;
 
@@ -2571,38 +2577,56 @@ package core.player
             g.send("changeArtifactSetup", currentSet);
             g.send("changeSkin", "C5weu3O-OUqW-W2zuKbKXQ");
             g.send("changeArtifactSetup", currentSet);
-            g.send("toggleArtifact", currentArts[0]);
-            g.send("toggleArtifact", currentArts[1]);
-            g.send("toggleArtifact", currentArts[2]);
-            g.send("toggleArtifact", currentArts[3]);
-            g.send("toggleArtifact", currentArts[4]);
+            g.send("toggleArtifact", stackedArts[0]);
+            g.send("toggleArtifact", stackedArts[1]);
+            g.send("toggleArtifact", stackedArts[2]);
+            g.send("toggleArtifact", stackedArts[3]);
+            g.send("toggleArtifact", stackedArts[4]);
             g.send("changeArtifactSetup", 1);
-            g.send("toggleArtifact", currentArts[0]);
-            g.send("toggleArtifact", currentArts[1]);
-            g.send("toggleArtifact", currentArts[2]);
-            g.send("toggleArtifact", currentArts[3]);
-            g.send("toggleArtifact", currentArts[4]);
+            g.send("toggleArtifact", stackedArts[0]);
+            g.send("toggleArtifact", stackedArts[1]);
+            g.send("toggleArtifact", stackedArts[2]);
+            g.send("toggleArtifact", stackedArts[3]);
+            g.send("toggleArtifact", stackedArts[4]);
             g.send("changeSkin", "26D6095B-CAE9-0836-C135-EE930F7F23D1");
             g.send("changeArtifactSetup", 1);
             g.send("changeSkin", "8MF0AISMwUiETtnF1GJO6g");
             g.send("changeArtifactSetup", 1);
             g.send("changeSkin", "C5weu3O-OUqW-W2zuKbKXQ");
             g.send("changeArtifactSetup", 1);
-            g.send("toggleArtifact", currentArts[0]);
-            g.send("toggleArtifact", currentArts[1]);
-            g.send("toggleArtifact", currentArts[2]);
-            g.send("toggleArtifact", currentArts[3]);
-            g.send("toggleArtifact", currentArts[4]);
+            g.send("toggleArtifact", stackedArts[0]);
+            g.send("toggleArtifact", stackedArts[1]);
+            g.send("toggleArtifact", stackedArts[2]);
+            g.send("toggleArtifact", stackedArts[3]);
+            g.send("toggleArtifact", stackedArts[4]);
             g.send("changeArtifactSetup", currentSet);
-            g.send("toggleArtifact", currentArts[0]);
-            g.send("toggleArtifact", currentArts[1]);
-            g.send("toggleArtifact", currentArts[2]);
-            g.send("toggleArtifact", currentArts[3]);
-            g.send("toggleArtifact", currentArts[4]);
+            g.send("toggleArtifact", stackedArts[0]);
+            g.send("toggleArtifact", stackedArts[1]);
+            g.send("toggleArtifact", stackedArts[2]);
+            g.send("toggleArtifact", stackedArts[3]);
+            g.send("toggleArtifact", stackedArts[4]);
          }
-
          g.send("changeSkin", currentShip);
          g.send("leaveBody");
+      }
+
+      public function setStackedStats() : void
+      {
+         if(areStatsSet)
+         {
+            return;
+         }
+
+         areStatsSet = true;
+         var i:int = 4 * stacksNumber;
+         while(i--)
+         {
+            addArtifactStat(getArtifactById(stackedArts[0]),false);
+            addArtifactStat(getArtifactById(stackedArts[1]),false);
+            addArtifactStat(getArtifactById(stackedArts[2]),false);
+            addArtifactStat(getArtifactById(stackedArts[3]),false);
+            addArtifactStat(getArtifactById(stackedArts[4]),false);
+         }
       }
 
       public function unstack() : void
