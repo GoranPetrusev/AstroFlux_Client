@@ -163,17 +163,6 @@ package core.hud.components.starMap
          line.thickness = 5;
          var _loc2_:Vector.<Number> = new Vector.<Number>();
          _loc2_.push(_loc1_,_loc3_,_loc4_,_loc8_);
-         if(transit)
-         {
-            forwardArrow.visible = true;
-            forwardArrow.rotation = _loc9_ + 3.141592653589793 / 2;
-            forwardArrow.x = Math.cos(_loc9_) * (icon1.size + 20);
-            forwardArrow.y = Math.sin(_loc9_) * (icon1.size + 20);
-            backArrow.visible = true;
-            backArrow.rotation = _loc9_ + 3.141592653589793 + 3.141592653589793 / 2;
-            backArrow.x = icon2.x + Math.cos(_loc9_ + 3.141592653589793) * (icon2.size + 20) - icon1.x;
-            backArrow.y = icon2.y + Math.sin(_loc9_ + 3.141592653589793) * (icon2.size + 20) - icon1.y;
-         }
       }
       
       private function onTouch(param1:TouchEvent) : void
