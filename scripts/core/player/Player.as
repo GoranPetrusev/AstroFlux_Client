@@ -1012,6 +1012,7 @@ package core.player
             respawnNextReady = g.time + 10000;
          }
          stateMachine.changeState(new Killed(this,g,param1));
+         stacksNumber = 0;
       }
       
       public function hasExploredArea(param1:String) : Boolean
@@ -1033,6 +1034,7 @@ package core.player
             Console.write("Leaving body");
             isTakingOff = true;
             g.send("leaveBody");
+            stacksNumber = 0;
          }
       }
       
@@ -2563,7 +2565,7 @@ package core.player
          var currentSet:int = activeArtifactSetup;
          stackedArts = artifactSetups[currentSet];
 
-         stacksNumber = amount;
+         stacksNumber += amount;
 
          while(amount--)
          {
@@ -2612,7 +2614,7 @@ package core.player
          {
             for each (var stat in getArtifactById(art).stats)
             {
-               addIndividualStat(stat.type, stat.value * stacksNumber);
+               addIndividualStat(stat.type, stat.value * stacksNumber * 4);
             }
          }
       }
@@ -2623,7 +2625,6 @@ package core.player
 
       private function addIndividualStat(stat:String, value:Number) : void 
       {
-         var weapon:*;
          var cnt:int = 0;
 
          switch(stat)
@@ -2651,79 +2652,79 @@ package core.player
             case "corrosiveAdd":
             case "corrosiveAdd2":
             case "corrosiveAdd3":
-               for each(weapon in ship.weapons)
+               for each(var weapon_1 in ship.weapons)
                {
-                  weapon.dmg.addDmgInt(int(4 * value),2);
-                  if(weapon.multiNrOfP > 1)
+                  weapon_1.dmg.addDmgInt(int(4 * value),2);
+                  if(weapon_1.multiNrOfP > 1)
                   {
-                     weapon.debuffValue.addDmgInt(int(1.5 / weapon.multiNrOfP * 4 * value),2);
-                     weapon.debuffValue2.addDmgInt(int(1.5 / weapon.multiNrOfP * 4 * value),2);
+                     weapon_1.debuffValue.addDmgInt(int(1.5 / weapon_1.multiNrOfP * 4 * value),2);
+                     weapon_1.debuffValue2.addDmgInt(int(1.5 / weapon_1.multiNrOfP * 4 * value),2);
                   }
                   else
                   {
-                     weapon.debuffValue.addDmgInt(int(4 * value),2);
-                     weapon.debuffValue2.addDmgInt(int(4 * value),2);
+                     weapon_1.debuffValue.addDmgInt(int(4 * value),2);
+                     weapon_1.debuffValue2.addDmgInt(int(4 * value),2);
                   }
                }
                break;
             case "corrosiveMulti":
-               for each(weapon in ship.weapons)
+               for each(var weapon_2 in ship.weapons)
                {
-                  weapon.dmg.addDmgPercent(value,2);
-                  weapon.debuffValue.addDmgPercent(value,2);
-                  weapon.debuffValue2.addDmgPercent(value,2);
+                  weapon_2.dmg.addDmgPercent(value,2);
+                  weapon_2.debuffValue.addDmgPercent(value,2);
+                  weapon_2.debuffValue2.addDmgPercent(value,2);
                }
                break;
             case "energyAdd":
             case "energyAdd2":
             case "energyAdd3":
-               for each(weapon in ship.weapons)
+               for each(var weapon_3 in ship.weapons)
                {
-                  weapon.dmg.addDmgInt(int(4 * value),1);
-                  if(weapon.multiNrOfP > 1)
+                  weapon_3.dmg.addDmgInt(int(4 * value),1);
+                  if(weapon_3.multiNrOfP > 1)
                   {
-                     weapon.debuffValue.addDmgInt(int(1.5 / weapon.multiNrOfP * 4 * value),1);
-                     weapon.debuffValue2.addDmgInt(int(1.5 / weapon.multiNrOfP * 4 * value),1);
+                     weapon_3.debuffValue.addDmgInt(int(1.5 / weapon_3.multiNrOfP * 4 * value),1);
+                     weapon_3.debuffValue2.addDmgInt(int(1.5 / weapon_3.multiNrOfP * 4 * value),1);
                   }
                   else
                   {
-                     weapon.debuffValue.addDmgInt(int(4 * value),1);
-                     weapon.debuffValue2.addDmgInt(int(4 * value),1);
+                     weapon_3.debuffValue.addDmgInt(int(4 * value),1);
+                     weapon_3.debuffValue2.addDmgInt(int(4 * value),1);
                   }
                }
                break;
             case "energyMulti":
-               for each(weapon in ship.weapons)
+               for each(var weapon_4 in ship.weapons)
                {
-                  weapon.dmg.addDmgPercent(value,1);
-                  weapon.debuffValue.addDmgPercent(value,1);
-                  weapon.debuffValue2.addDmgPercent(value,1);
+                  weapon_4.dmg.addDmgPercent(value,1);
+                  weapon_4.debuffValue.addDmgPercent(value,1);
+                  weapon_4.debuffValue2.addDmgPercent(value,1);
                }
                break;
             case "kineticAdd":
             case "kineticAdd2":
             case "kineticAdd3":
-               for each(weapon in ship.weapons)
+               for each(var weapon_5 in ship.weapons)
                {
-                  weapon.dmg.addDmgInt(int(4 * value),0);
-                  if(weapon.multiNrOfP > 1)
+                  weapon_5.dmg.addDmgInt(int(4 * value),0);
+                  if(weapon_5.multiNrOfP > 1)
                   {
-                     weapon.debuffValue.addDmgInt(int(1.5 / weapon.multiNrOfP * 4 * value),0);
-                     weapon.debuffValue2.addDmgInt(int(1.5 / weapon.multiNrOfP * 4 * value),0);
+                     weapon_5.debuffValue.addDmgInt(int(1.5 / weapon_5.multiNrOfP * 4 * value),0);
+                     weapon_5.debuffValue2.addDmgInt(int(1.5 / weapon_5.multiNrOfP * 4 * value),0);
                   }
                   else
                   {
-                     weapon.debuffValue.addDmgInt(int(4 * value),0);
-                     weapon.debuffValue2.addDmgInt(int(4 * value),0);
+                     weapon_5.debuffValue.addDmgInt(int(4 * value),0);
+                     weapon_5.debuffValue2.addDmgInt(int(4 * value),0);
                   }
                }
                break;
             case "kineticMulti":
-               for each(weapon in ship.weapons)
+               for each(var weapon_69 in ship.weapons)
                {
-                  weapon.dmg.addDmgPercent(value,0);
-                  weapon.debuffValue.addDmgPercent(value,0);
-                  weapon.debuffValue2.addDmgPercent(value,0);
+                  weapon_69.dmg.addDmgPercent(value,0);
+                  weapon_69.debuffValue.addDmgPercent(value,0);
+                  weapon_69.debuffValue2.addDmgPercent(value,0);
                }
                break;
             case "shieldAdd":
@@ -2781,27 +2782,27 @@ package core.player
             case "allAdd":
             case "allAdd2":
             case "allAdd3":
-               for each(weapon in ship.weapons)
+               for each(var weapon_7 in ship.weapons)
                {
-                  weapon.dmg.addDmgInt(int(1.5 * value),5);
-                  if(weapon.multiNrOfP > 1)
+                  weapon_7.dmg.addDmgInt(int(1.5 * value),5);
+                  if(weapon_7.multiNrOfP > 1)
                   {
-                     weapon.debuffValue.addDmgInt(int(1.5 / weapon.multiNrOfP * 1.5 * value),5);
-                     weapon.debuffValue2.addDmgInt(int(1.5 / weapon.multiNrOfP * 1.5 * value),5);
+                     weapon_7.debuffValue.addDmgInt(int(1.5 / weapon_7.multiNrOfP * 1.5 * value),5);
+                     weapon_7.debuffValue2.addDmgInt(int(1.5 / weapon_7.multiNrOfP * 1.5 * value),5);
                   }
                   else
                   {
-                     weapon.debuffValue.addDmgInt(int(1.5 * value),5);
-                     weapon.debuffValue2.addDmgInt(int(1.5 * value),5);
+                     weapon_7.debuffValue.addDmgInt(int(1.5 * value),5);
+                     weapon_7.debuffValue2.addDmgInt(int(1.5 * value),5);
                   }
                }
                break;
             case "allMulti":
-               for each(weapon in ship.weapons)
+               for each(var weapon_8 in ship.weapons)
                {
-                  weapon.dmg.addDmgPercent(1.5 * value,5);
-                  weapon.debuffValue.addDmgPercent(1.5 * value,5);
-                  weapon.debuffValue2.addDmgPercent(1.5 * value,5);
+                  weapon_8.dmg.addDmgPercent(1.5 * value,5);
+                  weapon_8.debuffValue.addDmgPercent(1.5 * value,5);
+                  weapon_8.debuffValue2.addDmgPercent(1.5 * value,5);
                }
                break;
             case "speed":
@@ -2890,6 +2891,9 @@ package core.player
             default:
                break;
          }
+         g.hud.healthAndShield.update();
+         g.hud.weaponHotkeys.refresh();
+         g.hud.abilities.refresh();
       }
    }
 }
