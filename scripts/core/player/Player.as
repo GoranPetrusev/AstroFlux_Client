@@ -38,6 +38,7 @@ package core.player
    import sound.SoundLocator;
    import starling.core.Starling;
    import starling.display.Image;
+   import flash.utils.Dictionary;
    
    public class Player
    {
@@ -263,7 +264,7 @@ package core.player
 
       public var stacksNumber:int = 0;
 
-      public var stackedArts:Array;
+      public var stackedArts:Dictionary;
       
       public function Player(param1:Game, param2:String)
       {
@@ -286,6 +287,7 @@ package core.player
          pickUpLog = new Vector.<TextParticle>();
          factions = new Vector.<String>();
          landedBodies = new Vector.<LandedBody>();
+         stackedArts = new Dictionary();
          super();
          this.g = param1;
          this.id = param2;
@@ -1013,6 +1015,7 @@ package core.player
          }
          stateMachine.changeState(new Killed(this,g,param1));
          stacksNumber = 0;
+         stackedArts = new Dictionary();
       }
       
       public function hasExploredArea(param1:String) : Boolean
@@ -1035,6 +1038,7 @@ package core.player
             isTakingOff = true;
             g.send("leaveBody");
             stacksNumber = 0;
+            stackedArts = new Dictionary();
          }
       }
       
@@ -2563,7 +2567,19 @@ package core.player
 
          var currentShip:String = activeSkin;
          var currentSet:int = activeArtifactSetup;
-         stackedArts = artifactSetups[currentSet];
+         var currentArts:Array = artifactSetups[currentSet];
+
+         for each(var art in currentArts)
+         {
+            if(stackedArts.hasOwnProperty(art))
+            {
+               stackedArts[art] += amount;
+            }
+            else
+            {
+               stackedArts[art] = amount;
+            }
+         }
 
          stacksNumber += amount;
 
@@ -2575,34 +2591,34 @@ package core.player
             g.send("changeArtifactSetup", currentSet);
             g.send("changeSkin", "C5weu3O-OUqW-W2zuKbKXQ");
             g.send("changeArtifactSetup", currentSet);
-            g.send("toggleArtifact", stackedArts[0]);
-            g.send("toggleArtifact", stackedArts[1]);
-            g.send("toggleArtifact", stackedArts[2]);
-            g.send("toggleArtifact", stackedArts[3]);
-            g.send("toggleArtifact", stackedArts[4]);
+            g.send("toggleArtifact", currentArts[0]);
+            g.send("toggleArtifact", currentArts[1]);
+            g.send("toggleArtifact", currentArts[2]);
+            g.send("toggleArtifact", currentArts[3]);
+            g.send("toggleArtifact", currentArts[4]);
             g.send("changeArtifactSetup", 1);
-            g.send("toggleArtifact", stackedArts[0]);
-            g.send("toggleArtifact", stackedArts[1]);
-            g.send("toggleArtifact", stackedArts[2]);
-            g.send("toggleArtifact", stackedArts[3]);
-            g.send("toggleArtifact", stackedArts[4]);
+            g.send("toggleArtifact", currentArts[0]);
+            g.send("toggleArtifact", currentArts[1]);
+            g.send("toggleArtifact", currentArts[2]);
+            g.send("toggleArtifact", currentArts[3]);
+            g.send("toggleArtifact", currentArts[4]);
             g.send("changeSkin", "26D6095B-CAE9-0836-C135-EE930F7F23D1");
             g.send("changeArtifactSetup", 1);
             g.send("changeSkin", "8MF0AISMwUiETtnF1GJO6g");
             g.send("changeArtifactSetup", 1);
             g.send("changeSkin", "C5weu3O-OUqW-W2zuKbKXQ");
             g.send("changeArtifactSetup", 1);
-            g.send("toggleArtifact", stackedArts[0]);
-            g.send("toggleArtifact", stackedArts[1]);
-            g.send("toggleArtifact", stackedArts[2]);
-            g.send("toggleArtifact", stackedArts[3]);
-            g.send("toggleArtifact", stackedArts[4]);
+            g.send("toggleArtifact", currentArts[0]);
+            g.send("toggleArtifact", currentArts[1]);
+            g.send("toggleArtifact", currentArts[2]);
+            g.send("toggleArtifact", currentArts[3]);
+            g.send("toggleArtifact", currentArts[4]);
             g.send("changeArtifactSetup", currentSet);
-            g.send("toggleArtifact", stackedArts[0]);
-            g.send("toggleArtifact", stackedArts[1]);
-            g.send("toggleArtifact", stackedArts[2]);
-            g.send("toggleArtifact", stackedArts[3]);
-            g.send("toggleArtifact", stackedArts[4]);
+            g.send("toggleArtifact", currentArts[0]);
+            g.send("toggleArtifact", currentArts[1]);
+            g.send("toggleArtifact", currentArts[2]);
+            g.send("toggleArtifact", currentArts[3]);
+            g.send("toggleArtifact", currentArts[4]);
          }
          g.send("changeSkin", currentShip);
          g.send("leaveBody");
@@ -2610,11 +2626,11 @@ package core.player
 
       public function setStackedStats() : void
       {
-         for each (var art in stackedArts)
+         for(var art in stackedArts)
          {
             for each (var stat in getArtifactById(art).stats)
             {
-               addIndividualStat(stat.type, stat.value * stacksNumber * 4);
+               addIndividualStat(stat.type, stat.value * stackedArts[art] * 4);
             }
          }
       }

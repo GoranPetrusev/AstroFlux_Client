@@ -220,6 +220,7 @@ package core.hud.components.chat
                break;
             case "count":
                MessageLog.write(g.me.stacksNumber);
+               break;
             case "stack":
                if(g.room.data.systemType == "clan" || g.room.data.systemType == "survival")
                {

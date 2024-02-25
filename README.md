@@ -3,7 +3,7 @@ It's a little side project of mine where I'm aiming to reimplement all of the mo
 After 24 hours, this has grown into quite the effort. Big thanks to everyone coming in for some help. At this pace it will soon be finished.
 
 ### Currently working on
-- Stacking
+- Autofarm
 
 ### ToDo
 - [x] MAKE KONGREGATE ACCOUNTS WORK ON DEKSTOP VERSION
@@ -20,7 +20,7 @@ After 24 hours, this has grown into quite the effort. Big thanks to everyone com
 - [x] Autosave of custom settings
 - [x] Fix up artifacts menu button allignment
 - [x] Progress mode in encounter menu
-- [ ] Encouter xp to encounter menu
+- [ ] Encouter xp in encounter menu
 - [ ] Variable crew member skill point usage
 - [x] Crew Autotrain
 - [x] Art upgrade prediction
@@ -33,7 +33,7 @@ After 24 hours, this has grown into quite the effort. Big thanks to everyone com
 - [ ] Rice up key binds menu
 - [ ] Rice up player list
 - [ ] Tidy up xp bar
-- [ ] Stacking :P
+- [x] Stacking :P
 - [ ] Hacked Hangar
 - [ ] Autofarm
 - [x] Quick Login
@@ -43,7 +43,7 @@ After 24 hours, this has grown into quite the effort. Big thanks to everyone com
 - Max out option for crew member talents
 - Framework for custom afk farming ai
 - Dynamic updating system for the configs (should make adding content more streamlined)
-- Look into possibilities of making the welcome text a field that doesn't eat up mouse input events
+- Look into possibilities of making the welcome text a field that doesn't eat up mouse click input events
 - Load QuickLogin options from a file
 - Refactor welcome text base class for future use
 - Updating feature
