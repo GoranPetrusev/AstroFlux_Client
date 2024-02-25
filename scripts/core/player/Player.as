@@ -264,8 +264,6 @@ package core.player
       public var stacksNumber:int = 0;
 
       public var stackedArts:Array;
-
-      public var areStatsSet:Boolean = false;
       
       public function Player(param1:Game, param2:String)
       {
@@ -1013,7 +1011,6 @@ package core.player
          {
             respawnNextReady = g.time + 10000;
          }
-         areStatsSet = false;
          stateMachine.changeState(new Killed(this,g,param1));
       }
       
@@ -1035,7 +1032,6 @@ package core.player
          {
             Console.write("Leaving body");
             isTakingOff = true;
-            areStatsSet = false;
             g.send("leaveBody");
          }
       }
@@ -2612,25 +2608,288 @@ package core.player
 
       public function setStackedStats() : void
       {
-         if(areStatsSet)
+         for each (var art in stackedArts)
          {
-            return;
-         }
-
-         areStatsSet = true;
-         var i:int = 4 * stacksNumber;
-         while(i--)
-         {
-            addArtifactStat(getArtifactById(stackedArts[0]),false);
-            addArtifactStat(getArtifactById(stackedArts[1]),false);
-            addArtifactStat(getArtifactById(stackedArts[2]),false);
-            addArtifactStat(getArtifactById(stackedArts[3]),false);
-            addArtifactStat(getArtifactById(stackedArts[4]),false);
+            for each (var stat in getArtifactById(art).stats)
+            {
+               addIndividualStat(stat.type, stat.value * stacksNumber);
+            }
          }
       }
 
       public function unstack() : void
       {
+      }
+
+      private function addIndividualStat(stat:String, value:Number) : void 
+      {
+         var weapon:*;
+         var cnt:int = 0;
+
+         switch(stat)
+         {
+            case "healthAdd":
+            case "healthAdd2":
+            case "healthAdd3":
+               ship.removeConvert();
+               ship.hpMax += int(2 * value);
+               ship.addConvert();
+               break;
+            case "healthMulti":
+               ship.removeConvert();
+               ship.hpMax += int(ship.hpBase * (1.35 * value) / 100);
+               ship.addConvert();
+               break;
+            case "armorAdd":
+            case "armorAdd2":
+            case "armorAdd3":
+               ship.armorThreshold += int(7.5 * value);
+               break;
+            case "armorMulti":
+               ship.armorThreshold += int(ship.armorThresholdBase * value / 100);
+               break;
+            case "corrosiveAdd":
+            case "corrosiveAdd2":
+            case "corrosiveAdd3":
+               for each(weapon in ship.weapons)
+               {
+                  weapon.dmg.addDmgInt(int(4 * value),2);
+                  if(weapon.multiNrOfP > 1)
+                  {
+                     weapon.debuffValue.addDmgInt(int(1.5 / weapon.multiNrOfP * 4 * value),2);
+                     weapon.debuffValue2.addDmgInt(int(1.5 / weapon.multiNrOfP * 4 * value),2);
+                  }
+                  else
+                  {
+                     weapon.debuffValue.addDmgInt(int(4 * value),2);
+                     weapon.debuffValue2.addDmgInt(int(4 * value),2);
+                  }
+               }
+               break;
+            case "corrosiveMulti":
+               for each(weapon in ship.weapons)
+               {
+                  weapon.dmg.addDmgPercent(value,2);
+                  weapon.debuffValue.addDmgPercent(value,2);
+                  weapon.debuffValue2.addDmgPercent(value,2);
+               }
+               break;
+            case "energyAdd":
+            case "energyAdd2":
+            case "energyAdd3":
+               for each(weapon in ship.weapons)
+               {
+                  weapon.dmg.addDmgInt(int(4 * value),1);
+                  if(weapon.multiNrOfP > 1)
+                  {
+                     weapon.debuffValue.addDmgInt(int(1.5 / weapon.multiNrOfP * 4 * value),1);
+                     weapon.debuffValue2.addDmgInt(int(1.5 / weapon.multiNrOfP * 4 * value),1);
+                  }
+                  else
+                  {
+                     weapon.debuffValue.addDmgInt(int(4 * value),1);
+                     weapon.debuffValue2.addDmgInt(int(4 * value),1);
+                  }
+               }
+               break;
+            case "energyMulti":
+               for each(weapon in ship.weapons)
+               {
+                  weapon.dmg.addDmgPercent(value,1);
+                  weapon.debuffValue.addDmgPercent(value,1);
+                  weapon.debuffValue2.addDmgPercent(value,1);
+               }
+               break;
+            case "kineticAdd":
+            case "kineticAdd2":
+            case "kineticAdd3":
+               for each(weapon in ship.weapons)
+               {
+                  weapon.dmg.addDmgInt(int(4 * value),0);
+                  if(weapon.multiNrOfP > 1)
+                  {
+                     weapon.debuffValue.addDmgInt(int(1.5 / weapon.multiNrOfP * 4 * value),0);
+                     weapon.debuffValue2.addDmgInt(int(1.5 / weapon.multiNrOfP * 4 * value),0);
+                  }
+                  else
+                  {
+                     weapon.debuffValue.addDmgInt(int(4 * value),0);
+                     weapon.debuffValue2.addDmgInt(int(4 * value),0);
+                  }
+               }
+               break;
+            case "kineticMulti":
+               for each(weapon in ship.weapons)
+               {
+                  weapon.dmg.addDmgPercent(value,0);
+                  weapon.debuffValue.addDmgPercent(value,0);
+                  weapon.debuffValue2.addDmgPercent(value,0);
+               }
+               break;
+            case "shieldAdd":
+            case "shieldAdd2":
+            case "shieldAdd3":
+               ship.removeConvert();
+               ship.shieldHpMax += int(1.5 * value);
+               ship.shieldRegen += int(ship.shieldRegenBase * (0.0025 * value) / 100);
+               ship.addConvert();
+               break;
+            case "shieldMulti":
+               ship.removeConvert();
+               ship.shieldHpMax += int(ship.shieldHpBase * (1.35 * value) / 100);
+               ship.shieldRegen += int(ship.shieldRegenBase * (0.25 * value) / 100);
+               ship.addConvert();
+               break;
+            case "shieldRegen":
+               ship.removeConvert();
+               ship.shieldRegen += int(ship.shieldRegenBase * value / 100);
+               ship.addConvert();
+               break;
+            case "corrosiveResist":
+               ship.resistances[2] = ship.resistances[2] + value;
+               if(ship.resistances[2] < 0)
+               {
+                  ship.resistances[2] = 0;
+               }
+               break;
+            case "kineticResist":
+               ship.resistances[0] = ship.resistances[0] + value;
+               if(ship.resistances[0] < 0)
+               {
+                  ship.resistances[0] = 0;
+               }
+               break;
+            case "energyResist":
+               ship.resistances[1] = ship.resistances[1] + value;
+               if(ship.resistances[1] < 0)
+               {
+                  ship.resistances[1] = 0;
+               }
+               break;
+            case "allResist":
+               cnt = 0;
+               while(cnt < 5)
+               {
+                  ship.resistances[cnt] = ship.resistances[cnt] + value * Damage.stats[5][cnt];
+                  if(ship.resistances[cnt] < 0)
+                  {
+                     ship.resistances[cnt] = 0;
+                  }
+                  cnt++;
+               }
+               break;
+            case "allAdd":
+            case "allAdd2":
+            case "allAdd3":
+               for each(weapon in ship.weapons)
+               {
+                  weapon.dmg.addDmgInt(int(1.5 * value),5);
+                  if(weapon.multiNrOfP > 1)
+                  {
+                     weapon.debuffValue.addDmgInt(int(1.5 / weapon.multiNrOfP * 1.5 * value),5);
+                     weapon.debuffValue2.addDmgInt(int(1.5 / weapon.multiNrOfP * 1.5 * value),5);
+                  }
+                  else
+                  {
+                     weapon.debuffValue.addDmgInt(int(1.5 * value),5);
+                     weapon.debuffValue2.addDmgInt(int(1.5 * value),5);
+                  }
+               }
+               break;
+            case "allMulti":
+               for each(weapon in ship.weapons)
+               {
+                  weapon.dmg.addDmgPercent(1.5 * value,5);
+                  weapon.debuffValue.addDmgPercent(1.5 * value,5);
+                  weapon.debuffValue2.addDmgPercent(1.5 * value,5);
+               }
+               break;
+            case "speed":
+            case "speed2":
+            case "speed3":
+               ship.engine.speed /= 1 + ship.aritfact_speed;
+               ship.aritfact_speed += 0.001 * 2 * value;
+               ship.engine.speed *= 1 + ship.aritfact_speed;
+               break;
+            case "refire":
+            case "refire2":
+            case "refire3":
+               cnt = 0;
+               while(cnt < ship.weapons.length)
+               {
+                  if(ship.weapons[cnt] is Teleport)
+                  {
+                     ship.weapons[cnt].speed /= 1 + 0.5 * ship.aritfact_refire;
+                  }
+                  else if(!(ship.weapons[cnt] is Cloak))
+                  {
+                     ship.weapons[cnt].reloadTime *= 1 + ship.aritfact_refire;
+                     ship.weapons[cnt].heatCost *= 1 + ship.aritfact_refire;
+                  }
+                  cnt++;
+               }
+               ship.aritfact_refire += 3 * 0.001 * value;
+               cnt = 0;
+               while(cnt < ship.weapons.length)
+               {
+                  if(ship.weapons[cnt] is Teleport)
+                  {
+                     ship.weapons[cnt].speed *= 1 + 0.5 * ship.aritfact_refire;
+                  }
+                  else if(!(ship.weapons[cnt] is Cloak))
+                  {
+                     ship.weapons[cnt].reloadTime /= 1 + ship.aritfact_refire;
+                     ship.weapons[cnt].heatCost /= 1 + ship.aritfact_refire;
+                  }
+                  cnt++;
+               }
+               break;
+            case "convHp":
+               ship.removeConvert();
+               ship.aritfact_convAmount -= 0.001 * value;
+               ship.addConvert();
+               break;
+            case "convShield":
+               ship.removeConvert();
+               ship.aritfact_convAmount += 0.001 * value;
+               ship.addConvert();
+               break;
+            case "powerReg":
+            case "powerReg2":
+            case "powerReg3":
+               ship.powerRegBonus += 0.001 * 1.5 * value;
+               ship.weaponHeat.setBonuses(ship.maxPower + ship.aritfact_powerMax, ship.powerRegBonus + ship.aritfact_poweReg);
+               break;
+            case "powerMax":
+               ship.aritfact_powerMax += 0.01 * 1.5 * value;
+               ship.weaponHeat.setBonuses(ship.maxPower + ship.aritfact_powerMax,ship.powerRegBonus + ship.aritfact_poweReg);
+               break;
+            case "cooldown":
+            case "cooldown2":
+            case "cooldown3":
+               cnt = 0;
+               while(cnt < ship.weapons.length)
+               {
+                  if(ship.weapons[cnt] is Teleport || ship.weapons[cnt] is Cloak)
+                  {
+                     ship.weapons[cnt].reloadTime *= 1 + ship.aritfact_cooldownReduction;
+                  }
+                  cnt++;
+               }
+               ship.aritfact_cooldownReduction += 0.001 * value;
+               cnt = 0;
+               while(cnt < ship.weapons.length)
+               {
+                  if(ship.weapons[cnt] is Teleport || ship.weapons[cnt] is Cloak)
+                  {
+                     ship.weapons[cnt].reloadTime /= 1 + ship.aritfact_cooldownReduction;
+                  }
+                  cnt++;
+               }
+               break;
+            default:
+               break;
+         }
       }
    }
 }

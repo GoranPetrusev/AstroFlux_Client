@@ -240,8 +240,9 @@ package core.artifact
             case "corrosiveResist":
                return 1 * 0.5 * FitnessConfig.values.corrosiveResist * this.value;
             case "kineticResist":
-            case "energyResist":
                return 1 * 0.5 * FitnessConfig.values.kineticResist * this.value;
+            case "energyResist":
+               return 1 * 0.5 * FitnessConfig.values.energyResist * this.value;
             case "allResist":
                return 1 * 1 * FitnessConfig.values.allResist * this.value;
             case "allAdd":
