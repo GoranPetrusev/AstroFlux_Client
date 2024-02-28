@@ -8,32 +8,24 @@ package goki
    {
       
       private static var callback:Function = null;
-       
+
       
-      private var g:Game;
-      
-      private var player:PlayerShip;
-      
-      public function AutoFarm(instance:Game)
+      public function AutoFarm()
       {
          super();
-         g = instance;
-         player = g.me;
       }
       
-      public function init(procedure:String) : void
+      public static function init(procedure:String) : void
       {
          try
          {
-            if(AutoFarmProcedures.functions.hasOwnProperty(procedure))
+            if(AFprocedures.functions.hasOwnProperty(procedure))
             {
-               callback = AutoFarmProcedures.functions[procedure];
-               MessageLog.write("function set");
+               callback = AFprocedures.functions[procedure];
             }
             else
             {
                callback = null;
-               MessageLog.write("function null");
             }
          }
          catch(e:Error)
@@ -42,13 +34,13 @@ package goki
          }
       }
       
-      public function run() : void
+      public static function run(game:Game) : void
       {
          if(callback == null)
          {
             return;
          }
-         callback();
+         callback(game);
       }
    }
 }

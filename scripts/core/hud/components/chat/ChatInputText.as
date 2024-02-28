@@ -9,6 +9,7 @@ package core.hud.components.chat
    import flash.ui.Mouse;
    import goki.FileManager;
    import goki.PlayerConfig;
+   import goki.AutoFarm;
    import sound.Playlist;
    import starling.core.Starling;
    import starling.display.Sprite;
@@ -209,6 +210,29 @@ package core.hud.components.chat
          output = parseCommand(text);
          switch(output[0])
          {
+            case "test":
+               for each (var enemy in g.shipManager.enemies)
+               {
+                  MessageLog.write(enemy.bodyName);
+               }
+            case "af":
+            case "autofarm":
+               try
+               {
+                  if(output.length == 2)
+                  {
+                     AutoFarm.init(output[1]);
+                  }
+                  else
+                  {
+                     AutoFarm.init(null);
+                  }
+               }
+               catch(e:Error)
+               {
+                  g.showErrorDialog(e.getStackTrace());
+               }
+               break;
             case "set_stats":
                g.me.setStackedStats();
                break;
