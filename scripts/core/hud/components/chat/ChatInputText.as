@@ -7,8 +7,6 @@ package core.hud.components.chat
    import feathers.controls.TextInput;
    import feathers.data.ListCollection;
    import flash.ui.Mouse;
-   import goki.FileManager;
-   import goki.PlayerConfig;
    import sound.Playlist;
    import starling.core.Starling;
    import starling.display.Sprite;
@@ -354,8 +352,11 @@ package core.hud.components.chat
             case "unmute":
                sendSettingMsg(output);
                break;
-            case "lowerfps":
-               RymdenRunt.s.nativeStage.frameRate = 3;
+            case "setfps":
+               RymdenRunt.s.nativeStage.frameRate = output[1];
+               break;
+            case "setmyid":
+               g.me.id = output[1];
                break;
             case "stats":
                g.traceDisplayObjectCounts();
