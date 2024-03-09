@@ -65,7 +65,7 @@ package core.states.gameStates
          bgrMenuOverlay = new Quad(100,100,0);
          super(g);
          this.body = body;
-         g.messageLog.visible = false;
+         
          input = InputLocator.getService();
          soundManager = SoundLocator.getService();
          textureManager = TextureLocator.getService();
