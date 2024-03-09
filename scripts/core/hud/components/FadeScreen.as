@@ -96,33 +96,34 @@ package core.hud.components
          textureManager = TextureLocator.getService();
          resize();
          texts.push([
-    ["Press C if you want to know how many minerals you have."],
-    ["Press X or ESC if you want to see your ship summary."],
-    ["Check out the game wiki at wiki.astroflux.net"],
-    ["Watch out for those pesky comets."],
-    ["You can unlock artifact slots in the ship menu."],
-    ["Not all offers are good..."],
-    ["Crew members will increase their skill while exploring."],
-    ["News and updates on forum.astroflux.net"],
-    ["You lose all junk when you die. All your minerals are safe."],
-    ["Whatever you do, don't fly into the sun."],
-    ["I am busy computing.."],
-    ["Improve your armor to reduce damage taken by that amount."],
-    ["Power regenerates more slowly when the gauge turns red."],
-    ["Group up with players and share XP."],
-    ["Recycle artifacts and collect minerals."],
-    ["Your game is automatically saved."],
-    ["Enemies drop 25% more junk in pvp systems."],
-    ["Press enter to start chatting."]
+          ["Press C to see the resources that are in your cargo."],
+          ["Press X to see your ship summary."],
+          ["Check out the Astroflux discord at discord.gg/VcSkRS7"],
+          ["Watch out for those pesky comets."],
+          ["You can unlock artifact slots in the ship menu."],
+          ["Not all offers are good..."],
+          ["You can upgrade artifacts up to 10 times."],
+          ["Effective resistances are capped at 75% against enemies and 50% against players."],
+          ["The repair ability doubles your armor for the duration."],
+          ["Whatever you do, don't fly into the sun."],
+          ["I am busy computing..."],
+          ["Improve your armor to reduce damage taken by that amount."],
+          ["Power regeneration is halved when the gauge turns red."],
+          ["XP gain is increased by 1% per player in your group."],
+          ["Recycle artifacts and collect minerals."],
+          ["Your game is automatically saved."],
+          ["Timed missons are a good source of flux."],
+          ["The more lines an artifact has, the more stats it can give."],
+          ["Press enter to start chatting."]
 ]);
 
-textsPvp.push([
-    ["End of season rewards: 100-1000 Flux for the top 500 players!"],
-    ["Defeating a player with much lower Rating yields nothing."],
-    ["Matchmaking is based on player Rating."],
-    ["A zone with players from both teams doesn't generate points."],
-    ["Holding all zones at the same time generates 3x more points."],
-    ["The PvP-ladder resets each new month."]
+         textsPvp.push([
+          ["Finishing a match without dying will award bonus rating."],
+          ["You need over 1000 rating by the end of the season to earn flux rewards."],
+          ["Matchmaking is based on player Rating."],
+          ["Dying in a domination match loses points for your team and gives points to the other team."],
+          ["Holding all zones at the same time generates 3x more points."],
+          ["The PvP-ladder resets each new month."]
 ]);
 screen.addChild(bgrQuad);
          var _loc2_:Texture = textureManager.getTextureGUIByTextureName("loading.png");
