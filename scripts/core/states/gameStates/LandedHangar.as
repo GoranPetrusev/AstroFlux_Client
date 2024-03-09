@@ -17,7 +17,6 @@ package core.states.gameStates
       {
          super.enter();
          addChild(new Hangar(g,body));
-  
          loadCompleted();
       }
    }
