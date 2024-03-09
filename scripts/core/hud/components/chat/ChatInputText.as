@@ -198,6 +198,7 @@ package core.hud.components.chat
          var output:Vector.<String>;
          var tmp:Array;
          var q:int;
+         var _loc2_:*;
          var text:String = input.text;
          var stackAmount:int = 1;
          if(text == "")
@@ -244,14 +245,20 @@ package core.hud.components.chat
                break;
             case "y":
             case "yes":
-               sendConfirmInviteGroup();
+               g.groupManager.acceptGroupInvite();
                break;
             case "i":
             case "inv":
             case "invite":
                if(output.length == 2)
                {
-                  sendInvite(output[1]);
+                  for each(_loc2_ in g.playerManager.players)
+                  {
+                     if(output[1] == _loc2_.name)
+                     {
+                        g.groupManager.invitePlayer(_loc2_);
+                     }
+                  }
                }
                break;
             case "g":
@@ -264,7 +271,7 @@ package core.hud.components.chat
                }
                break;
             case "go":
-               sendChatMessageMod(output[1]);
+               g.send("devMsg","mod",output[1]);
                break;
             case "m":
             case "w":
@@ -319,18 +326,27 @@ package core.hud.components.chat
                }
                break;
             case "leave":
-               sendLeave();
+               g.groupManager.leaveGroup();
                break;
             case "help":
             case "commands":
             case "command":
-               listCommands();
+               MessageLog.write("\'\'/i, /inv, /invite PlayerName\'\' to send a group invite");
+               MessageLog.write("\'\'/leave\'\' to leave your group");
+               MessageLog.write("\'\'/l, /local, msg\'\' sends a msg to all");
+               MessageLog.write("\'\'/c, /clan, msg\'\' sends a msg to your clan");
+               MessageLog.write("\'\'/g, /grp, /group msg\'\' sends a msg to your group");
+               MessageLog.write("\'\'/w, /whisper, /m, /t, /tell, /private PlayerName msg\'\' sends a msg to that player");
+               MessageLog.write("\'\'/r, /reply msg\'\' to reply to last private msg");
+               MessageLog.write("\'\'/list\'\' lists all players in the system");
+               MessageLog.write("\'\'/ignore name\'\' ignore a player");
+               MessageLog.write("\'\'/unignore name\'\' remove ignore");
                break;
             case "list":
-               listPlayers();
+               g.playerManager.listAll();
                break;
             case "msgstats":
-               getMsgStats();
+               g.send("getMsgStats");
                break;
             case "ignore":
             case "mute":
@@ -423,33 +439,6 @@ package core.hud.components.chat
          else if(_loc3_.length > 0)
          {
             Game.trackEvent("reportedPlayers",_loc3_[0],"no reason (" + g.me.name + ")",1);
-         }
-      }
-      
-      private function listCommands() : void
-      {
-         MessageLog.write("\'\'/i, /inv, /invite PlayerName\'\' to send a group invite");
-         MessageLog.write("\'\'/leave\'\' to leave your group");
-         MessageLog.write("\'\'/l, /local, msg\'\' sends a msg to all");
-         MessageLog.write("\'\'/c, /clan, msg\'\' sends a msg to your clan");
-         MessageLog.write("\'\'/g, /grp, /group msg\'\' sends a msg to your group");
-         MessageLog.write("\'\'/w, /whisper, /m, /t, /tell, /private PlayerName msg\'\' sends a msg to that player");
-         MessageLog.write("\'\'/r, /reply msg\'\' to reply to last private msg");
-         MessageLog.write("\'\'/list\'\' lists all players in the system");
-         MessageLog.write("\'\'/ignore name\'\' ignore a player");
-         MessageLog.write("\'\'/unignore name\'\' remove ignore");
-      }
-      
-      private function getMsgStats() : void
-      {
-         g.send("getMsgStats");
-      }
-      
-      private function listPlayers() : void
-      {
-         if(g != null && g.playerManager != null)
-         {
-            g.playerManager.listAll();
          }
       }
       
@@ -570,47 +559,6 @@ package core.hud.components.chat
          {
             MessageLog.write("You have to wait " + Math.round((nextGlobalRdySendTime - g.time) / 1000) + " seconds.");
          }
-      }
-      
-      private function sendChatMessageMod(param1:String) : void
-      {
-         if(nextRdySendTime < g.time)
-         {
-            history.push(param1);
-            nextRdySendTime = g.time + 1000;
-            g.send("devMsg","mod",param1);
-         }
-         else if(nextRdySendTime > g.time)
-         {
-            MessageLog.write("Hold your horses cowboy.");
-         }
-      }
-      
-      private function sendConfirmInviteGroup() : void
-      {
-         if(g != null)
-         {
-            g.groupManager.acceptGroupInvite();
-         }
-      }
-      
-      private function sendInvite(param1:String) : void
-      {
-         if(param1 != "")
-         {
-            for each(var _loc2_ in g.playerManager.players)
-            {
-               if(param1 == _loc2_.name)
-               {
-                  g.groupManager.invitePlayer(_loc2_);
-               }
-            }
-         }
-      }
-      
-      private function sendLeave() : void
-      {
-         g.groupManager.leaveGroup();
       }
       
       public function previous() : void
