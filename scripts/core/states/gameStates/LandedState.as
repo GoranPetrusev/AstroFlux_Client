@@ -125,7 +125,7 @@ package core.states.gameStates
       {
          g.hud.show = false;
          g.toggleRoamingCanvases(false);
-         RymdenRunt.s.nativeStage.frameRate = 60;
+       
          g.addChildToMenu(container);
          g.addChildToMenu(defaultButton);
          g.addChildToMenu(fleetButton);
@@ -229,7 +229,7 @@ package core.states.gameStates
          Tutorial.clear();
          g.camera.zoomFocus(PlayerConfig.values.zoomFactor,1);
          g.toggleRoamingCanvases(true);
-         RymdenRunt.s.nativeStage.frameRate = 60;
+       
          param1();
       }
       
