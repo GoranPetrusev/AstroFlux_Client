@@ -6,7 +6,6 @@ package core.states.gameStates
    import core.hud.components.InputText;
    import core.hud.components.Text;
    import core.hud.components.dialogs.CreditBuyBox;
-   import core.hud.components.dialogs.PopupConfirmMessage;
    import core.particle.Emitter;
    import core.particle.EmitterFactory;
    import core.player.FleetObj;
@@ -60,6 +59,9 @@ package core.states.gameStates
          var buyWithFluxButton:Button;
          var freePaintJobs:Text;
          var testDriveButton:Button;
+         var buttonString:String;
+         var fluxCost:int;
+         var confirmString:String;
          super.enter();
          fleetObj = g.me.getActiveFleetObj();
          addShip();
@@ -146,65 +148,41 @@ package core.states.gameStates
                _loc2_.changeHue(sliderEngineHue.value);
             }
          });
+         freePaintJobs = new Text(150,400);
+         freePaintJobs.htmlText = "You have <FONT COLOR=\'#adff2f\'>" + me.freePaintJobs + "</FONT> free paint jobs left.";
          if(me.freePaintJobs > 0)
          {
-            buyWithFluxButton = new Button(function(param1:TouchEvent):void
-            {
-               var e:TouchEvent = param1;
-               var confirmBox:PopupConfirmMessage = new PopupConfirmMessage();
-               confirmBox.text = "Are you sure you want to buy the paint job? You have <FONT COLOR=\'#adff2f\'>" + me.freePaintJobs + "</FONT> free paint jobs left.";
-               g.addChildToOverlay(confirmBox,true);
-               confirmBox.addEventListener("accept",function():void
-               {
-                  var m:Message = g.createMessage("buyPaintJob",sliderShipHue.value,Number(sliderShipBrightness.text),Number(sliderShipSaturation.text),Number(sliderShipContrast.text),sliderEngineHue.value);
-                  g.rpcMessage(m,function(param1:Message):void
-                  {
-                     boughtPaintJob(param1);
-                     confirmBox.removeEventListeners();
-                     g.removeChildFromOverlay(confirmBox,true);
-                  });
-               });
-               confirmBox.addEventListener("close",function():void
-               {
-                  buyWithFluxButton.enabled = true;
-                  confirmBox.removeEventListeners();
-                  g.removeChildFromOverlay(confirmBox,true);
-               });
-            },"Buy for Free","positive");
-            freePaintJobs = new Text();
-            freePaintJobs.htmlText = "You have <FONT COLOR=\'#adff2f\'>" + me.freePaintJobs + "</FONT> free paint jobs left.";
-            freePaintJobs.x = 395;
-            freePaintJobs.y = 445;
-            addChild(freePaintJobs);
+            buttonString = "Buy for free";
+            fluxCost = 0;
+            confirmString = "Are you sure you want to use a free paint job?";
          }
          else
          {
-            buyWithFluxButton = new Button(function(param1:TouchEvent):void
-            {
-               var e:TouchEvent = param1;
-               g.creditManager.refresh(function():void
-               {
-                  var confirmBuyWithFlux:CreditBuyBox = new CreditBuyBox(g,CreditManager.getCostPaintJob(),"Are you sure you want to buy the paint job?");
-                  g.addChildToOverlay(confirmBuyWithFlux);
-                  confirmBuyWithFlux.addEventListener("accept",function():void
-                  {
-                     var m:Message = g.createMessage("buyPaintJob",sliderShipHue.value,Number(sliderShipBrightness.text),Number(sliderShipSaturation.text),Number(sliderShipContrast.text),sliderEngineHue.value);
-                     g.rpcMessage(m,function(param1:Message):void
-                     {
-                        boughtPaintJob(param1);
-                        confirmBuyWithFlux.removeEventListeners();
-                        g.removeChildFromOverlay(confirmBuyWithFlux,true);
-                     });
-                  });
-                  confirmBuyWithFlux.addEventListener("close",function():void
-                  {
-                     buyWithFluxButton.enabled = true;
-                     confirmBuyWithFlux.removeEventListeners();
-                     g.removeChildFromOverlay(confirmBuyWithFlux,true);
-                  });
-               });
-            },"Buy for [flux] Flux".replace("[flux]",CreditManager.getCostPaintJob()),"positive");
+            buttonString = "Buy for 250 Flux";
+            fluxCost = 250;
+            confirmString = "Are you sure you want buy the paint job?";
          }
+         buyWithFluxButton = new Button(function():void
+         {
+            var confirmBuyWithFlux:CreditBuyBox = new CreditBuyBox(g,fluxCost,confirmString);
+            g.addChildToOverlay(confirmBuyWithFlux);
+            confirmBuyWithFlux.addEventListener("accept",function():void
+            {
+               var m:Message = g.createMessage("buyPaintJob",sliderShipHue.value,Number(sliderShipBrightness.text),Number(sliderShipSaturation.text),Number(sliderShipContrast.text),sliderEngineHue.value);
+               g.rpcMessage(m,function(param1:Message):void
+               {
+                  boughtPaintJob(param1);
+                  confirmBuyWithFlux.removeEventListeners();
+                  g.removeChildFromOverlay(confirmBuyWithFlux,true);
+               });
+            });
+            confirmBuyWithFlux.addEventListener("close",function():void
+            {
+               buyWithFluxButton.enabled = true;
+               confirmBuyWithFlux.removeEventListeners();
+               g.removeChildFromOverlay(confirmBuyWithFlux,true);
+            });
+         },buttonString,"positive");
          buyWithFluxButton.x = 170;
          buyWithFluxButton.y = 440;
          testDriveButton = new Button(testDrive2,"Free test drive","positive");
@@ -223,6 +201,7 @@ package core.states.gameStates
          addChild(sliderShipContrast);
          addChild(labelEngineHue);
          addChild(sliderEngineHue);
+         addChild(freePaintJobs);
          loadCompleted();
          if(RymdenRunt.isBuggedFlashVersion)
          {
