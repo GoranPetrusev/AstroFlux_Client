@@ -16,6 +16,7 @@ package core.states.gameStates
    import feathers.controls.Slider;
    import generics.Util;
    import playerio.Message;
+   import starling.core.Starling;
    import starling.display.Sprite;
    import starling.events.Event;
    import starling.events.TouchEvent;
@@ -50,6 +51,7 @@ package core.states.gameStates
       override public function enter() : void
       {
          var obj:Object;
+         var infoText:Text;
          var labelShipHue:Text;
          var labelShipBrightness:Text;
          var labelShipSaturation:Text;
@@ -62,10 +64,11 @@ package core.states.gameStates
          fleetObj = g.me.getActiveFleetObj();
          addShip();
          obj = dataManager.loadKey("Skins",g.me.activeSkin);
-         labelShipHue = new Text();
+         infoText = new Text(450,100,true);
+         infoText.text = "In this paint shop, you can set values for brightness, saturation, and contrast.\nThe default ranges in the original paint shop are:\n-0.18 to 0.04 for brightness\n-1 to 1 for saturation\n0 to 1 for contrast\n\nYou can go beyond these values if you\'d like, just don\'t make a white box or black out your ship.\n\nScientific noation in the form \'1.23e+45\' is supported, but be aware that other players may see your ship differently than what is seen (potentially invisible).\n\n Lastly, don\'t put words.";
+         infoText.width = 225;
+         labelShipHue = new Text(80,160);
          labelShipHue.text = "Ship color";
-         labelShipHue.x = 80;
-         labelShipHue.y = 160;
          sliderShipHue = new Slider();
          sliderShipHue.x = 200;
          sliderShipHue.y = 160;
@@ -85,10 +88,8 @@ package core.states.gameStates
             _loc2_.adjustContrast(sliderShipContrast.text);
             preview.movieClip.filter = _loc2_;
          });
-         labelShipBrightness = new Text();
+         labelShipBrightness = new Text(80,200);
          labelShipBrightness.text = "Ship brightness";
-         labelShipBrightness.x = 80;
-         labelShipBrightness.y = 200;
          sliderShipBrightness = new InputText(200,200,200,20);
          sliderShipBrightness.text = fleetObj.shipBrightness;
          sliderShipBrightness.addEventListener("change",function(param1:Event):void
@@ -100,10 +101,8 @@ package core.states.gameStates
             _loc2_.adjustContrast(sliderShipContrast.text);
             preview.movieClip.filter = _loc2_;
          });
-         labelShipSaturation = new Text();
+         labelShipSaturation = new Text(80,240);
          labelShipSaturation.text = "Ship saturation";
-         labelShipSaturation.x = 80;
-         labelShipSaturation.y = 240;
          sliderShipSaturation = new InputText(200,240,200,20);
          sliderShipSaturation.text = fleetObj.shipSaturation;
          sliderShipSaturation.addEventListener("change",function(param1:Event):void
@@ -115,10 +114,8 @@ package core.states.gameStates
             _loc2_.adjustContrast(sliderShipContrast.text);
             preview.movieClip.filter = _loc2_;
          });
-         labelShipContrast = new Text();
+         labelShipContrast = new Text(80,280);
          labelShipContrast.text = "Ship contrast";
-         labelShipContrast.x = 80;
-         labelShipContrast.y = 280;
          sliderShipContrast = new InputText(200,280,200,20);
          sliderShipContrast.text = fleetObj.shipContrast;
          sliderShipContrast.addEventListener("change",function(param1:Event):void
@@ -130,10 +127,8 @@ package core.states.gameStates
             _loc2_.adjustContrast(sliderShipContrast.text);
             preview.movieClip.filter = _loc2_;
          });
-         labelEngineHue = new Text();
+         labelEngineHue = new Text(80,340);
          labelEngineHue.text = "Engine color";
-         labelEngineHue.x = 80;
-         labelEngineHue.y = 340;
          sliderEngineHue = new Slider();
          sliderEngineHue.x = 200;
          sliderEngineHue.y = 340;
@@ -161,7 +156,7 @@ package core.states.gameStates
                g.addChildToOverlay(confirmBox,true);
                confirmBox.addEventListener("accept",function():void
                {
-                  var m:Message = g.createMessage("buyPaintJob",sliderShipHue.value,sliderShipBrightness.text,sliderShipSaturation.text,sliderShipContrast.text,sliderEngineHue.value);
+                  var m:Message = g.createMessage("buyPaintJob",sliderShipHue.value,Number(sliderShipBrightness.text),Number(sliderShipSaturation.text),Number(sliderShipContrast.text),sliderEngineHue.value);
                   g.rpcMessage(m,function(param1:Message):void
                   {
                      boughtPaintJob(param1);
@@ -210,12 +205,12 @@ package core.states.gameStates
                });
             },"Buy for [flux] Flux".replace("[flux]",CreditManager.getCostPaintJob()),"positive");
          }
-         buyWithFluxButton.x = 270;
+         buyWithFluxButton.x = 170;
          buyWithFluxButton.y = 440;
-// test drive button
-         testDriveButton = new Button(testDrive2,"free test drive","positive");
-         testDriveButton.x = 270;
+         testDriveButton = new Button(testDrive2,"Free test drive","positive");
+         testDriveButton.x = 170;
          testDriveButton.y = 485;
+         addChild(infoText);
          addChild(testDriveButton);
          addChild(buyWithFluxButton);
          addChild(labelShipHue);
@@ -271,7 +266,7 @@ package core.states.gameStates
          var _loc5_:Sprite = new Sprite();
          preview.canvas = _loc5_;
          preview.addToCanvas();
-         _loc5_.x = 380;
+         _loc5_.x = 300;
          _loc5_.y = 100;
          addChild(_loc5_);
          if(_loc7_.dual)
@@ -343,7 +338,7 @@ package core.states.gameStates
          }
          super.exit(param1);
       }
-      // copying mufenz's code doesn't work
+      
       public function testDrive(param1:TouchEvent = null) : void
       {
          var _loc2_:ColorMatrixFilter = new ColorMatrixFilter();
