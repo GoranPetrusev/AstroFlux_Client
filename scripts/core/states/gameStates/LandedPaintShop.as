@@ -78,7 +78,6 @@ package core.states.gameStates
          sliderShipHue.width = 200;
          sliderShipHue.step = 0.001;
          sliderShipHue.value = fleetObj.shipHue;
-         sliderShipHue.direction == "horizontal";
          sliderShipHue.useHandCursor = true;
          sliderShipHue.addEventListener("change",updatePreview);
          labelShipBrightness = new Text(80,200);
@@ -106,7 +105,6 @@ package core.states.gameStates
          sliderEngineHue.width = 200;
          sliderEngineHue.step = 0.001;
          sliderEngineHue.value = fleetObj.engineHue;
-         sliderEngineHue.direction == "horizontal";
          sliderEngineHue.useHandCursor = true;
          sliderEngineHue.addEventListener("change",function():void
          {
