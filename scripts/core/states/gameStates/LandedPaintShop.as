@@ -175,6 +175,7 @@ package core.states.gameStates
                   confirmBuyWithFlux.removeEventListeners();
                   g.removeChildFromOverlay(confirmBuyWithFlux,true);
                });
+               g.creditManager.refresh();
             });
             confirmBuyWithFlux.addEventListener("close",function():void
             {
