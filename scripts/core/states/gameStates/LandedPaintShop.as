@@ -57,16 +57,17 @@ package core.states.gameStates
          var labelEngineHue:Text;
          var buyWithFluxButton:Button;
          var freePaintJobs:Text;
+         var testDriveButton:Button;
          super.enter();
          fleetObj = g.me.getActiveFleetObj();
          addShip();
          obj = dataManager.loadKey("Skins",g.me.activeSkin);
          labelShipHue = new Text();
          labelShipHue.text = "Ship color";
-         labelShipHue.x = 100;
+         labelShipHue.x = 80;
          labelShipHue.y = 160;
          sliderShipHue = new Slider();
-         sliderShipHue.x = 250;
+         sliderShipHue.x = 200;
          sliderShipHue.y = 160;
          sliderShipHue.minimum = 0;
          sliderShipHue.maximum = 1.8707963267948966;
@@ -86,9 +87,9 @@ package core.states.gameStates
          });
          labelShipBrightness = new Text();
          labelShipBrightness.text = "Ship brightness";
-         labelShipBrightness.x = 100;
+         labelShipBrightness.x = 80;
          labelShipBrightness.y = 200;
-         sliderShipBrightness = new InputText(150,200,150,20);
+         sliderShipBrightness = new InputText(200,200,200,20);
          sliderShipBrightness.text = fleetObj.shipBrightness;
          sliderShipBrightness.addEventListener("change",function(param1:Event):void
          {
@@ -101,9 +102,9 @@ package core.states.gameStates
          });
          labelShipSaturation = new Text();
          labelShipSaturation.text = "Ship saturation";
-         labelShipSaturation.x = 100;
+         labelShipSaturation.x = 80;
          labelShipSaturation.y = 240;
-         sliderShipSaturation = new InputText(150,240,150,20);
+         sliderShipSaturation = new InputText(200,240,200,20);
          sliderShipSaturation.text = fleetObj.shipSaturation;
          sliderShipSaturation.addEventListener("change",function(param1:Event):void
          {
@@ -116,9 +117,9 @@ package core.states.gameStates
          });
          labelShipContrast = new Text();
          labelShipContrast.text = "Ship contrast";
-         labelShipContrast.x = 100;
+         labelShipContrast.x = 80;
          labelShipContrast.y = 280;
-         sliderShipContrast = new InputText(150,280,150,20);
+         sliderShipContrast = new InputText(200,280,200,20);
          sliderShipContrast.text = fleetObj.shipContrast;
          sliderShipContrast.addEventListener("change",function(param1:Event):void
          {
@@ -131,10 +132,10 @@ package core.states.gameStates
          });
          labelEngineHue = new Text();
          labelEngineHue.text = "Engine color";
-         labelEngineHue.x = 100;
+         labelEngineHue.x = 80;
          labelEngineHue.y = 340;
          sliderEngineHue = new Slider();
-         sliderEngineHue.x = 250;
+         sliderEngineHue.x = 200;
          sliderEngineHue.y = 340;
          sliderEngineHue.minimum = 0;
          sliderEngineHue.maximum = 3.141592653589793;
@@ -192,7 +193,7 @@ package core.states.gameStates
                   g.addChildToOverlay(confirmBuyWithFlux);
                   confirmBuyWithFlux.addEventListener("accept",function():void
                   {
-                     var m:Message = g.createMessage("buyPaintJob",sliderShipHue.value,sliderShipBrightness.text,sliderShipSaturation.text,sliderShipContrast.text,sliderEngineHue.value);
+                     var m:Message = g.createMessage("buyPaintJob",sliderShipHue.value,Number(sliderShipBrightness.text),Number(sliderShipSaturation.text),Number(sliderShipContrast.text),sliderEngineHue.value);
                      g.rpcMessage(m,function(param1:Message):void
                      {
                         boughtPaintJob(param1);
@@ -211,6 +212,11 @@ package core.states.gameStates
          }
          buyWithFluxButton.x = 270;
          buyWithFluxButton.y = 440;
+// test drive button
+         testDriveButton = new Button(testDrive2,"free test drive","positive");
+         testDriveButton.x = 270;
+         testDriveButton.y = 485;
+         addChild(testDriveButton);
          addChild(buyWithFluxButton);
          addChild(labelShipHue);
          addChild(sliderShipHue);
@@ -336,6 +342,25 @@ package core.states.gameStates
             _loc2_.killEmitter();
          }
          super.exit(param1);
+      }
+      // copying mufenz's code doesn't work
+      public function testDrive(param1:TouchEvent = null) : void
+      {
+         var _loc2_:ColorMatrixFilter = new ColorMatrixFilter();
+         _loc2_.adjustHue(sliderShipHue.value);
+         _loc2_.adjustBrightness(sliderShipBrightness.text);
+         _loc2_.adjustSaturation(sliderShipSaturation.text);
+         _loc2_.adjustContrast(sliderShipContrast.text);
+         g.me.ship.movieClip.filter = _loc2_;
+         g.me.ship.originalFilter = _loc2_;
+      }
+      
+      public function testDrive2(param1:TouchEvent = null) : void
+      {
+         leave();
+         Starling.juggler.delayCall(testDrive,1);
+         Starling.juggler.delayCall(testDrive,2);
+         g.me.enginePaint = sliderEngineHue.value;
       }
    }
 }
