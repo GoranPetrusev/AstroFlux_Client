@@ -17,7 +17,6 @@ package core.states.gameStates
    import playerio.Message;
    import starling.core.Starling;
    import starling.display.Sprite;
-   import starling.events.Event;
    import starling.events.TouchEvent;
    import starling.filters.ColorMatrixFilter;
    
@@ -81,54 +80,22 @@ package core.states.gameStates
          sliderShipHue.value = fleetObj.shipHue;
          sliderShipHue.direction == "horizontal";
          sliderShipHue.useHandCursor = true;
-         sliderShipHue.addEventListener("change",function(param1:Event):void
-         {
-            var _loc2_:ColorMatrixFilter = new ColorMatrixFilter();
-            _loc2_.adjustHue(sliderShipHue.value);
-            _loc2_.adjustBrightness(sliderShipBrightness.text);
-            _loc2_.adjustSaturation(sliderShipSaturation.text);
-            _loc2_.adjustContrast(sliderShipContrast.text);
-            preview.movieClip.filter = _loc2_;
-         });
+         sliderShipHue.addEventListener("change",updatePreview);
          labelShipBrightness = new Text(80,200);
          labelShipBrightness.text = "Ship brightness";
          sliderShipBrightness = new InputText(200,200,200,20);
          sliderShipBrightness.text = fleetObj.shipBrightness;
-         sliderShipBrightness.addEventListener("change",function(param1:Event):void
-         {
-            var _loc2_:ColorMatrixFilter = new ColorMatrixFilter();
-            _loc2_.adjustHue(sliderShipHue.value);
-            _loc2_.adjustBrightness(sliderShipBrightness.text);
-            _loc2_.adjustSaturation(sliderShipSaturation.text);
-            _loc2_.adjustContrast(sliderShipContrast.text);
-            preview.movieClip.filter = _loc2_;
-         });
+         sliderShipBrightness.addEventListener("change",updatePreview);
          labelShipSaturation = new Text(80,240);
          labelShipSaturation.text = "Ship saturation";
          sliderShipSaturation = new InputText(200,240,200,20);
          sliderShipSaturation.text = fleetObj.shipSaturation;
-         sliderShipSaturation.addEventListener("change",function(param1:Event):void
-         {
-            var _loc2_:ColorMatrixFilter = new ColorMatrixFilter();
-            _loc2_.adjustHue(sliderShipHue.value);
-            _loc2_.adjustBrightness(sliderShipBrightness.text);
-            _loc2_.adjustSaturation(sliderShipSaturation.text);
-            _loc2_.adjustContrast(sliderShipContrast.text);
-            preview.movieClip.filter = _loc2_;
-         });
+         sliderShipSaturation.addEventListener("change",updatePreview);
          labelShipContrast = new Text(80,280);
          labelShipContrast.text = "Ship contrast";
          sliderShipContrast = new InputText(200,280,200,20);
          sliderShipContrast.text = fleetObj.shipContrast;
-         sliderShipContrast.addEventListener("change",function(param1:Event):void
-         {
-            var _loc2_:ColorMatrixFilter = new ColorMatrixFilter();
-            _loc2_.adjustHue(sliderShipHue.value);
-            _loc2_.adjustBrightness(sliderShipBrightness.text);
-            _loc2_.adjustSaturation(sliderShipSaturation.text);
-            _loc2_.adjustContrast(sliderShipContrast.text);
-            preview.movieClip.filter = _loc2_;
-         });
+         sliderShipContrast.addEventListener("change",updatePreview);
          labelEngineHue = new Text(80,340);
          labelEngineHue.text = "Engine color";
          sliderEngineHue = new Slider();
@@ -141,11 +108,11 @@ package core.states.gameStates
          sliderEngineHue.value = fleetObj.engineHue;
          sliderEngineHue.direction == "horizontal";
          sliderEngineHue.useHandCursor = true;
-         sliderEngineHue.addEventListener("change",function(param1:Event):void
+         sliderEngineHue.addEventListener("change",function():void
          {
-            for each(var _loc2_ in emitters)
+            for each(var _loc1_ in emitters)
             {
-               _loc2_.changeHue(sliderEngineHue.value);
+               _loc1_.changeHue(sliderEngineHue.value);
             }
          });
          freePaintJobs = new Text(150,400);
@@ -336,6 +303,16 @@ package core.states.gameStates
          Starling.juggler.delayCall(testDrive,1);
          Starling.juggler.delayCall(testDrive,2);
          g.me.enginePaint = sliderEngineHue.value;
+      }
+      
+      private function updatePreview() : void
+      {
+         var _loc2_:ColorMatrixFilter = new ColorMatrixFilter();
+         _loc2_.adjustHue(sliderShipHue.value);
+         _loc2_.adjustBrightness(sliderShipBrightness.text);
+         _loc2_.adjustSaturation(sliderShipSaturation.text);
+         _loc2_.adjustContrast(sliderShipContrast.text);
+         preview.movieClip.filter = _loc2_;
       }
    }
 }
