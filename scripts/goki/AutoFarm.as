@@ -9,6 +9,7 @@ package goki
       
       private static var callback:Function = null;
 
+      public static var isRunning:Boolean = false;
       
       public function AutoFarm()
       {
@@ -17,20 +18,20 @@ package goki
       
       public static function init(procedure:String) : void
       {
-         try
+         if(AFprocedures.functions.hasOwnProperty(procedure))
          {
-            if(AFprocedures.functions.hasOwnProperty(procedure))
-            {
-               callback = AFprocedures.functions[procedure];
-            }
-            else
-            {
-               callback = null;
-            }
+            callback = AFprocedures.functions[procedure];
+            isRunning = true;
+            AFutil.isAccelerating = false;
+            AFutil.isDeaccelerating = false;
+            AFutil.isTurningLeft = false;
+            AFutil.isTurningRight = false;
+            AFutil.isFiring = false;
          }
-         catch(e:Error)
+         else
          {
-            g.showErrorDialog(e.getStackTrace());
+            callback = null;
+            isRunning = false;
          }
       }
       
@@ -40,7 +41,16 @@ package goki
          {
             return;
          }
-         callback(game);
+         try
+         {
+            callback(game);
+         }
+         catch (e:Error)
+         {
+            g.showErrorDialog(e.getStackTrace());
+            callback = null;
+            isRunning = false;
+         }
       }
    }
 }
