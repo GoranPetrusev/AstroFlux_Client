@@ -14,7 +14,6 @@ package core.states.gameStates
    import core.ship.ShipFactory;
    import core.solarSystem.Body;
    import feathers.controls.Slider;
-   import generics.Localize;
    import generics.Util;
    import playerio.Message;
    import starling.display.Sprite;
@@ -64,15 +63,15 @@ package core.states.gameStates
          obj = dataManager.loadKey("Skins",g.me.activeSkin);
          labelShipHue = new Text();
          labelShipHue.text = "Ship color";
-         labelShipHue.x = 250;
+         labelShipHue.x = 100;
          labelShipHue.y = 160;
          sliderShipHue = new Slider();
-         sliderShipHue.x = 400;
+         sliderShipHue.x = 250;
          sliderShipHue.y = 160;
          sliderShipHue.minimum = 0;
          sliderShipHue.maximum = 1.8707963267948966;
          sliderShipHue.width = 200;
-         sliderShipHue.step = 0.01;
+         sliderShipHue.step = 0.001;
          sliderShipHue.value = fleetObj.shipHue;
          sliderShipHue.direction == "horizontal";
          sliderShipHue.useHandCursor = true;
@@ -87,9 +86,9 @@ package core.states.gameStates
          });
          labelShipBrightness = new Text();
          labelShipBrightness.text = "Ship brightness";
-         labelShipBrightness.x = 250;
+         labelShipBrightness.x = 100;
          labelShipBrightness.y = 200;
-         sliderShipBrightness = new InputText(400,200,150,20);
+         sliderShipBrightness = new InputText(150,200,150,20);
          sliderShipBrightness.text = fleetObj.shipBrightness;
          sliderShipBrightness.addEventListener("change",function(param1:Event):void
          {
@@ -102,9 +101,9 @@ package core.states.gameStates
          });
          labelShipSaturation = new Text();
          labelShipSaturation.text = "Ship saturation";
-         labelShipSaturation.x = 250;
+         labelShipSaturation.x = 100;
          labelShipSaturation.y = 240;
-         sliderShipSaturation = new InputText(400,240,150,20);
+         sliderShipSaturation = new InputText(150,240,150,20);
          sliderShipSaturation.text = fleetObj.shipSaturation;
          sliderShipSaturation.addEventListener("change",function(param1:Event):void
          {
@@ -117,9 +116,9 @@ package core.states.gameStates
          });
          labelShipContrast = new Text();
          labelShipContrast.text = "Ship contrast";
-         labelShipContrast.x = 250;
+         labelShipContrast.x = 100;
          labelShipContrast.y = 280;
-         sliderShipContrast = new InputText(400,280,150,20);
+         sliderShipContrast = new InputText(150,280,150,20);
          sliderShipContrast.text = fleetObj.shipContrast;
          sliderShipContrast.addEventListener("change",function(param1:Event):void
          {
@@ -132,15 +131,15 @@ package core.states.gameStates
          });
          labelEngineHue = new Text();
          labelEngineHue.text = "Engine color";
-         labelEngineHue.x = 250;
+         labelEngineHue.x = 100;
          labelEngineHue.y = 340;
          sliderEngineHue = new Slider();
-         sliderEngineHue.x = 400;
+         sliderEngineHue.x = 250;
          sliderEngineHue.y = 340;
          sliderEngineHue.minimum = 0;
          sliderEngineHue.maximum = 3.141592653589793;
          sliderEngineHue.width = 200;
-         sliderEngineHue.step = 0.01;
+         sliderEngineHue.step = 0.001;
          sliderEngineHue.value = fleetObj.engineHue;
          sliderEngineHue.direction == "horizontal";
          sliderEngineHue.useHandCursor = true;
