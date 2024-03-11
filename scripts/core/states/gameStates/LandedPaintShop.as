@@ -125,7 +125,7 @@ package core.states.gameStates
          {
             buttonString = "Buy for 250 Flux";
             fluxCost = 250;
-            confirmString = "Are you sure you want buy the paint job?";
+            confirmString = "Are you sure you want to buy the paint job?";
          }
          buyWithFluxButton = new Button(function():void
          {
