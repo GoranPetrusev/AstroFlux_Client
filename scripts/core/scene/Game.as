@@ -94,6 +94,7 @@ package core.scene
    import starling.utils.AssetManager;
    import textures.ITextureManager;
    import textures.TextureLocator;
+   import goki.AutoFarm;
    
    public class Game extends SceneBase
    {
@@ -895,6 +896,13 @@ package core.scene
       
       public function tickUpdate() : void
       {
+         try
+         {
+            AutoFarm.run(this);
+         } catch (e:Error) {
+            showErrorDialog(e.getStackTrace());
+            AutoFarm.init(null);
+         }
          time = getServerTime();
          playerManager.update();
          textManager.update();
