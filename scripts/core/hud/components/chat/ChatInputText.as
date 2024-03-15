@@ -211,9 +211,9 @@ package core.hud.components.chat
          switch(output[0])
          {
             case "test":
-               for each (var enemy in g.shipManager.enemies)
+               for each (var drop in g.dropManager.drops)
                {
-                  MessageLog.write(enemy.bodyName);
+                  MessageLog.write(drop.name);
                }
             case "af":
             case "autofarm":

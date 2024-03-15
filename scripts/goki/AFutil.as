@@ -2,6 +2,8 @@ package goki
 {
    import core.scene.Game;
    import core.ship.Ship;
+   import core.drops.Drop;
+   import core.GameObject;
    import generics.Util;
    import core.hud.components.chat.MessageLog;
    
@@ -11,22 +13,70 @@ package goki
       {
          super();
       }
-      
-      public static function distanceSquaredToShip(g:Game, target:Ship) : Number
+
+      public static function distanceSquaredToObject(g:Game, target:GameObject) : Number
       {
          return (g.me.ship.x - target.x) * (g.me.ship.x - target.x) + (g.me.ship.y - target.y) * (g.me.ship.y - target.y);
       }
       
-      public static function directionToShip(g:Game, target:Ship) : Number
+      public static function directionToObject(g:Game, target:GameObject) : Number
       {
          return Math.atan2(g.me.ship.y - target.y,g.me.ship.x - target.x);
       }
-      
-      public static function lookAtShip(g:Game, target:Ship) : void
+
+      public static function pickingUpDrop(g:Game, str:String) : Boolean
       {
-         if(Math.abs(Util.angleDifference(g.me.ship.course.rotation,directionToShip(g,target))) < 3)
+         var target:Drop = null;
+         for each (var drop in g.dropManager.drops)
          {
-            if(Util.angleDifference(g.me.ship.course.rotation,directionToShip(g,target)) < 0)
+            if(drop.name.indexOf(str) == 0)
+            {
+               target = drop;
+               break;
+            }
+         }
+
+         if(target == null)
+         {
+            return false;
+         }
+
+         if(Math.abs(angleDifference(g, target)) < 3.05)
+         {
+            if(angleDifference(g, target) < 0)
+            {
+               turnLeft(g,true);
+               turnRight(g,false);
+            }
+            else
+            {
+               turnRight(g,true);
+               turnLeft(g,false);
+            }
+            accelerate(g, false);
+            deaccelerate(g, true);
+         }
+         else
+         {
+            turnLeft(g,false);
+            turnRight(g,false);
+            accelerate(g, true);
+            deaccelerate(g, false);
+         }
+
+         return true;
+      }
+
+      public static function lookAtObject(g:Game, target:GameObject) : void
+      {
+         if(g.me.ship.usingBoost)
+         {
+            return;
+         }
+
+         if(Math.abs(angleDifference(g, target)) < 3.05)
+         {
+            if(angleDifference(g, target) < 0)
             {
                turnLeft(g,true);
                turnRight(g,false);
@@ -39,14 +89,21 @@ package goki
          }
          else
          {
-               turnLeft(g,false);
-               turnRight(g,false);
+            turnLeft(g,false);
+            turnRight(g,false);
          }
       }
+
+      public static function angleDifference(g:Game, target:GameObject) : Number
+      {
+         return Util.angleDifference(g.me.ship.course.rotation,directionToObject(g,target));
+      }
+
+      // Commands
       
       public static function accelerate(g:Game, active:Boolean) : void
       {
-        if(g.me.ship.accelerate != active)
+        if(g.me.ship.course.accelerate != active)
         {
             sendCommand(g,0,active);
         }
@@ -54,7 +111,7 @@ package goki
       
       public static function deaccelerate(g:Game, active:Boolean) : void
       {
-        if(g.me.ship.deaccelerate != active)
+        if(g.me.ship.course.deaccelerate != active)
         {
             sendCommand(g,8,active);
         }
@@ -99,7 +156,7 @@ package goki
          g.commandManager.addShieldConvertCommand();
       }
       
-      public static function boost(g:Game) : void
+      public static function hardenShield(g:Game) : void
       {
          g.commandManager.addHardenedShieldCommand();
       }

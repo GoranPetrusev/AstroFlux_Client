@@ -1,6 +1,7 @@
 package goki
 {
    import core.hud.components.chat.MessageLog;
+   import core.drops.Drop;
    import core.scene.Game;
    import core.ship.ShipManger;
    import core.ship.Ship;
@@ -29,14 +30,22 @@ package goki
                continue;
             }
 
-            if(AFutil.distanceSquaredToShip(g, currEnemy) < AFutil.distanceSquaredToShip(g, closestEnemy))
+            if(AFutil.distanceSquaredToObject(g, currEnemy) < AFutil.distanceSquaredToObject(g, closestEnemy))
             {
                closestEnemy = currEnemy;
             }
          }
 
-         AFutil.lookAtShip(g, closestEnemy);
-         AFutil.accelerate(g, true);
+         if(!AFutil.pickingUpDrop(g, "Bug Leg"))
+         {
+            if(AFutil.distanceSquaredToObject(g, closestEnemy) > 1000*1000 && AFutil.angleDifference(g, closestEnemy) > 3)
+            {
+               AFutil.boost(g);
+            }
+            AFutil.lookAtObject(g, closestEnemy);
+            AFutil.accelerate(g, true);
+         }         
+
          AFutil.fire(g, true);
       }      
    }

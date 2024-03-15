@@ -22,11 +22,6 @@ package goki
          {
             callback = AFprocedures.functions[procedure];
             isRunning = true;
-            AFutil.isAccelerating = false;
-            AFutil.isDeaccelerating = false;
-            AFutil.isTurningLeft = false;
-            AFutil.isTurningRight = false;
-            AFutil.isFiring = false;
          }
          else
          {
