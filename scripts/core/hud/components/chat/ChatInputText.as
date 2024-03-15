@@ -225,7 +225,7 @@ package core.hud.components.chat
                {
                   if(output.length == 2)
                   {
-                     stackAmount = output[1];
+                     stackAmount = int(output[1]);
                   }
                   g.me.stack(stackAmount);
                }
@@ -242,6 +242,10 @@ package core.hud.components.chat
                {
                   g.showErrorDialog(e.getStackTrace());
                }
+               break;
+            case "tptodeath":
+               g.rpc("buyTeleportToDeath",null,g.me.id);
+               MessageLog.write("Spent 3 flux to teleport to death");
                break;
             case "y":
             case "yes":
@@ -332,7 +336,7 @@ package core.hud.components.chat
             case "commands":
             case "command":
                MessageLog.write("<font color=\'#4287f5\'>Base Game Commands<br>/i [PlayerName] - Invite player to group<br>/y - Accept group invite<br>/leave - Leave current group<br>/l - Local chat<br>/global - Global chat<br>/c - Clan chat<br>/g - Group chat<br>/w [PlayerName] - Private message to player<br>/r - Reply to player that private messaged you<br>/ignore [PlayerName] - Stop seeing messages from that player<br>/unignore [PlayerName] - Undos the ignore command<br>/list - List and get ids of players in the system<br>/myid - Shows your own id in the chat box<br>/next - Stops current song to play the next song<br>/stats - Shows the number of objects that are rendered. Spams the chat.<br>/setfps - Set your max fps to that number</font>");
-               MessageLog.write("<font color=\'#f44336\'>Client Commands<br>/init_stack - Ensures the stack ships are set up properly. You still need to empty out setup 2.<br>/stack [number] - Adds 30 artifacts worth of stats (your current setup x6) per stack. Repeat this [number] times.<br>/count - The number of stacks you have.<br>/setmyid [id] - Sets your playerid.</font>");
+               MessageLog.write("<font color=\'#f44336\'>Client Commands<br>/init_stack - Ensures the stack ships are set up properly. You still need to empty out setup 2.<br>/stack [number] - Adds 30 artifacts worth of stats (your current setup x6) per stack. Repeat this [number] times.<br>/set_stats - Sets your stats to the stacked stats.<br>/count - The number of stacks you have.<br>/setmyid [id] - Sets your playerid.<br>/tptodeath - Spends 3 flux to teleport to death. Will teleport to (0, 0) if you have not died.)<br>====================</font>");
                break;
             case "list":
                g.playerManager.listAll();
