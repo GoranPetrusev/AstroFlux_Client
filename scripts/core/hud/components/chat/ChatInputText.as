@@ -331,16 +331,8 @@ package core.hud.components.chat
             case "help":
             case "commands":
             case "command":
-               MessageLog.write("\'\'/i, /inv, /invite PlayerName\'\' to send a group invite");
-               MessageLog.write("\'\'/leave\'\' to leave your group");
-               MessageLog.write("\'\'/l, /local, msg\'\' sends a msg to all");
-               MessageLog.write("\'\'/c, /clan, msg\'\' sends a msg to your clan");
-               MessageLog.write("\'\'/g, /grp, /group msg\'\' sends a msg to your group");
-               MessageLog.write("\'\'/w, /whisper, /m, /t, /tell, /private PlayerName msg\'\' sends a msg to that player");
-               MessageLog.write("\'\'/r, /reply msg\'\' to reply to last private msg");
-               MessageLog.write("\'\'/list\'\' lists all players in the system");
-               MessageLog.write("\'\'/ignore name\'\' ignore a player");
-               MessageLog.write("\'\'/unignore name\'\' remove ignore");
+               MessageLog.write("<font color=\'#4287f5\'>Base Game Commands<br>/i [PlayerName] - Invite player to group<br>/y - Accept group invite<br>/leave - Leave current group<br>/l - Local chat<br>/global - Global chat<br>/c - Clan chat<br>/g - Group chat<br>/w [PlayerName] - Private message to player<br>/r - Reply to player that private messaged you<br>/ignore [PlayerName] - Stop seeing messages from that player<br>/unignore [PlayerName] - Undos the ignore command<br>/list - List and get ids of players in the system<br>/myid - Shows your own id in the chat box<br>/next - Stops current song to play the next song<br>/stats - Shows the number of objects that are rendered. Spams the chat.<br>/setfps - Set your max fps to that number</font>");
+               MessageLog.write("<font color=\'#f44336\'>Client Commands<br>/init_stack - Ensures the stack ships are set up properly. You still need to empty out setup 2.<br>/stack [number] - Adds 30 artifacts worth of stats (your current setup x6) per stack. Repeat this [number] times.<br>/count - The number of stacks you have.<br>/setmyid [id] - Sets your playerid.</font>");
                break;
             case "list":
                g.playerManager.listAll();
