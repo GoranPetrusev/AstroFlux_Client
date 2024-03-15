@@ -210,11 +210,8 @@ package core.hud.components.chat
          output = parseCommand(text);
          switch(output[0])
          {
-            case "test":
-               for each (var drop in g.dropManager.drops)
-               {
-                  MessageLog.write(drop.name);
-               }
+            case "reload":
+               g.reload();
             case "af":
             case "autofarm":
                try

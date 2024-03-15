@@ -1044,7 +1044,7 @@ package core.scene
          removeEventListener("enterFrame",update);
       }
       
-      private function reload() : void
+      public function reload() : void
       {
          var roomId:String;
          var joinRoomManager:JoinRoomManager;

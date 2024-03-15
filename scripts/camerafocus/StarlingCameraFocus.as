@@ -5,6 +5,7 @@ package camerafocus
    import flash.utils.Dictionary;
    import starling.display.DisplayObject;
    import starling.display.Stage;
+   import goki.PlayerConfig;
    
    public final class StarlingCameraFocus
    {
@@ -266,6 +267,11 @@ package camerafocus
       
       public function shake(param1:Number, param2:int) : void
       {
+         if(PlayerConfig.values.disableCameraShake)
+         {
+            return;
+         }
+         
          _intensity = param1;
          _shakeTimer = param2;
          _shakeDecay = param1 / param2;
@@ -435,15 +441,15 @@ package camerafocus
       
       private function positionStageContainer() : void
       {
-         if(this.focusTarget is flash.geom.Point)
+         if(this.focusTarget is Point)
          {
             var _loc1_:Point = this._stageContainer.localToGlobal(this._focusTracker);
          }
-         else if(this.focusTarget is starling.display.DisplayObject && this.focusTarget.parent != null)
+         else if(this.focusTarget is DisplayObject && this.focusTarget.parent != null)
          {
             _loc1_ = this.focusTarget.parent.localToGlobal(this._focusTracker);
          }
-         else if(this.focusTarget is starling.display.DisplayObject)
+         else if(this.focusTarget is DisplayObject)
          {
             _loc1_ = this._stageContainer.localToGlobal(this._focusTracker);
          }
@@ -451,36 +457,32 @@ package camerafocus
          {
             return;
          }
-         §§push(_stageContainer.x);
-         §§push(_focusPosition.x);
-         if(this.focusTarget is flash.geom.Point)
+         if(this.focusTarget is Point)
          {
             var _loc2_:Point = this._stageContainer.localToGlobal(this._focusTracker);
          }
-         else if(this.focusTarget is starling.display.DisplayObject && this.focusTarget.parent != null)
+         else if(this.focusTarget is DisplayObject && this.focusTarget.parent != null)
          {
             _loc2_ = this.focusTarget.parent.localToGlobal(this._focusTracker);
          }
-         else if(this.focusTarget is starling.display.DisplayObject)
+         else if(this.focusTarget is DisplayObject)
          {
             _loc2_ = this._stageContainer.localToGlobal(this._focusTracker);
          }
-         _stageContainer.x = §§pop() + (§§pop() - _loc2_.x);
-         §§push(_stageContainer.y);
-         §§push(_focusPosition.y);
-         if(this.focusTarget is flash.geom.Point)
+         _stageContainer.x += _focusPosition.x - _loc2_.x;
+         if(this.focusTarget is Point)
          {
             var _loc3_:Point = this._stageContainer.localToGlobal(this._focusTracker);
          }
-         else if(this.focusTarget is starling.display.DisplayObject && this.focusTarget.parent != null)
+         else if(this.focusTarget is DisplayObject && this.focusTarget.parent != null)
          {
             _loc3_ = this.focusTarget.parent.localToGlobal(this._focusTracker);
          }
-         else if(this.focusTarget is starling.display.DisplayObject)
+         else if(this.focusTarget is DisplayObject)
          {
             _loc3_ = this._stageContainer.localToGlobal(this._focusTracker);
          }
-         _stageContainer.y = §§pop() + (§§pop() - _loc3_.y);
+         _stageContainer.y += _focusPosition.y - _loc3_.y;
       }
       
       private function positionParallax(param1:Object) : void

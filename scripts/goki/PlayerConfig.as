@@ -15,7 +15,8 @@ package goki
          "barAlwaysShow":false,
          "maxChatMessages":"100",
          "censorChat":false,
-         "dontKick":false
+         "dontKick":false,
+         "disableScreenShake":true
       };
        
       
