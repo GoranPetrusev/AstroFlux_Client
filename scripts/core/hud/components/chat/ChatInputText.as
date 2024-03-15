@@ -210,6 +210,10 @@ package core.hud.components.chat
          output = parseCommand(text);
          switch(output[0])
          {
+            case "rec":
+            case "recycle":
+               g.onboardRecycle();
+               break;
             case "reload":
                g.reload();
             case "af":

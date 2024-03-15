@@ -267,11 +267,11 @@ package camerafocus
       
       public function shake(param1:Number, param2:int) : void
       {
-         if(PlayerConfig.values.disableCameraShake)
+         if(PlayerConfig.values.disableScreenShake)
          {
             return;
          }
-         
+
          _intensity = param1;
          _shakeTimer = param2;
          _shakeDecay = param1 / param2;
