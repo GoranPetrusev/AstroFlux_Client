@@ -49,7 +49,6 @@ package core.hud
    import core.states.menuStates.EncounterState;
    import core.states.menuStates.HomeState;
    import data.KeyBinds;
-   import generics.Localize;
    import playerio.Message;
    import starling.core.Starling;
    import starling.display.Image;
@@ -194,19 +193,19 @@ package core.hud
          pvpIcon.load();
          safeZoneText.format.color = 11184895;
          safeZoneText.size = 26;
-         safeZoneText.text = Localize.t("Safe Zone (weapons disabled)");
+         safeZoneText.text = "Safe Zone (weapons disabled)";
          safeZoneText.visible = false;
          safeZoneText.blendMode = "add";
          safeZoneText.touchable = false;
          repairText.format.color = 11206570;
          repairText.size = 22;
-         repairText.text = Localize.t("(Repairing Ship)");
+         repairText.text = "(Repairing Ship)";
          repairText.visible = false;
          repairText.blendMode = "add";
          repairText.touchable = false;
          repairText.batchable = true;
          keyBinds = SceneBase.settings.keybinds;
-         landText.text = Localize.t("Press [key] to land on").replace("[key]",keyBinds.getKeyChar(10)) + " ";
+         landText.text = "Press [key] to land on ".replace("[key]",keyBinds.getKeyChar(10));
          landText.size = 16;
          landText.format.color = 11206570;
          landText.x = 380 - landText.width / 2;
@@ -214,7 +213,7 @@ package core.hud
          landText.touchable = false;
          landText.blendMode = "add";
          landText.visible = false;
-         artifactLimitText.text = Localize.t("Artifact Limit!");
+         artifactLimitText.text = "Artifact Limit!";
          artifactLimitText.format.color = 16729156;
          artifactLimitText.x = 160;
          artifactLimitText.size = 18;
@@ -262,7 +261,7 @@ package core.hud
          shopButton = new Button(function():void
          {
             g.enterState(new ShopState(g));
-         },Localize.t("Shop"),"buy");
+         },"Shop","buy");
          shopButton.autoEnableAfterClick = true;
          shopButton.visible = !g.me.guest;
          clanButton = new ButtonClan(function():void
@@ -272,25 +271,15 @@ package core.hud
          clanButton.visible = !g.me.guest;
          newMissionsButton = new ButtonNewMission(function():void
          {
-            if(g.me.isDeveloper || g.me.isModerator || g.me.id == "fb100002203869719")
-            {
+            
                g.enterState(new MissionsState(g));
-            }
-            else
-            {
-               g.enterState(new MissionsState(g));
-            }
+            
          },g);
          missionsButton = new ButtonMissions(function():void
          {
-            if(g.me.isDeveloper || g.me.isModerator || g.me.id == "fb100002203869719")
-            {
+    
                g.enterState(new MissionsState(g));
-            }
-            else
-            {
-               g.enterState(new MissionsState(g));
-            }
+           
          });
          abilities.load();
          settingsButton = new ButtonHud(function():void
@@ -325,22 +314,22 @@ package core.hud
          pvpMenuButton = new ButtonPvPMenu(function():void
          {
             g.enterState(new PvpScreenState(g));
-         },Localize.t("PvP"));
+         },"PvP");
          pvpQuickMatchButton = new ButtonPvPQuickMatch(g,"pvp random",g.queueManager.getQueue("pvp random"),true);
-         new ToolTip(g,mapButton,Localize.t("Solar system map <FONT COLOR=\'#44FF44\'>[key]</FONT>").replace("[key]",keyBinds.getKeyChar(9)));
-         new ToolTip(g,shipButton,Localize.t("Ship <FONT COLOR=\'#44FF44\'>[key]</FONT>").replace("[key]",keyBinds.getKeyChar(2)));
-         new ToolTip(g,cargoButton,Localize.t("Cargo bay <FONT COLOR=\'#44FF44\'>[key]</FONT>").replace("[key]",keyBinds.getKeyChar(7)));
-         new ToolTip(g,artifactsButton,Localize.t("Artifacts <FONT COLOR=\'#44FF44\'>[key]</FONT>").replace("[key]",keyBinds.getKeyChar(3)));
-         new ToolTip(g,settingsButton,Localize.t("Settings <FONT COLOR=\'#44FF44\'>[key]</FONT>").replace("[key]",keyBinds.getKeyChar(8)));
-         new ToolTip(g,buyFluxButton,Localize.t("Flux is necessary to get <FONT COLOR=\'#ffffff\'>new ships</FONT> and is also used to gain <FONT COLOR=\'#ffffff\'>upgrades</FONT> and other <FONT COLOR=\'#ffffff\'>advantages</FONT> in the game."));
-         new ToolTip(g,shopButton,Localize.t("Shop <FONT COLOR=\'#44FF44\'>[key]</FONT>\nHere you can get cool <FONT COLOR=\'#ffffff\'>packages</FONT> and <FONT COLOR=\'#ffffff\'>boosts</FONT> that will make the game more fun!").replace("[key]",keyBinds.getKeyChar(1)));
-         new ToolTip(g,playerListButton,Localize.t("Players <FONT COLOR=\'#44FF44\'>[key]</FONT>").replace("[key]",keyBinds.getKeyChar(25)));
-         new ToolTip(g,leaderboardButton,Localize.t("Leaderboard"));
-         new ToolTip(g,missionsButton,Localize.t("Missions <FONT COLOR=\'#44FF44\'>[key]</FONT>").replace("[key]",keyBinds.getKeyChar(5)));
-         new ToolTip(g,encountersButton,Localize.t("Alien Encounters <FONT COLOR=\'#44FF44\'>[key]</FONT>").replace("[key]",keyBinds.getKeyChar(4)));
-         new ToolTip(g,pvpMenuButton,Localize.t("Queue up for pvp \nmatches and view \npvp statistics <FONT COLOR=\'#44FF44\'>[key]</FONT>").replace("[key]",keyBinds.getKeyChar(6)));
-         new ToolTip(g,pvpQuickMatchButton,"<FONT COLOR=\'#88FF88\'>" + Localize.t("Play a PvP match.") + "</FONT>\n\n" + "<FONT COLOR=\'#FFFFFF\'>" + Localize.t("Domination") + "</FONT>\n" + Localize.t("This gamemode is team based and requires you to capture zones in order to win.") + "\n\n" + "<FONT COLOR=\'#FFFFFF\'>" + Localize.t("Deathmatch") + "</FONT>\n" + Localize.t("This is a free for all gamemode where the player with most kills win.") + "\n\n" + "<FONT COLOR=\'#FFFFFF\'>" + Localize.t("Rewards") + "</FONT>\n" + Localize.t("By participating you will gain resources, experience and artifacts! Rewards are based on your own skill, but also your teams performance in Domination.") + "\n\n" + "<FONT COLOR=\'#FFFFFF\'>" + Localize.t("Match Making") + "</FONT>\n" + Localize.t("The matchmaker tries to find players and teams that have equal rating. There is also a split between levels:") + " 1-9, 10-19, 20-39, 40-79, 80-120\n");
-         new ToolTip(g,podButton,Localize.t("Click here to purchase or open your pods."));
+         new ToolTip(g,mapButton,"Solar system map <FONT COLOR=\'#44FF44\'>[key]</FONT>".replace("[key]",keyBinds.getKeyChar(9)));
+         new ToolTip(g,shipButton,"Ship <FONT COLOR=\'#44FF44\'>[key]</FONT>".replace("[key]",keyBinds.getKeyChar(2)));
+         new ToolTip(g,cargoButton,"Cargo bay <FONT COLOR=\'#44FF44\'>[key]</FONT>".replace("[key]",keyBinds.getKeyChar(7)));
+         new ToolTip(g,artifactsButton,"Artifacts <FONT COLOR=\'#44FF44\'>[key]</FONT>".replace("[key]",keyBinds.getKeyChar(3)));
+         new ToolTip(g,settingsButton,"Settings <FONT COLOR=\'#44FF44\'>[key]</FONT>".replace("[key]",keyBinds.getKeyChar(8)));
+         new ToolTip(g,buyFluxButton,"Flux is necessary to get <FONT COLOR=\'#ffffff\'>new ships</FONT> and is also used to gain <FONT COLOR=\'#ffffff\'>upgrades</FONT> and other <FONT COLOR=\'#ffffff\'>advantages</FONT> in the game.");
+         new ToolTip(g,shopButton,"Shop <FONT COLOR=\'#44FF44\'>[key]</FONT>\nHere you can get cool <FONT COLOR=\'#ffffff\'>packages</FONT> and <FONT COLOR=\'#ffffff\'>boosts</FONT> that will make the game more fun!".replace("[key]",keyBinds.getKeyChar(1)));
+         new ToolTip(g,playerListButton,"Players <FONT COLOR=\'#44FF44\'>[key]</FONT>".replace("[key]",keyBinds.getKeyChar(25)));
+         new ToolTip(g,leaderboardButton,"Leaderboard");
+         new ToolTip(g,missionsButton,"Missions <FONT COLOR=\'#44FF44\'>[key]</FONT>".replace("[key]",keyBinds.getKeyChar(5)));
+         new ToolTip(g,encountersButton,"Alien Encounters <FONT COLOR=\'#44FF44\'>[key]</FONT>".replace("[key]",keyBinds.getKeyChar(4)));
+         new ToolTip(g,pvpMenuButton,"Queue up for pvp \nmatches and view \npvp statistics <FONT COLOR=\'#44FF44\'>[key]</FONT>".replace("[key]",keyBinds.getKeyChar(6)));
+         new ToolTip(g,pvpQuickMatchButton,"<FONT COLOR=\'#88FF88\'>Play a PvP match.</FONT>\n\n<FONT COLOR=\'#FFFFFF\'>Domination</FONT>\nThis gamemode is team based and requires you to capture zones in order to win.\n\n<FONT COLOR=\'#FFFFFF\'>Deathmatch</FONT>\nThis is a free for all gamemode where the player with most kills win.\n\n<FONT COLOR=\'#FFFFFF\'>Rewards</FONT>\nBy participating you will gain resources, experience and artifacts! Rewards are based on your own skill, but also your teams performance in Domination.\n\n<FONT COLOR=\'#FFFFFF\'>Match Making</FONT>\nThe matchmaker tries to find players and teams that have equal rating. There is also a split between levels: 1-49, 50-99, 100-150\n");
+         new ToolTip(g,podButton,"Click here to purchase or open your pods.");
          resourceBox = new ResourceBox(g);
          g.myCargo.reloadCargoFromServer(function():void
          {
@@ -393,9 +382,6 @@ package core.hud
          if(!g.solarSystem.isPvpSystemInEditor)
          {
             container.addChild(missionsButton);
-         }
-         if(!g.solarSystem.isPvpSystemInEditor)
-         {
             container.addChild(newMissionsButton);
          }
          container.addChild(pvpMenuButton);
@@ -425,7 +411,7 @@ package core.hud
          if(g.me.level <= 2)
          {
             hintMapText = new TextBitmap();
-            hintMapText.text = Localize.t("Press [key] for map").replace("[key]",keyBinds.getKeyChar(9));
+            hintMapText.text = "Press [key] for map".replace("[key]",keyBinds.getKeyChar(9));
             hintMapText.format.color = 16777028;
             hintMapText.x = 140;
             hintMapText.y = g.stage.stageHeight - 135;
@@ -646,16 +632,13 @@ package core.hud
          bgr.addMesh(_loc15_);
          if(!g.solarSystem.isPvpSystemInEditor)
          {
+            bgr.addMesh(_loc3_);
             bgr.addMesh(_loc17_);
          }
          bgr.addMesh(_loc14_);
          bgr.addMesh(_loc2_);
          bgr.addMesh(_loc12_);
          bgr.addMesh(_loc10_);
-         if(!g.solarSystem.isPvpSystemInEditor)
-         {
-            bgr.addMesh(_loc3_);
-         }
          bgr.addMesh(_loc16_);
          bgr.y = 0;
          bgr.touchable = false;
@@ -694,14 +677,15 @@ package core.hud
          {
             powerBar.scaleX = 0.9;
             powerBar.x = g.stage.stageWidth / 2 - 147 + _loc13_ + 20;
-            powerBar.y = g.stage.stageHeight - 31;
+            
          }
          else
          {
             powerBar.scaleX = 1;
             powerBar.x = g.stage.stageWidth / 2 - 147 + _loc13_;
-            powerBar.y = g.stage.stageHeight - 31;
+        
          }
+         powerBar.y = g.stage.stageHeight - 31;
          healthAndShield.x = g.stage.stageWidth / 2 + 23 + _loc13_;
          healthAndShield.y = g.stage.stageHeight - 42;
          uberStats.y = 66;
@@ -835,7 +819,7 @@ package core.hud
             return;
          }
          var _loc2_:KeyBinds = SceneBase.settings.keybinds;
-         landText.text = Localize.t("Press [key] to land on").replace("[key]",_loc2_.getKeyChar(10)) + " " + param1;
+         landText.text = "Press [key] to land on ".replace("[key]",_loc2_.getKeyChar(10)) + param1;
          landText.visible = true;
       }
       
