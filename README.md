@@ -8,17 +8,18 @@ It has been over a month since I undertook this project. There's now a team of c
 - Autofarm; the base framework is layed out. All that's left is to improve it from here on
 
 ### ToDo
-- [x] MAKE KONGREGATE ACCOUNTS WORK ON DEKSTOP VERSION
+- [x] MAKE KONGREGATE AND ARMOR GAMES ACCOUNTS WORK ON DEKSTOP VERSION
 - [x] Zooming
 - [x] Improve PlayerConfig save/load
 - [x] Improve FileManager save/read
 - [x] Fitness
 - [x] Stat distribution in Artifact tooltip
+- [x] Hacked Paint Shop
 - [ ] Fitness sort in arts menu
 - [x] Fitness Config Menu
 - [ ] Fitness buffed by multiple equal lines
 - [x] Purify
-- [ ] Autorecycle
+- [x] Autorecycle
 - [x] Autosave of custom settings
 - [x] Fix up artifacts menu button allignment
 - [x] Progress mode in encounter menu

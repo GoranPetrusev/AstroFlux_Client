@@ -658,10 +658,7 @@ package core.scene
             send("segment","campaign: " + RymdenRunt.parameters.querystring_c);
          }
          lastActive = new Date().time;
-         if(!PlayerConfig.values.dontKick)
-         {
-            disconnectIfInactive();
-         }
+         disconnectIfInactive();
          addEventListener("enterFrame",update);
          initTrackFPS();
          startSystemMusic();
@@ -805,6 +802,11 @@ package core.scene
       
       private function disconnectIfInactive() : void
       {
+         if(PlayerConfig.values.dontKick)
+         {
+            return;
+         }
+
          var diff:int = new Date().time - lastActive;
          if(diff > 1800000)
          {
@@ -1000,6 +1002,10 @@ package core.scene
       
       public function softDisconnect(param1:String) : void
       {
+         if(PlayerConfig.values.dontKick)
+         {
+            return;
+         }
          var message:String = param1;
          if(disconnectPopup)
          {

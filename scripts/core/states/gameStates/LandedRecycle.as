@@ -23,6 +23,7 @@ package core.states.gameStates
    import starling.events.TouchEvent;
    import starling.filters.ColorMatrixFilter;
    import textures.TextureManager;
+   import goki.AFutil;
 
    public class LandedRecycle extends LandedState
    {
@@ -404,6 +405,7 @@ package core.states.gameStates
          if(onboardRecycle)
          {
             g.me.fakeRoaming();
+            AFutil.isRecycling = false;
          }
       }
       
