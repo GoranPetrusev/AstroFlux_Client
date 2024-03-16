@@ -20,7 +20,6 @@ package core.states.gameStates
    import feathers.controls.TextInput;
    import flash.display.Bitmap;
    import generics.Color;
-   import generics.Localize;
    import generics.Util;
    import playerio.Message;
    import starling.display.Image;
@@ -98,7 +97,7 @@ package core.states.gameStates
                   return param1.rank4;
             }
          }
-         return Localize.t("Not a member");
+         return "Not a member";
       }
       
       override public function enter() : void
@@ -109,8 +108,8 @@ package core.states.gameStates
          addChild(bgr);
          closeButton = new ButtonExpandableHud(function():void
          {
-            sm.revertState();
-         },Localize.t("close"));
+            sm.changeState(new RoamingState(g));
+         },"close");
          closeButton.x = bgr.width - 46 - closeButton.width;
          closeButton.y = 0;
          addChild(closeButton);
@@ -141,13 +140,13 @@ package core.states.gameStates
          scrollContainer.height = 380;
          headline = new Text();
          headline.size = 36;
-         headline.text = Localize.t("Clans");
+         headline.text = "Clans";
          headline.y = 60;
          headline.x = 60;
          viewContainer.addChild(headline);
          if(g.me.clanId == "")
          {
-            createClanButton = new Button(createClan,Localize.t("Create Clan"),"buy");
+            createClanButton = new Button(createClan,"Create Clan","buy");
             createClanButton.x = 680 - createClanButton.width;
             createClanButton.y = 60;
             viewContainer.addChild(createClanButton);
@@ -157,7 +156,7 @@ package core.states.gameStates
             yourClanButton = new Button(function(param1:TouchEvent):void
             {
                drawClanView(g.me.clanId);
-            },Localize.t("Your Clan"));
+            },"Your Clan");
             yourClanButton.x = 680 - yourClanButton.width;
             yourClanButton.y = 60;
             viewContainer.addChild(yourClanButton);
@@ -171,7 +170,7 @@ package core.states.gameStates
                onSearch();
             }
          });
-         searchButton = new Button(onSearch,Localize.t("Search"));
+         searchButton = new Button(onSearch,"Search");
          searchField.x = headline.x;
          searchButton.x = searchField.x + searchField.width + 10;
          searchButton.y = 110;
@@ -344,7 +343,7 @@ package core.states.gameStates
             clansButton = new Button(function():void
             {
                drawClansView();
-            },Localize.t("Search Clans"));
+            },"Search Clans");
             clansButton.x = 680 - clansButton.width;
             clansButton.y = 60;
             viewContainer.addChild(clansButton);
@@ -353,7 +352,7 @@ package core.states.gameStates
                joinButton = new Button(function():void
                {
                   drawApplyView(obj.key);
-               },Localize.t("Join Clan"),"buy");
+               },"Join Clan","buy");
                joinButton.x = clansButton.x - joinButton.width - 10;
                joinButton.y = 60;
                viewContainer.addChild(joinButton);
@@ -376,7 +375,7 @@ package core.states.gameStates
                         g.sendMessageToServiceRoom(_loc2_);
                         g.me.clanId = "";
                         g.updateServiceRoom();
-                        g.showErrorDialog(Localize.t("You have now left the clan."));
+                        g.showErrorDialog("You have now left the clan.");
                      }
                      else
                      {
@@ -385,7 +384,7 @@ package core.states.gameStates
                      drawClansView();
                      g.blockHotkeys = false;
                   });
-               },Localize.t("Leave Clan"),"negative");
+               },"Leave Clan","negative");
                leaveButton.x = clansButton.x - leaveButton.width - 10;
                leaveButton.y = 60;
                viewContainer.addChild(leaveButton);
@@ -415,7 +414,7 @@ package core.states.gameStates
                handleApplicationButton = new Button(function():void
                {
                   drawHandleApplicationsView(obj.key);
-               },Localize.t("Handle Applications"));
+               },"Handle Applications");
                handleApplicationButton.x = 60;
                handleApplicationButton.y = hh + 20;
                viewContainer.addChild(handleApplicationButton);
@@ -425,13 +424,13 @@ package core.states.gameStates
                editButton = new Button(function():void
                {
                   drawEditView(clanId);
-               },Localize.t("Edit Clan"));
+               },"Edit Clan");
                editButton.x = handleApplicationButton.x + handleApplicationButton.width + 10;
                editButton.y = handleApplicationButton.y;
                viewContainer.addChild(editButton);
             }
             rank = new Text();
-            rank.text = Localize.t("Rank");
+            rank.text = "Rank";
             rank.size = 16;
             rank.color = 11184810;
             rank.x = 560;
@@ -536,7 +535,7 @@ package core.states.gameStates
             name.size -= 1;
          }
          level = new Text();
-         level.text = Localize.t("lvl") + " " + (mObj.level || "..");
+         level.text = "lvl " + (mObj.level || "..");
          level.color = 11184810;
          level.x = name.x + name.width + 5;
          level.y = name.y + name.height - level.height - 2;
@@ -554,20 +553,20 @@ package core.states.gameStates
             rankM.size -= 1;
          }
          rank = getMemberRank(clanObj,memberId);
-         promoteButtonText = rank == 2 ? Localize.t("Promote to leader") : Localize.t("Promote");
+         promoteButtonText = rank == 2 ? "Promote to leader" : "Promote";
          promoteStyle = rank == 2 ? "negative" : "positive";
          promoteButton = new Button(function():void
          {
             var warning:PopupConfirmMessage;
             if(rank == 2)
             {
-               warning = new PopupConfirmMessage(promoteButtonText,Localize.t("Cancel"),"negative");
-               warning.text = Localize.t("<FONT COLOR=\'#FF4444\' SIZE=\'18\'>WARNING!</FONT>\n\nYou are about to give away your clan to someone else. Only one player can be the leader.");
+               warning = new PopupConfirmMessage(promoteButtonText,"Cancel","negative");
+               warning.text = "<FONT COLOR=\'#FF4444\' SIZE=\'18\'>WARNING!</FONT>\n\nYou are about to give away your clan to someone else. Only one player can be the leader.";
             }
             else
             {
-               warning = new PopupConfirmMessage(promoteButtonText,Localize.t("Cancel"),"positive");
-               warning.text = Localize.t("Do you really want to promote this player?");
+               warning = new PopupConfirmMessage(promoteButtonText,"Cancel","positive");
+               warning.text = "Do you really want to promote this player?";
             }
             g.blockHotkeys = true;
             warning.addEventListener("accept",function():void
@@ -582,7 +581,7 @@ package core.states.gameStates
                {
                   if(param1.getBoolean(0))
                   {
-                     g.showErrorDialog(Localize.t("Player promoted!"));
+                     g.showErrorDialog("Player promoted!");
                   }
                   else
                   {
@@ -607,8 +606,8 @@ package core.states.gameStates
          promoteButton.y = 20;
          demoteButton = new Button(function():void
          {
-            var warning:PopupConfirmMessage = new PopupConfirmMessage(Localize.t("Demote"),Localize.t("cancel"),"negative");
-            warning.text = Localize.t("Do you really want to demote this player?");
+            var warning:PopupConfirmMessage = new PopupConfirmMessage("Demote","cancel","negative");
+            warning.text = "Do you really want to demote this player?";
             g.blockHotkeys = true;
             warning.addEventListener("accept",function():void
             {
@@ -623,7 +622,7 @@ package core.states.gameStates
                {
                   if(param1.getBoolean(0))
                   {
-                     g.showErrorDialog(Localize.t("Player demoted!"));
+                     g.showErrorDialog("Player demoted!");
                   }
                   else
                   {
@@ -643,7 +642,7 @@ package core.states.gameStates
                g.removeChildFromOverlay(warning,true);
             });
             g.addChildToOverlay(warning);
-         },Localize.t("Demote"),"negative");
+         },"Demote","negative");
          demoteButton.x = promoteButton.x + promoteButton.width + 5;
          demoteButton.y = 20;
          if(rank == 4)
@@ -652,8 +651,8 @@ package core.states.gameStates
          }
          kickButton = new Button(function():void
          {
-            var warning:PopupConfirmMessage = new PopupConfirmMessage(Localize.t("Kick"),Localize.t("cancel"),"negative");
-            warning.text = Localize.t("Do you really want to kick this player?");
+            var warning:PopupConfirmMessage = new PopupConfirmMessage("Kick","cancel","negative");
+            warning.text = "Do you really want to kick this player?";
             g.blockHotkeys = true;
             warning.addEventListener("accept",function():void
             {
@@ -674,7 +673,7 @@ package core.states.gameStates
                      _loc2_.add(mObj.name);
                      _loc2_.add(clanObj.name);
                      g.sendMessageToServiceRoom(_loc2_);
-                     g.showErrorDialog(Localize.t("Player kicked!"));
+                     g.showErrorDialog("Player kicked!");
                   }
                   else
                   {
@@ -695,7 +694,7 @@ package core.states.gameStates
                g.removeChildFromOverlay(warning,true);
             });
             g.addChildToOverlay(warning);
-         },Localize.t("Kick"),"negative");
+         },"Kick","negative");
          kickButton.x = demoteButton.x + demoteButton.width + 5;
          kickButton.y = 20;
          troonsM = new Text();
@@ -726,7 +725,7 @@ package core.states.gameStates
          contM.y = i * 80;
          contM.x = 0;
          scrollContainer.addChild(contM);
-         new ToolTip(g,contM,Localize.t("Last Login") + ": " + (mObj.lastSession != null ? mObj.lastSession : "---"),null,"clan");
+         new ToolTip(g,contM,"Last Login: " + (mObj.lastSession != null ? mObj.lastSession : "---"),null,"clan");
          if(!isAllowedToPromote(clanObj,g.me.id) || isLeader(clanObj,memberId) || rank == 2 && !isLeader(clanObj,g.me.id))
          {
             return;
@@ -769,7 +768,7 @@ package core.states.gameStates
       private function createClan(param1:TouchEvent) : void
       {
          var e:TouchEvent = param1;
-         confirmBuyWithFlux = new CreditBuyBox(g,CreditManager.getCostClan(),Localize.t("Are you sure you want to buy a clan?"));
+         confirmBuyWithFlux = new CreditBuyBox(g,CreditManager.getCostClan(),"Are you sure you want to buy a clan?");
          g.addChildToOverlay(confirmBuyWithFlux);
          confirmBuyWithFlux.addEventListener("accept",function():void
          {
@@ -782,7 +781,7 @@ package core.states.gameStates
                if(param1.getBoolean(0))
                {
                   g.creditManager.refresh();
-                  g.showErrorDialog(Localize.t("Clan created!"));
+                  g.showErrorDialog("Clan created!");
                   _loc2_ = param1.getString(1);
                   g.me.clanId = _loc2_;
                   drawClanView(_loc2_);
@@ -844,18 +843,18 @@ package core.states.gameStates
             {
                g.blockHotkeys = false;
                drawClanView(g.me.clanId);
-            },Localize.t("back"));
+            },"back");
             backButton.x = 680 - backButton.width;
             backButton.y = 60;
             viewContainer.addChild(backButton);
             headline = new Text();
             headline.size = 36;
-            headline.text = Localize.t("Edit");
+            headline.text = "Edit";
             headline.y = 60;
             headline.x = 60;
             viewContainer.addChild(headline);
             labelName = new TextBitmap();
-            labelName.text = Localize.t("Name");
+            labelName.text = "Name";
             labelName.x = 60;
             labelName.y = 160;
             viewContainer.addChild(labelName);
@@ -865,7 +864,7 @@ package core.states.gameStates
             inputName.y = 160;
             viewContainer.addChild(inputName);
             labelRank1 = new TextBitmap();
-            labelRank1.text = Localize.t("Rank") + " 1";
+            labelRank1.text = "Rank 1";
             labelRank1.x = 60;
             labelRank1.y = labelName.y + labelName.height + padding;
             viewContainer.addChild(labelRank1);
@@ -875,7 +874,7 @@ package core.states.gameStates
             inputRank1.y = labelName.y + labelName.height + padding;
             viewContainer.addChild(inputRank1);
             labelRank2 = new TextBitmap();
-            labelRank2.text = Localize.t("Rank") + " 2";
+            labelRank2.text = "Rank 2";
             labelRank2.x = 60;
             labelRank2.y = labelRank1.y + labelRank1.height + padding;
             viewContainer.addChild(labelRank2);
@@ -885,7 +884,7 @@ package core.states.gameStates
             inputRank2.y = labelRank1.y + labelRank1.height + padding;
             viewContainer.addChild(inputRank2);
             labelRank3 = new TextBitmap();
-            labelRank3.text = Localize.t("Rank") + " 3";
+            labelRank3.text = "Rank 3";
             labelRank3.x = 60;
             labelRank3.y = labelRank2.y + labelRank2.height + padding;
             viewContainer.addChild(labelRank3);
@@ -895,7 +894,7 @@ package core.states.gameStates
             inputRank3.y = labelRank2.y + labelRank2.height + padding;
             viewContainer.addChild(inputRank3);
             labelRank4 = new TextBitmap();
-            labelRank4.text = Localize.t("Rank") + " 4";
+            labelRank4.text = "Rank 4";
             labelRank4.x = 60;
             labelRank4.y = labelRank3.y + labelRank3.height + padding;
             viewContainer.addChild(labelRank4);
@@ -905,7 +904,7 @@ package core.states.gameStates
             inputRank4.y = labelRank3.y + labelRank3.height + padding;
             viewContainer.addChild(inputRank4);
             labelDescription = new TextBitmap();
-            labelDescription.text = Localize.t("Description");
+            labelDescription.text = "Description";
             labelDescription.x = 60;
             labelDescription.y = labelRank4.y + labelRank4.height + padding;
             viewContainer.addChild(labelDescription);
@@ -922,7 +921,7 @@ package core.states.gameStates
                logo.color = Color.RGBtoHEX(_loc3_,_loc1_,_loc2_);
                inputColor.text = _loc3_ + "," + _loc1_ + "," + _loc2_;
                changeColor.enabled = true;
-            },Localize.t("Randomize Color"));
+            },"Randomize Color");
             changeColor.x = 400;
             changeColor.y = 160;
             viewContainer.addChild(changeColor);
@@ -952,7 +951,7 @@ package core.states.gameStates
                clanObj.logo = "clan_logo" + (_loc2_ + 1).toString();
                logo.texture = textureManager.getTextureGUIByTextureName(clanObj.logo);
                changeLogo.enabled = true;
-            },Localize.t("Next Logo"));
+            },"Next Logo");
             changeLogo.x = 400;
             changeLogo.y = changeColor.y + changeColor.height + padding;
             viewContainer.addChild(changeLogo);
@@ -999,7 +998,7 @@ package core.states.gameStates
                {
                   if(param1.getBoolean(0))
                   {
-                     g.showErrorDialog(Localize.t("Success!"));
+                     g.showErrorDialog("Success!");
                   }
                   else
                   {
@@ -1007,7 +1006,7 @@ package core.states.gameStates
                   }
                   drawEditView(clanId);
                });
-            },Localize.t("Save Settings"),"buy");
+            },"Save Settings","buy");
             saveButton.x = 400;
             saveButton.y = logo.y + logo.height + padding;
             viewContainer.addChild(saveButton);
@@ -1024,11 +1023,11 @@ package core.states.gameStates
                      g.showErrorDialog(param1.getString(1));
                      return;
                   }
-                  g.showErrorDialog(Localize.t("Clan deleted."));
+                  g.showErrorDialog("Clan deleted.");
                   g.me.clanId = "";
                   TweenMax.delayedCall(2,drawClansView);
                });
-            },Localize.t("Delete clan"),"negative");
+            },"Delete clan","negative");
             deleteButton.x = 400;
             deleteButton.y = logo.y + logo.height + padding + 100;
             viewContainer.addChild(deleteButton);
@@ -1056,12 +1055,12 @@ package core.states.gameStates
             {
                g.blockHotkeys = false;
                drawClanView(clanObj.key);
-            },Localize.t("back"));
+            },"back");
             backButton.x = 680 - backButton.width;
             backButton.y = 60;
             viewContainer.addChild(backButton);
             info = new Text();
-            info.text = Localize.t("You can have one pending application at a time. \nAny active applications will be removed.");
+            info.text = "You can have one pending application at a time. \nAny active applications will be removed.";
             info.wordWrap = true;
             info.x = 60;
             info.y = 100;
@@ -1069,7 +1068,7 @@ package core.states.gameStates
             info.height = 50;
             viewContainer.addChild(info);
             inputReason = new InputText(0,0,400,22);
-            inputReason.text = Localize.t("I want to join your clan!");
+            inputReason.text = "I want to join your clan!";
             inputReason.x = 60;
             inputReason.y = info.y + info.height + 30;
             viewContainer.addChild(inputReason);
@@ -1085,14 +1084,14 @@ package core.states.gameStates
                      me.clanApplicationId = clanObj.key;
                      g.sendToServiceRoom("clanApplication",clanObj.key);
                      drawClanView(clanId);
-                     g.showErrorDialog(Localize.t("You have applied!"));
+                     g.showErrorDialog("You have applied!");
                   }
                   else
                   {
                      g.showErrorDialog(param1.getString(1));
                   }
                });
-            },Localize.t("Send Application"),"buy");
+            },"Send Application","buy");
             saveButton.x = 60;
             saveButton.y = inputReason.y + 40;
             viewContainer.addChild(saveButton);
@@ -1119,7 +1118,7 @@ package core.states.gameStates
             {
                g.blockHotkeys = false;
                drawClanView(clanObj.key);
-            },Localize.t("back"));
+            },"back");
             backButton.x = 680 - backButton.width;
             backButton.y = 60;
             viewContainer.addChild(backButton);
@@ -1137,7 +1136,7 @@ package core.states.gameStates
             if(i == 0)
             {
                t = new Text();
-               t.text = Localize.t("You have no new applications to handle.");
+               t.text = "You have no new applications to handle.";
                t.size = 16;
                t.x = 60;
                t.y = 120;
@@ -1197,13 +1196,13 @@ package core.states.gameStates
             name.size = 16;
             name.touchable = false;
             level = new Text();
-            level.text = Localize.t("lvl") + " " + mObj.level;
+            level.text = "lvl " + mObj.level;
             level.color = 11184810;
             level.x = 260;
             level.y = 20;
             level.size = 12;
             level.touchable = false;
-            new ToolTip(g,contM,Localize.t("Application") + ": <FONT COLOR=\'#ffffff\'>" + reason + "</FONT>",null,"clan");
+            new ToolTip(g,contM,"Application: <FONT COLOR=\'#ffffff\'>" + reason + "</FONT>",null,"clan");
             acceptButton = new Button(function():void
             {
                var m:Message = g.createMessage("clanAcceptApplication");
@@ -1220,7 +1219,7 @@ package core.states.gameStates
                      _loc2_.add(playerId);
                      _loc2_.add(clanObj.name);
                      g.sendMessageToServiceRoom(_loc2_);
-                     g.showErrorDialog(Localize.t("Application accepted!"));
+                     g.showErrorDialog("Application accepted!");
                      Action.join(clanObj.name);
                   }
                   else
@@ -1230,7 +1229,7 @@ package core.states.gameStates
                   drawHandleApplicationsView(clanObj.key);
                   g.blockHotkeys = false;
                });
-            },Localize.t("Accept"),"buy");
+            },"Accept","buy");
             acceptButton.x = 300;
             acceptButton.y = 20;
             declineButton = new Button(function():void
@@ -1250,7 +1249,7 @@ package core.states.gameStates
                      _loc2_.add(playerId);
                      _loc2_.add(clanObj.name);
                      g.sendMessageToServiceRoom(_loc2_);
-                     g.showErrorDialog(Localize.t("Application declined!"));
+                     g.showErrorDialog("Application declined!");
                   }
                   else
                   {
@@ -1259,7 +1258,7 @@ package core.states.gameStates
                   drawHandleApplicationsView(clanObj.key);
                   g.blockHotkeys = false;
                });
-            },Localize.t("Decline"),"negative");
+            },"Decline","negative");
             declineButton.x = acceptButton.x + acceptButton.width + 5;
             declineButton.y = 20;
             troonsM = new Text();
@@ -1287,7 +1286,7 @@ package core.states.gameStates
             if(application.accepted)
             {
                acceptedText = new TextBitmap();
-               acceptedText.text = Localize.t("ACCEPTED").toUpperCase();
+               acceptedText.text = "ACCEPTED".toUpperCase();
                acceptedText.x = name.x;
                acceptedText.y = name.y + name.height;
                acceptedText.format.color = 4521796;
@@ -1344,7 +1343,7 @@ package core.states.gameStates
          {
             if(keybinds.isEscPressed)
             {
-               sm.revertState();
+               sm.changeState(new RoamingState(g));
             }
          }
          super.execute();
