@@ -18,9 +18,12 @@ It has been over a month since I undertook this project. There's now a team of c
 - [ ] Fitness sort in arts menu
 - [x] Fitness Config Menu
 - [ ] Fitness buffed by multiple equal lines
+- [ ] Renameable art setups
+- [ ] Side scrolling art setups container
 - [x] Purify
 - [x] Autorecycle
 - [x] Autosave of custom settings
+- [x] Copiable chat messages
 - [x] Fix up artifacts menu button allignment
 - [x] Progress mode in encounter menu
 - [ ] Encouter xp in encounter menu
@@ -38,7 +41,7 @@ It has been over a month since I undertook this project. There's now a team of c
 - [x] Tidy up xp bar
 - [x] Stacking :P
 - [x] Hacked Hangar
-- [ ] Autofarm
+- [x] Autofarm
 - [x] Quick Login
 
 ### Ideas

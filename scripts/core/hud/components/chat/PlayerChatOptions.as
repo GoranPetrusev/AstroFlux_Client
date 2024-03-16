@@ -23,6 +23,8 @@ package core.hud.components.chat
       
       private var banImage:Image;
       
+      private var textImage:Image;
+      
       public function PlayerChatOptions(param1:Game, param2:Object)
       {
          super();
@@ -45,6 +47,11 @@ package core.hud.components.chat
          messageImage.useHandCursor = true;
          addChild(messageImage);
          new ToolTip(param1,messageImage,"send private message",null,"PlayerChatOptions");
+         textImage = new Image(_loc3_.getTextureGUIByTextureName("chat_pm"));
+         textImage.addEventListener("touch",onTextChat);
+         textImage.useHandCursor = true;
+         addChild(textImage);
+         new ToolTip(param1,textImage,"get text",null,"PlayerChatOptions");
          if(param1.me.isModerator || param1.me.isDeveloper)
          {
             banImage = new Image(_loc3_.getTextureGUIByTextureName("chat_ban"));
@@ -90,6 +97,37 @@ package core.hud.components.chat
          }
          ToolTip.disposeType("PlayerChatOptions");
          super.dispose();
+      }
+      
+      public function onTextChat(param1:TouchEvent) : void
+      {
+         if(param1.getTouch(textImage,"ended"))
+         {
+            g.chatInput.setText(removeSystemMsg(obj.text));
+         }
+      }
+      
+      public function removeSystemMsg(param1:String) : String
+      {
+         param1 = param1.replace("<FONT COLOR=\'#9a9a9a\'>[private]</FONT>","");
+         param1 = param1.replace("<FONT COLOR=\'#cccc44\'>[global]</FONT>","");
+         param1 = param1.replace("<FONT COLOR=\'#8888cc\'>[local]</FONT>","");
+         param1 = param1.replace("<FONT COLOR=\'#6666ff\'>[team]</FONT>","");
+         param1 = param1.replace("<FONT COLOR=\'#88cc88\'>[clan]</FONT>","");
+         param1 = param1.replace("<FONT COLOR=\'#20ecea\'>[group]</FONT>","");
+         param1 = param1.replace("<FONT COLOR=\'#ff3daf\'>[mod]</FONT>","");
+         param1 = param1.replace("<FONT COLOR=\'#ff6daf\'>[modchat]</FONT>","");
+         param1 = param1.replace("<FONT COLOR=\'#ff44ff\'>[planet wars]</FONT>","");
+         param1 = param1.replace("<FONT COLOR=\'#C5403A\'>[error]</FONT>","");
+         param1 = param1.replace("[death]","");
+         param1 = param1.replace("[loot]","");
+         param1.replace("[join_leave]","");
+         var _loc3_:int = 1;
+         while(_loc3_ < param1.length && param1.charAt(_loc3_) != ":")
+         {
+            _loc3_++;
+         }
+         return param1.substring(_loc3_ + 2);
       }
    }
 }
