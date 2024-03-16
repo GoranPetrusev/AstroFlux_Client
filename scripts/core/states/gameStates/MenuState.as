@@ -50,7 +50,7 @@ package core.states.gameStates
          checkAccelerate(true);
          if(menuHud.stateMachine.inState(CargoState) && keybinds.isInputPressed(7) || !g.blockHotkeys && menuHud.stateMachine.inState(HomeState) && keybinds.isInputPressed(2) || !g.blockHotkeys && menuHud.stateMachine.inState(ArtifactState2) && keybinds.isInputPressed(3) || !g.blockHotkeys && menuHud.stateMachine.inState(EncounterState) && keybinds.isInputPressed(4) || !g.blockHotkeys && keybinds.isEscPressed)
          {
-            sm.revertState();
+            sm.changeState(new RoamingState(g));
             menuHud.unload();
          }
       }
