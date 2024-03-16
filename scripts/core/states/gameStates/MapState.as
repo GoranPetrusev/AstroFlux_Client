@@ -26,7 +26,7 @@ package core.states.gameStates
          g.tutorial.showMapTargetHint();
          map.addEventListener("close",function(param1:Event):void
          {
-            sm.revertState();
+            sm.changeState(new RoamingState(g));
          });
          loadCompleted();
       }
@@ -47,12 +47,13 @@ package core.states.gameStates
          {
             if(keybinds.isEscPressed || keybinds.isInputPressed(9))
             {
-               sm.revertState();
+               sm.changeState(new RoamingState(g));
             }
             else if(keybinds.isInputPressed(1) && (g.me.isDeveloper || g.me.isModerator))
             {
                sm.changeState(new GoWarpState(g));
             }
+            
             updateCommands();
          }
          super.execute();
