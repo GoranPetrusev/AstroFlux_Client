@@ -112,7 +112,7 @@ package core.states.gameStates.missions
          {
             show(MissionsStory,storyButton);
          }
-         else if(dailyCount > 0)
+         else if(dailyCount > 3)
          {
             show(MissionsDaily,dailyButton);
          }
@@ -204,7 +204,7 @@ package core.states.gameStates.missions
             container.removeChild(activePage,true);
          }
          clearBackground();
-         sm.changeState(new RoamingState(g));
+         sm.revertState();
       }
    }
 }
