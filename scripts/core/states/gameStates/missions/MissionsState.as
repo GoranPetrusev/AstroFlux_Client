@@ -204,7 +204,7 @@ package core.states.gameStates.missions
             container.removeChild(activePage,true);
          }
          clearBackground();
-         sm.revertState();
+         sm.changeState(new RoamingState(g));
       }
    }
 }
