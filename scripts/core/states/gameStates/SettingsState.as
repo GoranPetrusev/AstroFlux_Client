@@ -138,9 +138,9 @@ package core.states.gameStates
             container.removeChild(activePage,true);
          }
          clearBackground();
-         g.me.rotationSpeedMod = core.states.§gameStates:SettingsState§.settings.rotationSpeed;
+         g.me.rotationSpeedMod = settings.rotationSpeed;
          SceneBase.settings.save();
-         sm.revertState();
+         sm.changeState(new RoamingState(g));
       }
    }
 }

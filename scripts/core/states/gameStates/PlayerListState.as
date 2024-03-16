@@ -53,7 +53,7 @@ package core.states.gameStates
          g.hud.show = false;
          playerList.addEventListener("close",function(param1:Event):void
          {
-            sm.revertState();
+            sm.changeState(new RoamingState(g));
          });
       }
       
@@ -65,7 +65,7 @@ package core.states.gameStates
          }
          if(keybinds.isEscPressed || keybinds.isInputPressed(25))
          {
-            sm.revertState();
+            sm.changeState(new RoamingState(g));
             return;
          }
          updateCommands();
