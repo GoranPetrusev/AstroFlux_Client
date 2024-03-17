@@ -33,8 +33,6 @@ package core.hud.components.map
       
       private var mapContainer:Sprite;
       
-      private var coords:TextBitmap;
-      
       private var mapPlayers:Vector.<MapPlayer>;
       
       private var mapBodies:Vector.<MapBodyBase>;
@@ -56,7 +54,6 @@ package core.hud.components.map
       public function Map(param1:Game)
       {
          mapContainer = new Sprite();
-         coords = new TextBitmap();
          mapPlayers = new Vector.<MapPlayer>();
          mapBodies = new Vector.<MapBodyBase>();
          mapSpawners = new Vector.<MapSpawner>();
@@ -124,15 +121,7 @@ package core.hud.components.map
          {
             clearedFraction = exploreCount / areaCount * 100;
          }
-         var name:TextBitmap = new TextBitmap(0,-10,g.solarSystem.name,16);
-         name.format.color = 16689475;
-         name.alpha = 0.8;
-         name.batchable = true;
-         if(!pvpMode)
-         {
-            addChild(name);
-         }
-         var explored:TextBitmap = new TextBitmap(name.x + name.width + 4,name.y + 2,Util.formatDecimal(clearedFraction,1) + "% Explored");
+         var explored:TextBitmap = new TextBitmap(0,0,Util.formatDecimal(clearedFraction,1) + "% Explored");
          explored.format.color = 6842472;
          explored.batchable = true;
          if(!pvpMode)
@@ -219,13 +208,6 @@ package core.hud.components.map
          mask.width = WIDTH;
          mask.height = HEIGHT;
          mapContainer.mask = mask;
-         coords.format.color = 8947848;
-         coords.size = 14;
-         coords.batchable = true;
-         if(!pvpMode)
-         {
-            addChild(coords);
-         }
       }
       
       public function playerJoined(param1:Player) : void
@@ -253,9 +235,6 @@ package core.hud.components.map
                _loc1_ = mapContainer.mask;
                _loc1_.x = -(WIDTH / 2) + _loc6_.x + PADDING / 2;
                _loc1_.y = -(HEIGHT / 2) + _loc6_.y + PADDING / 2;
-               coords.text = "Current position: " + Math.round(_loc6_.x) + ", " + Math.round(_loc6_.y);
-               coords.x = 0;
-               coords.y = 10;
                mapContainer.x = WIDTH / 2 - _loc6_.x;
                mapContainer.y = HEIGHT / 2 - _loc6_.y;
                if(!g.solarSystem.isPvpSystemInEditor)
