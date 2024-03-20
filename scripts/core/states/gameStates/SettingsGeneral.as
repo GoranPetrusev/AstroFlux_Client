@@ -71,6 +71,8 @@ package core.states.gameStates
 
       private var dontKick:Check;
       
+      private var disableScreenShake:Check;
+      
       public function SettingsGeneral(param1:Game)
       {
          super();
@@ -219,6 +221,13 @@ package core.states.gameStates
             PlayerConfig.values.dontKick = dontKick.isSelected;
          });
          addCheckbox(dontKick, "Don't Kick");
+         disableScreenShake = new Check();
+         disableScreenShake.isSelected = PlayerConfig.values.disableScreenShake;
+         disableScreenShake.addEventListener("change",function(param1:Event):void
+         {
+            PlayerConfig.values.disableScreenShake = disableScreenShake.isSelected;
+         });
+         addCheckbox(disableScreenShake, "Disable Camera Shake");
       }
       
       private function addInputField(str:String, field:InputText) : void

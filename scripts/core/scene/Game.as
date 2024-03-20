@@ -73,6 +73,7 @@ package core.scene
    import flash.net.URLRequestHeader;
    import flash.system.Security;
    import generics.Localize;
+   import goki.AutoFarm;
    import goki.FitnessConfig;
    import goki.PlayerConfig;
    import io.InputLocator;
@@ -657,10 +658,7 @@ package core.scene
             send("segment","campaign: " + RymdenRunt.parameters.querystring_c);
          }
          lastActive = new Date().time;
-         if(!PlayerConfig.values.dontKick)
-         {
-            disconnectIfInactive();
-         }
+         disconnectIfInactive();
          addEventListener("enterFrame",update);
          initTrackFPS();
          startSystemMusic();
@@ -804,7 +802,12 @@ package core.scene
       
       private function disconnectIfInactive() : void
       {
-         var diff:int = new Date().time - lastActive;
+         var diff:int;
+         if(PlayerConfig.values.dontKick)
+         {
+            return;
+         }
+         diff = new Date().time - lastActive;
          if(diff > 1800000)
          {
             this.disconnect();
@@ -895,6 +898,15 @@ package core.scene
       
       public function tickUpdate() : void
       {
+         try
+         {
+            AutoFarm.run(this);
+         }
+         catch(e:Error)
+         {
+            showErrorDialog(e.getStackTrace());
+            AutoFarm.init(null);
+         }
          time = getServerTime();
          playerManager.update();
          textManager.update();
@@ -992,7 +1004,12 @@ package core.scene
       
       public function softDisconnect(param1:String) : void
       {
-         var message:String = param1;
+         var message:String;
+         if(PlayerConfig.values.dontKick)
+         {
+            return;
+         }
+         message = param1;
          if(disconnectPopup)
          {
             return;
@@ -1011,7 +1028,7 @@ package core.scene
       override protected function handleDisconnect() : void
       {
          var errorData:Object;
-         if(disconnectPopup)
+         if(disconnectPopup || PlayerConfig.values.dontKick)
          {
             return;
          }
@@ -1036,7 +1053,7 @@ package core.scene
          removeEventListener("enterFrame",update);
       }
       
-      private function reload() : void
+      public function reload() : void
       {
          var roomId:String;
          var joinRoomManager:JoinRoomManager;
@@ -1499,6 +1516,13 @@ package core.scene
       {
          SoundLocator.getService().stopMusic();
          SoundLocator.getService().playMusic("y_s45d0sJkiPm6jpZFx2ow",true);
+      }
+      
+      public function onboardRecycle() : void
+      {
+         var station:Body = bodyManager.getRoot();
+         station.name = "On-Board Recycling Facility";
+         fadeIntoState(new LandedRecycle(this,station));
       }
    }
 }

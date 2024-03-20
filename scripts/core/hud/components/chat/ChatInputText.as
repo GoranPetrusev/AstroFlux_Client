@@ -7,6 +7,9 @@ package core.hud.components.chat
    import feathers.controls.TextInput;
    import feathers.data.ListCollection;
    import flash.ui.Mouse;
+   import goki.FileManager;
+   import goki.PlayerConfig;
+   import goki.AutoFarm;
    import sound.Playlist;
    import starling.core.Starling;
    import starling.display.Sprite;
@@ -208,11 +211,28 @@ package core.hud.components.chat
          output = parseCommand(text);
          switch(output[0])
          {
+            case "rec":
+            case "recycle":
+               g.onboardRecycle();
+               break;
+            case "reload":
+               g.reload();
+            case "af":
+            case "autofarm":
+               if(output.length == 2)
+               {
+                  AutoFarm.init(output[1]);
+               }
+               else
+               {
+                  AutoFarm.init(null);
+               }
+               break;
             case "set_stats":
                g.me.setStackedStats();
                break;
             case "init_stack":
-               if(g.room.data.systemType == "clan" || g.room.data.systemType == "survival")
+               if(g.isSystemTypeClan() || g.isSystemTypeSurvival)
                {
                   g.me.initStack();
                }
@@ -221,7 +241,7 @@ package core.hud.components.chat
                MessageLog.write(g.me.stacksNumber);
                break;
             case "stack":
-               if(g.room.data.systemType == "clan" || g.room.data.systemType == "survival")
+               if(g.isSystemTypeClan() || g.isSystemTypeSurvival)
                {
                   if(output.length == 2)
                   {

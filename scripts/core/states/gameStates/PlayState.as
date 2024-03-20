@@ -3,9 +3,9 @@ package core.states.gameStates
    import core.scene.Game;
    import core.scene.SceneBase;
    import core.ship.PlayerShip;
-   import core.weapon.Weapon;
    import flash.geom.Point;
    import generics.Util;
+   import goki.AutoFarm;
    import goki.PlayerConfig;
    import io.InputLocator;
    import movement.Heading;
@@ -16,6 +16,7 @@ package core.states.gameStates
    import starling.display.Sprite;
    import starling.events.Event;
    import textures.TextureLocator;
+   import core.hud.components.chat.MessageLog;
    
    public class PlayState extends GameState
    {
@@ -131,7 +132,7 @@ package core.states.gameStates
       
       public function updateMouseAim() : void
       {
-         var _loc3_:PlayerShip = core.states.§gameStates:GameState§.me.ship;
+         var _loc3_:PlayerShip = g.me.ship;
          var _loc2_:Heading = _loc3_.course;
          var _loc5_:Point;
          var _loc8_:Number = (_loc5_ = _loc3_.getGlobalPos()).x;
@@ -176,7 +177,7 @@ package core.states.gameStates
       
       public function checkAccelerate(param1:Boolean = false) : void
       {
-         if(!core.states.§gameStates:GameState§.me.commandable)
+         if(!g.me.commandable)
          {
             return;
          }
@@ -184,7 +185,7 @@ package core.states.gameStates
          {
             return;
          }
-         var _loc3_:PlayerShip = core.states.§gameStates:GameState§.me.ship;
+         var _loc3_:PlayerShip = g.me.ship;
          var _loc2_:Heading = _loc3_.course;
          if(keybinds.isInputPressed(26))
          {
@@ -220,7 +221,7 @@ package core.states.gameStates
       
       public function updateCommands() : void
       {
-         if(!core.states.§gameStates:GameState§.me.commandable)
+         if(!g.me.commandable)
          {
             return;
          }
@@ -228,7 +229,7 @@ package core.states.gameStates
          {
             return;
          }
-         var _loc1_:PlayerShip = core.states.§gameStates:GameState§.me.ship;
+         var _loc1_:PlayerShip = g.me.ship;
          if(_loc1_.channelingEnd > g.time)
          {
             _loc1_.course.rotateLeft = false;
@@ -236,8 +237,14 @@ package core.states.gameStates
             _loc1_.course.accelerate = false;
             return;
          }
-         checkBoost();
          checkZoom();
+         checkWeaponChange();
+         if(AutoFarm.isRunning)
+         {
+            AutoFarm.run(g);
+            return;
+         }
+         checkBoost();
          checkShield();
          checkConvert();
          checkPower();
@@ -264,7 +271,7 @@ package core.states.gameStates
          {
             return updateMouseAim();
          }
-         var _loc1_:Heading = core.states.§gameStates:GameState§.me.ship.course;
+         var _loc1_:Heading = g.me.ship.course;
          if(!_loc1_.rotateLeft && keybinds.isInputDown(13))
          {
             sendCommand(1,true);
@@ -289,8 +296,24 @@ package core.states.gameStates
       
       private function handleWeaponFire() : void
       {
-         var _loc2_:PlayerShip = core.states.§gameStates:GameState§.me.ship;
-         fireWithHotkeys = false;
+         var _loc2_:PlayerShip = g.me.ship;
+         fireWithHotkeys = checkWeaponChange();
+         if(!_loc2_.isShooting && (keybinds.isInputDown(19) || fireWithHotkeys))
+         {
+            sendCommand(3,true);
+         }
+         else if(_loc2_.isShooting && keybinds.isInputUp(19) && !fireWithHotkeys)
+         {
+            for each(var _loc1_ in _loc2_.weapons)
+            {
+               _loc1_.fire = false;
+            }
+            sendCommand(3,false);
+         }
+      }
+
+      private function checkWeaponChange() : Boolean
+      {
          var _loc3_:int = 0;
          if(keybinds.isInputDown(20))
          {
@@ -314,32 +337,21 @@ package core.states.gameStates
          }
          if(_loc3_ > 0 && _loc3_ < 6)
          {
-            if(g.hud.weaponHotkeys.selectedHotkey == null || _loc3_ != g.hud.weaponHotkeys.selectedHotkey.key && !_loc2_.weaponIsChanging)
+            if(g.hud.weaponHotkeys.selectedHotkey == null || _loc3_ != g.hud.weaponHotkeys.selectedHotkey.key && !g.me.ship.weaponIsChanging)
             {
                g.me.sendChangeWeapon(_loc3_);
             }
             if(SceneBase.settings.fireWithHotkeys)
             {
-               fireWithHotkeys = true;
+               return true;
             }
          }
-         if(!_loc2_.isShooting && (keybinds.isInputDown(19) || core.states.§gameStates:PlayState§.fireWithHotkeys))
-         {
-            sendCommand(3,true);
-         }
-         else if(_loc2_.isShooting && keybinds.isInputUp(19) && !core.states.§gameStates:PlayState§.fireWithHotkeys)
-         {
-            for each(var _loc1_ in _loc2_.weapons)
-            {
-               _loc1_.fire = false;
-            }
-            sendCommand(3,false);
-         }
+         return false;
       }
       
       private function handleDeathlines() : void
       {
-         var _loc1_:PlayerShip = core.states.§gameStates:GameState§.me.ship;
+         var _loc1_:PlayerShip = g.me.ship;
          if(input.isKeyPressed(89))
          {
             g.deathLineManager.addCoord(_loc1_.pos.x,_loc1_.pos.y);
@@ -396,7 +408,7 @@ package core.states.gameStates
          if(keybinds.isInputPressed(15))
          {
             g.commandManager.addBoostCommand();
-            if(core.states.§gameStates:GameState§.me.ship.usingBoost)
+            if(g.me.ship.usingBoost)
             {
                g.camera.zoomFocus(0.75 * PlayerConfig.values.zoomFactor,80);
             }

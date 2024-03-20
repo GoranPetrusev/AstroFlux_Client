@@ -23,7 +23,8 @@ package core.states.gameStates
    import starling.events.TouchEvent;
    import starling.filters.ColorMatrixFilter;
    import textures.TextureManager;
-   
+   import goki.AFutil;
+
    public class LandedRecycle extends LandedState
    {
        
@@ -47,6 +48,8 @@ package core.states.gameStates
       private var scrollContainer:ScrollContainer;
       
       private var scrollContainer2:ScrollContainer;
+
+      private var onboardRecycle:Boolean;
       
       public function LandedRecycle(param1:Game, param2:Body)
       {
@@ -56,6 +59,7 @@ package core.states.gameStates
          myCargo = param1.myCargo;
          junkTextItems = [];
          mineralTextItems = [];
+         onboardRecycle = param2.name == "On-Board Recycling Facility";
       }
       
       override public function enter() : void
@@ -153,6 +157,11 @@ package core.states.gameStates
          addChild(scrollContainer);
          addChild(scrollContainer2);
          junkReceived();
+         if(onboardRecycle)
+         {
+            selectAllJunk();
+            recycle(null);
+         }
       }
       
       override public function execute() : void
@@ -392,6 +401,11 @@ package core.states.gameStates
             myCargo.addItem("Commodities",_loc3_,_loc5_);
             _loc7_ += 2;
             _loc2_++;
+         }
+         if(onboardRecycle)
+         {
+            g.me.fakeRoaming();
+            AFutil.isRecycling = false;
          }
       }
       

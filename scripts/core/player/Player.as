@@ -939,6 +939,12 @@ package core.player
             stateMachine.changeState(new Roaming(this,g));
          }
       }
+
+      public function fakeRoaming() : void
+      {
+         g.fadeIntoState(new RoamingState(g));
+         enterRoaming();
+      }
       
       public function startLanded(param1:Body) : void
       {
