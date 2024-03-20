@@ -54,7 +54,7 @@ package goki
          "kineticResist":[1.1,5,1],
          "powerMax":[2,-20,1],
          "powerReg":[0.15,-2,0.1],
-         "powerReg3":[0.15,8,0.1],
+         "powerReg3":[0.15,6,0.1],
          "powerReg2":[0.15,3,0.1],
          "refire2":[0.4,-5,0.30000000000000004],
          "refire3":[0.5,20,0.30000000000000004],

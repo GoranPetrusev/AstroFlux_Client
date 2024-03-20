@@ -1526,10 +1526,7 @@ package core.player
                g.hud.showArtifactLimitText();
             }
          }
-         if(_loc12_)
-         {
-            MessageLog.writeChatMsg("loot","<FONT COLOR=\'#4488ff\'>You found a Crate</FONT>");
-         }
+         
          if(_loc9_)
          {
             MessageLog.writeChatMsg("loot","<FONT COLOR=\'#ffcc44\'>Auto recycled artifact</FONT>");

@@ -132,7 +132,7 @@ package movement
       public function addBoostCommand(param1:AbilityHotkey = null) : void
       {
          var _loc2_:PlayerShip = g.me.ship;
-         if(_loc2_.boostNextRdy < g.time && _loc2_.hasBoost)
+         if(_loc2_.boostNextRdy + 50 < g.time && _loc2_.hasBoost)
          {
             g.hud.abilities.initiateCooldown("Engine");
             _loc2_.boost();
@@ -143,7 +143,7 @@ package movement
       public function addDmgBoostCommand(param1:AbilityHotkey = null) : void
       {
          var _loc2_:PlayerShip = g.me.ship;
-         if(_loc2_.hasDmgBoost && _loc2_.dmgBoostNextRdy < g.time)
+         if(_loc2_.dmgBoostNextRdy + 50 < g.time && _loc2_.hasDmgBoost )
          {
             g.hud.abilities.initiateCooldown("Power");
             _loc2_.dmgBoost();
@@ -154,7 +154,7 @@ package movement
       public function addShieldConvertCommand(param1:AbilityHotkey = null) : void
       {
          var _loc2_:PlayerShip = g.me.ship;
-         if(_loc2_.hasArmorConverter && _loc2_.convNextRdy < g.time)
+         if(_loc2_.convNextRdy < g.time && _loc2_.hasArmorConverter)
          {
             g.hud.abilities.initiateCooldown("Armor");
             _loc2_.convertShield();
@@ -165,7 +165,7 @@ package movement
       public function addHardenedShieldCommand(param1:AbilityHotkey = null) : void
       {
          var _loc2_:PlayerShip = g.me.ship;
-         if(_loc2_.hardenNextRdy < g.time && _loc2_.hasHardenedShield)
+         if(_loc2_.hardenNextRdy + 50 < g.time && _loc2_.hasHardenedShield)
          {
             g.hud.abilities.initiateCooldown("Shield");
             _loc2_.hardenShield();

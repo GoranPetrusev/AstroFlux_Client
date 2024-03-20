@@ -368,7 +368,7 @@ package core.weapon
             _loc2_ += Localize.t("Fires <FONT COLOR=\'#eeeeee\'>[nrp]</FONT>x projectiles\n").replace("[nrp]",multiNrOfP);
          }
          _loc2_ += Localize.t("Fires <FONT COLOR=\'#eeeeee\'>[rps]</FONT> rounds per second.\n").replace("[rps]",(1000 * multiNrOfP / reloadTime).toFixed(1));
-         _loc2_ += Localize.t("Damage per second: <FONT COLOR=\'#eeeeee\'>[dps]</FONT>\n").replace("[dps]",Util.formatAmount(dmg.dmg() * burst * multiNrOfP * 1000 / (reloadTime + (burst - 1) * 33)));
+         _loc2_ += Localize.t("Damage per second: <FONT COLOR=\'#eeeeee\'>[dps]</FONT>\n").replace("[dps]",Util.formatAmount((dmg.dmg() * burst * multiNrOfP * 1000 / (reloadTime + (burst - 1) * 33)).toFixed(1)));
          if(shieldVamp > 0 || healthVamp > 0)
          {
             _loc2_ += "\n";

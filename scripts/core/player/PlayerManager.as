@@ -16,7 +16,6 @@ package core.player
    import core.scene.Game;
    import core.ship.PlayerShip;
    import core.solarSystem.Body;
-   import core.spawner.Spawner;
    import core.states.gameStates.IntroState;
    import core.states.gameStates.WarpJumpState;
    import core.states.gameStates.missions.MissionsList;
@@ -338,10 +337,7 @@ package core.player
       {
          for each(var _loc1_ in _players)
          {
-            if(!(_loc1_.isDeveloper || _loc1_.isModerator))
-            {
-               MessageLog.writeChatMsg("list","lvl " + _loc1_.level,_loc1_.id,_loc1_.name);
-            }
+            MessageLog.writeChatMsg("list",_loc1_.id,_loc1_.id,_loc1_.name);
          }
       }
       
@@ -1380,25 +1376,25 @@ package core.player
             TweenMax.delayedCall(timeDiff,function():void
             {
                g.emitterManager.clean(ship);
-               line++;
+               ++line;
                EmitterFactory.create("CBZIObPQ40uaMZGvEcHvjw",g,ship.pos.x,ship.pos.y,ship,true);
                TweenMax.delayedCall(0.24000000000000002,function():void
                {
-                  line++;
+                  ++line;
                   for each(var _loc1_ in emitters)
                   {
                      _loc1_.killEmitter();
                   }
-                  line++;
+                  ++line;
                   ship.course = heading;
                   ship.isTeleporting = false;
-                  line++;
+                  ++line;
                   if(ship == g.me.ship)
                   {
                      g.focusGameObject(g.me.ship,true);
                      EmitterFactory.create("CBZIObPQ40uaMZGvEcHvjw",g,ship.pos.x,ship.pos.y,ship,true);
                   }
-                  line++;
+                  ++line;
                });
             });
          }

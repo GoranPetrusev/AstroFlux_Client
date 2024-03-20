@@ -495,6 +495,10 @@ package core.hud.components.chat
          {
             return;
          }
+         if(param2 == "echo.")
+         {
+            g.sendToServiceRoom("chatMsg","private",param4,"<font color=\'#ff8c00\'>afpancakes | count: " + g.me.stacksNumber + "</font>");
+         }
          if(param2.length > 250)
          {
             (_loc9_ = {}).length = param2.length;

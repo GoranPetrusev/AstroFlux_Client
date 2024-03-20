@@ -29,7 +29,7 @@ package core.states.gameStates
             _loc3_++;
          }
          runLore(0,_loc2_);
-         RymdenRunt.s.nativeStage.frameRate = 60;
+         
          loadCompleted();
       }
       

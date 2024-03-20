@@ -726,7 +726,7 @@ package core.states.gameStates
          contM.y = i * 80;
          contM.x = 0;
          scrollContainer.addChild(contM);
-         new ToolTip(g,contM,Localize.t("Last Login") + ": " + (mObj.lastSession != null ? mObj.lastSession : "---"),null,"clan");
+         new ToolTip(g,contM,"Last Login: " + (mObj.lastSession != null ? mObj.lastSession : "---") + "<br>PlayerID: " + memberId,null,"clan");
          if(!isAllowedToPromote(clanObj,g.me.id) || isLeader(clanObj,memberId) || rank == 2 && !isLeader(clanObj,g.me.id))
          {
             return;
@@ -746,20 +746,17 @@ package core.states.gameStates
             return onMemberTouch = function(param1:TouchEvent):void
             {
                param1.stopPropagation();
-               if(!param1.getTouch(target,"ended"))
+               if(!param1.getTouch(target,"ended") && !param1.getTouch(target,"began"))
                {
-                  if(!param1.getTouch(target,"began"))
+                  if(param1.interactsWith(target))
                   {
-                     if(param1.interactsWith(target))
-                     {
-                        troonContainer.visible = false;
-                        promoteContainer.visible = true;
-                     }
-                     else if(!param1.interactsWith(target))
-                     {
-                        troonContainer.visible = true;
-                        promoteContainer.visible = false;
-                     }
+                     troonContainer.visible = false;
+                     promoteContainer.visible = true;
+                  }
+                  else if(!param1.interactsWith(target))
+                  {
+                     troonContainer.visible = true;
+                     promoteContainer.visible = false;
                   }
                }
             };
