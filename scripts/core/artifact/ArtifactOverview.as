@@ -3,6 +3,7 @@ package core.artifact
    import com.greensock.TweenMax;
    import core.credits.CreditManager;
    import core.hud.components.Box;
+   import core.hud.components.chat.MessageLog;
    import core.hud.components.Button;
    import core.hud.components.CrewDisplayBoxNew;
    import core.hud.components.InputText;
@@ -20,6 +21,8 @@ package core.artifact
    import core.states.gameStates.ShopState;
    import feathers.controls.ScrollContainer;
    import feathers.controls.ToggleButton;
+   import feathers.layout.HorizontalLayout;
+   import feathers.layout.VerticalLayout;
    import generics.Localize;
    import generics.Util;
    import goki.FitnessConfig;
@@ -36,8 +39,7 @@ package core.artifact
    import starling.text.TextFormat;
    import textures.ITextureManager;
    import textures.TextureLocator;
-   import core.hud.components.chat.MessageLog;
-
+   
    public class ArtifactOverview extends Sprite
    {
       
@@ -113,11 +115,13 @@ package core.artifact
       private var selectedCrewMember:CrewDisplayBoxNew;
       
       private var purifyButton:Button;
-
+      
       private var autoTrainButton:Button;
-
+      
       private var isAutoTrainOn:Boolean;
       
+      private var setupsContainer:ScrollContainer;
+            
       public function ArtifactOverview(param1:Game)
       {
          activeSlots = new Vector.<ArtifactBox>();
@@ -262,7 +266,7 @@ package core.artifact
          upgradeButton.visible = false;
          upgradeButton.enabled = false;
          addChild(upgradeButton);
-         autoTrainButton = new Button(autoTrain, "Auto Train");
+         autoTrainButton = new Button(autoTrain,"Auto Train");
          autoTrainButton.x = upgradeButton.x - autoTrainButton.width - 10;
          autoTrainButton.y = 480;
          autoTrainButton.visible = false;
@@ -417,23 +421,21 @@ package core.artifact
       
       private function drawArtifactSetups() : void
       {
-         var _loc5_:int = 0;
-         var _loc4_:int = 0;
-         var _loc2_:ToggleButton = null;
+         addHorizontalScrollContainer();
+
          for each(var _loc1_ in setups)
          {
             _loc1_.removeEventListeners();
-            removeChild(_loc1_);
          }
          setups.length = 0;
+         var _loc2_:ToggleButton = null;
          var _loc3_:int = p.artifactSetups.length + 1;
-         _loc5_ = 0;
-         _loc4_ = 10;
+         var _loc5_:int = 0;
          while(_loc5_ < _loc3_)
          {
             _loc2_ = new ToggleButton();
             _loc2_.styleNameList.add("artifact_setup");
-            addChild(_loc2_);
+            setupsContainer.addChild(_loc2_);
             if(_loc5_ == 0)
             {
                _loc2_.label = Localize.t("Setup") + " 1";
@@ -453,15 +455,33 @@ package core.artifact
             {
                _loc2_.isSelected = true;
             }
-            _loc2_.x = _loc4_;
-            _loc2_.y = 70;
             _loc2_.height = 24;
             _loc2_.useHandCursor = true;
             _loc2_.validate();
-            _loc4_ += _loc2_.width - 1;
             setups.push(_loc2_);
             _loc5_++;
          }
+      }
+
+      private function addHorizontalScrollContainer() : void
+      {
+         setupsContainer = new ScrollContainer();
+         addChild(setupsContainer);
+         var layout:HorizontalLayout = new HorizontalLayout();
+         layout.gap = -1;
+         setupsContainer.layout = layout;
+
+         setupsContainer.width = 630;
+         setupsContainer.height = 24;
+         setupsContainer.x = 10;
+         setupsContainer.y = 70;
+         setupsContainer.verticalScrollPolicy = "off";
+         setupsContainer.horizontalScrollPolicy = "on";
+         setupsContainer.interactionMode = "mouse";
+         setupsContainer.scrollBarDisplayMode = "none";
+         setupsContainer.verticalMouseWheelScrollDirection = "horizontal";
+         setupsContainer.verticalMouseWheelScrollStep = 25;
+
       }
       
       private function drawArtifactsInCargo() : void
@@ -1244,7 +1264,7 @@ package core.artifact
          g.showConfirmDialog(Localize.t("The upgrade will be finished in") + ": \n\n<font color=\'#ffaa88\'>" + Util.getFormattedTime(_loc4_) + "</font>",confirmUpgrade);
          upgradeButton.enabled = true;
       }
-
+      
       private function confirmUpgrade() : void
       {
          if(selectedUpgradeBox == null)
@@ -1518,11 +1538,11 @@ package core.artifact
          onRecycle(null);
          purifyButton.enabled = true;
       }
-
+      
       private function autoTrain(param1:TouchEvent = null) : void
       {
          autoTrainButton.enabled = true;
-         if (isAutoTrainOn)
+         if(isAutoTrainOn)
          {
             g.showErrorDialog("Auto Train is already on. If you wish to turn it off just close the arts menu.");
             return;
@@ -1530,36 +1550,33 @@ package core.artifact
          runAutoTrain();
          isAutoTrainOn = true;
       }
-
+      
       private function runAutoTrain(depth:int = 0) : void
       {
+         var artBox:*;
          if(depth >= p.crewMembers.length)
          {
             return;
          }
-
          if(p.crewMembers[depth].isUpgrading)
          {
-            TweenMax.delayedCall(3, function():void
+            TweenMax.delayedCall(3,function():void
             {
                runAutoTrain(depth + 1);
             });
             return;
          }
-
-         for each(var artBox in cargoBoxes)
+         for each(artBox in cargoBoxes)
          {
             if(artBox.a != null && !artBox.a.revealed && artBox.a.levelPotential <= 10 && artBox.a.upgraded <= 3)
             {
                selectedUpgradeBox = artBox;
-               selectedCrewMember = new CrewDisplayBoxNew(g, p.crewMembers[depth], 2);
+               selectedCrewMember = new CrewDisplayBoxNew(g,p.crewMembers[depth],2);
                confirmUpgrade();
-
-               TweenMax.delayedCall(3, function():void
+               TweenMax.delayedCall(3,function():void
                {
                   runAutoTrain(depth + 1);
                });
-
                return;
             }
          }

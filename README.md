@@ -19,7 +19,7 @@ It has been over a month since I undertook this project. There's now a team of c
 - [x] Fitness Config Menu
 - [ ] Fitness buffed by multiple equal lines
 - [ ] Renamable art setups
-- [ ] Side scrolling art setups container
+- [x] Side scrolling art setups container
 - [ ] Fullscreen map
 - [x] Purify
 - [x] Autorecycle
@@ -53,6 +53,7 @@ It has been over a month since I undertook this project. There's now a team of c
 - Refactor welcome text base class for future use
 - Updating feature
 - Why the hell is text so broken in this game? It has weird offsets and relations to the camera... look into it
+- Look into using List component as chat base
 
 Stat Distribution Color Coding
 57bb8a
