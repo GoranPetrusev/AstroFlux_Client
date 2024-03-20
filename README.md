@@ -18,8 +18,9 @@ It has been over a month since I undertook this project. There's now a team of c
 - [ ] Fitness sort in arts menu
 - [x] Fitness Config Menu
 - [ ] Fitness buffed by multiple equal lines
-- [ ] Renameable art setups
+- [ ] Renamable art setups
 - [ ] Side scrolling art setups container
+- [ ] Fullscreen map
 - [x] Purify
 - [x] Autorecycle
 - [x] Autosave of custom settings

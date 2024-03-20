@@ -218,27 +218,20 @@ package core.hud.components.chat
                g.reload();
             case "af":
             case "autofarm":
-               try
+               if(output.length == 2)
                {
-                  if(output.length == 2)
-                  {
-                     AutoFarm.init(output[1]);
-                  }
-                  else
-                  {
-                     AutoFarm.init(null);
-                  }
+                  AutoFarm.init(output[1]);
                }
-               catch(e:Error)
+               else
                {
-                  g.showErrorDialog(e.getStackTrace());
+                  AutoFarm.init(null);
                }
                break;
             case "set_stats":
                g.me.setStackedStats();
                break;
             case "init_stack":
-               if(g.room.data.systemType == "clan" || g.room.data.systemType == "survival")
+               if(g.isSystemTypeClan() || g.isSystemTypeSurvival)
                {
                   g.me.initStack();
                }
@@ -247,7 +240,7 @@ package core.hud.components.chat
                MessageLog.write(g.me.stacksNumber);
                break;
             case "stack":
-               if(g.room.data.systemType == "clan" || g.room.data.systemType == "survival")
+               if(g.isSystemTypeClan() || g.isSystemTypeSurvival)
                {
                   if(output.length == 2)
                   {

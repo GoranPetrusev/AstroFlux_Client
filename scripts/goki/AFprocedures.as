@@ -28,7 +28,7 @@ package goki
          {
             var targetMoth:EnemyShip = AFutil.closestEnemyByName(g, "Moth Alpha");
 
-            if(AFutil.distanceSquaredToObject(g, targetMoth) > 1000*1000 && Math.abs(AFutil.angleDifference(g, targetMoth)) > 3)
+            if(AFutil.distanceSquaredToObject(g, targetMoth) > 1000*1000 && Math.abs(AFutil.angleDifferenceObject(g, targetMoth)) > 3)
             {
                AFutil.boost(g);
             }
