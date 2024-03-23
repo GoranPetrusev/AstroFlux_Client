@@ -25,6 +25,7 @@ package core.hud.components.cargo
    import starling.textures.Texture;
    import textures.ITextureManager;
    import textures.TextureLocator;
+   import goki.PlayerConfig;
    
    public class Cargo extends Sprite
    {
@@ -101,6 +102,10 @@ package core.hud.components.cargo
       {
          ButtonCargo.serverSaysCargoIsFull = true;
          g.hud.cargoButton.update();
+         if(PlayerConfig.value.autoRec)
+         {
+            g.onboardRecycle();
+         }
       }
       
       public function reloadCargoView(param1:Function = null) : void

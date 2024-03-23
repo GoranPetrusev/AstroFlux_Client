@@ -36,7 +36,6 @@ package goki
             AFutil.accelerate(g, true);
          }
 
-         AFutil.recycleCargoIfFull(g);
          AFutil.fire(g, true);
       }
 
@@ -47,6 +46,7 @@ package goki
             AFutil.lookAtPoint(g, -425, -100);
             AFutil.accelerate(g, true);
          }
+         
          AFutil.fire(g,true);
       }
    }
