@@ -1286,7 +1286,7 @@ package core.scene
             welcomeText.start([["Welcome to " + solarSystem.name]]);
          }
          welcomeText.x = stage.stageWidth / 2 - 200;
-         welcomeText.y = stage.stageHeight / 2 - 400;
+         welcomeText.y = stage.stageHeight / 2 - 100;
          addChildToOverlay(welcomeText);
          solarSystemData.x = welcomeText.x;
          solarSystemData.y = welcomeText.y + 40;
