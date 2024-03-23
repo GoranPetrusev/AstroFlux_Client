@@ -3,12 +3,21 @@ package core.hud.components.chat
    import core.scene.Game;
    import feathers.controls.Label;
    import feathers.controls.ScrollContainer;
+   import feathers.controls.List;
+   import feathers.controls.renderers.IListItemRenderer;
+   import feathers.controls.renderers.DefaultListItemRenderer;
+   import feathers.controls.text.BitmapFontTextRenderer;
+   import feathers.controls.text.TextFieldTextRenderer;
+   import feathers.text.BitmapFontTextFormat;
+   import feathers.core.ITextRenderer;
    import feathers.layout.VerticalLayout;
+   import feathers.data.ListCollection;
    import starling.core.Starling;
    import starling.display.Quad;
    import starling.display.Sprite;
    import starling.events.Event;
    import starling.events.TouchEvent;
+   import starling.text.TextFormat;
    
    public class ChatAdvanced extends Sprite
    {
@@ -19,6 +28,8 @@ package core.hud.components.chat
       private var scrollView:Sprite;
       
       private var scroll:ScrollContainer;
+
+      public var listScroll:List;
       
       private var playerChatOptions:PlayerChatOptions;
       
@@ -33,7 +44,7 @@ package core.hud.components.chat
          var _loc3_:Quad = new Quad(_loc6_,_loc2_,0);
          _loc3_.alpha = 0.6;
          scrollView.addChild(_loc3_);
-         var _loc4_:VerticalLayout = new VerticalLayout();
+         var _loc4_:VerticalLayout = new VerticalLayout(); 
          scroll = new ScrollContainer();
          scroll.layout = _loc4_;
          scroll.x = _loc5_;
@@ -42,6 +53,29 @@ package core.hud.components.chat
          scroll.height = _loc2_ - scroll.y;
          scrollView.addChild(scroll);
          addChild(scrollView);
+
+         listScroll = new List();
+         listScroll.x = _loc5_;
+         listScroll.y = _loc5_;
+         listScroll.width = _loc6_ - _loc5_;
+         listScroll.height = _loc2_ - scroll.y;
+
+         listScroll.itemRendererFactory = function():IListItemRenderer
+         {
+            var itemRederer:DefaultListItemRenderer = new DefaultListItemRenderer();
+            itemRederer.labelField = "text";
+            itemRederer.labelFactory = function():ITextRenderer
+            {
+               var textRenderer:TextFieldTextRenderer = new TextFieldTextRenderer();
+               textRenderer.isHTML = true;
+               textRenderer.textFormat = new TextFormat("Verdana", 12, 0x000000);
+               return textRenderer;
+            }
+            return itemRederer;
+         }
+
+         scrollView.addChild(listScroll);
+
          addEventListener("addedToStage",load);
          addEventListener("removedFromStage",unload);
       }
@@ -74,6 +108,7 @@ package core.hud.components.chat
       {
          var obj:Object = param1;
          var textQueue:Vector.<Object> = g.messageLog.getQueue();
+         listScroll.dataProvider = new ListCollection(textQueue);
          if(textQueue.length == 0)
          {
             return;

@@ -201,7 +201,7 @@ package core.hud.components.chat
          var output:Vector.<String>;
          var tmp:Array;
          var q:int;
-         var body:*;
+         var msg:*;
          var text:String = input.text;
          var stackAmount:int = 1;
          if(text == "")
@@ -212,9 +212,9 @@ package core.hud.components.chat
          switch(output[0])
          {
             case "test":
-               for each(body in g.bodyManager.bodies)
+               for each(msg in g.messageLog.advanced.listScroll.dataProvider)
                {
-                  MessageLog.write(body.name + " " + body.pos.x + " " + body.pos.y);
+                  MessageLog.write(msg.text);
                }
                break;
             case "rec":

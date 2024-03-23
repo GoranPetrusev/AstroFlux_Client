@@ -451,9 +451,9 @@ package core.hud.components.chat
       
       private var activeView:String;
       
-      private var simple:ChatSimple;
+      public var simple:ChatSimple;
       
-      private var advanced:ChatAdvanced;
+      public var advanced:ChatAdvanced;
       
       public function MessageLog(param1:Game)
       {
