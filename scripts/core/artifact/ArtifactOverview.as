@@ -37,6 +37,7 @@ package core.artifact
    import starling.text.TextFormat;
    import textures.ITextureManager;
    import textures.TextureLocator;
+   import core.hud.components.chat.MessageLog;
    
    public class ArtifactOverview extends Sprite
    {
@@ -119,8 +120,6 @@ package core.artifact
       private var isAutoTrainOn:Boolean;
       
       private var setupsContainer:ScrollContainer;
-
-      private var purifyLoop:Boolean = false;
             
       public function ArtifactOverview(param1:Game)
       {
@@ -1114,10 +1113,7 @@ package core.artifact
          }
          if(g.myCargo.isFull)
          {
-            if(!PlayerConfig.autorec)
-            {
-               g.showErrorDialog(Localize.t("Your cargo compressor is overloaded!"));
-            }
+            g.showErrorDialog(Localize.t("Your cargo compressor is overloaded!"));
             return;
          }
          var _loc3_:Message = g.createMessage("bulkRecycle");
@@ -1144,7 +1140,10 @@ package core.artifact
          if(!success)
          {
             reason = m.getString(1);
-            g.showErrorDialog("Recycle failed, " + reason);
+            if(!PlayerConfig.autorec)
+            {
+               g.showErrorDialog("Recycle failed, " + reason);
+            }
             return;
          }
          i = 0;
@@ -1177,11 +1176,7 @@ package core.artifact
             g.hud.hideArtifactLimitText();
          }
          markedForRecycle.splice(0,markedForRecycle.length);
-         if(purifyLoop)
-         {
-            purifyLoop = false;
-            purifyArts();
-         }
+         purifyArts();
       }
       
       private function onActiveRemoved(param1:Event) : void
@@ -1506,6 +1501,7 @@ package core.artifact
       private function purifyArts(param1:TouchEvent = null) : void
       {
          var _loc3_:int = 0;
+         var recyclePossible:Boolean = false;
          markedForRecycle.splice(0,markedForRecycle.length);
          for each(var _loc2_ in cargoBoxes)
          {
@@ -1516,12 +1512,20 @@ package core.artifact
                   _loc2_.setSelectedForRecycle();
                   markedForRecycle.push(_loc2_.a);
                   _loc3_++;
-                  purifyLoop = true;
+                  recyclePossible = true;
                }
             }
          }
-         onRecycle(null);
          purifyButton.enabled = true;
+
+         if(recyclePossible)
+         {
+            onRecycle(null);
+         }
+         else if(PlayerConfig.autorec)
+         {
+            g.onboardRecycle();
+         }
       }
       
       private function autoTrain(param1:TouchEvent = null) : void

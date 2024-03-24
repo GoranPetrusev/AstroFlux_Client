@@ -405,6 +405,7 @@ package core.states.gameStates
          if(onboardRecycle)
          {
             g.me.fakeRoaming();
+            g.hud.cargoButton.update();
          }
       }
       

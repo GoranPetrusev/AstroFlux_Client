@@ -118,7 +118,7 @@ package goki
 
       public static function accelerateNonOrbitToPoint(g:Game, x:int, y:int) : void
       {
-         if(Math.abs(angleDifferencePoint(g, x, y)) < 2.95)
+         if(Math.abs(angleDifferencePoint(g, x, y)) < 3)
          {
             accelerate(g, false);
             deaccelerate(g, true);
@@ -133,7 +133,7 @@ package goki
 
       public static function accelerateNonOrbitToObject(g:Game, target:GameObject) : void
       {
-         if(Math.abs(angleDifferenceObject(g, target)) < 2.95)
+         if(Math.abs(angleDifferenceObject(g, target)) < 3)
          {
             accelerate(g, false);
             deaccelerate(g, true);
