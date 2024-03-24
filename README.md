@@ -46,14 +46,7 @@ It has been over a month since I undertook this project. There's now a team of c
 - [x] Quick Login
 
 ### Ideas
-- Max out option for crew member talents
-- Framework for custom afk farming ai
-- Dynamic updating system for the configs (should make adding content more streamlined)
-- Look into possibilities of making the welcome text a field that doesn't eat up mouse click input events
-- Refactor welcome text base class for future use
 - Updating feature
-- Why the hell is text so broken in this game? It has weird offsets and relations to the camera... look into it
-- Look into using List component as chat base
 
 Stat Distribution Color Coding
 57bb8a
