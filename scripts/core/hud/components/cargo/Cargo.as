@@ -102,7 +102,7 @@ package core.hud.components.cargo
       {
          ButtonCargo.serverSaysCargoIsFull = true;
          g.hud.cargoButton.update();
-         if(PlayerConfig.value.autoRec)
+         if(PlayerConfig.autorec)
          {
             g.onboardRecycle();
          }

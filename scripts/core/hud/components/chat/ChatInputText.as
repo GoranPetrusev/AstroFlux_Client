@@ -220,8 +220,8 @@ package core.hud.components.chat
             case "ar":
             case "autorec":
             case "autorecycle":
-               PlayerConfig.values.autoRec = !PlayerConfig.values.autoRec;
-               MessageLog.write("Auto recycle is set to: " + PlayerConfig.values.autoRec);
+               PlayerConfig.autorec = !PlayerConfig.autorec;
+               MessageLog.write("Auto recycle is set to: " + PlayerConfig.autorec);
                break;
             case "rec":
             case "recycle":
