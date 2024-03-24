@@ -3,7 +3,6 @@ package core.artifact
    import com.greensock.TweenMax;
    import core.credits.CreditManager;
    import core.hud.components.Box;
-   import core.hud.components.chat.MessageLog;
    import core.hud.components.Button;
    import core.hud.components.CrewDisplayBoxNew;
    import core.hud.components.InputText;
@@ -22,8 +21,6 @@ package core.artifact
    import feathers.controls.ScrollContainer;
    import feathers.controls.ToggleButton;
    import feathers.layout.HorizontalLayout;
-   import feathers.layout.VerticalLayout;
-   import generics.Localize;
    import generics.Util;
    import goki.FitnessConfig;
    import goki.PlayerConfig;
@@ -153,7 +150,7 @@ package core.artifact
             return;
          }
          textureManager = TextureLocator.getService();
-         loadingText = new TextField(400,100,Localize.t("Loading data..."),new TextFormat("DAIDRR",30,16777215));
+         loadingText = new TextField(400,100,"Loading data...",new TextFormat("DAIDRR",30,16777215));
          loadingText.x = 380 - loadingText.width / 2 - 55;
          loadingText.y = 300 - loadingText.height / 2 - 50;
          addChild(loadingText);
@@ -228,7 +225,7 @@ package core.artifact
          statsContainer.x = 390;
          statsContainer.y = 100;
          addChild(statsContainer);
-         labelArtifactStats = new TextBitmap(0,0,Localize.t("Artifact Stats"),16);
+         labelArtifactStats = new TextBitmap(0,0,"Artifact Stats",16);
          labelArtifactStats.format.color = 16777167;
          statsContainer.addChild(labelArtifactStats);
          statisticSummary = new TextField(300,360,"");
@@ -241,15 +238,15 @@ package core.artifact
          statisticSummary.y = 30;
          statsContainer.addChild(statisticSummary);
          reloadStats();
-         chooseSortingButton = new Button(chooseSorting,Localize.t("Sorting"));
+         chooseSortingButton = new Button(chooseSorting,"Sorting");
          chooseSortingButton.x = 2;
          chooseSortingButton.y = 480;
          addChild(chooseSortingButton);
-         toggleRecycleButton = new Button(toggleRecycle,Localize.t("Recycle"));
+         toggleRecycleButton = new Button(toggleRecycle,"Recycle");
          toggleRecycleButton.x = chooseSortingButton.x + chooseSortingButton.width + 10;
          toggleRecycleButton.y = 480;
          addChild(toggleRecycleButton);
-         toggleUpgradeButton = new Button(toggleUpgrade,Localize.t("Upgrade"));
+         toggleUpgradeButton = new Button(toggleUpgrade,"Upgrade");
          toggleUpgradeButton.x = toggleRecycleButton.x + toggleRecycleButton.width + 10;
          toggleUpgradeButton.y = 480;
          addChild(toggleUpgradeButton);
@@ -257,12 +254,12 @@ package core.artifact
          purifyButton.x = toggleUpgradeButton.x + toggleUpgradeButton.width + 10;
          purifyButton.y = 480;
          addChild(purifyButton);
-         cancelUpgradeButton = new Button(toggleUpgrade,Localize.t("Cancel"));
+         cancelUpgradeButton = new Button(toggleUpgrade,"Cancel");
          cancelUpgradeButton.x = 2;
          cancelUpgradeButton.y = 480;
          cancelUpgradeButton.visible = false;
          addChild(cancelUpgradeButton);
-         upgradeButton = new Button(onUpgradeArtifact,Localize.t("Upgrade"),"positive");
+         upgradeButton = new Button(onUpgradeArtifact,"Upgrade","positive");
          upgradeButton.x = purifyButton.x + (purifyButton.width - upgradeButton.width);
          upgradeButton.y = 480;
          upgradeButton.visible = false;
@@ -279,7 +276,7 @@ package core.artifact
          crewContainer.visible = false;
          addChild(crewContainer);
          labelSelectCrew = new TextBitmap();
-         labelSelectCrew.text = Localize.t("Select artifact and crew");
+         labelSelectCrew.text = "Select artifact and crew";
          labelSelectCrew.size = 18;
          crewContainer.addChild(labelSelectCrew);
          crewMembersThatCompletedUpgrade = new Vector.<CrewMember>();
@@ -297,31 +294,31 @@ package core.artifact
             i++;
          }
          onLoadUpgradeArtifactComplete(crewMembersThatCompletedUpgrade);
-         cancelRecycleButton = new Button(toggleRecycle,Localize.t("Cancel"));
+         cancelRecycleButton = new Button(toggleRecycle,"Cancel");
          cancelRecycleButton.x = 2;
          cancelRecycleButton.y = 480;
          cancelRecycleButton.visible = false;
          addChild(cancelRecycleButton);
-         recycleButton = new Button(onRecycle,Localize.t("Recycle"),"positive");
+         recycleButton = new Button(onRecycle,"Recycle","positive");
          recycleButton.x = purifyButton.x + (purifyButton.width - recycleButton.width);
          recycleButton.y = 480;
          recycleButton.visible = false;
          addChild(recycleButton);
-         selectAllRecycleButton = new Button(selectAllForRecycle,Localize.t("Select Max"));
+         selectAllRecycleButton = new Button(selectAllForRecycle,"Select Max");
          selectAllRecycleButton.x = cancelRecycleButton.x + cancelRecycleButton.width + 10;
          selectAllRecycleButton.y = 480;
          selectAllRecycleButton.visible = false;
          addChild(selectAllRecycleButton);
          recycleText = new TextField(200,10,"",new TextFormat("DAIDRR",13,Style.COLOR_HIGHLIGHT,"left"));
          recycleText.autoSize = "vertical";
-         recycleText.text = Localize.t("Recycle");
+         recycleText.text = "Recycle";
          recycleText.visible = false;
          recycleText.x = 380;
          recycleText.y = 100;
          addChild(recycleText);
          recycleTextInfo = new TextField(200,10,"",new TextFormat("Verdana",13,16777215,"left"));
          recycleTextInfo.autoSize = "vertical";
-         recycleTextInfo.text = Localize.t("Select those artifacts you want to recycle. A recycled artifact will turn into junk that can be further recycled into minerals at the nearest recycle station.");
+         recycleTextInfo.text = "Select those artifacts you want to recycle. A recycled artifact will turn into junk that can be further recycled into minerals at the nearest recycle station.";
          recycleTextInfo.visible = false;
          recycleTextInfo.y = recycleText.y + recycleText.height + 2;
          recycleTextInfo.x = recycleText.x;
@@ -329,14 +326,14 @@ package core.artifact
          autoRecycleText = new TextField(240,10,"",new TextFormat("DAIDRR",13,Style.COLOR_HIGHLIGHT,"left"));
          autoRecycleText.isHtmlText = true;
          autoRecycleText.autoSize = "vertical";
-         autoRecycleText.text = Localize.t("Auto Recycle <FONT COLOR=\'#666666\'>(Supporter Only!)</FONT>");
+         autoRecycleText.text = "Auto Recycle <FONT COLOR=\'#666666\'>(Supporter Only!)</FONT>";
          autoRecycleText.visible = false;
          autoRecycleText.y = recycleTextInfo.y + recycleTextInfo.height + 10;
          autoRecycleText.x = recycleText.x;
          addChild(autoRecycleText);
          autoRecycleTextInfo = new TextField(200,10,"",new TextFormat("Verdana",13,Style.COLOR_HIGHLIGHT,"left"));
          autoRecycleTextInfo.autoSize = "vertical";
-         autoRecycleTextInfo.text = Localize.t("Artifacts below a specified\x03 potential level will be auto-recycled when you pickup drops.");
+         autoRecycleTextInfo.text = "Artifacts below a specified\x03 potential level will be auto-recycled when you pickup drops.";
          autoRecycleTextInfo.visible = false;
          autoRecycleTextInfo.y = autoRecycleText.y + autoRecycleText.height + 2;
          autoRecycleTextInfo.x = recycleText.x;
@@ -352,12 +349,12 @@ package core.artifact
                g.enterState(new RoamingState(g));
                g.enterState(new ShopState(g,"supporterPackage"));
             }
-         },Localize.t("Buy Supporter"),"buy");
+         },"Buy Supporter","buy");
          buySupporter.y = autoRecycleTextInfo.y + autoRecycleTextInfo.height + 10;
          buySupporter.x = recycleText.x;
          buySupporter.visible = false;
          addChild(buySupporter);
-         autoRecycleButton = new Button(onAutoRecycle,Localize.t("Set Level"),"positive");
+         autoRecycleButton = new Button(onAutoRecycle,"Set Level","positive");
          autoRecycleButton.x = recycleText.x;
          autoRecycleButton.enabled = g.me.hasSupporter();
          autoRecycleButton.visible = false;
@@ -428,7 +425,6 @@ package core.artifact
       private function drawArtifactSetups() : void
       {
          addHorizontalScrollContainer();
-
          for each(var _loc1_ in setups)
          {
             _loc1_.removeEventListeners();
@@ -436,28 +432,28 @@ package core.artifact
          setups.length = 0;
          var _loc2_:ToggleButton = null;
          var _loc3_:int = p.artifactSetups.length + 1;
-         var _loc5_:int = 0;
-         while(_loc5_ < _loc3_)
+         var _loc4_:int = 0;
+         while(_loc4_ < _loc3_)
          {
             _loc2_ = new ToggleButton();
             _loc2_.styleNameList.add("artifact_setup");
             setupsContainer.addChild(_loc2_);
-            if(_loc5_ == 0)
+            if(_loc4_ == 0)
             {
-               _loc2_.label = Localize.t("Setup") + " 1";
+               _loc2_.label = "Setup" + " 1";
                _loc2_.addEventListener("triggered",onSetupChange);
             }
-            else if(_loc5_ == _loc3_ - 1)
+            else if(_loc4_ == _loc3_ - 1)
             {
                _loc2_.defaultIcon = new Image(textureManager.getTextureGUIByTextureName("setup_buy_button"));
                _loc2_.addEventListener("triggered",onSetupBuy);
             }
             else
             {
-               _loc2_.label = (_loc5_ + 1).toString();
+               _loc2_.label = (_loc4_ + 1).toString();
                _loc2_.addEventListener("triggered",onSetupChange);
             }
-            if(_loc5_ == p.activeArtifactSetup)
+            if(_loc4_ == p.activeArtifactSetup)
             {
                _loc2_.isSelected = true;
             }
@@ -465,10 +461,10 @@ package core.artifact
             _loc2_.useHandCursor = true;
             _loc2_.validate();
             setups.push(_loc2_);
-            _loc5_++;
+            _loc4_++;
          }
       }
-
+      
       private function addHorizontalScrollContainer() : void
       {
          setupsContainer = new ScrollContainer();
@@ -476,7 +472,6 @@ package core.artifact
          var layout:HorizontalLayout = new HorizontalLayout();
          layout.gap = -1;
          setupsContainer.layout = layout;
-
          setupsContainer.width = 630;
          setupsContainer.height = 24;
          setupsContainer.x = 10;
@@ -487,7 +482,6 @@ package core.artifact
          setupsContainer.scrollBarDisplayMode = "none";
          setupsContainer.verticalMouseWheelScrollDirection = "horizontal";
          setupsContainer.verticalMouseWheelScrollStep = 25;
-
       }
       
       private function drawArtifactsInCargo() : void
@@ -527,7 +521,7 @@ package core.artifact
          }
          if(p.artifactCapacityLevel < Player.ARTIFACT_CAPACITY.length - 1)
          {
-            (_loc6_ = new Button(onUpgradeCapacity,p.artifactCount + " / " + p.artifactLimit + " " + Localize.t("INCREASE to") + " " + Player.ARTIFACT_CAPACITY[p.artifactCapacityLevel + 1],"positive")).x = 0;
+            (_loc6_ = new Button(onUpgradeCapacity,p.artifactCount + " / " + p.artifactLimit + " " + "INCREASE to" + " " + Player.ARTIFACT_CAPACITY[p.artifactCapacityLevel + 1],"positive")).x = 0;
             _loc6_.width = 353;
             _loc6_.y = (_loc2_.height + 8) * _loc5_;
             cargoContainer.addChild(_loc6_);
@@ -602,7 +596,7 @@ package core.artifact
          if(markedForRecycle.length >= 40)
          {
             _loc3_.setNotSelected();
-            g.showMessageDialog(Localize.t("You can\'t select more than 40 artifacts to recycle."));
+            g.showMessageDialog("You can\'t select more than 40 artifacts to recycle.");
             return;
          }
          markedForRecycle.push(_loc2_);
@@ -646,9 +640,9 @@ package core.artifact
          var number:int = box.slot + 1;
          var fluxCost:int = CreditManager.getCostArtifactSlot(number);
          var buyBox:PopupBuyMessage = new PopupBuyMessage(g);
-         buyBox.text = Localize.t("Artifact Slot");
+         buyBox.text = "Artifact Slot";
          buyBox.addCost(new PriceCommodities(g,"flpbTKautkC1QzjWT28gkw",unlockCost));
-         buyBox.addBuyForFluxButton(fluxCost,number,"buyArtifactSlotWithFlux",Localize.t("Are you sure you want to buy an artifact slot?"));
+         buyBox.addBuyForFluxButton(fluxCost,number,"buyArtifactSlotWithFlux","Are you sure you want to buy an artifact slot?");
          buyBox.addEventListener("fluxBuy",function(param1:Event):void
          {
             p.unlockedArtifactSlots = number;
@@ -676,7 +670,7 @@ package core.artifact
       {
          var e:Event = param1;
          var cost:int = CreditManager.getCostArtifactCapacityUpgrade(p.artifactCapacityLevel + 1);
-         var creditBuyBox:CreditBuyBox = new CreditBuyBox(g,cost,Localize.t("Increases artifact capacity to") + " " + Player.ARTIFACT_CAPACITY[p.artifactCapacityLevel + 1]);
+         var creditBuyBox:CreditBuyBox = new CreditBuyBox(g,cost,"Increases artifact capacity to" + " " + Player.ARTIFACT_CAPACITY[p.artifactCapacityLevel + 1]);
          g.addChildToOverlay(creditBuyBox);
          creditBuyBox.addEventListener("accept",function(param1:Event):void
          {
@@ -697,7 +691,7 @@ package core.artifact
             g.showErrorDialog(param1.getString(1));
             return;
          }
-         g.showErrorDialog(Localize.t("Success!"));
+         g.showErrorDialog("Success!");
          p.artifactCapacityLevel += 1;
          drawArtifactsInCargo();
          g.creditManager.refresh();
@@ -720,7 +714,7 @@ package core.artifact
       {
          if(recycleMode)
          {
-            g.showErrorDialog(Localize.t("Artifact setup can\'t be changed while recycling."));
+            g.showErrorDialog("Artifact setup can\'t be changed while recycling.");
             return;
          }
          var _loc4_:ToggleButton = param1.target as ToggleButton;
@@ -760,7 +754,7 @@ package core.artifact
          var button:ToggleButton;
          var e:Event = param1;
          var cost:int = CreditManager.getCostArtifactSetup();
-         var creditBuyBox:CreditBuyBox = new CreditBuyBox(g,cost,Localize.t("Unlocks one more artifact setup."));
+         var creditBuyBox:CreditBuyBox = new CreditBuyBox(g,cost,"Unlocks one more artifact setup.");
          g.addChildToOverlay(creditBuyBox);
          creditBuyBox.addEventListener("accept",function(param1:Event):void
          {
@@ -783,7 +777,7 @@ package core.artifact
             g.showErrorDialog(param1.getString(1));
             return;
          }
-         g.showErrorDialog(Localize.t("Success!"));
+         g.showErrorDialog("Success!");
          p.artifactSetups.push([]);
          g.creditManager.refresh();
          drawArtifactSetups();
@@ -799,7 +793,7 @@ package core.artifact
       {
          if(p.activeArtifacts.length == 0)
          {
-            statisticSummary.text = Localize.t("You do not have any artifacts.");
+            statisticSummary.text = "You do not have any artifacts.";
             return;
          }
          var _loc1_:Object = sortStatsForSummary();
@@ -854,9 +848,9 @@ package core.artifact
                      {
                         _loc1_["corrosiveAdd"] = 0;
                      }
-                     _loc1_["kineticAdd"] += _loc2_.value;
-                     _loc1_["energyAdd"] += _loc2_.value;
-                     _loc1_["corrosiveAdd"] += _loc2_.value;
+                     _loc1_["kineticAdd"] += _loc2_.value * 0.375;
+                     _loc1_["energyAdd"] += _loc2_.value * 0.375;
+                     _loc1_["corrosiveAdd"] += _loc2_.value * 0.375;
                   }
                   else if(_loc5_ == "allMulti")
                   {
@@ -872,9 +866,9 @@ package core.artifact
                      {
                         _loc1_["corrosiveMulti"] = 0;
                      }
-                     _loc1_["kineticMulti"] += _loc2_.value;
-                     _loc1_["energyMulti"] += _loc2_.value;
-                     _loc1_["corrosiveMulti"] += _loc2_.value;
+                     _loc1_["kineticMulti"] += _loc2_.value * 1.5;
+                     _loc1_["energyMulti"] += _loc2_.value * 1.5;
+                     _loc1_["corrosiveMulti"] += _loc2_.value * 1.5;
                   }
                   else
                   {
@@ -1279,7 +1273,7 @@ package core.artifact
          {
             _loc4_ = 43200000;
          }
-         g.showConfirmDialog(Localize.t("The upgrade will be finished in") + ": \n\n<font color=\'#ffaa88\'>" + Util.getFormattedTime(_loc4_) + "</font>",confirmUpgrade);
+         g.showConfirmDialog("The upgrade will be finished in" + ": \n\n<font color=\'#ffaa88\'>" + Util.getFormattedTime(_loc4_) + "</font>",confirmUpgrade);
          upgradeButton.enabled = true;
       }
       
@@ -1425,13 +1419,13 @@ package core.artifact
                upgradeText = new TextBitmap();
                upgradeText.format.color = 11184810;
                upgradeText.y = artBox.height + 20;
-               upgradeText.text = Localize.t("Upgrade Result");
+               upgradeText.text = "Upgrade Result";
                upgradeText.x = 90;
                upgradeText.center();
                box.addChild(upgradeText);
                crewSkillText = new TextBitmap();
                crewSkillText.format.color = 16777215;
-               crewSkillText.text = Localize.t("Crew Skill") + " +" + newSkillPoints;
+               crewSkillText.text = "Crew Skill" + " +" + newSkillPoints;
                crewSkillText.size = 14;
                crewSkillText.x = 90;
                crewSkillText.y = upgradeText.y + upgradeText.height + 10;
@@ -1439,7 +1433,7 @@ package core.artifact
                box.addChild(crewSkillText);
                levelText = new TextBitmap();
                levelText.format.color = 16777215;
-               levelText.text = Localize.t("strength") + " +" + diffLevel;
+               levelText.text = "strength" + " +" + diffLevel;
                levelText.size = 18;
                levelText.x = 90;
                levelText.y = crewSkillText.y + crewSkillText.height + 10;
@@ -1484,7 +1478,7 @@ package core.artifact
                   {
                      finishedCallback();
                   }
-               },Localize.t("close"));
+               },"close");
                closeButton.x = 90 - closeButton.width / 2;
                closeButton.y = box.height - 60;
                box.addChild(closeButton);
