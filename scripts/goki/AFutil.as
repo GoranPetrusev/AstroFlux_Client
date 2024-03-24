@@ -10,102 +10,57 @@ package goki
    
    public class AFutil
    {  
-      private static var isRecycling:Boolean = false;
-
       public function AFutil()
       {
          super();
       }
 
-      public static function isPickingUpDropInZone(g:Game, str:String, x:int, y:int, r:int) : Boolean
+      public static function isPickingUpDropInZone(g:Game, name:String, x:int, y:int, r:int) : Boolean
       {
-         var target:GameObject = null;
-         for each (var drop in g.dropManager.drops)
-         {
-            if(drop.name.indexOf(str) != -1)
-            {
-               target = drop;
-               break;
-            }
-         }
+         var target:GameObject = findDropByName(g, name);
 
-         if(target == null && distanceSquaredToPoint(g, x, y) > r*r*1600)
+         if(target == null || distanceSquaredToPoint(g, x, y) > r*r*1600)
          {
             return false;
          }
 
-         if(Math.abs(angleDifferencePoint(g, target)) < 3.05)
-         {
-            if(angleDifferencePoint(g, target) < 0)
-            {
-               turnLeft(g,true);
-               turnRight(g,false);
-            }
-            else
-            {
-               turnRight(g,true);
-               turnLeft(g,false);
-            }
-            accelerate(g, false);
-            deaccelerate(g, true);
-         }
-         else
-         {
-            turnLeft(g,false);
-            turnRight(g,false);
-            accelerate(g, true);
-            deaccelerate(g, false);
-         }
+         lookAtObject(g, target);
+         accelerateNonOrbitToObject(g, target);
 
          return true;
       }
 
-      public static function isPickingUpDrop(g:Game, str:String) : Boolean
+      public static function isPickingUpDrop(g:Game, name:String) : Boolean
       {
-         var target:Drop = null;
-         for each (var drop in g.dropManager.drops)
-         {
-            if(drop.name.indexOf(str) != -1)
-            {
-               target = drop;
-               break;
-            }
-         }
+         var target:GameObject = findDropByName(g, name);
 
          if(target == null)
          {
             return false;
          }
 
-         if(Math.abs(angleDifferenceObject(g, target)) < 3.05)
-         {
-            if(angleDifferenceObject(g, target) < 0)
-            {
-               turnLeft(g,true);
-               turnRight(g,false);
-            }
-            else
-            {
-               turnRight(g,true);
-               turnLeft(g,false);
-            }
-            accelerate(g, false);
-            deaccelerate(g, true);
-         }
-         else
-         {
-            turnLeft(g,false);
-            turnRight(g,false);
-            accelerate(g, true);
-            deaccelerate(g, false);
-         }
+         lookAtObject(g, target);
+         accelerateNonOrbitToObject(g, target);
 
          return true;
       }
 
+      public static function findDropByName(g:Game, name:String) : Drop
+      {
+         for each (var drop in g.dropManager.drops)
+         {
+            if(drop.name.indexOf(name) != -1)
+            {
+               return drop;
+            }
+         }
+
+         return null;
+      }
+
       public static function closestEnemyByName(g:Game, name:String) : EnemyShip
       {
-         var closestEnemy:EnemyShip = null;
+         var closestEnemy:EnemyShip = g.shipManager.enemies[0];
          for each (var currEnemy in g.shipManager.enemies)
          {
             if(currEnemy.bodyName.indexOf(name) != -1 && AFutil.distanceSquaredToObject(g, currEnemy) < AFutil.distanceSquaredToObject(g, closestEnemy))
@@ -113,16 +68,12 @@ package goki
                closestEnemy = currEnemy;
             }
          }
-         return closestEnemy;
+
+         return (closestEnemy.bodyName.indexOf(name) == -1) ? null : closestEnemy;
       }
 
       public static function lookAtPoint(g:Game, x:int, y:int) : void
       {
-         if(g.me.ship.usingBoost)
-         {
-            return;
-         }
-
          if(Math.abs(angleDifferencePoint(g, x, y)) < 3.05)
          {
             if(angleDifferencePoint(g, x, y) < 0)
@@ -145,11 +96,6 @@ package goki
 
       public static function lookAtObject(g:Game, target:GameObject) : void
       {
-         if(g.me.ship.usingBoost)
-         {
-            return;
-         }
-
          if(Math.abs(angleDifferenceObject(g, target)) < 3.05)
          {
             if(angleDifferenceObject(g, target) < 0)
@@ -168,6 +114,36 @@ package goki
             turnLeft(g,false);
             turnRight(g,false);
          }
+      }
+
+      public static function accelerateNonOrbitToPoint(g:Game, x:int, y:int) : void
+      {
+         if(Math.abs(angleDifferencePoint(g, x, y)) < 2.95)
+         {
+            accelerate(g, false);
+            deaccelerate(g, true);
+         }
+         else
+         {
+            accelerate(g, true);
+            deaccelerate(g, false);
+         }
+
+      }
+
+      public static function accelerateNonOrbitToObject(g:Game, target:GameObject) : void
+      {
+         if(Math.abs(angleDifferenceObject(g, target)) < 2.95)
+         {
+            accelerate(g, false);
+            deaccelerate(g, true);
+         }
+         else
+         {
+            accelerate(g, true);
+            deaccelerate(g, false);
+         }
+
       }
 
       public static function distanceSquaredToObject(g:Game, target:GameObject) : Number
@@ -204,7 +180,7 @@ package goki
       
       public static function accelerate(g:Game, active:Boolean) : void
       {
-        if(g.me.ship.course.accelerate != active)
+        if(!g.me.ship.usingBoost && g.me.ship.course.accelerate != active)
         {
             sendCommand(g,0,active);
         }
@@ -212,7 +188,7 @@ package goki
       
       public static function deaccelerate(g:Game, active:Boolean) : void
       {
-        if(g.me.ship.course.deaccelerate != active)
+        if(!g.me.ship.usingBoost && g.me.ship.course.deaccelerate != active)
         {
             sendCommand(g,8,active);
         }
@@ -220,7 +196,7 @@ package goki
       
       public static function turnLeft(g:Game, active:Boolean) : void
       {
-        if(g.me.ship.course.rotateLeft != active)
+        if(!g.me.ship.usingBoost && g.me.ship.course.rotateLeft != active)
         {
             sendCommand(g,1,active);
         }
@@ -228,7 +204,7 @@ package goki
       
       public static function turnRight(g:Game, active:Boolean) : void
       {
-        if(g.me.ship.course.rotateRight != active)
+        if(!g.me.ship.usingBoost && g.me.ship.course.rotateRight != active)
         {
             sendCommand(g,2,active);
         }

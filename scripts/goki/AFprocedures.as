@@ -24,29 +24,35 @@ package goki
 
       public static function buglegs(g:Game) : void
       {
-         if(!AFutil.isPickingUpDrop(g, "Bug Leg"))
+         if(AFutil.isPickingUpDrop(g, "Bug Leg"))
          {
-            var targetMoth:EnemyShip = AFutil.closestEnemyByName(g, "Moth Alpha");
+            return;
+         }
 
+         var targetMoth:EnemyShip = AFutil.closestEnemyByName(g, "Moth Alpha");
+         if(targetMoth != null)
+         {
             if(AFutil.distanceSquaredToObject(g, targetMoth) > 1000*1000 && Math.abs(AFutil.angleDifferenceObject(g, targetMoth)) > 3)
             {
                AFutil.boost(g);
             }
+
             AFutil.lookAtObject(g, targetMoth);
-            AFutil.accelerate(g, true);
          }
 
+         AFutil.accelerate(g, true);
          AFutil.fire(g, true);
       }
 
       public static function exefarm(g:Game) : void
       {
-         if(!AFutil.isPickingUpDropInZone(g, "Crate", -425, -100, 75))
+         if(AFutil.isPickingUpDropInZone(g, "Crate", -425, -100, 75))
          {
-            AFutil.lookAtPoint(g, -425, -100);
-            AFutil.accelerate(g, true);
+            return;
          }
          
+         AFutil.lookAtPoint(g, -425, -100);
+         AFutil.accelerate(g, true);
          AFutil.fire(g,true);
       }
    }
