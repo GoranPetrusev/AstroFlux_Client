@@ -217,12 +217,19 @@ package core.hud.components.chat
                   MessageLog.write(body.name + " " + body.pos.x + " " + body.pos.y);
                }
                break;
+            case "ar":
+            case "autorec":
+            case "autorecycle":
+               PlayerConfig.autorec = !PlayerConfig.autorec;
+               MessageLog.write("Auto recycle is set to: " + PlayerConfig.autorec);
+               break;
             case "rec":
             case "recycle":
                g.onboardRecycle();
                break;
             case "reload":
                g.reload();
+               break;
             case "af":
             case "autofarm":
                if(output.length == 2)

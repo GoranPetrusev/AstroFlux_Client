@@ -29,12 +29,7 @@ package goki
             }
          }
 
-         if(target == null)
-         {
-            return false;
-         }
-
-         if(distanceSquaredToPoint(g, x, y) > r*r*1600)
+         if(target == null && distanceSquaredToPoint(g, x, y) > r*r*1600)
          {
             return false;
          }
@@ -119,15 +114,6 @@ package goki
             }
          }
          return closestEnemy;
-      }
-
-      public static function recycleCargoIfFull(g:Game) : void
-      {
-         if(g.myCargo.isFull && !isRecycling)
-         {
-            g.onboardRecycle();
-            isRecycling = true;
-         }
       }
 
       public static function lookAtPoint(g:Game, x:int, y:int) : void

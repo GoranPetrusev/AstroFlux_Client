@@ -58,6 +58,7 @@ package core.hud
    import starling.textures.Texture;
    import textures.ITextureManager;
    import textures.TextureLocator;
+   import goki.PlayerConfig;
    
    public class Hud
    {
@@ -137,7 +138,7 @@ package core.hud
       
       public var uberStats:UberStats;
       
-      private var artifactLimitText:TextBitmap;
+      public var artifactLimitText:TextBitmap;
       
       private var loadComplete:Boolean = false;
       
@@ -742,6 +743,10 @@ package core.hud
       
       public function showArtifactLimitText() : void
       {
+         if(PlayerConfig.autorec)
+         {
+            g.enterState(new MenuState(g,ArtifactState2));
+         }
          artifactLimitText.visible = true;
          artifactsButton.hintNew();
          artifactsButton.flash();

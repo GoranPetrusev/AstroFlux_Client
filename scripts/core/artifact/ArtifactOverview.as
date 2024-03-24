@@ -23,6 +23,7 @@ package core.artifact
    import feathers.layout.HorizontalLayout;
    import generics.Util;
    import goki.FitnessConfig;
+   import goki.PlayerConfig;
    import playerio.Message;
    import sound.ISound;
    import sound.SoundLocator;
@@ -118,7 +119,9 @@ package core.artifact
       private var isAutoTrainOn:Boolean;
       
       private var setupsContainer:ScrollContainer;
-      
+
+      private var purifyLoop:Boolean = false;
+            
       public function ArtifactOverview(param1:Game)
       {
          activeSlots = new Vector.<ArtifactBox>();
@@ -165,7 +168,6 @@ package core.artifact
             if(param1.length >= p.artifactLimit)
             {
                g.hud.showArtifactLimitText();
-               g.tutorial.showArtifactLimitAdvice();
             }
             p.artifactCount = param1.length;
             g.send("artifactCount",param1.length);
@@ -372,6 +374,10 @@ package core.artifact
          autoRecycleInput.isEnabled = g.me.hasSupporter();
          autoRecycleInput.visible = false;
          addChild(autoRecycleInput);
+         if(PlayerConfig.autorec && g.hud.artifactLimitText.visible)
+         {
+            purifyArts();
+         }
       }
       
       private function initActiveSlots() : void
@@ -1108,7 +1114,10 @@ package core.artifact
          }
          if(g.myCargo.isFull)
          {
-            g.showErrorDialog("Your cargo compressor is overloaded!");
+            if(!PlayerConfig.autorec)
+            {
+               g.showErrorDialog(Localize.t("Your cargo compressor is overloaded!"));
+            }
             return;
          }
          var _loc3_:Message = g.createMessage("bulkRecycle");
@@ -1192,6 +1201,15 @@ package core.artifact
             toggleRecycle();
          });
          markedForRecycle.splice(0,markedForRecycle.length);
+         if(PlayerConfig.autorec)
+         {
+            g.removeChildFromOverlay(recycleBox, true);
+         }
+         if(purifyLoop)
+         {
+            purifyLoop = false;
+            purifyArts();
+         }
       }
       
       private function onActiveRemoved(param1:Event) : void
@@ -1526,6 +1544,7 @@ package core.artifact
                   _loc2_.setSelectedForRecycle();
                   markedForRecycle.push(_loc2_.a);
                   _loc3_++;
+                  purifyLoop = true;
                }
             }
          }

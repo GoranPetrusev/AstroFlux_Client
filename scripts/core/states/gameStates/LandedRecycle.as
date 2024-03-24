@@ -405,7 +405,6 @@ package core.states.gameStates
          if(onboardRecycle)
          {
             g.me.fakeRoaming();
-            AFutil.isRecycling = false;
          }
       }
       

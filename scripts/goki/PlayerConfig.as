@@ -4,6 +4,8 @@ package goki
    {
       
       private static const _filePath:String = "PlayerConfig.txt";
+
+      public static var autorec:Boolean = false;
       
       public static var values:Object = {
          "zoomFactor":"1.0",
