@@ -1137,10 +1137,6 @@ package core.artifact
          var reason:String;
          var a:Artifact;
          var cargoBox:ArtifactCargoBox;
-         var recycleBox:LootPopupMessage;
-         var junk:String;
-         var amount:int;
-         var lootItem:LootItem;
          var m:Message = param1;
          g.hideModalLoadingScreen();
          success = m.getBoolean(0);
@@ -1180,31 +1176,7 @@ package core.artifact
          {
             g.hud.hideArtifactLimitText();
          }
-         recycleBox = new LootPopupMessage();
-         g.addChildToOverlay(recycleBox,true);
-         i = 1;
-         j = 0;
-         while(i < m.length)
-         {
-            junk = m.getString(i);
-            amount = m.getInt(i + 1);
-            g.myCargo.addItem("Commodities",junk,amount);
-            lootItem = new LootItem("Commodities",junk,amount);
-            lootItem.y = j * 40;
-            recycleBox.addItem(lootItem);
-            i += 2;
-            j++;
-         }
-         recycleBox.addEventListener("close",function(param1:Event):void
-         {
-            g.removeChildFromOverlay(recycleBox,true);
-            toggleRecycle();
-         });
          markedForRecycle.splice(0,markedForRecycle.length);
-         if(PlayerConfig.autorec)
-         {
-            g.removeChildFromOverlay(recycleBox, true);
-         }
          if(purifyLoop)
          {
             purifyLoop = false;
