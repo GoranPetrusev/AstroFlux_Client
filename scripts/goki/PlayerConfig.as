@@ -18,7 +18,8 @@ package goki
          "maxChatMessages":"100",
          "censorChat":false,
          "dontKick":false,
-         "disableScreenShake":true
+         "disableScreenShake":true,
+         "autoReload":false
       };
        
       

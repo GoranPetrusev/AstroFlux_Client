@@ -818,36 +818,36 @@ package core.scene
       {
          var _loc1_:Body = me.currentBody;
          switch (_loc1_.type) {
-    case "planet":
-        fadeIntoState(new LandedExplore(this, _loc1_));
-        break;
-    case "junk yard":
-        fadeIntoState(new LandedRecycle(this, _loc1_));
-        break;
-    case "shop":
-        fadeIntoState(new LandedWeaponFactory(this, _loc1_));
-        break;
-    case "research":
-        fadeIntoState(new LandedUpgrade(this, _loc1_));
-        break;
-    case "warpGate":
-        fadeIntoState(new LandedWarpGate(this, _loc1_));
-        break;
-    case "hangar":
-        fadeIntoState(new LandedHangar(this, _loc1_));
-        break;
-    case "cantina":
-        fadeIntoState(new LandedCantina(this, _loc1_));
-        break;
-    case "paintShop":
-        fadeIntoState(new LandedPaintShop(this, _loc1_));
-        break;
-    case "lore":
-        fadeIntoState(new LandedLore(this, _loc1_));
-        break;
-    case "pirate":
-        fadeIntoState(new LandedPiratebay(this, _loc1_));
-        break;
+            case "planet":
+               fadeIntoState(new LandedExplore(this, _loc1_));
+               break;
+            case "junk yard":
+               fadeIntoState(new LandedRecycle(this, _loc1_));
+               break;
+            case "shop":
+               fadeIntoState(new LandedWeaponFactory(this, _loc1_));
+               break;
+            case "research":
+               fadeIntoState(new LandedUpgrade(this, _loc1_));
+               break;
+            case "warpGate":
+               fadeIntoState(new LandedWarpGate(this, _loc1_));
+               break;
+            case "hangar":
+               fadeIntoState(new LandedHangar(this, _loc1_));
+               break;
+            case "cantina":
+               fadeIntoState(new LandedCantina(this, _loc1_));
+               break;
+            case "paintShop":
+               fadeIntoState(new LandedPaintShop(this, _loc1_));
+               break;
+            case "lore":
+               fadeIntoState(new LandedLore(this, _loc1_));
+               break;
+            case "pirate":
+               fadeIntoState(new LandedPiratebay(this, _loc1_));
+               break;
          }
          focusGameObject(_loc1_,true);
          me.stacksNumber = 0;
@@ -981,8 +981,9 @@ package core.scene
       public function softDisconnect(param1:String) : void
       {
          var message:String;
-         if(PlayerConfig.values.dontKick || disconnectPopup)
+         if(PlayerConfig.values.autoReload || disconnectPopup)
          {
+            reload();
             return;
          }
          message = param1;
@@ -1000,8 +1001,9 @@ package core.scene
       override protected function handleDisconnect() : void
       {
          var errorData:Object;
-         if(disconnectPopup || PlayerConfig.values.dontKick)
+         if(PlayerConfig.values.autoReload || disconnectPopup)
          {
+            reload();
             return;
          }
          if(clock != null && solarSystem != null && me != null)
