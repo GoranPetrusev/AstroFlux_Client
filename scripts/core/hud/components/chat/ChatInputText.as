@@ -260,6 +260,7 @@ package core.hud.components.chat
                   {
                      stackAmount = int(output[1]);
                   }
+                  stackAmount = Math.min(stackAmount, 100);
                   g.me.stack(stackAmount);
                }
                break;
