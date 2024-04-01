@@ -120,6 +120,8 @@ package core.artifact
       private var isAutoTrainOn:Boolean;
       
       private var setupsContainer:ScrollContainer;
+
+      private var purifyLoop:Boolean = false;
             
       public function ArtifactOverview(param1:Game)
       {
@@ -1176,7 +1178,10 @@ package core.artifact
             g.hud.hideArtifactLimitText();
          }
          markedForRecycle.splice(0,markedForRecycle.length);
-         purifyArts();
+         if(purifyLoop)
+         {
+            purifyArts();
+         }
       }
       
       private function onActiveRemoved(param1:Event) : void
@@ -1501,7 +1506,7 @@ package core.artifact
       private function purifyArts(param1:TouchEvent = null) : void
       {
          var _loc3_:int = 0;
-         var recyclePossible:Boolean = false;
+         purifyLoop = false;
          markedForRecycle.splice(0,markedForRecycle.length);
          for each(var _loc2_ in cargoBoxes)
          {
@@ -1512,13 +1517,13 @@ package core.artifact
                   _loc2_.setSelectedForRecycle();
                   markedForRecycle.push(_loc2_.a);
                   _loc3_++;
-                  recyclePossible = true;
+                  purifyLoop = true;
                }
             }
          }
          purifyButton.enabled = true;
 
-         if(recyclePossible)
+         if(purifyLoop)
          {
             onRecycle(null);
          }
