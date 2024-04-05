@@ -211,6 +211,10 @@ package core.hud.components.chat
          output = parseCommand(text);
          switch(output[0])
          {
+            case "zoom":
+               PlayerConfig.values.zoomFactor = output[1];
+               g.camera.zoomFocus(PlayerConfig.values.zoomFactor,1);
+               break;
             case "test":
                for each(body in g.bodyManager.bodies)
                {

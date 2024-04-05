@@ -20,6 +20,7 @@ It has been over a month since I undertook this project. There's now a team of c
 - [ ] Fitness buffed by multiple equal lines
 - [ ] Renamable art setups
 - [x] Side scrolling art setups container
+- [ ] Mute list
 - [ ] Fullscreen map
 - [x] Purify
 - [x] Autorecycle
