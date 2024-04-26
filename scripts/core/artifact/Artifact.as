@@ -260,6 +260,44 @@ package core.artifact
          return 0;
       }
       
+      public static function orderFitnessHigh(param1:Artifact, param2:Artifact) : int
+      {
+         if(!param1.revealed || !param2.revealed)
+         {
+            return orderRevealed(param1,param2);
+         }
+         var _loc4_:int = param1.fitness;
+         var _loc3_:int = param2.fitness;
+         if(_loc4_ > _loc3_)
+         {
+            return -1;
+         }
+         if(_loc4_ < _loc3_)
+         {
+            return 1;
+         }
+         return 0;
+      }
+      
+      public static function orderFitnessLow(param1:Artifact, param2:Artifact) : int
+      {
+         if(!param1.revealed || !param2.revealed)
+         {
+            return orderRevealed(param1,param2);
+         }
+         var _loc4_:int = param1.fitness;
+         var _loc3_:int = param2.fitness;
+         if(_loc4_ > _loc3_)
+         {
+            return 1;
+         }
+         if(_loc4_ < _loc3_)
+         {
+            return -1;
+         }
+         return 0;
+      }
+      
       public static function orderRevealed(param1:Artifact, param2:Artifact) : int
       {
          if(!param1.revealed && param2.revealed)
@@ -299,11 +337,7 @@ package core.artifact
       public function get isRestricted() : Boolean
       {
          var _loc1_:int = Game.instance.me.level;
-         var _loc2_:int = Math.ceil(1.2 * _loc1_ + 10);
-         if(_loc2_ > 150)
-         {
-            _loc2_ = 150;
-         }
+         var _loc2_:int = Math.min(150,Math.ceil(1.2 * _loc1_ + 10));
          return levelPotential > _loc2_;
       }
       
