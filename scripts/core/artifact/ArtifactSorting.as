@@ -44,6 +44,8 @@ package core.artifact
          var sortLevelLow:Button;
          var sortCountAsc:Button;
          var sortCountDesc:Button;
+         var sortFitnessHigh:Button;
+         var sortFitnessLow:Button;
          var g:Game = param1;
          var callback:Function = param2;
          super();
@@ -55,21 +57,19 @@ package core.artifact
          q.alpha = 0.9;
          addChild(q);
          headline = new TextField(300,100);
+         headline.x = 300;
+         headline.y = 1;
          headline.format.font = "DAIDRR";
          headline.format.size = 26;
          headline.format.color = 16777215;
          headline.format.horizontalAlign = "left";
          headline.format.verticalAlign = "top";
-         headline.text = "Choose sorting:";
-         headline.y = 20;
-         headline.x = nextY;
+         headline.text = "Choose sorting";
          addChild(headline);
          scrollArea = new ScrollContainer();
          mainBody = new Sprite();
-         scrollArea.y = 60;
-         scrollArea.x = 4;
          scrollArea.width = 660;
-         scrollArea.height = 400;
+         scrollArea.height = 450;
          tmp = g.dataManager.loadTable("ArtifactTypes");
          types = ObjUtils.ToVector(tmp,true,"name");
          drawOfSubset("health");
@@ -83,12 +83,17 @@ package core.artifact
          drawOfSubset("power");
          drawOfSubset("all");
          newRow();
-         drawOfSubset("kinetic");
+         drawOfSubset("kineticAdd");
+         drawOfSubset("kineticMulti");
+         drawOfSubset("kineticResist");
          newRow();
-         drawOfSubset("energy");
+         drawOfSubset("energyAdd");
+         drawOfSubset("energyMulti");
+         drawOfSubset("energyResist");
          newRow();
-         drawOfSubset("corrosive");
-         newRow();
+         drawOfSubset("corrosiveAdd");
+         drawOfSubset("corrosiveMulti");
+         drawOfSubset("corrosiveResist");
          drawOfSubset("speed");
          drawOfSubset("refire");
          drawOfSubset("cooldown");
@@ -100,29 +105,43 @@ package core.artifact
             closeAndSort("levelhigh");
          },"Strength high");
          sortLevelHigh.x = nextX;
-         sortLevelHigh.y = 480;
+         sortLevelHigh.y = 440;
          addChild(sortLevelHigh);
          sortLevelLow = new Button(function():void
          {
             closeAndSort("levellow");
          },"Strength low");
-         sortLevelLow.x = sortLevelHigh.x + sortLevelHigh.width + 20;
+         sortLevelLow.x = nextX;
          sortLevelLow.y = 480;
          addChild(sortLevelLow);
-         sortCountAsc = new Button(function():void
-         {
-            closeAndSort("statcountasc");
-         },"Modifiers high");
-         sortCountAsc.x = sortLevelLow.x + sortLevelLow.width + 20;
-         sortCountAsc.y = 480;
-         addChild(sortCountAsc);
          sortCountDesc = new Button(function():void
          {
             closeAndSort("statcountdesc");
-         },"Modifiers low");
-         sortCountDesc.x = sortCountAsc.x + sortCountAsc.width + 20;
-         sortCountDesc.y = 480;
+         },"Lines high");
+         sortCountDesc.x = sortLevelLow.x + sortLevelLow.width + 20;
+         sortCountDesc.y = 440;
          addChild(sortCountDesc);
+         sortCountAsc = new Button(function():void
+         {
+            closeAndSort("statcountasc");
+         },"Lines low");
+         sortCountAsc.x = sortLevelLow.x + sortLevelLow.width + 20;
+         sortCountAsc.y = 480;
+         addChild(sortCountAsc);
+         sortLevelLow = new Button(function():void
+         {
+            closeAndSort("fitnesshigh");
+         },"Fitness high");
+         sortLevelLow.x = sortCountAsc.x + sortCountAsc.width + 20;
+         sortLevelLow.y = 440;
+         addChild(sortLevelLow);
+         sortLevelLow = new Button(function():void
+         {
+            closeAndSort("fitnesslow");
+         },"Fitness low");
+         sortLevelLow.x = sortCountAsc.x + sortCountAsc.width + 20;
+         sortLevelLow.y = 480;
+         addChild(sortLevelLow);
       }
       
       private function newRow() : void
