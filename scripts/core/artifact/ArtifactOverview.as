@@ -6,12 +6,10 @@ package core.artifact
    import core.hud.components.Button;
    import core.hud.components.CrewDisplayBoxNew;
    import core.hud.components.InputText;
-   import core.hud.components.LootItem;
    import core.hud.components.PriceCommodities;
    import core.hud.components.Style;
    import core.hud.components.TextBitmap;
    import core.hud.components.dialogs.CreditBuyBox;
-   import core.hud.components.dialogs.LootPopupMessage;
    import core.hud.components.dialogs.PopupBuyMessage;
    import core.player.CrewMember;
    import core.player.Player;
@@ -37,7 +35,6 @@ package core.artifact
    import starling.text.TextFormat;
    import textures.ITextureManager;
    import textures.TextureLocator;
-   import core.hud.components.chat.MessageLog;
    
    public class ArtifactOverview extends Sprite
    {
@@ -120,9 +117,9 @@ package core.artifact
       private var isAutoTrainOn:Boolean;
       
       private var setupsContainer:ScrollContainer;
-
+      
       private var purifyLoop:Boolean = false;
-            
+      
       public function ArtifactOverview(param1:Game)
       {
          activeSlots = new Vector.<ArtifactBox>();
@@ -220,7 +217,7 @@ package core.artifact
          drawArtifactSetups();
          drawArtifactsInCargo();
          q = new Quad(650,1,11184810);
-         q.y = 70 + 24 - 1;
+         q.y = 93;
          addChildAt(q,0);
          statsContainer = new Sprite();
          statsContainer.x = 390;
@@ -1050,27 +1047,15 @@ package core.artifact
          markedForRecycle.splice(0,markedForRecycle.length);
          for each(var _loc2_ in cargoBoxes)
          {
-            if(_loc2_.a != null)
+            if(_loc2_.a != null && !_loc2_.isUsedInSetup() && !_loc2_.a.upgrading && _loc2_.a.upgraded == 0)
             {
-               if(!_loc2_.isUsedInSetup())
+               if(_loc3_ == 40)
                {
-                  if(!_loc2_.a.upgrading)
-                  {
-                     if(!_loc2_.a.upgrading)
-                     {
-                        if(_loc2_.a.upgraded <= 0)
-                        {
-                           if(_loc3_ == 40)
-                           {
-                              break;
-                           }
-                           _loc2_.setSelectedForRecycle();
-                           markedForRecycle.push(_loc2_.a);
-                           _loc3_++;
-                        }
-                     }
-                  }
+                  break;
                }
+               _loc2_.setSelectedForRecycle();
+               markedForRecycle.push(_loc2_.a);
+               _loc3_++;
             }
          }
          cargoContainer.scrollToPosition(0,0);
@@ -1081,25 +1066,28 @@ package core.artifact
       {
          chooseSortingButton.enabled = true;
          Artifact.currentTypeOrder = param1;
-         if(param1 == "levelhigh")
+         switch(param1)
          {
-            p.artifacts.sort(Artifact.orderLevelHigh);
-         }
-         else if(param1 == "levellow")
-         {
-            p.artifacts.sort(Artifact.orderLevelLow);
-         }
-         else if(param1 == "statcountasc")
-         {
-            p.artifacts.sort(Artifact.orderStatCountAsc);
-         }
-         else if(param1 == "statcountdesc")
-         {
-            p.artifacts.sort(Artifact.orderStatCountDesc);
-         }
-         else
-         {
-            p.artifacts.sort(Artifact.orderStat);
+            case "levelhigh":
+               p.artifacts.sort(Artifact.orderLevelHigh);
+               break;
+            case "levellow":
+               p.artifacts.sort(Artifact.orderLevelLow);
+               break;
+            case "statcountasc":
+               p.artifacts.sort(Artifact.orderStatCountAsc);
+               break;
+            case "statcountdesc":
+               p.artifacts.sort(Artifact.orderStatCountDesc);
+               break;
+            case "fitnesshigh":
+               p.artifacts.sort(Artifact.orderFitnessHigh);
+               break;
+            case "fitnesslow":
+               p.artifacts.sort(Artifact.orderFitnessLow);
+               break;
+            default:
+               p.artifacts.sort(Artifact.orderStat);
          }
          cargoContainer.removeChildren(0,-1,true);
          cargoBoxes.length = 0;
@@ -1129,31 +1117,25 @@ package core.artifact
       
       private function onRecycleMessage(param1:Message) : void
       {
-         var success:Boolean;
-         var j:int;
-         var i:int;
-         var reason:String;
-         var a:Artifact;
-         var cargoBox:ArtifactCargoBox;
          var m:Message = param1;
          g.hideModalLoadingScreen();
-         success = m.getBoolean(0);
-         j = 0;
+         var success:Boolean = m.getBoolean(0);
+         var j:int = 0;
          if(!success)
          {
-            reason = m.getString(1);
+            var reason:String = m.getString(1);
             if(!PlayerConfig.autorec)
             {
                g.showErrorDialog("Recycle failed, " + reason);
             }
             return;
          }
-         i = 0;
+         var i:int = 0;
          while(i < markedForRecycle.length)
          {
-            a = markedForRecycle[i];
+            var a:Artifact = markedForRecycle[i];
             p.artifactCount -= 1;
-            for each(cargoBox in cargoBoxes)
+            for each(var cargoBox in cargoBoxes)
             {
                if(cargoBox.a == a)
                {
@@ -1522,7 +1504,6 @@ package core.artifact
             }
          }
          purifyButton.enabled = true;
-
          if(purifyLoop)
          {
             onRecycle(null);
