@@ -436,12 +436,7 @@ package core.artifact
             _loc2_ = new ToggleButton();
             _loc2_.styleNameList.add("artifact_setup");
             setupsContainer.addChild(_loc2_);
-            if(_loc4_ == 0)
-            {
-               _loc2_.label = "Setup" + " 1";
-               _loc2_.addEventListener("triggered",onSetupChange);
-            }
-            else if(_loc4_ == _loc3_ - 1)
+            if(_loc4_ == _loc3_ - 1)
             {
                _loc2_.defaultIcon = new Image(textureManager.getTextureGUIByTextureName("setup_buy_button"));
                _loc2_.addEventListener("triggered",onSetupBuy);
@@ -519,7 +514,7 @@ package core.artifact
          }
          if(p.artifactCapacityLevel < Player.ARTIFACT_CAPACITY.length - 1)
          {
-            (_loc6_ = new Button(onUpgradeCapacity,p.artifactCount + " / " + p.artifactLimit + " " + "INCREASE to" + " " + Player.ARTIFACT_CAPACITY[p.artifactCapacityLevel + 1],"positive")).x = 0;
+            (_loc6_ = new Button(onUpgradeCapacity,p.artifactCount + " / " + p.artifactLimit + " INCREASE to " + Player.ARTIFACT_CAPACITY[p.artifactCapacityLevel + 1],"positive")).x = 0;
             _loc6_.width = 353;
             _loc6_.y = (_loc2_.height + 8) * _loc5_;
             cargoContainer.addChild(_loc6_);
@@ -561,16 +556,13 @@ package core.artifact
          }
          for each(_loc5_ in activeSlots)
          {
-            if(_loc5_.isEmpty)
+            if(_loc5_.isEmpty && !_loc5_.locked)
             {
-               if(!_loc5_.locked)
-               {
-                  _loc5_.setActive(_loc3_);
-                  p.toggleArtifact(_loc3_);
-                  _loc4_.update();
-                  reloadStats();
-                  break;
-               }
+               _loc5_.setActive(_loc3_);
+               p.toggleArtifact(_loc3_);
+               _loc4_.update();
+               reloadStats();
+               break;
             }
          }
       }
@@ -668,7 +660,7 @@ package core.artifact
       {
          var e:Event = param1;
          var cost:int = CreditManager.getCostArtifactCapacityUpgrade(p.artifactCapacityLevel + 1);
-         var creditBuyBox:CreditBuyBox = new CreditBuyBox(g,cost,"Increases artifact capacity to" + " " + Player.ARTIFACT_CAPACITY[p.artifactCapacityLevel + 1]);
+         var creditBuyBox:CreditBuyBox = new CreditBuyBox(g,cost,"Increases artifact capacity to " + Player.ARTIFACT_CAPACITY[p.artifactCapacityLevel + 1]);
          g.addChildToOverlay(creditBuyBox);
          creditBuyBox.addEventListener("accept",function(param1:Event):void
          {
@@ -713,6 +705,7 @@ package core.artifact
          if(recycleMode)
          {
             g.showErrorDialog("Artifact setup can\'t be changed while recycling.");
+            toggleRecycle();
             return;
          }
          var _loc4_:ToggleButton = param1.target as ToggleButton;
@@ -728,10 +721,6 @@ package core.artifact
          {
             _loc4_.isSelected = false;
             return;
-         }
-         if(recycleMode)
-         {
-            toggleRecycle();
          }
          g.send("changeArtifactSetup",_loc6_);
          p.changeArtifactSetup(_loc6_);
@@ -1086,6 +1075,12 @@ package core.artifact
             case "fitnesslow":
                p.artifacts.sort(Artifact.orderFitnessLow);
                break;
+            case "upgradeslow":
+               p.artifacts.sort(Artifact.orderUpgradesLow);
+               break;
+            case "upgradeshigh":
+               p.artifacts.sort(Artifact.orderUpgradesHigh);
+               break;
             default:
                p.artifacts.sort(Artifact.orderStat);
          }
@@ -1103,7 +1098,7 @@ package core.artifact
          }
          if(g.myCargo.isFull)
          {
-            g.showErrorDialog(Localize.t("Your cargo compressor is overloaded!"));
+            g.showErrorDialog("Your cargo compressor is overloaded!");
             return;
          }
          var _loc3_:Message = g.createMessage("bulkRecycle");
@@ -1203,31 +1198,11 @@ package core.artifact
       private function onUpgradeArtifact(param1:Event) : void
       {
          var _loc3_:Artifact = selectedUpgradeBox.a;
-         var _loc5_:Number = _loc3_.level;
-         var _loc6_:Number = _loc3_.level - 50;
-         var _loc2_:Number = _loc3_.level - 75;
-         if(_loc5_ > 50)
-         {
-            _loc5_ = 50;
-         }
-         if(_loc6_ > 25)
-         {
-            _loc6_ = 25;
-         }
-         if(_loc6_ < 0)
-         {
-            _loc6_ = 0;
-         }
-         if(_loc2_ < 0)
-         {
-            _loc2_ = 0;
-         }
-         var _loc4_:Number;
-         if((_loc4_ = 5 * Math.pow(1.075,_loc5_) * Math.pow(1.05,_loc6_) * (1 + 0.02 * _loc2_) * 60 * 1000) > 43200000)
-         {
-            _loc4_ = 43200000;
-         }
-         g.showConfirmDialog("The upgrade will be finished in" + ": \n\n<font color=\'#ffaa88\'>" + Util.getFormattedTime(_loc4_) + "</font>",confirmUpgrade);
+         var _loc5_:Number = Math.min(50,_loc3_.level);
+         var _loc6_:Number = Math.max(0,Math.min(25,_loc3_.level - 50));
+         var _loc2_:Number = Math.max(0,_loc3_.level - 75);
+         var _loc4_:Number = Math.min(43200000,300000 * Math.pow(1.075,_loc5_) * Math.pow(1.05,_loc6_) * (1 + 0.02 * _loc2_));
+         g.showConfirmDialog("The upgrade will be finished in: \n\n<font color=\'#ffaa88\'>" + Util.getFormattedTime(_loc4_) + "</font>",confirmUpgrade);
          upgradeButton.enabled = true;
       }
       
@@ -1379,7 +1354,7 @@ package core.artifact
                box.addChild(upgradeText);
                crewSkillText = new TextBitmap();
                crewSkillText.format.color = 16777215;
-               crewSkillText.text = "Crew Skill" + " +" + newSkillPoints;
+               crewSkillText.text = "Crew Skill +" + newSkillPoints;
                crewSkillText.size = 14;
                crewSkillText.x = 90;
                crewSkillText.y = upgradeText.y + upgradeText.height + 10;
@@ -1387,7 +1362,7 @@ package core.artifact
                box.addChild(crewSkillText);
                levelText = new TextBitmap();
                levelText.format.color = 16777215;
-               levelText.text = "strength" + " +" + diffLevel;
+               levelText.text = "strength +" + diffLevel;
                levelText.size = 18;
                levelText.x = 90;
                levelText.y = crewSkillText.y + crewSkillText.height + 10;
