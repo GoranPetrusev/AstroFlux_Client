@@ -176,7 +176,7 @@ package core.artifact
          }
          var _loc3_:Number = param1.stats.length;
          var _loc4_:Number = param2.stats.length;
-         return compare(_loc3_,_loc4_);
+         return compare(_loc4_,_loc3_);
       }
       
       public static function orderLevelHigh(param1:Artifact, param2:Artifact) : int
