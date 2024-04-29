@@ -40,12 +40,7 @@ package core.artifact
          var q:Quad;
          var headline:TextField;
          var tmp:Object;
-         var sortLevelHigh:Button;
-         var sortLevelLow:Button;
-         var sortCountAsc:Button;
-         var sortCountDesc:Button;
-         var sortFitnessHigh:Button;
-         var sortFitnessLow:Button;
+         var sortButton:Button;
          var g:Game = param1;
          var callback:Function = param2;
          super();
@@ -56,13 +51,13 @@ package core.artifact
          q.y = -10;
          q.alpha = 0.9;
          addChild(q);
-         headline = new TextField(300,100);
-         headline.x = 300;
+         headline = new TextField(375,100);
+         headline.x = 280;
          headline.y = 1;
          headline.format.font = "DAIDRR";
-         headline.format.size = 26;
+         headline.format.size = 40;
          headline.format.color = 16777215;
-         headline.format.horizontalAlign = "left";
+         headline.format.horizontalAlign = "right";
          headline.format.verticalAlign = "top";
          headline.text = "Choose sorting";
          addChild(headline);
@@ -87,9 +82,7 @@ package core.artifact
          drawOfSubset("kineticMulti");
          drawOfSubset("kineticResist");
          newRow();
-         drawOfSubset("energyAdd");
-         drawOfSubset("energyMulti");
-         drawOfSubset("energyResist");
+         drawOfSubset("energy");
          newRow();
          drawOfSubset("corrosiveAdd");
          drawOfSubset("corrosiveMulti");
@@ -100,48 +93,62 @@ package core.artifact
          newRow();
          scrollArea.addChild(mainBody);
          addChild(scrollArea);
-         sortLevelHigh = new Button(function():void
+         sortButton = new Button(function():void
          {
             closeAndSort("levelhigh");
          },"Strength high");
-         sortLevelHigh.x = nextX;
-         sortLevelHigh.y = 440;
-         addChild(sortLevelHigh);
-         sortLevelLow = new Button(function():void
+         sortButton.x = 20;
+         sortButton.y = 440;
+         addChild(sortButton);
+         sortButton = new Button(function():void
          {
             closeAndSort("levellow");
          },"Strength low");
-         sortLevelLow.x = nextX;
-         sortLevelLow.y = 480;
-         addChild(sortLevelLow);
-         sortCountDesc = new Button(function():void
+         sortButton.x = 20;
+         sortButton.y = 480;
+         addChild(sortButton);
+         sortButton = new Button(function():void
          {
             closeAndSort("statcountdesc");
          },"Lines high");
-         sortCountDesc.x = sortLevelLow.x + sortLevelLow.width + 20;
-         sortCountDesc.y = 440;
-         addChild(sortCountDesc);
-         sortCountAsc = new Button(function():void
+         sortButton.x = 152;
+         sortButton.y = 440;
+         addChild(sortButton);
+         sortButton = new Button(function():void
          {
             closeAndSort("statcountasc");
          },"Lines low");
-         sortCountAsc.x = sortLevelLow.x + sortLevelLow.width + 20;
-         sortCountAsc.y = 480;
-         addChild(sortCountAsc);
-         sortLevelLow = new Button(function():void
+         sortButton.x = 152;
+         sortButton.y = 480;
+         addChild(sortButton);
+         sortButton = new Button(function():void
          {
             closeAndSort("fitnesshigh");
          },"Fitness high");
-         sortLevelLow.x = sortCountAsc.x + sortCountAsc.width + 20;
-         sortLevelLow.y = 440;
-         addChild(sortLevelLow);
-         sortLevelLow = new Button(function():void
+         sortButton.x = 260;
+         sortButton.y = 440;
+         addChild(sortButton);
+         sortButton = new Button(function():void
          {
             closeAndSort("fitnesslow");
          },"Fitness low");
-         sortLevelLow.x = sortCountAsc.x + sortCountAsc.width + 20;
-         sortLevelLow.y = 480;
-         addChild(sortLevelLow);
+         sortButton.x = 260;
+         sortButton.y = 480;
+         addChild(sortButton);
+         sortButton = new Button(function():void
+         {
+            closeAndSort("upgradeshigh");
+         },"Upgrades high");
+         sortButton.x = 382;
+         sortButton.y = 440;
+         addChild(sortButton);
+         sortButton = new Button(function():void
+         {
+            closeAndSort("upgradeslow");
+         },"Upgrades low");
+         sortButton.x = 382;
+         sortButton.y = 480;
+         addChild(sortButton);
       }
       
       private function newRow() : void
