@@ -6,12 +6,10 @@ package core.artifact
    import core.hud.components.Button;
    import core.hud.components.CrewDisplayBoxNew;
    import core.hud.components.InputText;
-   import core.hud.components.LootItem;
    import core.hud.components.PriceCommodities;
    import core.hud.components.Style;
    import core.hud.components.TextBitmap;
    import core.hud.components.dialogs.CreditBuyBox;
-   import core.hud.components.dialogs.LootPopupMessage;
    import core.hud.components.dialogs.PopupBuyMessage;
    import core.player.CrewMember;
    import core.player.Player;
@@ -37,7 +35,6 @@ package core.artifact
    import starling.text.TextFormat;
    import textures.ITextureManager;
    import textures.TextureLocator;
-   import core.hud.components.chat.MessageLog;
    
    public class ArtifactOverview extends Sprite
    {
@@ -120,9 +117,9 @@ package core.artifact
       private var isAutoTrainOn:Boolean;
       
       private var setupsContainer:ScrollContainer;
-
+      
       private var purifyLoop:Boolean = false;
-            
+      
       public function ArtifactOverview(param1:Game)
       {
          activeSlots = new Vector.<ArtifactBox>();
@@ -1129,31 +1126,25 @@ package core.artifact
       
       private function onRecycleMessage(param1:Message) : void
       {
-         var success:Boolean;
-         var j:int;
-         var i:int;
-         var reason:String;
-         var a:Artifact;
-         var cargoBox:ArtifactCargoBox;
          var m:Message = param1;
          g.hideModalLoadingScreen();
-         success = m.getBoolean(0);
-         j = 0;
+         var success:Boolean = m.getBoolean(0);
+         var j:int = 0;
          if(!success)
          {
-            reason = m.getString(1);
+            var reason:String = m.getString(1);
             if(!PlayerConfig.autorec)
             {
                g.showErrorDialog("Recycle failed, " + reason);
             }
             return;
          }
-         i = 0;
+         var i:int = 0;
          while(i < markedForRecycle.length)
          {
-            a = markedForRecycle[i];
+            var a:Artifact = markedForRecycle[i];
             p.artifactCount -= 1;
-            for each(cargoBox in cargoBoxes)
+            for each(var cargoBox in cargoBoxes)
             {
                if(cargoBox.a == a)
                {
@@ -1178,6 +1169,7 @@ package core.artifact
             g.hud.hideArtifactLimitText();
          }
          markedForRecycle.splice(0,markedForRecycle.length);
+         g.hud.cargoButton.update();
          if(purifyLoop)
          {
             purifyArts();
@@ -1522,7 +1514,6 @@ package core.artifact
             }
          }
          purifyButton.enabled = true;
-
          if(purifyLoop)
          {
             onRecycle(null);

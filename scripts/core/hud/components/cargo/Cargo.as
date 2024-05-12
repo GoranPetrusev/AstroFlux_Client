@@ -15,6 +15,7 @@ package core.hud.components.cargo
    import feathers.controls.ScrollContainer;
    import feathers.layout.VerticalLayout;
    import generics.Localize;
+   import goki.PlayerConfig;
    import playerio.Message;
    import sound.SoundLocator;
    import starling.display.Image;
@@ -25,7 +26,6 @@ package core.hud.components.cargo
    import starling.textures.Texture;
    import textures.ITextureManager;
    import textures.TextureLocator;
-   import goki.PlayerConfig;
    
    public class Cargo extends Sprite
    {
@@ -100,11 +100,12 @@ package core.hud.components.cargo
       
       private function handleServerSaysCargoIsFull(param1:Message) : void
       {
+         ButtonCargo.serverSaysCargoIsFull = true;
          if(PlayerConfig.autorec)
          {
-            TweenMax.delayedCall(0.5, g.onboardRecycle());
+            TweenMax.delayedCall(0.5,g.onboardRecycle());
+            return;
          }
-         ButtonCargo.serverSaysCargoIsFull = true;
          g.hud.cargoButton.update();
       }
       

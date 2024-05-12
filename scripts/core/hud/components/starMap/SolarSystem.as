@@ -308,7 +308,7 @@ package core.hud.components.starMap
             iconNormal.alpha = 1;
          }
          var _loc2_:Number = size + 14;
-         var _loc1_:Number = size + 10;
+         var _loc1_:Number = size - 20;
          if(_hasFriends)
          {
             friendBullet.visible = true;
