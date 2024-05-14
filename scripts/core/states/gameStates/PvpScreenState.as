@@ -37,7 +37,7 @@ package core.states.gameStates
          g.hud.show = false;
          obj.addEventListener("close",function(param1:Event):void
          {
-            sm.revertState();
+            sm.changeState(new RoamingState(g));
          });
          loadCompleted();
       }
@@ -62,7 +62,7 @@ package core.states.gameStates
             }
             if(keybinds.isEscPressed || keybinds.isInputPressed(6))
             {
-               sm.revertState();
+               sm.changeState(new RoamingState(g));
             }
             updateCommands();
          }
