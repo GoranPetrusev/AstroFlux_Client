@@ -198,13 +198,10 @@ package core.hud
          shopIcons.load();
          pvpIcon.load();
          systemText.text = g.solarSystem.name;
-         systemText.visible = true;
          systemText.touchable = false;
          systemText.format.color = 16689475;
          systemText.batchable = true;
          systemText.size = 16;
-         coordsText.text = "Current position: " + g.me.ship.x + ", " + g.me.ship.y;
-         coordsText.visible = true;
          coordsText.touchable = false;
          coordsText.format.color = 8947848;
          coordsText.batchable = true;
@@ -596,7 +593,7 @@ package core.hud
             repairText.visible = false;
             safeZoneText.visible = false;
          }
-         coordsText.text = "Current position: " + g.me.ship.x + ", " + g.me.ship.y;
+         coordsText.text = "Current position: " + Math.round(g.me.ship.x * systemScaling()) + ", " + Math.round(g.me.ship.y * systemScaling());
       }
       
       public function resize(param1:Event = null) : void
@@ -878,6 +875,38 @@ package core.hud
          safeZoneText.dispose();
          repairText.dispose();
          landText.dispose();
+      }
+      
+      public function systemScaling() : Number
+      {
+         switch(g.solarSystem.name)
+         {
+            case "Hyperion":
+            case "Fulzar":
+               return 2 / 80;
+            case "Kapello":
+               return 2 / 60;
+            case "Durian":
+               return 2 / 89;
+            case "Arrenius":
+               return 2 / 158;
+            case "Kritillian":
+               return 2 / 139;
+            case "Hozar":
+               return 2 / 250;
+            case "Zergilin":
+               return 2 / 70;
+            case "Mitrilion":
+               return 2 / 48;
+            case "Vibrilian":
+               return 2 / 120;
+            case "Sarkinon":
+               return 2 / 220;
+            case "Vorsran":
+               return 2 / 250;
+            default:
+               return 0.1;
+         }
       }
    }
 }
