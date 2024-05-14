@@ -1,11 +1,9 @@
 package core.hud.components.map
 {
    import core.hud.components.ButtonExpandableHud;
-   import core.hud.components.TextBitmap;
    import core.hud.components.pvp.DominationManager;
    import core.player.Player;
    import core.scene.Game;
-   import generics.Util;
    import starling.display.DisplayObject;
    import starling.display.Image;
    import starling.display.Quad;
@@ -77,56 +75,28 @@ package core.hud.components.map
          if(pvpMode)
          {
             mapBgr = new Image(textureManager.getTextureGUIByTextureName("hud_radar_pvp.png"));
-            var q:Quad = new Quad(width,height,0);
-            q.alpha = 0.8;
-            addChild(q);
             mapBgr.y = -8;
             addChild(mapBgr);
          }
-         else
-         {
-            mapContainer.alpha = 0.8;
-         }
+         var q:Quad = new Quad(10000,10000,0);
+         q.x = -4269;
+         q.y = -4269;
+         q.alpha = 0.69;
+         q.touchable = false;
+         addChild(q);
          addChild(mapContainer);
          var maxRadius:Number = 200;
-         var areaCount:Number = 0;
-         var exploreCount:Number = 0;
          SCALE = scale;
          WIDTH = width;
          HEIGHT = height;
          PADDING = padding;
          CORNER = corner;
-         for each(var b in g.bodyManager.bodies)
+         for each(b in g.bodyManager.bodies)
          {
-            if(b.type != "comet")
+            if(b.type != "comet" && b.course.orbitRadius * SCALE > maxRadius)
             {
-               if(b.course.orbitRadius * SCALE > maxRadius)
-               {
-                  SCALE = maxRadius / b.course.orbitRadius;
-               }
-               if(b.type == "planet")
-               {
-                  for each(var area in b.obj.exploreAreas)
-                  {
-                     if(g.me.hasExploredArea(area))
-                     {
-                        exploreCount++;
-                     }
-                     areaCount++;
-                  }
-               }
+               SCALE = maxRadius / b.course.orbitRadius;
             }
-         }
-         if(areaCount > 0)
-         {
-            clearedFraction = exploreCount / areaCount * 100;
-         }
-         var explored:TextBitmap = new TextBitmap(0,0,Util.formatDecimal(clearedFraction,1) + "% Explored");
-         explored.format.color = 6842472;
-         explored.batchable = true;
-         if(!pvpMode)
-         {
-            addChild(explored);
          }
          for each(var b2 in g.bodyManager.bodies)
          {
