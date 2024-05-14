@@ -73,6 +73,7 @@ package core.scene
    import flash.net.URLRequestHeader;
    import flash.system.Security;
    import generics.Localize;
+   import goki.AutoFarm;
    import goki.FitnessConfig;
    import goki.PlayerConfig;
    import io.InputLocator;
@@ -94,7 +95,6 @@ package core.scene
    import starling.utils.AssetManager;
    import textures.ITextureManager;
    import textures.TextureLocator;
-   import goki.AutoFarm;
    
    public class Game extends SceneBase
    {
@@ -256,7 +256,8 @@ package core.scene
          var serviceConnection:Connection = param2;
          var connection:Connection = param3;
          var room:Room = param4;
-         welcomeText = new ScreenTextField(450,100);
+         welcomeText = new ScreenTextField();
+         welcomeText.touchable = false;
          solarSystemData = new Text();
          loadingSprite = new Sprite();
          super(client,serviceConnection,connection,room);
@@ -400,8 +401,7 @@ package core.scene
          if(param1 != null && param1.hasOwnProperty("from") && param1.from.hasOwnProperty("id"))
          {
             Game.trackEvent("FBinvite","invite feedback","joined game",1);
-            _loc2_ = String(param1.from.id);
-            _loc2_ = "fb" + _loc2_;
+            _loc2_ = "fb" + String(param1.from.id);
             me.inviter_id = _loc2_;
             send("FBinviteAccepted",_loc2_);
             sendToServiceRoom("requestUpdateInviteReward",_loc2_);
@@ -658,10 +658,7 @@ package core.scene
             send("segment","campaign: " + RymdenRunt.parameters.querystring_c);
          }
          lastActive = new Date().time;
-         if(!PlayerConfig.values.dontKick)
-         {
-            disconnectIfInactive();
-         }
+         disconnectIfInactive();
          addEventListener("enterFrame",update);
          initTrackFPS();
          startSystemMusic();
@@ -669,23 +666,7 @@ package core.scene
       
       private function trackFPS() : void
       {
-         if(runningFPS < 3)
-         {
-            return;
-         }
-         if(!enableTrackFPS)
-         {
-            return;
-         }
-         if(solarSystem == null)
-         {
-            return;
-         }
-         if(me.isWarpJumping)
-         {
-            return;
-         }
-         if(!RymdenRunt.isInFocus)
+         if(runningFPS < 3 || !enableTrackFPS || solarSystem == null || me.isWarpJumping || !RymdenRunt.isInFocus)
          {
             return;
          }
@@ -805,7 +786,12 @@ package core.scene
       
       private function disconnectIfInactive() : void
       {
-         var diff:int = new Date().time - lastActive;
+         var diff:int;
+         if(PlayerConfig.values.dontKick)
+         {
+            return;
+         }
+         diff = new Date().time - lastActive;
          if(diff > 1800000)
          {
             this.disconnect();
@@ -831,45 +817,37 @@ package core.scene
       public function enterLandedState() : void
       {
          var _loc1_:Body = me.currentBody;
-         if(_loc1_.type == "planet")
-         {
-            fadeIntoState(new LandedExplore(this,_loc1_));
-         }
-         else if(_loc1_.type == "junk yard")
-         {
-            fadeIntoState(new LandedRecycle(this,_loc1_));
-         }
-         else if(_loc1_.type == "shop")
-         {
-            fadeIntoState(new LandedWeaponFactory(this,_loc1_));
-         }
-         else if(_loc1_.type == "research")
-         {
-            fadeIntoState(new LandedUpgrade(this,_loc1_));
-         }
-         else if(_loc1_.type == "warpGate")
-         {
-            fadeIntoState(new LandedWarpGate(this,_loc1_));
-         }
-         else if(_loc1_.type == "hangar")
-         {
-            fadeIntoState(new LandedHangar(this,_loc1_));
-         }
-         else if(_loc1_.type == "cantina")
-         {
-            fadeIntoState(new LandedCantina(this,_loc1_));
-         }
-         else if(_loc1_.type == "paintShop")
-         {
-            fadeIntoState(new LandedPaintShop(this,_loc1_));
-         }
-         else if(_loc1_.type == "lore")
-         {
-            fadeIntoState(new LandedLore(this,_loc1_));
-         }
-         else if(_loc1_.type == "pirate")
-         {
-            fadeIntoState(new LandedPiratebay(this,_loc1_));
+         switch (_loc1_.type) {
+            case "planet":
+               fadeIntoState(new LandedExplore(this, _loc1_));
+               break;
+            case "junk yard":
+               fadeIntoState(new LandedRecycle(this, _loc1_));
+               break;
+            case "shop":
+               fadeIntoState(new LandedWeaponFactory(this, _loc1_));
+               break;
+            case "research":
+               fadeIntoState(new LandedUpgrade(this, _loc1_));
+               break;
+            case "warpGate":
+               fadeIntoState(new LandedWarpGate(this, _loc1_));
+               break;
+            case "hangar":
+               fadeIntoState(new LandedHangar(this, _loc1_));
+               break;
+            case "cantina":
+               fadeIntoState(new LandedCantina(this, _loc1_));
+               break;
+            case "paintShop":
+               fadeIntoState(new LandedPaintShop(this, _loc1_));
+               break;
+            case "lore":
+               fadeIntoState(new LandedLore(this, _loc1_));
+               break;
+            case "pirate":
+               fadeIntoState(new LandedPiratebay(this, _loc1_));
+               break;
          }
          focusGameObject(_loc1_,true);
          me.stacksNumber = 0;
@@ -899,7 +877,9 @@ package core.scene
          try
          {
             AutoFarm.run(this);
-         } catch (e:Error) {
+         }
+         catch(e:Error)
+         {
             showErrorDialog(e.getStackTrace());
             AutoFarm.init(null);
          }
@@ -1000,13 +980,15 @@ package core.scene
       
       public function softDisconnect(param1:String) : void
       {
-         var message:String = param1;
-         if(disconnectPopup)
+         var message:String;
+         if(PlayerConfig.values.autoReload || disconnectPopup)
          {
+            reload();
             return;
          }
+         message = param1;
          disconnectPopup = new PopupMessage("Ok");
-         disconnectPopup.text = Localize.t(message);
+         disconnectPopup.text = message;
          addChildToOverlay(disconnectPopup);
          disconnectPopup.addEventListener("close",function(param1:starling.events.Event):void
          {
@@ -1019,8 +1001,9 @@ package core.scene
       override protected function handleDisconnect() : void
       {
          var errorData:Object;
-         if(disconnectPopup)
+         if(PlayerConfig.values.autoReload || disconnectPopup)
          {
+            reload();
             return;
          }
          if(clock != null && solarSystem != null && me != null)
@@ -1033,7 +1016,7 @@ package core.scene
             client.errorLog.writeError("Client Disconnect Adv. from GameRoom","disconnect handler on client from GameRoom","No Stacktrace",errorData);
          }
          disconnectPopup = new PopupMessage("Reload");
-         disconnectPopup.text = Localize.t("You got disconnected from the server.");
+         disconnectPopup.text = "You got disconnected from the server.";
          addChildToOverlay(disconnectPopup);
          disconnectPopup.addEventListener("close",function(param1:starling.events.Event):void
          {
@@ -1305,7 +1288,7 @@ package core.scene
             welcomeText.start([["Welcome to " + solarSystem.name]]);
          }
          welcomeText.x = stage.stageWidth / 2 - 200;
-         welcomeText.y = stage.stageHeight / 2 + 275;
+         welcomeText.y = stage.stageHeight / 2 - 100;
          addChildToOverlay(welcomeText);
          solarSystemData.x = welcomeText.x;
          solarSystemData.y = welcomeText.y + 40;
@@ -1434,7 +1417,7 @@ package core.scene
          loadingSprite.addChild(_loc3_);
          var _loc2_:Text = new Text();
          _loc2_.size = 26;
-         _loc2_.htmlText = Localize.t(param1);
+         _loc2_.htmlText = param1;
          loadingFadeTween = TweenMax.fromTo(_loc2_,2,{"alpha":1},{
             "alpha":0.4,
             "repeat":-1
@@ -1508,7 +1491,7 @@ package core.scene
          SoundLocator.getService().stopMusic();
          SoundLocator.getService().playMusic("y_s45d0sJkiPm6jpZFx2ow",true);
       }
-
+      
       public function onboardRecycle() : void
       {
          var station:Body = bodyManager.getRoot();

@@ -634,7 +634,7 @@ package
             loginContainer.addChild(connectSteamButton);
          }
          accsContainer = new ScrollContainer();
-         var layout = new VerticalLayout();
+         var layout:VerticalLayout = new VerticalLayout();
          layout.gap = 8;
          accsContainer.layout = layout;
          accsContainer.height = 250;

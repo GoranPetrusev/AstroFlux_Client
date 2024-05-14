@@ -8,18 +8,24 @@ It has been over a month since I undertook this project. There's now a team of c
 - Autofarm; the base framework is layed out. All that's left is to improve it from here on
 
 ### ToDo
-- [x] MAKE KONGREGATE ACCOUNTS WORK ON DEKSTOP VERSION
+- [x] MAKE KONGREGATE AND ARMOR GAMES ACCOUNTS WORK ON DEKSTOP VERSION
 - [x] Zooming
 - [x] Improve PlayerConfig save/load
 - [x] Improve FileManager save/read
 - [x] Fitness
 - [x] Stat distribution in Artifact tooltip
+- [x] Hacked Paint Shop
 - [ ] Fitness sort in arts menu
 - [x] Fitness Config Menu
 - [ ] Fitness buffed by multiple equal lines
+- [ ] Renamable art setups
+- [x] Side scrolling art setups container
+- [ ] Mute list
+- [ ] Fullscreen map
 - [x] Purify
-- [ ] Autorecycle
+- [x] Autorecycle
 - [x] Autosave of custom settings
+- [x] Copiable chat messages
 - [x] Fix up artifacts menu button allignment
 - [x] Progress mode in encounter menu
 - [ ] Encouter xp in encounter menu
@@ -37,17 +43,11 @@ It has been over a month since I undertook this project. There's now a team of c
 - [x] Tidy up xp bar
 - [x] Stacking :P
 - [x] Hacked Hangar
-- [ ] Autofarm
+- [x] Autofarm
 - [x] Quick Login
 
 ### Ideas
-- Max out option for crew member talents
-- Framework for custom afk farming ai
-- Dynamic updating system for the configs (should make adding content more streamlined)
-- Look into possibilities of making the welcome text a field that doesn't eat up mouse click input events
-- Refactor welcome text base class for future use
 - Updating feature
-- Why the hell is text so broken in this game? It has weird offsets and relations to the camera... look into it
 
 Stat Distribution Color Coding
 57bb8a

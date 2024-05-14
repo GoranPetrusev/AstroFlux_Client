@@ -6,13 +6,15 @@ package goki
    import core.ship.ShipManger;
    import core.ship.Ship;
    import core.ship.EnemyShip;
+   import core.solarSystem.Body;
    import generics.Util;
    import flash.geom.Point;
 
    public class AFprocedures
    {
       public static var functions:Object = {
-         "buglegs":buglegs
+         "buglegs":buglegs,
+         "exe":exefarm
       };
 
       public function AFprocedures()
@@ -22,31 +24,36 @@ package goki
 
       public static function buglegs(g:Game) : void
       {
-         var closestEnemy:EnemyShip = g.shipManager.enemies[0];
-         for each (var currEnemy in g.shipManager.enemies)
+         if(AFutil.isPickingUpDrop(g, "Bug Leg"))
          {
-            if(currEnemy.bodyName != "Enemy Moth Alpha lvl 13")
-            {
-               continue;
-            }
-
-            if(AFutil.distanceSquaredToObject(g, currEnemy) < AFutil.distanceSquaredToObject(g, closestEnemy))
-            {
-               closestEnemy = currEnemy;
-            }
+            return;
          }
 
-         if(!AFutil.pickingUpDrop(g, "Bug Leg"))
+         var targetMoth:EnemyShip = AFutil.closestEnemyByName(g, "Moth Alpha");
+         if(targetMoth != null)
          {
-            if(AFutil.distanceSquaredToObject(g, closestEnemy) > 1000*1000 && AFutil.angleDifference(g, closestEnemy) > 3)
+            if(AFutil.distanceSquaredToObject(g, targetMoth) > 1000*1000 && Math.abs(AFutil.angleDifferenceObject(g, targetMoth)) > 3)
             {
                AFutil.boost(g);
             }
-            AFutil.lookAtObject(g, closestEnemy);
-            AFutil.accelerate(g, true);
-         }         
 
+            AFutil.lookAtObject(g, targetMoth);
+         }
+
+         AFutil.accelerate(g, true);
          AFutil.fire(g, true);
-      }      
+      }
+
+      public static function exefarm(g:Game) : void
+      {
+         if(AFutil.isPickingUpDropInZone(g, "Crate", -425, -100, 75))
+         {
+            return;
+         }
+         
+         AFutil.lookAtPoint(g, -425, -100);
+         AFutil.accelerate(g, true);
+         AFutil.fire(g,true);
+      }
    }
 }

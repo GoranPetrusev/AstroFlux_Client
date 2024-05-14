@@ -25,6 +25,7 @@ package core.hud.components.cargo
    import starling.textures.Texture;
    import textures.ITextureManager;
    import textures.TextureLocator;
+   import goki.PlayerConfig;
    
    public class Cargo extends Sprite
    {
@@ -99,6 +100,10 @@ package core.hud.components.cargo
       
       private function handleServerSaysCargoIsFull(param1:Message) : void
       {
+         if(PlayerConfig.autorec)
+         {
+            TweenMax.delayedCall(0.5, g.onboardRecycle());
+         }
          ButtonCargo.serverSaysCargoIsFull = true;
          g.hud.cargoButton.update();
       }

@@ -40,7 +40,6 @@ package core.states
       
       public function enter() : void
       {
-         g.messageLog.visible = false;
          parent = sm.parent;
          container = new Sprite();
          backButton = new Button(back,"Back");
@@ -54,8 +53,8 @@ package core.states
          {
             backButton.visible = true;
          }
-         core.§states:DisplayState§.parent.addChild(container);
-         core.§states:DisplayState§.parent.addChild(backButton);
+         parent.addChild(container);
+         parent.addChild(backButton);
       }
       
       public function execute() : void
@@ -65,13 +64,13 @@ package core.states
       public function exit() : void
       {
          container.removeChildren(0,container.numChildren,true);
-         if(core.§states:DisplayState§.parent.contains(container))
+         if(parent.contains(container))
          {
-            core.§states:DisplayState§.parent.removeChild(container,true);
+            parent.removeChild(container,true);
          }
-         if(core.§states:DisplayState§.parent.contains(backButton))
+         if(parent.contains(backButton))
          {
-            core.§states:DisplayState§.parent.removeChild(backButton,true);
+            parent.removeChild(backButton,true);
          }
          container = null;
          parent = null;

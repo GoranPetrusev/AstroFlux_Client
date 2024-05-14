@@ -72,7 +72,9 @@ package core.states.gameStates
       private var dontKick:Check;
       
       private var disableScreenShake:Check;
-      
+
+      private var autoReload:Check;
+
       public function SettingsGeneral(param1:Game)
       {
          super();
@@ -171,7 +173,7 @@ package core.states.gameStates
          {
             settings.iWantAllTimedMissions = iWantAllTimedMissions.isSelected;
          });
-         addCheckbox(iWantAllTimedMissions,Localize.t("I want all timed missions."));
+         addCheckbox(iWantAllTimedMissions,Localize.t("I want all timed missions"));
          currentHeight = 10;
          currentWidth = 380;
          addHeader("Misc");
@@ -181,22 +183,22 @@ package core.states.gameStates
          {
             PlayerConfig.values.showAllEncounters = showAllEncounters.isSelected;
          });
-         addCheckbox(showAllEncounters,Localize.t("Show All Encounters"));
+         addCheckbox(showAllEncounters,Localize.t("Show all encounters"));
          hpshBarsAlwaysOn = new Check();
          hpshBarsAlwaysOn.isSelected = PlayerConfig.values.barAlwaysShow;
          hpshBarsAlwaysOn.addEventListener("change",function(param1:Event):void
          {
             PlayerConfig.values.barAlwaysShow = hpshBarsAlwaysOn.isSelected;
          });
-         addCheckbox(hpshBarsAlwaysOn,Localize.t("Always Show SH/HP Bars"));
+         addCheckbox(hpshBarsAlwaysOn,Localize.t("Always show SH/HP bars"));
          dmgTextSizeSlider = new Slider();
-         addSlider(dmgTextSizeSlider,(PlayerConfig.values.dmgTextSize - 1) * 0.5,Localize.t("Damage Text Scale"));
+         addSlider(dmgTextSizeSlider,(PlayerConfig.values.dmgTextSize - 1) * 0.5,Localize.t("Damage text scale"));
          dmgTextSizeSlider.addEventListener("change",function(param1:Event):void
          {
             PlayerConfig.values.dmgTextSize = 1 + dmgTextSizeSlider.value * 2;
          });
          hpshBarSizeSlider = new Slider();
-         addSlider(hpshBarSizeSlider,(PlayerConfig.values.barSize - 1) * 0.25,Localize.t("SH/HP Bars Scale"));
+         addSlider(hpshBarSizeSlider,(PlayerConfig.values.barSize - 1) * 0.25,Localize.t("SH/HP Bars scale"));
          hpshBarSizeSlider.addEventListener("change",function(param1:Event):void
          {
             PlayerConfig.values.barSize = 1 + hpshBarSizeSlider.value * 4;
@@ -206,28 +208,35 @@ package core.states.gameStates
          {
             PlayerConfig.values.maxChatMessages = nMessagesInput.text;
          });
-         addInputField("Max Chat Messages",nMessagesInput);
+         addInputField("Max chat messages",nMessagesInput);
          censorChat = new Check();
          censorChat.isSelected = PlayerConfig.values.censorChat;
          censorChat.addEventListener("change",function(param1:Event):void
          {
             PlayerConfig.values.censorChat = censorChat.isSelected;
          });
-         addCheckbox(censorChat,"Censor Profanities");
+         addCheckbox(censorChat,"Censor profanities");
          dontKick = new Check();
          dontKick.isSelected = PlayerConfig.values.dontKick;
          dontKick.addEventListener("change",function(param1:Event):void
          {
             PlayerConfig.values.dontKick = dontKick.isSelected;
          });
-         addCheckbox(dontKick, "Don't Kick");
+         addCheckbox(dontKick, "Don't kick");
          disableScreenShake = new Check();
          disableScreenShake.isSelected = PlayerConfig.values.disableScreenShake;
          disableScreenShake.addEventListener("change",function(param1:Event):void
          {
             PlayerConfig.values.disableScreenShake = disableScreenShake.isSelected;
          });
-         addCheckbox(disableScreenShake, "Disable Camera Shake");
+         addCheckbox(disableScreenShake, "Disable camera shake");
+         autoReload = new Check();
+         autoReload.isSelected = PlayerConfig.values.autoReload;
+         autoReload.addEventListener("change",function(param1:Event):void
+         {
+            PlayerConfig.values.autoReload = autoReload.isSelected;
+         });
+         addCheckbox(autoReload, "Automatically reload when disconnected");
       }
       
       private function addInputField(str:String, field:InputText) : void

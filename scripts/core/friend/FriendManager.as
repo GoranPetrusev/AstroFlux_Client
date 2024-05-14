@@ -91,20 +91,19 @@ package core.friend
       {
          var _loc3_:String = param1.getString(0);
          var _loc2_:Player = g.playerManager.playersById[_loc3_];
-         if(_loc2_ == null)
-         {
-            return;
-         }
-         if(me.isFriendWith(_loc2_))
-         {
-            return;
-         }
-         if(requests.indexOf(_loc3_) != -1)
+         if(_loc2_ == null || requests.indexOf(_loc3_) != -1)
          {
             return;
          }
          requests.push(_loc3_);
-         MessageLog.write("<FONT COLOR=\'#88ff88\'>" + _loc2_.name + " wants to add you as a friend.</FONT>");
+         if(me.isFriendWith(_loc2_))
+         {
+            MessageLog.write("<FONT COLOR=\'#88ff88\'>" + _loc2_.name + " wants you to refriend them.</FONT>");
+         }
+         else
+         {
+            MessageLog.write("<FONT COLOR=\'#88ff88\'>" + _loc2_.name + " wants to add you as a friend.</FONT>");
+         }
          g.hud.playerListButton.hintNew();
       }
       

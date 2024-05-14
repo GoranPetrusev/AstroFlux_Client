@@ -201,6 +201,7 @@ package core.hud.components.chat
          var output:Vector.<String>;
          var tmp:Array;
          var q:int;
+         var body:*;
          var text:String = input.text;
          var stackAmount:int = 1;
          if(text == "")
@@ -210,35 +211,45 @@ package core.hud.components.chat
          output = parseCommand(text);
          switch(output[0])
          {
+            case "zoom":
+               PlayerConfig.values.zoomFactor = output[1];
+               g.camera.zoomFocus(PlayerConfig.values.zoomFactor,1);
+               break;
+            case "test":
+               for each(body in g.bodyManager.bodies)
+               {
+                  MessageLog.write(body.name + " " + body.pos.x + " " + body.pos.y);
+               }
+               break;
+            case "ar":
+            case "autorec":
+            case "autorecycle":
+               PlayerConfig.autorec = !PlayerConfig.autorec;
+               MessageLog.write("Auto recycle is set to: " + PlayerConfig.autorec);
+               break;
             case "rec":
             case "recycle":
                g.onboardRecycle();
                break;
             case "reload":
                g.reload();
+               break;
             case "af":
             case "autofarm":
-               try
+               if(output.length == 2)
                {
-                  if(output.length == 2)
-                  {
-                     AutoFarm.init(output[1]);
-                  }
-                  else
-                  {
-                     AutoFarm.init(null);
-                  }
+                  AutoFarm.init(output[1]);
                }
-               catch(e:Error)
+               else
                {
-                  g.showErrorDialog(e.getStackTrace());
+                  AutoFarm.init(null);
                }
                break;
             case "set_stats":
                g.me.setStackedStats();
                break;
             case "init_stack":
-               if(g.room.data.systemType == "clan" || g.room.data.systemType == "survival")
+               if(g.isSystemTypeClan() || g.isSystemTypeSurvival)
                {
                   g.me.initStack();
                }
@@ -247,12 +258,13 @@ package core.hud.components.chat
                MessageLog.write(g.me.stacksNumber);
                break;
             case "stack":
-               if(g.room.data.systemType == "clan" || g.room.data.systemType == "survival")
+               if(g.isSystemTypeClan() || g.isSystemTypeSurvival)
                {
                   if(output.length == 2)
                   {
-                     stackAmount = output[1];
+                     stackAmount = int(output[1]);
                   }
+                  stackAmount = Math.min(stackAmount, 100);
                   g.me.stack(stackAmount);
                }
                break;
@@ -269,16 +281,26 @@ package core.hud.components.chat
                   g.showErrorDialog(e.getStackTrace());
                }
                break;
+            case "tptodeath":
+               g.rpc("buyTeleportToDeath",null,g.me.id);
+               MessageLog.write("Spent 3 flux to teleport to death");
+               break;
             case "y":
             case "yes":
-               sendConfirmInviteGroup();
+               g.groupManager.acceptGroupInvite();
                break;
             case "i":
             case "inv":
             case "invite":
                if(output.length == 2)
                {
-                  sendInvite(output[1]);
+                  for each(_loc2_ in g.playerManager.players)
+                  {
+                     if(output[1] == _loc2_.name)
+                     {
+                        g.groupManager.invitePlayer(_loc2_);
+                     }
+                  }
                }
                break;
             case "g":
@@ -291,7 +313,7 @@ package core.hud.components.chat
                }
                break;
             case "go":
-               sendChatMessageMod(output[1]);
+               g.send("devMsg","mod",output[1]);
                break;
             case "m":
             case "w":
@@ -346,7 +368,7 @@ package core.hud.components.chat
                }
                break;
             case "leave":
-               sendLeave();
+               g.groupManager.leaveGroup();
                break;
             case "help":
             case "commands":
@@ -354,10 +376,10 @@ package core.hud.components.chat
                listCommands();
                break;
             case "list":
-               listPlayers();
+               g.playerManager.listAll();
                break;
             case "msgstats":
-               getMsgStats();
+               g.send("getMsgStats");
                break;
             case "ignore":
             case "mute":
@@ -379,8 +401,11 @@ package core.hud.components.chat
             case "unmute":
                sendSettingMsg(output);
                break;
-            case "lowerfps":
-               RymdenRunt.s.nativeStage.frameRate = 3;
+            case "setfps":
+               RymdenRunt.s.nativeStage.frameRate = output[1];
+               break;
+            case "setmyid":
+               g.me.id = output[1];
                break;
             case "stats":
                g.traceDisplayObjectCounts();
@@ -462,19 +487,6 @@ package core.hud.components.chat
          MessageLog.write("\'\'/list\'\' lists all players in the system");
          MessageLog.write("\'\'/ignore name\'\' ignore a player");
          MessageLog.write("\'\'/unignore name\'\' remove ignore");
-      }
-      
-      private function getMsgStats() : void
-      {
-         g.send("getMsgStats");
-      }
-      
-      private function listPlayers() : void
-      {
-         if(g != null && g.playerManager != null)
-         {
-            g.playerManager.listAll();
-         }
       }
       
       private function sendSettingMsg(param1:Vector.<String>) : void
@@ -594,47 +606,6 @@ package core.hud.components.chat
          {
             MessageLog.write("You have to wait " + Math.round((nextGlobalRdySendTime - g.time) / 1000) + " seconds.");
          }
-      }
-      
-      private function sendChatMessageMod(param1:String) : void
-      {
-         if(nextRdySendTime < g.time)
-         {
-            history.push(param1);
-            nextRdySendTime = g.time + 1000;
-            g.send("devMsg","mod",param1);
-         }
-         else if(nextRdySendTime > g.time)
-         {
-            MessageLog.write("Hold your horses cowboy.");
-         }
-      }
-      
-      private function sendConfirmInviteGroup() : void
-      {
-         if(g != null)
-         {
-            g.groupManager.acceptGroupInvite();
-         }
-      }
-      
-      private function sendInvite(param1:String) : void
-      {
-         if(param1 != "")
-         {
-            for each(var _loc2_ in g.playerManager.players)
-            {
-               if(param1 == _loc2_.name)
-               {
-                  g.groupManager.invitePlayer(_loc2_);
-               }
-            }
-         }
-      }
-      
-      private function sendLeave() : void
-      {
-         g.groupManager.leaveGroup();
       }
       
       public function previous() : void
