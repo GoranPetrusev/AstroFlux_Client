@@ -62,7 +62,7 @@ package goki
       
       public static function icemoth(g:Game) : void
       {
-         var targetMoth:EnemyShip = AFutil.closestEnemyByName(g,"Moth Ice");
+         var targetMoth:EnemyShip = AFutil.closestEnemyByName(g,"Ice");
          if(targetMoth != null)
          {
             if(AFutil.distanceSquaredToObject(g,targetMoth) > 1000 * 1000 && Math.abs(AFutil.angleDifferenceObject(g,targetMoth)) > 3)
