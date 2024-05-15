@@ -221,6 +221,12 @@ package core.hud.components.chat
                   MessageLog.write(body.name + " " + body.pos.x + " " + body.pos.y);
                }
                break;
+            case "test2":
+               for each(currEnemy in g.shipManager.enemies)
+               {
+                  MessageLog.write(currEnemy + "<br>" + currEnemy.pos.x + ", " + currEnemy.pos.y);
+               }
+               break;
             case "ar":
             case "autorec":
             case "autorecycle":
