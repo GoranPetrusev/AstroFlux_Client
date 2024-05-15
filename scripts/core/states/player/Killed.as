@@ -288,9 +288,11 @@ package core.states.player
             {
                if(!g.solarSystem.isPvpSystemInEditor)
                {
+                  respawnText.format.size = 25;
                   respawnText.text = "Press SPACE to respawn";
                   if(g.isSystemTypeSurvival())
                   {
+                     respawnText.format.size = 40;
                      _loc2_ = g.hud.uberStats.getMyLives();
                      if(_loc2_ == 0)
                      {
@@ -306,7 +308,6 @@ package core.states.player
                      }
                   }
                }
-               respawnText.format.size = 25;
             }
             else
             {
