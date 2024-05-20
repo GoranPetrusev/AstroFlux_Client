@@ -1,7 +1,6 @@
 package core.hud.components.hotkeys
 {
    import core.hud.components.ToolTip;
-   import core.player.TechSkill;
    import core.scene.Game;
    import core.scene.SceneBase;
    import core.ship.PlayerShip;
@@ -9,7 +8,6 @@ package core.hud.components.hotkeys
    import data.IDataManager;
    import data.KeyBinds;
    import debug.Console;
-   import generics.Localize;
    import starling.display.Sprite;
    import starling.textures.Texture;
    import textures.ITextureManager;
@@ -66,65 +64,35 @@ package core.hud.components.hotkeys
                _loc6_ = null;
                _loc3_ = "";
                _loc5_ = 0;
-               if(_loc8_.name == "Engine")
+               switch(_loc8_.name)
                {
-                  _loc6_ = g.commandManager.addBoostCommand;
-                  _loc7_ = "E";
-                  _loc2_ = _loc4_.hasBoost;
-                  if(_loc4_.aritfact_cooldownReduction > 0.4)
-                  {
-                     _loc5_ = _loc4_.boostCD * 0.6;
-                  }
-                  else
-                  {
-                     _loc5_ = _loc4_.boostCD * (1 - _loc4_.aritfact_cooldownReduction);
-                  }
-                  _loc3_ = Localize.t("Boost your engine with <FONT COLOR=\'#ffffff\'>[boostBonus]%</FONT> over <FONT COLOR=\'#ffffff\'>[duration]</FONT> seconds.").replace("[boostBonus]",_loc4_.boostBonus).replace("[duration]",_loc4_.boostDuration / 1000);
-               }
-               else if(_loc8_.name == "Shield")
-               {
-                  _loc6_ = g.commandManager.addHardenedShieldCommand;
-                  _loc7_ = "Q";
-                  _loc2_ = _loc4_.hasHardenedShield;
-                  if(_loc4_.aritfact_cooldownReduction > 0.4)
-                  {
-                     _loc5_ = _loc4_.hardenCD * 0.6;
-                  }
-                  else
-                  {
-                     _loc5_ = _loc4_.hardenCD * (1 - _loc4_.aritfact_cooldownReduction);
-                  }
-                  _loc3_ = Localize.t("Creates a hardened shield that protects you from all damage over <FONT COLOR=\'#ffffff\'>[duration]</FONT> seconds.").replace("[duration]",_loc4_.hardenDuration / 1000);
-               }
-               else if(_loc8_.name == "Armor")
-               {
-                  _loc6_ = g.commandManager.addShieldConvertCommand;
-                  _loc7_ = "F";
-                  _loc2_ = _loc4_.hasArmorConverter;
-                  if(_loc4_.aritfact_cooldownReduction > 0.4)
-                  {
-                     _loc5_ = _loc4_.convCD * 0.6;
-                  }
-                  else
-                  {
-                     _loc5_ = _loc4_.convCD * (1 - _loc4_.aritfact_cooldownReduction);
-                  }
-                  _loc3_ = Localize.t("Use <FONT COLOR=\'#ffffff\'>[convCost]%</FONT> of your shield energy to repair ship with <FONT COLOR=\'#ffffff\'>[convGain]%</FONT> of the energy consumed.").replace("[convCost]",_loc4_.convCost).replace("[convGain]",_loc4_.convGain);
-               }
-               else if(_loc8_.name == "Power")
-               {
-                  _loc6_ = g.commandManager.addDmgBoostCommand;
-                  _loc7_ = "R";
-                  _loc2_ = _loc4_.hasDmgBoost;
-                  if(_loc4_.aritfact_cooldownReduction > 0.4)
-                  {
-                     _loc5_ = _loc4_.dmgBoostCD * 0.6;
-                  }
-                  else
-                  {
-                     _loc5_ = _loc4_.dmgBoostCD * (1 - _loc4_.aritfact_cooldownReduction);
-                  }
-                  _loc3_ = Localize.t("Damage is increased by <FONT COLOR=\'#ffffff\'>[damage]%</FONT> but power consumtion is increased by <FONT COLOR=\'#ffffff\'>[cost]%</FONT> over <FONT COLOR=\'#ffffff\'>[duration]</FONT> seconds.").replace("[damage]",_loc4_.dmgBoostBonus * 100).replace("[cost]",_loc4_.dmgBoostCost * 100).replace("[duration]",_loc4_.dmgBoostDuration / 1000);
+                  case "Engine":
+                     _loc6_ = g.commandManager.addBoostCommand;
+                     _loc7_ = "E";
+                     _loc2_ = _loc4_.hasBoost;
+                     _loc5_ = _loc4_.boostCD * (1 - Math.min(0.4,_loc4_.aritfact_cooldownReduction));
+                     _loc3_ = "Boost your engine with <FONT COLOR=\'#ffffff\'>[boostBonus]%</FONT> over <FONT COLOR=\'#ffffff\'>[duration]</FONT> seconds.".replace("[boostBonus]",_loc4_.boostBonus).replace("[duration]",_loc4_.boostDuration / 1000);
+                     break;
+                  case "Shield":
+                     _loc6_ = g.commandManager.addHardenedShieldCommand;
+                     _loc7_ = "Q";
+                     _loc2_ = _loc4_.hasHardenedShield;
+                     _loc5_ = _loc4_.hardenCD * (1 - Math.min(0.4,_loc4_.aritfact_cooldownReduction));
+                     _loc3_ = "Creates a hardened shield that protects you from all damage over <FONT COLOR=\'#ffffff\'>[duration]</FONT> seconds.".replace("[duration]",_loc4_.hardenDuration / 1000);
+                     break;
+                  case "Armor":
+                     _loc6_ = g.commandManager.addShieldConvertCommand;
+                     _loc7_ = "F";
+                     _loc2_ = _loc4_.hasArmorConverter;
+                     _loc5_ = _loc4_.convCD * (1 - Math.min(0.4,_loc4_.aritfact_cooldownReduction));
+                     _loc3_ = "Use <FONT COLOR=\'#ffffff\'>[convCost]%</FONT> of your shield energy to repair ship with <FONT COLOR=\'#ffffff\'>[convGain]%</FONT> of the energy consumed.".replace("[convCost]",_loc4_.convCost).replace("[convGain]",_loc4_.convGain);
+                     break;
+                  case "Power":
+                     _loc6_ = g.commandManager.addDmgBoostCommand;
+                     _loc7_ = "R";
+                     _loc2_ = _loc4_.hasDmgBoost;
+                     _loc5_ = _loc4_.dmgBoostCD * (1 - Math.min(0.4,_loc4_.aritfact_cooldownReduction));
+                     _loc3_ = "Damage is increased by <FONT COLOR=\'#ffffff\'>[damage]%</FONT> but power consumtion is increased by <FONT COLOR=\'#ffffff\'>[cost]%</FONT> over <FONT COLOR=\'#ffffff\'>[duration]</FONT> seconds.".replace("[damage]",_loc4_.dmgBoostBonus * 100).replace("[cost]",_loc4_.dmgBoostCost * 100).replace("[duration]",_loc4_.dmgBoostDuration / 1000);
                }
                _loc1_ = dataManager.loadKey("Images",_loc8_.techIcon);
                (_loc10_ = new AbilityHotkey(_loc6_,textureManager.getTextureGUIByTextureName(_loc1_.textureName),textureManager.getTextureGUIByTextureName(_loc1_.textureName + "_inactive"),textureManager.getTextureGUIByTextureName(_loc1_.textureName + "_cooldown"),_loc7_)).cooldownTime = _loc5_;
