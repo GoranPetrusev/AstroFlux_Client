@@ -12,7 +12,6 @@ package core.states.player
    import core.states.gameStates.ShopState;
    import core.weapon.Damage;
    import flash.geom.Point;
-   import generics.Localize;
    import playerio.Message;
    import starling.display.Quad;
    import starling.events.Event;
@@ -45,14 +44,6 @@ package core.states.player
       private var dropInfo:TextField;
       
       private var respawnText:TextField;
-      
-      private var uberText:TextField;
-      
-      private var upperScaleLimit:Number = 1.1;
-      
-      private var lowerScaleLimit:Number = 0.9;
-      
-      private var limitIterator:Number = 0.02;
       
       public function Killed(param1:Player, param2:Game, param3:Message)
       {
@@ -89,6 +80,8 @@ package core.states.player
          var amount:int;
          var prop2:String;
          var cargoProtectionButton:Button;
+         var _loc2_:String;
+         var _loc3_:*;
          if(player.isMe)
          {
             killedPosition = player.ship.pos.clone();
@@ -144,29 +137,28 @@ package core.states.player
          deathInfo.text = killerText;
          deathInfo.format.horizontalAlign = "left";
          box.addChild(deathInfo);
-         lostXpText = "";
          if(g.solarSystem.isPvpSystemInEditor)
          {
-            lostXpText += "";
+            lostXpText = "";
          }
          else if(player.hasXpProtection())
          {
-            lostXpText += "\n\n<FONT COLOR=\'#666666\'>" + Localize.t("Lost XP") + "</FONT>\n0 " + Localize.t("XP") + "\n<FONT COLOR=\'#88ff88\'>" + Localize.t("protection active") + "</FONT>";
+            lostXpText = "\n\n<FONT COLOR=\'#666666\'>Lost XP</FONT>\n0 XP\n<FONT COLOR=\'#88ff88\'>protection active</FONT>";
          }
          else
          {
-            lostXpText += "\n\n<FONT COLOR=\'#666666\'>" + Localize.t("Lost XP") + "</FONT>\n-" + m.getString(3) + " " + Localize.t("XP");
+            lostXpText = "\n\n<FONT COLOR=\'#666666\'>Lost XP</FONT>\n-" + m.getString(3) + " XP";
             xpProtectionButton = new Button(function(param1:Event):void
             {
                g.enterState(new ShopState(g,"xpProtection"));
-            },Localize.t("Get XP protection"));
+            },"Get XP protection");
          }
          teleportToDeathButton = new Button(function(param1:Event):void
          {
             var e:Event = param1;
             g.creditManager.refresh(function():void
             {
-               var confirmBuyWithFlux:CreditBuyBox = new CreditBuyBox(g,CreditManager.getCostTeleportToDeath(),Localize.t("Are you sure you want to teleport?"));
+               var confirmBuyWithFlux:CreditBuyBox = new CreditBuyBox(g,CreditManager.getCostTeleportToDeath(),"Are you sure you want to teleport?");
                g.addChildToOverlay(confirmBuyWithFlux);
                confirmBuyWithFlux.addEventListener("accept",function():void
                {
@@ -204,7 +196,7 @@ package core.states.player
          }
          if(!g.solarSystem.isPvpSystemInEditor)
          {
-            dropText = "<FONT COLOR=\'#666666\'>" + Localize.t("Lost Cargo") + "</FONT>\n";
+            dropText = "<FONT COLOR=\'#666666\'>Lost Cargo</FONT>\n";
             dropDict = {};
             prop = "";
             i = 5;
@@ -218,8 +210,8 @@ package core.states.player
                }
                else
                {
-                  var _loc2_:String = prop;
-                  var _loc3_:* = dropDict[_loc2_] + amount;
+                  _loc2_ = prop;
+                  _loc3_ = dropDict[_loc2_] + amount;
                   dropDict[_loc2_] = _loc3_;
                }
                i += 9;
@@ -230,11 +222,11 @@ package core.states.player
             }
             if(prop == "")
             {
-               dropText += Localize.t("None");
+               dropText += "None";
             }
             if(player.isCargoProtectionActive())
             {
-               dropText += "\n<FONT COLOR=\'#88ff88\'>" + Localize.t("protection active") + "</FONT>";
+               dropText += "\n<FONT COLOR=\'#88ff88\'>protection active</FONT>";
             }
             else
             {
@@ -253,7 +245,7 @@ package core.states.player
                cargoProtectionButton = new Button(function(param1:Event):void
                {
                   g.enterState(new ShopState(g,"cargoProtection"));
-               },Localize.t("Get cargo protection"));
+               },"Get cargo protection");
                cargoProtectionButton.x = dropInfo.x;
                cargoProtectionButton.y = dropInfo.height + cargoProtectionButton.height / 2;
                box.addChild(cargoProtectionButton);
@@ -269,21 +261,11 @@ package core.states.player
          respawnText.text = Math.round(player.respawnNextReady - g.time).toString();
          respawnText.filter = new GlowFilter(16777215,1,10);
          respawnText.x = box.width / 2;
-         respawnText.y = box.height - 60;
+         respawnText.y = box.height;
          respawnText.format.horizontalAlign = "center";
          respawnText.format.color = 16777215;
          respawnText.alignPivot();
          box.addChild(respawnText);
-         uberText = new TextField(10,10,"",new TextFormat("DAIDRR",52));
-         uberText.autoSize = "bothDirections";
-         uberText.text = "";
-         uberText.filter = new GlowFilter(16777215,1,10);
-         uberText.x = box.width / 2;
-         uberText.y = box.height + 30;
-         uberText.format.horizontalAlign = "center";
-         uberText.format.color = 16777215;
-         uberText.alignPivot();
-         box.addChild(uberText);
          resize();
       }
       
@@ -301,65 +283,37 @@ package core.states.player
          var _loc1_:String = null;
          if(player.isMe)
          {
-            if(respawnText.scaleX <= lowerScaleLimit)
-            {
-               limitIterator *= -1;
-            }
-            else if(respawnText.scaleX >= upperScaleLimit)
-            {
-               limitIterator *= -1;
-            }
-            if(player.respawnNextReady - g.time < 1000)
+            respawnText.scaleX = respawnText.scaleY = Math.sin((player.respawnNextReady - g.time) * 0.0075) * 0.1 + 1;
+            if(player.respawnNextReady < g.time + 100)
             {
                if(!g.solarSystem.isPvpSystemInEditor)
                {
+                  respawnText.format.size = 25;
                   respawnText.text = "Press SPACE to respawn";
-                  respawnText.format.size = 20;
                   if(g.isSystemTypeSurvival())
                   {
+                     respawnText.format.size = 40;
                      _loc2_ = g.hud.uberStats.getMyLives();
                      if(_loc2_ == 0)
                      {
-                        respawnText.text = "Press SPACE to leave";
+                        respawnText.text = "Game Over";
+                     }
+                     else if(_loc2_ == 1)
+                     {
+                        respawnText.text = _loc2_ + " life left";
+                     }
+                     else
+                     {
+                        respawnText.text = _loc2_ + " lives left";
                      }
                   }
                }
-               else
-               {
-                  respawnText.text = "";
-               }
-               respawnText.alignPivot();
             }
             else
             {
-               _loc1_ = Math.round(0.001 * (player.respawnNextReady - g.time)).toString();
-               if(_loc1_ != respawnText.text)
-               {
-                  respawnText.text = _loc1_;
-                  respawnText.alignPivot();
-               }
+               respawnText.text = Math.ceil(0.001 * (player.respawnNextReady - g.time));
             }
-            if(g.isSystemTypeSurvival())
-            {
-               _loc2_ = g.hud.uberStats.getMyLives();
-               if(_loc2_ == 0)
-               {
-                  uberText.text = "Game Over";
-               }
-               else if(_loc2_ == 1)
-               {
-                  uberText.text = _loc2_ + " life left";
-               }
-               else
-               {
-                  uberText.text = _loc2_ + " lives left";
-               }
-               uberText.alignPivot();
-            }
-            uberText.scaleX += limitIterator;
-            uberText.scaleY += limitIterator;
-            respawnText.scaleX += limitIterator;
-            respawnText.scaleY += limitIterator;
+            respawnText.alignPivot();
          }
       }
       
@@ -367,14 +321,6 @@ package core.states.player
       {
          if(player.isMe)
          {
-            if(uberText)
-            {
-               if(uberText.filter)
-               {
-                  uberText.filter.dispose();
-               }
-               uberText.filter = null;
-            }
             if(respawnText)
             {
                if(respawnText.filter)

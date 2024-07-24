@@ -12,7 +12,6 @@ package core.states.gameStates
    import feathers.controls.ScrollContainer;
    import flash.display.Sprite;
    import flash.filters.GlowFilter;
-   import generics.Localize;
    import playerio.Message;
    import sound.ISound;
    import sound.SoundLocator;
@@ -23,8 +22,7 @@ package core.states.gameStates
    import starling.events.TouchEvent;
    import starling.filters.ColorMatrixFilter;
    import textures.TextureManager;
-   import goki.AFutil;
-
+   
    public class LandedRecycle extends LandedState
    {
        
@@ -48,7 +46,7 @@ package core.states.gameStates
       private var scrollContainer:ScrollContainer;
       
       private var scrollContainer2:ScrollContainer;
-
+      
       private var onboardRecycle:Boolean;
       
       public function LandedRecycle(param1:Game, param2:Body)
@@ -65,76 +63,38 @@ package core.states.gameStates
       override public function enter() : void
       {
          super.enter();
-         var _loc7_:Text;
-         (_loc7_ = new Text()).text = body.name;
-         _loc7_.size = 26;
-         _loc7_.x = 80;
-         _loc7_.y = 60;
-         addChild(_loc7_);
-         var _loc5_:Text;
-         (_loc5_ = new Text()).text = Localize.t("Select space junk");
-         _loc5_.color = 6710886;
-         _loc5_.x = 80;
-         _loc5_.y = 100;
+         var _loc5_:Text = new Text(80,60);
+         _loc5_.text = body.name;
+         _loc5_.size = 26;
          addChild(_loc5_);
-         var _loc3_:Text = new Text();
-         _loc3_.text = Localize.t("Your Refined minerals");
+         var _loc3_:Text = new Text(80,100);
+         _loc3_.text = "Select space junk";
          _loc3_.color = 6710886;
-         _loc3_.x = 440;
-         _loc3_.y = 100;
          addChild(_loc3_);
-         var _loc6_:Vector.<int>;
-         (_loc6_ = new Vector.<int>()).push(1,2,2,2,2,2,2,2,2,2,2,2,2,1,2,2,2,2,1,2,2,2,2,1,2,2,2,2,1,2,2,2,2);
-         var _loc10_:Number = 400;
-         var _loc4_:Number = 260;
-         var _loc11_:Number = 80;
-         var _loc1_:Number = 40;
-         var _loc8_:Number = 10;
-         var _loc2_:Vector.<Number> = new Vector.<Number>();
-         _loc2_.push(0,0);
-         _loc2_.push(_loc4_,0);
-         _loc2_.push(_loc4_,_loc1_);
-         _loc2_.push(_loc4_ + _loc11_,_loc1_);
-         _loc2_.push(_loc4_ + _loc11_,0);
-         _loc2_.push(_loc4_ * 2 + _loc11_,0);
-         _loc2_.push(_loc4_ * 2 + _loc11_,_loc10_);
-         _loc2_.push(_loc4_ + _loc11_,_loc10_);
-         _loc2_.push(_loc4_ + _loc11_,_loc10_ - _loc1_);
-         _loc2_.push(_loc4_,_loc10_ - _loc1_);
-         _loc2_.push(_loc4_,_loc10_ - _loc1_ / 2);
-         _loc2_.push(0,_loc10_ - _loc1_ / 2);
-         _loc2_.push(0,0);
-         _loc2_.push(_loc4_,_loc1_ + _loc8_);
-         _loc2_.push(_loc4_ + _loc11_,_loc1_ + _loc8_);
-         _loc2_.push(_loc4_ + _loc11_,_loc1_ * 2 + _loc8_);
-         _loc2_.push(_loc4_,_loc1_ * 2 + _loc8_);
-         _loc2_.push(_loc4_,_loc1_ + _loc8_);
-         _loc2_.push(_loc4_,_loc1_ * 2 + _loc8_ * 2);
-         _loc2_.push(_loc4_ + _loc11_,_loc1_ * 2 + _loc8_ * 2);
-         _loc2_.push(_loc4_ + _loc11_,_loc10_ - _loc1_ * 2 - _loc8_ * 2);
-         _loc2_.push(_loc4_,_loc10_ - _loc1_ * 2 - _loc8_ * 2);
-         _loc2_.push(_loc4_,_loc1_ * 2 + _loc8_ * 2);
-         _loc2_.push(_loc4_,_loc10_ - _loc1_ - _loc8_);
-         _loc2_.push(_loc4_,_loc10_ - _loc1_ * 2 - _loc8_);
-         _loc2_.push(_loc4_ + _loc11_,_loc10_ - _loc1_ * 2 - _loc8_);
-         _loc2_.push(_loc4_ + _loc11_,_loc10_ - _loc1_ - _loc8_);
-         _loc2_.push(_loc4_,_loc10_ - _loc1_ - _loc8_);
-         var _loc9_:flash.display.Sprite;
-         (_loc9_ = new flash.display.Sprite()).graphics.lineStyle(1,6356795,1);
+         var _loc2_:Text = new Text(440,100);
+         _loc2_.text = "Your Refined minerals";
+         _loc2_.color = 6710886;
+         addChild(_loc2_);
+         var _loc4_:Vector.<int> = new Vector.<int>();
+         _loc4_.push(1,2,2,2,2,2,2,2,2,2,2,2,2,1,2,2,2,2,1,2,2,2,2,1,2,2,2,2,1,2,2,2,2);
+         var _loc1_:Vector.<Number> = new Vector.<Number>();
+         _loc1_.push(0,0,260,0,260,40,340,40,340,0,600,0,600,400,340,400,340,360,260,360,260,380,0,380,0,0,260,50,340,50,340,90,260,90,260,50,260,100,340,100,340,300,260,300,260,100,260,350,260,310,340,310,340,350,260,350);
+         var _loc9_:flash.display.Sprite = new flash.display.Sprite();
+         _loc9_.graphics.lineStyle(1,6356795,1);
          _loc9_.graphics.beginFill(0,1);
-         _loc9_.graphics.drawPath(_loc6_,_loc2_);
+         _loc9_.graphics.drawPath(_loc4_,_loc1_);
          _loc9_.graphics.endFill();
          _loc9_.filters = [new GlowFilter(6356795,0.4,15,15,2,2)];
          var _loc12_:Image;
          (_loc12_ = TextureManager.imageFromSprite(_loc9_,"recycleLines")).x = 80;
          _loc12_.y = 130;
          addChild(_loc12_);
-         takeButton = new Button(removeMinerals,Localize.t("Take Minerals"),"positive");
+         takeButton = new Button(removeMinerals,"Take Minerals","positive");
          takeButton.x = 475;
          takeButton.y = 490;
          takeButton.enabled = false;
          addChild(takeButton);
-         selectAllButton = new Button(selectAllJunk,Localize.t("Select All"),"normal");
+         selectAllButton = new Button(selectAllJunk,"Select All","normal");
          selectAllButton.x = 125;
          selectAllButton.y = 525;
          selectAllButton.enabled = false;
@@ -143,7 +103,7 @@ package core.states.gameStates
          g.tutorial.showRecycleAdvice();
          recycleButton = new ImageButton(recycle,textureManager.getTextureGUIByTextureName("recycle_button.png"),textureManager.getTextureGUIByTextureName("recycle_button_hover.png"),textureManager.getTextureGUIByTextureName("recycle_button_disabled.png"));
          recycleButton.y = 320;
-         recycleButton.x = 760 / 2;
+         recycleButton.x = 380;
          recycleButton.pivotX = recycleButton.width / 2;
          recycleButton.pivotY = recycleButton.height / 2;
          scrollContainer.x = 95;
@@ -216,7 +176,7 @@ package core.states.gameStates
          bgr.x = 0;
          bgr.y = 0;
          textName = new Text(35,8);
-         textName.text = Localize.t(obj.name);
+         textName.text = obj.name;
          textName.color = 6710886;
          textName.size = 12;
          textQuantity = new Text(0,5);

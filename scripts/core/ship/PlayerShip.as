@@ -273,7 +273,7 @@ package core.ship
          else
          {
             shieldHpMax -= int(hpMax * (1.5 * _loc1_));
-            shieldRegenBonus = -(int(0.01 * hpMax * _loc1_ * shieldRegen / shieldRegenBase));
+            shieldRegenBonus = -int(0.01 * hpMax * _loc1_ * shieldRegen / shieldRegenBase);
             if(shieldHpMax <= 0)
             {
                shieldHpMax = 1;
@@ -298,11 +298,7 @@ package core.ship
       override public function switchTexturesByObj(param1:Object, param2:String = "texture_main_NEW.png") : void
       {
          super.switchTexturesByObj(param1,param2);
-         if(!SceneBase.settings.showEffects)
-         {
-            return;
-         }
-         if(hideShadow)
+         if(!SceneBase.settings.showEffects || hideShadow)
          {
             return;
          }
@@ -437,14 +433,7 @@ package core.ship
       public function dmgBoost() : void
       {
          usingDmgBoost = true;
-         if(aritfact_cooldownReduction > 0.4)
-         {
-            dmgBoostNextRdy = g.time + dmgBoostCD * 0.6;
-         }
-         else
-         {
-            dmgBoostNextRdy = g.time + dmgBoostCD * (1 - aritfact_cooldownReduction);
-         }
+         dmgBoostNextRdy = g.time + dmgBoostCD * (1 - Math.min(0.4,aritfact_cooldownReduction));
          dmgBoostEndTime = g.time + dmgBoostDuration;
          damageBoostEffect();
       }
@@ -453,14 +442,7 @@ package core.ship
       {
          Console.write("-BOOST-");
          _usingBoost = true;
-         if(aritfact_cooldownReduction > 0.4)
-         {
-            boostNextRdy = g.time + boostCD * 0.6;
-         }
-         else
-         {
-            boostNextRdy = g.time + boostCD * (1 - aritfact_cooldownReduction);
-         }
+         boostNextRdy = g.time + boostCD * (1 - Math.min(0.4,aritfact_cooldownReduction));
          Console.write("boostDuration: " + boostDuration);
          boostEndTime = g.time + boostDuration;
          Console.write("boostEndTime: " + boostEndTime);
@@ -513,14 +495,7 @@ package core.ship
       {
          usingHardenedShield = true;
          hardenEndTimer = g.time + hardenDuration;
-         if(aritfact_cooldownReduction > 0.4)
-         {
-            hardenNextRdy = g.time + hardenCD * 0.6;
-         }
-         else
-         {
-            hardenNextRdy = g.time + hardenCD * (1 - aritfact_cooldownReduction);
-         }
+         hardenNextRdy = g.time + hardenCD * (1 - Math.min(0.4,aritfact_cooldownReduction));
          hardenShieldEffect();
       }
       
@@ -531,14 +506,7 @@ package core.ship
       
       public function convertShield() : void
       {
-         if(aritfact_cooldownReduction > 0.4)
-         {
-            convNextRdy = g.time + convCD * 0.6;
-         }
-         else
-         {
-            convNextRdy = g.time + convCD * (1 - aritfact_cooldownReduction);
-         }
+         convNextRdy = g.time + convCD * (1 - Math.min(0.4,aritfact_cooldownReduction));
       }
       
       override public function reset() : void
