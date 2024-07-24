@@ -154,34 +154,7 @@ package core.artifact
          }
          var _loc3_:Number = param1.getStat(Artifact.currentTypeOrder);
          var _loc4_:Number = param2.getStat(Artifact.currentTypeOrder);
-         if(_loc3_ < _loc4_)
-         {
-            return 1;
-         }
-         if(_loc3_ > _loc4_)
-         {
-            return -1;
-         }
-         return 0;
-      }
-      
-      public static function orderHighestLevel(param1:Artifact, param2:Artifact) : int
-      {
-         if(!param1.revealed || !param2.revealed)
-         {
-            return orderRevealed(param1,param2);
-         }
-         var _loc4_:int = param1.level;
-         var _loc3_:int = param2.level;
-         if(_loc4_ > _loc3_)
-         {
-            return -1;
-         }
-         if(_loc4_ < _loc3_)
-         {
-            return 1;
-         }
-         return 0;
+         return compare(_loc3_,_loc4_);
       }
       
       public static function orderStatCountAsc(param1:Artifact, param2:Artifact) : int
@@ -192,15 +165,7 @@ package core.artifact
          }
          var _loc3_:Number = param1.stats.length;
          var _loc4_:Number = param2.stats.length;
-         if(_loc3_ > _loc4_)
-         {
-            return 1;
-         }
-         if(_loc3_ < _loc4_)
-         {
-            return -1;
-         }
-         return 0;
+         return compare(_loc4_,_loc3_);
       }
       
       public static function orderStatCountDesc(param1:Artifact, param2:Artifact) : int
@@ -211,15 +176,7 @@ package core.artifact
          }
          var _loc3_:Number = param1.stats.length;
          var _loc4_:Number = param2.stats.length;
-         if(_loc3_ < _loc4_)
-         {
-            return 1;
-         }
-         if(_loc3_ > _loc4_)
-         {
-            return -1;
-         }
-         return 0;
+         return compare(_loc3_,_loc4_);
       }
       
       public static function orderLevelHigh(param1:Artifact, param2:Artifact) : int
@@ -230,15 +187,7 @@ package core.artifact
          }
          var _loc3_:Number = param1.level;
          var _loc4_:Number = param2.level;
-         if(_loc3_ < _loc4_)
-         {
-            return 1;
-         }
-         if(_loc3_ > _loc4_)
-         {
-            return -1;
-         }
-         return 0;
+         return compare(_loc3_,_loc4_);
       }
       
       public static function orderLevelLow(param1:Artifact, param2:Artifact) : int
@@ -249,15 +198,51 @@ package core.artifact
          }
          var _loc3_:Number = param1.level;
          var _loc4_:Number = param2.level;
-         if(_loc3_ > _loc4_)
+         return compare(_loc4_,_loc3_);
+      }
+      
+      public static function orderFitnessLow(param1:Artifact, param2:Artifact) : int
+      {
+         if(!param1.revealed || !param2.revealed)
          {
-            return 1;
+            return orderRevealed(param1,param2);
          }
-         if(_loc3_ < _loc4_)
+         var _loc4_:int = param1.fitness;
+         var _loc3_:int = param2.fitness;
+         return compare(_loc3_,_loc4_);
+      }
+      
+      public static function orderFitnessHigh(param1:Artifact, param2:Artifact) : int
+      {
+         if(!param1.revealed || !param2.revealed)
          {
-            return -1;
+            return orderRevealed(param1,param2);
          }
-         return 0;
+         var _loc4_:int = param1.fitness;
+         var _loc3_:int = param2.fitness;
+         return compare(_loc4_,_loc3_);
+      }
+      
+      public static function orderUpgradesHigh(param1:Artifact, param2:Artifact) : int
+      {
+         if(!param1.revealed || !param2.revealed)
+         {
+            return orderRevealed(param1,param2);
+         }
+         var _loc4_:int = param1.upgraded;
+         var _loc3_:int = param2.upgraded;
+         return compare(_loc4_,_loc3_);
+      }
+      
+      public static function orderUpgradesLow(param1:Artifact, param2:Artifact) : int
+      {
+         if(!param1.revealed || !param2.revealed)
+         {
+            return orderRevealed(param1,param2);
+         }
+         var _loc4_:int = param1.upgraded;
+         var _loc3_:int = param2.upgraded;
+         return compare(_loc3_,_loc4_);
       }
       
       public static function orderRevealed(param1:Artifact, param2:Artifact) : int
@@ -271,6 +256,11 @@ package core.artifact
             return -1;
          }
          return 0;
+      }
+      
+      public static function compare(param1:Number, param2:Number) : int
+      {
+         return param1 > param2 ? -1 : (param1 < param2 ? 1 : 0);
       }
       
       public function getStat(param1:String) : Number
@@ -299,11 +289,7 @@ package core.artifact
       public function get isRestricted() : Boolean
       {
          var _loc1_:int = Game.instance.me.level;
-         var _loc2_:int = Math.ceil(1.2 * _loc1_ + 10);
-         if(_loc2_ > 150)
-         {
-            _loc2_ = 150;
-         }
+         var _loc2_:int = Math.min(150,Math.ceil(1.2 * _loc1_ + 10));
          return levelPotential > _loc2_;
       }
       
