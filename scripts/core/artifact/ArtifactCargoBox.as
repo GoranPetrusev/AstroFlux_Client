@@ -4,7 +4,6 @@ package core.artifact
    import core.player.CrewMember;
    import core.player.Player;
    import core.scene.Game;
-   import generics.Localize;
    import generics.Util;
    import starling.display.Image;
    import starling.display.Sprite;
@@ -52,12 +51,15 @@ package core.artifact
       
       private var upgradingImage:Image;
       
+      private var colors:Array;
+      
       public function ArtifactCargoBox(param1:Game, param2:Artifact)
       {
          super();
          this.g = param1;
          this.p = param1.me;
          this.a = param2;
+         colors = [9013641,3632844,3653175,13383628,13409563];
          toolTip = new ToolTip(param1,this,"",null,"artifactBox");
          textureManager = TextureLocator.getService();
          update();
@@ -161,6 +163,7 @@ package core.artifact
          {
             return;
          }
+         setFrameColor(colors[a.stats.length - 1]);
          var _loc1_:Boolean = p.isActiveArtifact(a);
          if(_loc1_)
          {
@@ -172,14 +175,9 @@ package core.artifact
       {
          var _loc4_:int = 0;
          var _loc3_:CrewMember = null;
-         if(!a.revealed && recycleMode)
-         {
-            toolTip.text = Localize.t("You can\'t reveal in recycle mode!");
-            return;
-         }
          if(!a.revealed)
          {
-            toolTip.text = Localize.t("Click to reveal!");
+            toolTip.text = "<font color=\'#ffaa44\'>" + a.name + "</font>";
             return;
          }
          _loc4_ = 0;
@@ -195,27 +193,27 @@ package core.artifact
          var _loc2_:String = "<font color=\'#ffaa44\'>" + a.name + "</font><br>";
          if(a.revealed && a.isRestricted)
          {
-            _loc2_ += Localize.t("<font color=\'#ff0000\'>Requires level [level]</font>").replace("[level]",a.requiredPlayerLevel) + "<br><br>";
+            _loc2_ += "<font color=\'#ff0000\'>Requires level [level]</font><br><br>".replace("[level]",a.requiredPlayerLevel);
          }
-         _loc2_ += Localize.t("Level [potential]  Strength [level]").replace("[level]",a.level).replace("[potential]",a.levelPotential) + "<br>";
+         _loc2_ += "Level [potential]  Strength [level]<br>".replace("[level]",a.level).replace("[potential]",a.levelPotential);
          if(a.upgraded >= 10)
          {
-            _loc2_ += Localize.t("Max Upgraded") + "<br>";
+            _loc2_ += "Max Upgraded<br>";
          }
          else if(a.upgraded > 0)
          {
-            _loc2_ += Localize.t("[nr] upgrades").replace("[nr]",a.upgraded) + "<br>";
+            _loc2_ += "[nr] upgrades<br>".replace("[nr]",a.upgraded);
          }
          if(a.upgrading)
          {
-            _loc2_ += Localize.t("Upgrading") + ": " + Util.getFormattedTime(a.upgradeTime - g.time) + "<br>";
+            _loc2_ += "Upgrading: " + Util.getFormattedTime(a.upgradeTime - g.time) + "<br>";
          }
          _loc2_ = _loc2_ + "Fitness " + a.fitness + "<br>";
          var lineNumber:int = 0;
          for each(var _loc1_ in a.stats)
          {
-            var distribution:Number = ArtifactStat.statDistribution(_loc1_.type, _loc1_.value, a.stats.length, lineNumber, a.level).toFixed(2);
-            var sign:String = distribution >= 0 ? "+" : ""
+            var distribution:Number = Number(ArtifactStat.statDistribution(_loc1_.type,_loc1_.value,a.stats.length,lineNumber,a.level).toFixed(2));
+            var sign:String = distribution >= 0 ? "+" : "";
             _loc2_ += ArtifactStat.parseTextFromStatType(_loc1_.type,_loc1_.value) + "  " + sign + distribution + " str<br>";
             lineNumber++;
          }
@@ -304,18 +302,14 @@ package core.artifact
             }
             if(a.upgraded >= 10)
             {
-               g.showMessageDialog(Localize.t("This artifact has already been upgraded [times] times.").replace("[times]",10));
+               g.showMessageDialog("This artifact has already been upgraded 10 times.");
                return;
             }
             toggleUpgrade();
             dispatchEventWith("artifactUpgradeSelected",true);
             return;
          }
-         if(a.upgrading)
-         {
-            return;
-         }
-         if(isInSetup)
+         if(a.upgrading || isInSetup)
          {
             return;
          }
@@ -349,7 +343,7 @@ package core.artifact
          }
          else
          {
-            setFrameColor(COLOR_NORMAL);
+            setFrameColor(colors[a.stats.length - 1]);
          }
       }
       
@@ -359,11 +353,7 @@ package core.artifact
          {
             return;
          }
-         if(frame.color == COLOR_NORMAL)
-         {
-            setFrameColor(8978312);
-         }
-         else if(frame.color == 16777215)
+         if(frame.color != 8978312)
          {
             setFrameColor(8978312);
          }
@@ -373,7 +363,7 @@ package core.artifact
          }
          else
          {
-            setFrameColor(COLOR_NORMAL);
+            setFrameColor(colors[a.stats.length - 1]);
          }
       }
       
@@ -383,13 +373,13 @@ package core.artifact
          {
             return;
          }
-         if(frame.color == COLOR_NORMAL)
+         if(frame.color != 12203572)
          {
             setFrameColor(12203572);
          }
          else
          {
-            setFrameColor(COLOR_NORMAL);
+            setFrameColor(colors[a.stats.length - 1]);
          }
       }
       
@@ -407,7 +397,7 @@ package core.artifact
          }
          else
          {
-            setFrameColor(COLOR_NORMAL);
+            setFrameColor(colors[a.stats.length - 1]);
          }
          removeTouch();
          addTouch();
@@ -419,7 +409,7 @@ package core.artifact
          upgradeMode = false;
          if(a == null)
          {
-            setFrameColor(COLOR_NORMAL);
+            setFrameColor(colors[a.stats.length - 1]);
             return;
          }
          var _loc1_:Boolean = p.isActiveArtifact(a);
@@ -429,7 +419,7 @@ package core.artifact
          }
          else
          {
-            setFrameColor(COLOR_NORMAL);
+            setFrameColor(colors[a.stats.length - 1]);
          }
          removeTouch();
          addTouch();
@@ -450,7 +440,7 @@ package core.artifact
          }
          else
          {
-            setFrameColor(COLOR_NORMAL);
+            setFrameColor(colors[a.stats.length - 1]);
          }
          removeTouch();
          addTouch();
@@ -462,7 +452,7 @@ package core.artifact
          recycleMode = false;
          if(a == null)
          {
-            setFrameColor(COLOR_NORMAL);
+            setFrameColor(colors[a.stats.length - 1]);
             return;
          }
          var _loc1_:Boolean = p.isActiveArtifact(a);
@@ -472,7 +462,7 @@ package core.artifact
          }
          else
          {
-            setFrameColor(COLOR_NORMAL);
+            setFrameColor(colors[a.stats.length - 1]);
          }
          removeTouch();
          addTouch();
@@ -481,7 +471,7 @@ package core.artifact
       
       public function stateNormal() : void
       {
-         setFrameColor(COLOR_NORMAL);
+         setFrameColor(colors[a.stats.length - 1]);
       }
       
       public function updateSetupChange() : void
@@ -491,6 +481,7 @@ package core.artifact
          {
             return;
          }
+         setFrameColor(colors[a.stats.length - 1]);
          var _loc1_:Boolean = p.isActiveArtifact(a);
          if(_loc1_)
          {
