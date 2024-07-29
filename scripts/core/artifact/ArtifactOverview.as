@@ -11,6 +11,7 @@ package core.artifact
    import core.hud.components.TextBitmap;
    import core.hud.components.dialogs.CreditBuyBox;
    import core.hud.components.dialogs.PopupBuyMessage;
+   import core.hud.components.dialogs.PopupInputMessage;
    import core.player.CrewMember;
    import core.player.Player;
    import core.scene.Game;
@@ -443,7 +444,15 @@ package core.artifact
             }
             else
             {
-               _loc2_.label = (_loc4_ + 1).toString();
+               var id:String = (_loc4_ + 1).toString();
+               if(PlayerConfig.setupNames.hasOwnProperty(id))
+               {
+                  _loc2_.label = PlayerConfig.setupNames[id];
+               }
+               else
+               {
+                  _loc2_.label = id;
+               }
                _loc2_.addEventListener("triggered",onSetupChange);
             }
             if(_loc4_ == p.activeArtifactSetup)
@@ -719,7 +728,16 @@ package core.artifact
          var _loc6_:int;
          if((_loc6_ = setups.indexOf(_loc4_)) == p.activeArtifactSetup)
          {
-            _loc4_.isSelected = false;
+            var popUp:PopupInputMessage = new PopupInputMessage();
+            popUp.addEventListener("close", function():void{
+               g.removeChildFromOverlay(popUp);
+            })
+            popUp.addEventListener("accept", function():void{
+               g.removeChildFromOverlay(popUp);
+               PlayerConfig.setupNames[p.activeArtifactSetup + 1] = popUp.text;
+               _loc4_.label = popUp.text;
+            })
+            g.addChildToOverlay(popUp);
             return;
          }
          g.send("changeArtifactSetup",_loc6_);

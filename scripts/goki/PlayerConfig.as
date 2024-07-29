@@ -21,6 +21,8 @@ package goki
          "disableScreenShake":true,
          "autoReload":false
       };
+
+      public static var setupNames:Object = {};
        
       
       public function PlayerConfig()
@@ -31,11 +33,13 @@ package goki
       public static function saveConfig() : void
       {
          save(_filePath,values);
+         save("SetupNames.txt",setupNames);
       }
       
       public static function loadConfig() : void
       {
          load(_filePath,values);
+         load("SetupNames.txt",setupNames);
       }
    }
 }
