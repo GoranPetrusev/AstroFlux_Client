@@ -731,12 +731,13 @@ package core.artifact
             var popUp:PopupInputMessage = new PopupInputMessage();
             popUp.addEventListener("close", function():void{
                g.removeChildFromOverlay(popUp);
-            })
+            });
             popUp.addEventListener("accept", function():void{
                g.removeChildFromOverlay(popUp);
                PlayerConfig.setupNames[p.activeArtifactSetup + 1] = popUp.text;
-               _loc4_.label = popUp.text;
-            })
+               removeChild(setupsContainer);
+               drawArtifactSetups();
+            });
             g.addChildToOverlay(popUp);
             return;
          }
