@@ -268,6 +268,51 @@ class Blip extends Image
          {
             _loc4_ = 16729156;
             _loc9_ = _loc5_.getTextureGUIByTextureName("radar_enemy");
+            if(_loc8_.level >= 130)
+            {
+               _loc4_ = 16729156;
+               _loc9_ = _loc5_.getTextureGUIByTextureName("radar_boss");
+            }
+         }
+         if(_loc8_.name == "Mysterious Wanderer lvl 120")
+         {
+            _loc4_ = 15465468;
+            _loc9_ = _loc5_.getTextureGUIByTextureName("radar_player");
+         }
+         if(_loc8_.name == "Rear Admiral Vorghis lvl 124")
+         {
+            _loc4_ = 16544319;
+            _loc9_ = _loc5_.getTextureGUIByTextureName("radar_player");
+         }
+         if(_loc8_.name == "Lieutenant Commander Gerhavis lvl 85")
+         {
+            _loc4_ = 1532187;
+            _loc9_ = _loc5_.getTextureGUIByTextureName("radar_player");
+         }
+         if(_loc8_.name == "Ossakel lvl 36")
+         {
+            _loc4_ = 16777215;
+            _loc9_ = _loc5_.getTextureGUIByTextureName("radar_player");
+         }
+         if(_loc8_.name == "Sax lvl 8")
+         {
+            _loc4_ = 16753920;
+            _loc9_ = _loc5_.getTextureGUIByTextureName("radar_player");
+         }
+         if(_loc8_.name == "Drak lvl 26")
+         {
+            _loc4_ = 6950317;
+            _loc9_ = _loc5_.getTextureGUIByTextureName("radar_player");
+         }
+         if(_loc8_.name == "Fanatic Tank lvl 72")
+         {
+            _loc4_ = 11363356;
+            _loc9_ = _loc5_.getTextureGUIByTextureName("radar_player");
+         }
+         if(_loc8_.name == "Nezerian Dreadnought lvl 82")
+         {
+            _loc4_ = 10158829;
+            _loc9_ = _loc5_.getTextureGUIByTextureName("radar_player");
          }
       }
       else if(param1 is PlayerShip)
