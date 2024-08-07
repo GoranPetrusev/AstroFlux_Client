@@ -373,7 +373,7 @@ package core.artifact
          autoRecycleInput.isEnabled = g.me.hasSupporter();
          autoRecycleInput.visible = false;
          addChild(autoRecycleInput);
-         if(PlayerConfig.autorec && g.me.artifactCount > 150)
+         if(PlayerConfig.autorec && g.me.artifactCount >= g.me.artifactLimit - 10)
          {
             purifyArts();
          }

@@ -27,6 +27,8 @@ package core.player
    import core.weapon.Teleport;
    import core.weapon.Weapon;
    import core.weapon.WeaponDataHolder;
+   import core.states.gameStates.MenuState;
+   import core.states.menuStates.ArtifactState2;
    import data.DataLocator;
    import data.IDataManager;
    import debug.Console;
@@ -1524,6 +1526,10 @@ package core.player
             if(artifactCount >= artifactLimit)
             {
                g.hud.showArtifactLimitText();
+            }
+            if(PlayerConfig.autorec && artifactCount >= artifactLimit - 10)
+            {
+               g.enterState(new MenuState(g,ArtifactState2));
             }
          }
          
