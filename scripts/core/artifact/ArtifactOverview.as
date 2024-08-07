@@ -373,7 +373,7 @@ package core.artifact
          autoRecycleInput.isEnabled = g.me.hasSupporter();
          autoRecycleInput.visible = false;
          addChild(autoRecycleInput);
-         if(PlayerConfig.autorec && g.hud.artifactLimitText.visible)
+         if(PlayerConfig.autorec && g.me.artifactCount > 150)
          {
             purifyArts();
          }
@@ -1174,11 +1174,9 @@ package core.artifact
             g.hud.hideArtifactLimitText();
          }
          markedForRecycle.splice(0,markedForRecycle.length);
+         purifyArts();
          g.hud.cargoButton.update();
-         if(purifyLoop)
-         {
-            purifyArts();
-         }
+         recycleButton.enabled = true;
       }
       
       private function onActiveRemoved(param1:Event) : void
@@ -1505,7 +1503,8 @@ package core.artifact
          }
          else if(PlayerConfig.autorec)
          {
-            g.onboardRecycle();
+            g.me.fakeRoaming();
+            TweenMax.delayCall(10.0, g.onboardRecycle());
          }
       }
       

@@ -216,10 +216,7 @@ package core.hud.components.chat
                g.camera.zoomFocus(PlayerConfig.values.zoomFactor,1);
                break;
             case "test":
-               for each(body in g.bodyManager.bodies)
-               {
-                  MessageLog.write(body.name + " " + body.pos.x + " " + body.pos.y);
-               }
+               MessageLog.write(g.me.artifactCount);
                break;
             case "ar":
             case "autorec":
