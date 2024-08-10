@@ -1129,6 +1129,8 @@ package core.artifact
          g.showModalLoadingScreen("Recycling, please wait... \n\n <font size=\'12\'>This might take a couple of minutes</font>");
       }
       
+      private var loops:int = 0;
+
       private function onRecycleMessage(param1:Message) : void
       {
          var m:Message = param1;
@@ -1174,7 +1176,16 @@ package core.artifact
             g.hud.hideArtifactLimitText();
          }
          markedForRecycle.splice(0,markedForRecycle.length);
-         purifyArts();
+         if(PlayerConfig.autorec && loops == 1)
+         {
+            g.me.fakeRoaming();
+            g.onboardRecycle();
+         }
+         else
+         {
+            loops++;
+            purifyArts();
+         }
          g.hud.cargoButton.update();
          recycleButton.enabled = true;
       }
@@ -1500,11 +1511,6 @@ package core.artifact
          if(purifyLoop)
          {
             onRecycle(null);
-         }
-         else if(PlayerConfig.autorec)
-         {
-            g.me.fakeRoaming();
-            TweenMax.delayCall(10.0, g.onboardRecycle());
          }
       }
       

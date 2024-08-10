@@ -743,10 +743,6 @@ package core.hud
       
       public function showArtifactLimitText() : void
       {
-         if(PlayerConfig.autorec)
-         {
-            g.enterState(new MenuState(g,ArtifactState2));
-         }
          artifactLimitText.visible = true;
          artifactsButton.hintNew();
          artifactsButton.flash();
