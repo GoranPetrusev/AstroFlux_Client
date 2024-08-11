@@ -33,6 +33,7 @@ package core.player
    import data.IDataManager;
    import debug.Console;
    import facebook.Action;
+   import goki.FitnessConfig;
    import goki.PlayerConfig;
    import movement.Heading;
    import playerio.Message;
@@ -2644,9 +2645,31 @@ package core.player
          }
       }
 
-      public function unstack() : void
-      {
-      }
+      // public function purifyArts() : void
+      // {
+      //    try
+      //    {
+      //       var count:int = 0;
+      //       var msg:Message = g.createMessage("bulkRecycle");
+      //       for each(var art in artifacts)
+      //       {
+      //          if(!art.revealed && count < 40)
+      //          {
+      //             if(art.stats.length <= FitnessConfig.values.lines || art.fitness < FitnessConfig.values.fitness || art.level < FitnessConfig.values.strength)
+      //             {
+      //                count++;
+      //                msg.add(art.id);
+      //             }
+      //          }
+      //       }
+      //    }
+      //    catch(e:Error)
+      //    {
+      //       g.showErrorDialog(e.getStackTrace());
+      //    }
+
+      //    MessageLog.write("Recycled" + count + ": " + msg.toString());
+      // }
 
       private function addIndividualStat(stat:String, value:Number) : void 
       {

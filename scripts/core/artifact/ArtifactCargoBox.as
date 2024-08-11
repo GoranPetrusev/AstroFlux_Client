@@ -10,7 +10,7 @@ package core.artifact
    import starling.events.TouchEvent;
    import textures.ITextureManager;
    import textures.TextureLocator;
-   
+
    public class ArtifactCargoBox extends Sprite
    {
       
@@ -59,7 +59,6 @@ package core.artifact
          this.g = param1;
          this.p = param1.me;
          this.a = param2;
-         colors = [9013641,3632844,3653175,13383628,13409563];
          toolTip = new ToolTip(param1,this,"",null,"artifactBox");
          textureManager = TextureLocator.getService();
          update();
@@ -163,11 +162,11 @@ package core.artifact
          {
             return;
          }
-         setFrameColor(colors[a.stats.length - 1]);
+         setFrameColor(a.getColor());
          var _loc1_:Boolean = p.isActiveArtifact(a);
          if(_loc1_)
          {
-            setFrameColor(16777215);
+            setFrameColor(COLOR_ACTIVE);
          }
       }
       
@@ -328,7 +327,7 @@ package core.artifact
          {
             return;
          }
-         setFrameColor(12203572);
+         setFrameColor(COLOR_SELECTED_RECYCLE);
       }
       
       public function setNotSelected() : void
@@ -339,11 +338,11 @@ package core.artifact
          }
          if(isInSetup)
          {
-            setFrameColor(16777215);
+            setFrameColor(COLOR_ACTIVE);
          }
          else
          {
-            setFrameColor(colors[a.stats.length - 1]);
+            setFrameColor(a.getColor());
          }
       }
       
@@ -353,17 +352,17 @@ package core.artifact
          {
             return;
          }
-         if(frame.color != 8978312)
+         if(frame.color != COLOR_SELECTED_UPGRADE)
          {
-            setFrameColor(8978312);
+            setFrameColor(COLOR_SELECTED_UPGRADE);
          }
          else if(isInSetup)
          {
-            setFrameColor(16777215);
+            setFrameColor(COLOR_ACTIVE);
          }
          else
          {
-            setFrameColor(colors[a.stats.length - 1]);
+            setFrameColor(a.getColor());
          }
       }
       
@@ -373,13 +372,13 @@ package core.artifact
          {
             return;
          }
-         if(frame.color != 12203572)
+         if(frame.color != COLOR_SELECTED_RECYCLE)
          {
-            setFrameColor(12203572);
+            setFrameColor(COLOR_SELECTED_RECYCLE);
          }
          else
          {
-            setFrameColor(colors[a.stats.length - 1]);
+            setFrameColor(a.getColor());
          }
       }
       
@@ -393,11 +392,11 @@ package core.artifact
          isInSetup = p.isArtifactInSetup(a);
          if(isInSetup)
          {
-            setFrameColor(16777215);
+            setFrameColor(COLOR_ACTIVE);
          }
          else
          {
-            setFrameColor(colors[a.stats.length - 1]);
+            setFrameColor(a.getColor());
          }
          removeTouch();
          addTouch();
@@ -409,17 +408,17 @@ package core.artifact
          upgradeMode = false;
          if(a == null)
          {
-            setFrameColor(colors[a.stats.length - 1]);
+            setFrameColor(COLOR_NORMAL);
             return;
          }
          var _loc1_:Boolean = p.isActiveArtifact(a);
          if(_loc1_)
          {
-            setFrameColor(16777215);
+            setFrameColor(COLOR_ACTIVE);
          }
          else
          {
-            setFrameColor(colors[a.stats.length - 1]);
+            setFrameColor(a.getColor());
          }
          removeTouch();
          addTouch();
@@ -436,11 +435,11 @@ package core.artifact
          isInSetup = p.isArtifactInSetup(a);
          if(isInSetup)
          {
-            setFrameColor(16777215);
+            setFrameColor(COLOR_ACTIVE);
          }
          else
          {
-            setFrameColor(colors[a.stats.length - 1]);
+            setFrameColor(a.getColor());
          }
          removeTouch();
          addTouch();
@@ -452,17 +451,17 @@ package core.artifact
          recycleMode = false;
          if(a == null)
          {
-            setFrameColor(colors[a.stats.length - 1]);
+            setFrameColor(COLOR_NORMAL);
             return;
          }
          var _loc1_:Boolean = p.isActiveArtifact(a);
          if(_loc1_)
          {
-            setFrameColor(16777215);
+            setFrameColor(COLOR_ACTIVE);
          }
          else
          {
-            setFrameColor(colors[a.stats.length - 1]);
+            setFrameColor(a.getColor());
          }
          removeTouch();
          addTouch();
@@ -471,22 +470,22 @@ package core.artifact
       
       public function stateNormal() : void
       {
-         setFrameColor(colors[a.stats.length - 1]);
+         setFrameColor(a.getColor());
       }
       
       public function updateSetupChange() : void
       {
-         frame.color = COLOR_NORMAL;
+         setFrameColor(COLOR_NORMAL);
          if(a == null)
          {
             return;
          }
-         setFrameColor(colors[a.stats.length - 1]);
-         var _loc1_:Boolean = p.isActiveArtifact(a);
-         if(_loc1_)
+         if(p.isActiveArtifact(a))
          {
-            setFrameColor(16777215);
+            setFrameColor(COLOR_ACTIVE);
+            return;
          }
+         setFrameColor(a.getColor());
       }
       
       private function setFrameColor(param1:uint) : void
@@ -496,6 +495,7 @@ package core.artifact
             return;
          }
          frame.color = param1;
+         frame.alpha = (p.isActiveArtifact(a) || param1 == COLOR_SELECTED_RECYCLE || param1 == COLOR_SELECTED_UPGRADE) ? 1.0 : 0.5;
       }
       
       public function setEmpty() : void

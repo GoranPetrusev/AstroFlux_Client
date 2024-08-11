@@ -216,7 +216,8 @@ package core.hud.components.chat
                g.camera.zoomFocus(PlayerConfig.values.zoomFactor,1);
                break;
             case "test":
-               MessageLog.write(g.me.artifactCount);
+               //MessageLog.write(g.me.artifactCount);
+               g.me.purifyArts();
                break;
             case "ar":
             case "autorec":
