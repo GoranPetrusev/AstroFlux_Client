@@ -200,8 +200,6 @@ package core.hud.components.chat
       {
          var output:Vector.<String>;
          var tmp:Array;
-         var q:int;
-         var body:*;
          var text:String = input.text;
          var stackAmount:int = 1;
          if(text == "")
@@ -216,14 +214,12 @@ package core.hud.components.chat
                g.camera.zoomFocus(PlayerConfig.values.zoomFactor,1);
                break;
             case "test":
-               //MessageLog.write(g.me.artifactCount);
-               g.me.purifyArts();
+               MessageLog.write(g.me.artifactCount);
                break;
-            case "ar":
             case "autorec":
             case "autorecycle":
                PlayerConfig.autorec = !PlayerConfig.autorec;
-               MessageLog.write("Auto recycle is set to: " + PlayerConfig.autorec);
+               MessageLog.write("<FONT COLOR=\'#ffff88\'>Auto recycle is " + String((PlayerConfig.autorec)?"on!":"off!") + "</FONT>");
                break;
             case "rec":
             case "recycle":
@@ -243,10 +239,10 @@ package core.hud.components.chat
                   AutoFarm.init(null);
                }
                break;
-            case "set_stats":
+            case "setstats":
                g.me.setStackedStats();
                break;
-            case "init_stack":
+            case "initstack":
                if(g.isSystemTypeClan() || g.isSystemTypeSurvival)
                {
                   g.me.initStack();

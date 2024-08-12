@@ -1530,7 +1530,7 @@ package core.player
             }
             if(PlayerConfig.autorec && artifactCount >= artifactLimit - 10)
             {
-               g.enterState(new MenuState(g,ArtifactState2));
+               purifyArts();
             }
          }
          
@@ -2645,31 +2645,79 @@ package core.player
          }
       }
 
-      // public function purifyArts() : void
-      // {
-      //    try
-      //    {
-      //       var count:int = 0;
-      //       var msg:Message = g.createMessage("bulkRecycle");
-      //       for each(var art in artifacts)
-      //       {
-      //          if(!art.revealed && count < 40)
-      //          {
-      //             if(art.stats.length <= FitnessConfig.values.lines || art.fitness < FitnessConfig.values.fitness || art.level < FitnessConfig.values.strength)
-      //             {
-      //                count++;
-      //                msg.add(art.id);
-      //             }
-      //          }
-      //       }
-      //    }
-      //    catch(e:Error)
-      //    {
-      //       g.showErrorDialog(e.getStackTrace());
-      //    }
+      private var selectedArtIDs:Vector.<String>;
+      private function purifyArts() : void
+      {
+         if(g.myCargo.isFull)
+         {
+            return;
+         }
+         var count:int = 0;
+         var msg:Message = g.createMessage("bulkRecycle");
+         selectedArtIDs = new Vector.<String>();
+         for each(var art in artifacts)
+         {
+            if(!art.revealed && count < 40)
+            {
+               if(art.stats.length <= FitnessConfig.values.lines || art.fitness < FitnessConfig.values.fitness || art.level < FitnessConfig.values.strength)
+               {
+                  count++;
+                  msg.add(art.id);
+                  selectedArtIDs.push(art.id);
+               }
+            }
+         }
+         if(count > 0)
+         {
+            g.rpcMessage(msg,onPurifyMessage);
+         }
+      }
 
-      //    MessageLog.write("Recycled" + count + ": " + msg.toString());
-      // }
+      private function onPurifyMessage(msg:Message) : void
+      {
+         var success:Boolean;
+         var reason:String;
+         var junk:String;
+         var amount:int;
+         var i:int = 0;
+         success = msg.getBoolean(0);
+         if(!success)
+         {
+            reason = msg.getString(1);
+            MessageLog.write("<FONT COLOR=\'#ff8888\'>Could not purify arts because " + reason + "</FONT>");
+            return;
+         }
+         while(i < selectedArtIDs.length)
+         {
+            artifactCount -= 1;
+            j = 0;
+            while(j < artifacts.length)
+            {
+               if(selectedArtIDs[i] == artifacts[j].id)
+               {
+                  artifacts.splice(j,1);
+                  break;
+               }
+               j++;
+            }
+            i++;
+         } 
+         if(artifactCount < artifactLimit)
+         {
+            g.hud.hideArtifactLimitText();
+         }
+         i = 1;
+         while(i < msg.length)
+         {
+            junk = msg.getString(i);
+            amount = msg.getInt(i + 1);
+            g.myCargo.addItem("Commodities",junk,amount);
+            i += 2;
+         }
+         MessageLog.write("<FONT COLOR=\'#ffff88\'>Successfully purified " + selectedArtIDs.length + " artifacts!</FONT>");
+         g.hud.cargoButton.update();
+         purifyArts();
+      }
 
       private function addIndividualStat(stat:String, value:Number) : void 
       {

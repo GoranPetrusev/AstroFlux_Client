@@ -373,10 +373,6 @@ package core.artifact
          autoRecycleInput.isEnabled = g.me.hasSupporter();
          autoRecycleInput.visible = false;
          addChild(autoRecycleInput);
-         if(PlayerConfig.autorec && g.me.artifactCount >= g.me.artifactLimit - 10)
-         {
-            purifyArts();
-         }
       }
       
       private function initActiveSlots() : void
@@ -1140,10 +1136,7 @@ package core.artifact
          if(!success)
          {
             var reason:String = m.getString(1);
-            if(!PlayerConfig.autorec)
-            {
-               g.showErrorDialog("Recycle failed, " + reason);
-            }
+            g.showErrorDialog("Recycle failed, " + reason);
             return;
          }
          var i:int = 0;
@@ -1176,14 +1169,8 @@ package core.artifact
             g.hud.hideArtifactLimitText();
          }
          markedForRecycle.splice(0,markedForRecycle.length);
-         if(PlayerConfig.autorec && loops == 1)
+         if(purifyLoop)
          {
-            g.me.fakeRoaming();
-            g.onboardRecycle();
-         }
-         else
-         {
-            loops++;
             purifyArts();
          }
          g.hud.cargoButton.update();
@@ -1491,6 +1478,10 @@ package core.artifact
       
       private function purifyArts(param1:TouchEvent = null) : void
       {
+         if(g.myCargo.isFull)
+         {
+            return;
+         }
          var _loc3_:int = 0;
          purifyLoop = false;
          markedForRecycle.splice(0,markedForRecycle.length);
