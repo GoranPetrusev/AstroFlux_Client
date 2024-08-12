@@ -17,19 +17,14 @@ It has been over a month since I undertook this project. There's now a team of c
 - [x] Hacked Paint Shop
 - [x] Fitness sort in arts menu
 - [x] Fitness Config Menu
-- [ ] Fitness buffed by multiple equal lines
 - [x] Renamable art setups
 - [x] Side scrolling art setups container
-- [ ] Mute list
-- [ ] Fullscreen map
 - [x] Purify
 - [x] Autorecycle
 - [x] Autosave of custom settings
 - [x] Copiable chat messages
 - [x] Fix up artifacts menu button allignment
 - [x] Progress mode in encounter menu
-- [ ] Encouter xp in encounter menu
-- [ ] Variable crew member skill point usage
 - [x] Crew Autotrain
 - [x] Art upgrade prediction
 - [x] Modifiable hp/sh bar and dmg text size
@@ -37,21 +32,17 @@ It has been over a month since I undertook this project. There's now a team of c
 - [x] Increase FPS cap on warp menu 30 -> 60
 - [x] Fix that annoying warp path that was always grey
 - [x] Rice up the settings menu
-- [ ] Survival stats in top right empty area of arts menu
-- [ ] Rice up key binds menu
-- [ ] Rice up player list
 - [x] Tidy up xp bar
 - [x] Stacking :P
 - [x] Hacked Hangar
 - [x] Autofarm
 - [x] Quick Login
+- [ ] Fitness buffed by multiple equal lines
+- [ ] Mute list
+- [ ] Fullscreen map
+- [ ] Variable crew member skill point usage
+- [ ] Rice up player list
 
 ### Ideas
 - Updating feature
-
-Stat Distribution Color Coding
-57bb8a
-abc978
-ffd666
-f3a96d
-e67c73
+- In-game wiki
