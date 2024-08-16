@@ -221,6 +221,10 @@ package core.hud.components.chat
                PlayerConfig.autorec = !PlayerConfig.autorec;
                MessageLog.write("<FONT COLOR=\'#ffff88\'>Auto recycle is " + String((PlayerConfig.autorec)?"on!":"off!") + "</FONT>");
                break;
+            case "pur":
+            case "purify":
+               g.me.purifyArts();
+               break;
             case "rec":
             case "recycle":
                g.onboardRecycle();

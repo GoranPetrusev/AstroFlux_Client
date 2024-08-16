@@ -1528,7 +1528,7 @@ package core.player
             {
                g.hud.showArtifactLimitText();
             }
-            if(PlayerConfig.autorec && artifactCount >= artifactLimit - 10)
+            if(!currentlyPurifying && PlayerConfig.autorec && artifactCount >= artifactLimit - 10)
             {
                purifyArts();
             }
@@ -2645,13 +2645,12 @@ package core.player
          }
       }
 
+      private var currentlyPurifying:Boolean;
+      private var totalArtsPurified:int = 0;
       private var selectedArtIDs:Vector.<String>;
-      private function purifyArts() : void
+      public function purifyArts() : void
       {
-         if(g.myCargo.isFull)
-         {
-            return;
-         }
+         currentlyPurifying = true;
          var count:int = 0;
          var msg:Message = g.createMessage("bulkRecycle");
          selectedArtIDs = new Vector.<String>();
@@ -2669,8 +2668,25 @@ package core.player
          }
          if(count > 0)
          {
+            totalArtsPurified += count;
             g.rpcMessage(msg,onPurifyMessage);
          }
+         else
+         {
+            MessageLog.write("<FONT COLOR=\'#ffff88\'>Successfully purified " + totalArtsPurified + " artifacts!</FONT>");
+            currentlyPurifying = false;
+            totalArtsPurified = 0;
+         }
+      }
+
+      public function recycleCargo() : void
+      {
+         var msg:Message = g.createMessage("recycleJunk");
+         for each(var elm in g.myCargo.spaceJunk)
+         {
+            msg.add(elm.item);
+         }
+         g.rpcMessage(msg, onRecycleMessage);
       }
 
       private function onPurifyMessage(msg:Message) : void
@@ -2689,7 +2705,6 @@ package core.player
          }
          while(i < selectedArtIDs.length)
          {
-            artifactCount -= 1;
             j = 0;
             while(j < artifacts.length)
             {
@@ -2702,6 +2717,7 @@ package core.player
             }
             i++;
          } 
+         artifactCount -= i;
          if(artifactCount < artifactLimit)
          {
             g.hud.hideArtifactLimitText();
@@ -2714,7 +2730,21 @@ package core.player
             g.myCargo.addItem("Commodities",junk,amount);
             i += 2;
          }
-         MessageLog.write("<FONT COLOR=\'#ffff88\'>Successfully purified " + selectedArtIDs.length + " artifacts!</FONT>");
+         g.hud.cargoButton.update();
+         recycleCargo();
+      }
+
+      private function onRecycleMessage(msg:Message) : void
+      {
+         var i:int = 0;
+         while(i < msg.length)
+         {
+            var junk:String = msg.getString(i);
+            var amount:int = msg.getInt(i + 1);
+            g.myCargo.addItem("Commodities",junk,amount);
+            i += 2;
+         }
+         g.myCargo.spaceJunkCount = 0;
          g.hud.cargoButton.update();
          purifyArts();
       }
