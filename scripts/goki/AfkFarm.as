@@ -4,23 +4,23 @@ package goki
    import core.scene.Game;
    import core.ship.PlayerShip;
    
-   public class AutoFarm
+   public class AfkFarm
    {
       
       private static var callback:Function = null;
 
       public static var isRunning:Boolean = false;
       
-      public function AutoFarm()
+      public function AfkFarm()
       {
          super();
       }
       
       public static function init(procedure:String) : void
       {
-         if(AFprocedures.functions.hasOwnProperty(procedure))
+         if(AfkProcedures.functions.hasOwnProperty(procedure))
          {
-            callback = AFprocedures.functions[procedure];
+            callback = AfkProcedures.functions[procedure];
             isRunning = true;
          }
          else

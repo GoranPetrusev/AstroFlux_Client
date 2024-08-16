@@ -7,7 +7,17 @@ It has been over a month since I undertook this project. There's now a team of c
 ### Currently working on
 - Autofarm; the base framework is layed out. All that's left is to improve it from here on
 
-### ToDo
+### Version 1.1
+- [ ] Fitness buffed by multiple equal lines
+- [ ] Rework chat
+- [ ] Fullscreen map
+- [ ] Rework pickup messages
+- [ ] Mute list
+- [ ] Rice up player list
+- [ ] Variable crew member skill point usage
+- [ ] Lock items from auto recycling
+
+### Version 1.0
 - [x] MAKE KONGREGATE AND ARMOR GAMES ACCOUNTS WORK ON DEKSTOP VERSION
 - [x] Zooming
 - [x] Improve PlayerConfig save/load
@@ -37,11 +47,6 @@ It has been over a month since I undertook this project. There's now a team of c
 - [x] Hacked Hangar
 - [x] Autofarm
 - [x] Quick Login
-- [ ] Fitness buffed by multiple equal lines
-- [ ] Mute list
-- [ ] Fullscreen map
-- [ ] Variable crew member skill point usage
-- [ ] Rice up player list
 
 ### Ideas
 - Updating feature

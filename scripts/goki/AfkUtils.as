@@ -8,9 +8,9 @@ package goki
    import generics.Util;
    import core.hud.components.chat.MessageLog;
    
-   public class AFutil
+   public class AfkUtils
    {  
-      public function AFutil()
+      public function AfkUtils()
       {
          super();
       }
@@ -63,7 +63,7 @@ package goki
          var closestEnemy:EnemyShip = g.shipManager.enemies[0];
          for each (var currEnemy in g.shipManager.enemies)
          {
-            if(currEnemy.bodyName.indexOf(name) != -1 && AFutil.distanceSquaredToObject(g, currEnemy) < AFutil.distanceSquaredToObject(g, closestEnemy))
+            if(currEnemy.bodyName.indexOf(name) != -1 && distanceSquaredToObject(g, currEnemy) < distanceSquaredToObject(g, closestEnemy))
             {
                closestEnemy = currEnemy;
             }

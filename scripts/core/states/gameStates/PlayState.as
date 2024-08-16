@@ -5,7 +5,7 @@ package core.states.gameStates
    import core.ship.PlayerShip;
    import flash.geom.Point;
    import generics.Util;
-   import goki.AutoFarm;
+   import goki.AfkFarm;
    import goki.PlayerConfig;
    import io.InputLocator;
    import movement.Heading;
@@ -239,9 +239,9 @@ package core.states.gameStates
          }
          checkZoom();
          checkWeaponChange();
-         if(AutoFarm.isRunning)
+         if(AfkFarm.isRunning)
          {
-            AutoFarm.run(g);
+            AfkFarm.run(g);
             return;
          }
          checkBoost();

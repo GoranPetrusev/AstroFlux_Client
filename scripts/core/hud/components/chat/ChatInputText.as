@@ -9,7 +9,7 @@ package core.hud.components.chat
    import flash.ui.Mouse;
    import goki.FileManager;
    import goki.PlayerConfig;
-   import goki.AutoFarm;
+   import goki.AfkFarm;
    import sound.Playlist;
    import starling.core.Starling;
    import starling.display.Sprite;
@@ -233,14 +233,14 @@ package core.hud.components.chat
                g.reload();
                break;
             case "af":
-            case "autofarm":
+            case "afkfarm":
                if(output.length == 2)
                {
-                  AutoFarm.init(output[1]);
+                  AfkFarm.init(output[1]);
                }
                else
                {
-                  AutoFarm.init(null);
+                  AfkFarm.init(null);
                }
                break;
             case "setstats":
@@ -268,16 +268,6 @@ package core.hud.components.chat
                break;
             case "unstack":
                g.me.unstack();
-               break;
-            case "autofarm":
-               try
-               {
-                  g.autofarm.init(output[1]);
-               }
-               catch(e:Error)
-               {
-                  g.showErrorDialog(e.getStackTrace());
-               }
                break;
             case "tptodeath":
                g.rpc("buyTeleportToDeath",null,g.me.id);

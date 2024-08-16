@@ -119,8 +119,6 @@ package core.artifact
       
       private var setupsContainer:ScrollContainer;
       
-      private var purifyLoop:Boolean = false;
-      
       public function ArtifactOverview(param1:Game)
       {
          activeSlots = new Vector.<ArtifactBox>();
@@ -215,8 +213,8 @@ package core.artifact
          var cmBox:CrewDisplayBoxNew;
          initActiveSlots();
          setActiveArtifacts();
-         drawArtifactSetups();
          drawArtifactsInCargo();
+         drawArtifactSetups();
          q = new Quad(650,1,11184810);
          q.y = 93;
          addChildAt(q,0);
@@ -1168,12 +1166,9 @@ package core.artifact
          {
             g.hud.hideArtifactLimitText();
          }
-         markedForRecycle.splice(0,markedForRecycle.length);
-         if(purifyLoop)
-         {
-            purifyArts();
-         }
          g.hud.cargoButton.update();
+         markedForRecycle.splice(0,markedForRecycle.length);
+         purifyArts();
          recycleButton.enabled = true;
       }
       
@@ -1482,24 +1477,22 @@ package core.artifact
          {
             return;
          }
-         var _loc3_:int = 0;
-         purifyLoop = false;
+         var count:int = 0;
          markedForRecycle.splice(0,markedForRecycle.length);
-         for each(var _loc2_ in cargoBoxes)
+         for each(var box in cargoBoxes)
          {
-            if(_loc2_.a != null && !_loc2_.a.revealed && _loc3_ < 40)
+            if(box.a != null && !box.a.revealed && count < 40)
             {
-               if(_loc2_.a.stats.length <= FitnessConfig.values.lines || _loc2_.a.fitness < FitnessConfig.values.fitness || _loc2_.a.level < FitnessConfig.values.strength)
+               if(box.a.stats.length <= FitnessConfig.values.lines || box.a.fitness < FitnessConfig.values.fitness || box.a.level < FitnessConfig.values.strength)
                {
-                  _loc2_.setSelectedForRecycle();
-                  markedForRecycle.push(_loc2_.a);
-                  _loc3_++;
-                  purifyLoop = true;
+                  box.setSelectedForRecycle();
+                  markedForRecycle.push(box.a);
+                  count++;
                }
             }
          }
          purifyButton.enabled = true;
-         if(purifyLoop)
+         if(count > 0)
          {
             onRecycle(null);
          }

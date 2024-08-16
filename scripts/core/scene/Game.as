@@ -73,7 +73,7 @@ package core.scene
    import flash.net.URLRequestHeader;
    import flash.system.Security;
    import generics.Localize;
-   import goki.AutoFarm;
+   import goki.AfkFarm;
    import goki.FitnessConfig;
    import goki.PlayerConfig;
    import io.InputLocator;
@@ -876,12 +876,12 @@ package core.scene
       {
          try
          {
-            AutoFarm.run(this);
+            AfkFarm.run(this);
          }
          catch(e:Error)
          {
             showErrorDialog(e.getStackTrace());
-            AutoFarm.init(null);
+            AfkFarm.init(null);
          }
          time = getServerTime();
          playerManager.update();
