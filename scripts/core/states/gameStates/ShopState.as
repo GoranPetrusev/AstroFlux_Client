@@ -67,7 +67,7 @@ package core.states.gameStates
             g.hud.show = false;
             shop.addEventListener("close",function(param1:Event):void
             {
-               sm.revertState();
+               sm.changeState(new RoamingState(g));
             });
          });
       }
@@ -80,7 +80,7 @@ package core.states.gameStates
          }
          if(keybinds.isEscPressed || keybinds.isInputPressed(1))
          {
-            sm.revertState();
+            sm.changeState(new RoamingState(g));
             return;
          }
          shop.update();

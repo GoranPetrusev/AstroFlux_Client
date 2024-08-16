@@ -58,7 +58,6 @@ package core.hud
    import starling.textures.Texture;
    import textures.ITextureManager;
    import textures.TextureLocator;
-   import goki.PlayerConfig;
    
    public class Hud
    {
@@ -136,9 +135,13 @@ package core.hud
       
       private var hintMapText:TextBitmap;
       
+      private var systemText:TextBitmap;
+      
+      private var coordsText:TextBitmap;
+      
       public var uberStats:UberStats;
       
-      public var artifactLimitText:TextBitmap;
+      private var artifactLimitText:TextBitmap;
       
       private var loadComplete:Boolean = false;
       
@@ -158,6 +161,8 @@ package core.hud
       {
          container = new Sprite();
          bgr = new MeshBatch();
+         systemText = new TextBitmap(16.5);
+         coordsText = new TextBitmap(16.5);
          landText = new TextBitmap();
          safeZoneText = new TextBitmap();
          repairText = new TextBitmap();
@@ -192,6 +197,15 @@ package core.hud
          experience.load();
          shopIcons.load();
          pvpIcon.load();
+         systemText.text = g.solarSystem.name;
+         systemText.touchable = false;
+         systemText.format.color = 16689475;
+         systemText.batchable = true;
+         systemText.size = 16;
+         coordsText.touchable = false;
+         coordsText.format.color = 8947848;
+         coordsText.batchable = true;
+         coordsText.size = 14;
          safeZoneText.format.color = 11184895;
          safeZoneText.size = 26;
          safeZoneText.text = "Safe Zone (weapons disabled)";
@@ -272,15 +286,11 @@ package core.hud
          clanButton.visible = !g.me.guest;
          newMissionsButton = new ButtonNewMission(function():void
          {
-            
-               g.enterState(new MissionsState(g));
-            
+            g.enterState(new MissionsState(g));
          },g);
          missionsButton = new ButtonMissions(function():void
          {
-    
-               g.enterState(new MissionsState(g));
-           
+            g.enterState(new MissionsState(g));
          });
          abilities.load();
          settingsButton = new ButtonHud(function():void
@@ -355,6 +365,8 @@ package core.hud
          else
          {
             pvpMenuButton.visible = false;
+            container.addChild(missionsButton);
+            container.addChild(newMissionsButton);
          }
          if(g.isSystemTypeSurvival())
          {
@@ -380,11 +392,6 @@ package core.hud
          container.addChild(settingsButton);
          container.addChild(leaderboardButton);
          container.addChild(cargoButton);
-         if(!g.solarSystem.isPvpSystemInEditor)
-         {
-            container.addChild(missionsButton);
-            container.addChild(newMissionsButton);
-         }
          container.addChild(pvpMenuButton);
          container.addChild(pvpQuickMatchButton);
          if(g.salesManager.isSale())
@@ -401,6 +408,8 @@ package core.hud
             container.addChild(safeZoneText);
             container.addChild(repairText);
             container.addChild(landText);
+            container.addChild(systemText);
+            container.addChild(coordsText);
          }
          container.addChild(artifactLimitText);
          if(g.me.artifactCount >= g.me.artifactLimit)
@@ -584,6 +593,7 @@ package core.hud
             repairText.visible = false;
             safeZoneText.visible = false;
          }
+         coordsText.text = "Current position: " + Math.round(g.me.ship.x * systemScaling()) + ", " + Math.round(g.me.ship.y * systemScaling());
       }
       
       public function resize(param1:Event = null) : void
@@ -678,13 +688,11 @@ package core.hud
          {
             powerBar.scaleX = 0.9;
             powerBar.x = g.stage.stageWidth / 2 - 147 + _loc13_ + 20;
-            
          }
          else
          {
             powerBar.scaleX = 1;
             powerBar.x = g.stage.stageWidth / 2 - 147 + _loc13_;
-        
          }
          powerBar.y = g.stage.stageHeight - 31;
          healthAndShield.x = g.stage.stageWidth / 2 + 23 + _loc13_;
@@ -721,6 +729,8 @@ package core.hud
          landText.y = g.stage.stageHeight - g.stage.stageHeight / 3;
          radar.x = 16.5;
          radar.y = g.stage.stageHeight - 20.5 - radar.radius * 2;
+         systemText.y = radar.y - 50;
+         coordsText.y = radar.y - 30;
          if(fullScreenHintImage != null)
          {
             fullScreenHintImage.x = g.stage.stageWidth - 2 - fullScreenHintImage.width;
@@ -865,6 +875,38 @@ package core.hud
          safeZoneText.dispose();
          repairText.dispose();
          landText.dispose();
+      }
+      
+      public function systemScaling() : Number
+      {
+         switch(g.solarSystem.name)
+         {
+            case "Hyperion":
+            case "Fulzar":
+               return 2 / 80;
+            case "Kapello":
+               return 2 / 60;
+            case "Durian":
+               return 2 / 89;
+            case "Arrenius":
+               return 2 / 158;
+            case "Kritillian":
+               return 2 / 139;
+            case "Hozar":
+               return 2 / 250;
+            case "Zergilin":
+               return 2 / 70;
+            case "Mitrilion":
+               return 2 / 48;
+            case "Vibrilian":
+               return 2 / 120;
+            case "Sarkinon":
+               return 2 / 220;
+            case "Vorsran":
+               return 2 / 250;
+            default:
+               return 0.1;
+         }
       }
    }
 }

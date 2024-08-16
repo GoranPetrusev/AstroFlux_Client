@@ -48,9 +48,9 @@ package core.states.gameStates
             return;
          }
          checkAccelerate(true);
-         if(menuHud.stateMachine.inState(CargoState) && keybinds.isInputPressed(7) || !g.blockHotkeys && menuHud.stateMachine.inState(HomeState) && keybinds.isInputPressed(2) || !g.blockHotkeys && menuHud.stateMachine.inState(ArtifactState2) && keybinds.isInputPressed(3) || !g.blockHotkeys && menuHud.stateMachine.inState(EncounterState) && keybinds.isInputPressed(4) || !g.blockHotkeys && keybinds.isEscPressed)
+         if(!g.blockHotkeys && (menuHud.stateMachine.inState(CargoState) && keybinds.isInputPressed(7) || menuHud.stateMachine.inState(HomeState) && keybinds.isInputPressed(2) || menuHud.stateMachine.inState(ArtifactState2) && keybinds.isInputPressed(3) || menuHud.stateMachine.inState(EncounterState) && keybinds.isInputPressed(4) || keybinds.isEscPressed))
          {
-            sm.revertState();
+            sm.changeState(new RoamingState(g));
             menuHud.unload();
          }
       }
