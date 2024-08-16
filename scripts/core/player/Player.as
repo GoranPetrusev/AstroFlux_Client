@@ -2646,8 +2646,15 @@ package core.player
       }
 
       private var currentlyPurifying:Boolean;
-      private var totalArtsPurified:int = 0;
       private var selectedArtIDs:Vector.<String>;
+      private var resources:Object = {
+         "Steel":0,
+         "Iridium":0,
+         "Hydrogen Crystal":0,
+         "Plasma Fluids":0,
+         "Arts":0
+      };
+      private var onlyRecycle:Boolean = false;
       public function purifyArts() : void
       {
          currentlyPurifying = true;
@@ -2668,22 +2675,26 @@ package core.player
          }
          if(count > 0)
          {
-            totalArtsPurified += count;
+            resources["Arts"] += count;
             g.rpcMessage(msg,onPurifyMessage);
          }
          else
          {
-            if(totalArtsPurified != 0)
-            {
-               MessageLog.write("<FONT COLOR=\'#ffff88\'>Successfully purified " + totalArtsPurified + " artifacts!</FONT>");
-            }
+            MessageLog.write("<FONT COLOR=\'#ffff88\'><b>Successfully purified " + resources["Arts"] + " artifacts!</b></FONT>\n<FONT COLOR=\'#b7ccd5\'><b>Steel: " + resources["Steel"] + "</b></FONT>\n<FONT COLOR=\'#8fe9fb\'><b>Hydrogen: " + resources["Hydrogen Crystal"] + "</b></FONT>\n<FONT COLOR=\'#b7d496\'><b>Plasma Fluids: " + resources["Plasma Fluids"] + "</b></FONT>\n<FONT COLOR=\'#79f036\'><b>Iridium: " + resources["Iridium"] + "</b></FONT>");            
             currentlyPurifying = false;
-            totalArtsPurified = 0;
+            resources = {
+               "Steel":0,
+               "Iridium":0,
+               "Hydrogen Crystal":0,
+               "Plasma Fluids":0,
+               "Arts":0
+            };
          }
       }
 
-      public function recycleCargo() : void
+      public function recycleCargo(onlyRec:Boolean = false) : void
       {
+         onlyRecycle = onlyRec;
          var msg:Message = g.createMessage("recycleJunk");
          for each(var elm in g.myCargo.spaceJunk)
          {
@@ -2734,7 +2745,7 @@ package core.player
             i += 2;
          }
          g.hud.cargoButton.update();
-         recycleCargo();
+         recycleCargo();            
       }
 
       private function onRecycleMessage(msg:Message) : void
@@ -2744,12 +2755,28 @@ package core.player
          {
             var junk:String = msg.getString(i);
             var amount:int = msg.getInt(i + 1);
+            var commodities:Object = g.dataManager.loadKey("Commodities",junk);
+            resources[commodities.name] += amount;
             g.myCargo.addItem("Commodities",junk,amount);
             i += 2;
          }
          g.myCargo.spaceJunkCount = 0;
          g.hud.cargoButton.update();
-         purifyArts();
+         if(onlyRecycle)
+         {
+            MessageLog.write("<FONT COLOR=\'#b7ccd5\'><b>Steel: " + resources["Steel"] + "</b></FONT>\n<FONT COLOR=\'#8fe9fb\'><b>Hydrogen: " + resources["Hydrogen Crystal"] + "</b></FONT>\n<FONT COLOR=\'#b7d496\'><b>Plasma Fluids: " + resources["Plasma Fluids"] + "</b></FONT>\n<FONT COLOR=\'#79f036\'><b>Iridium: " + resources["Iridium"] + "</b></FONT>");            
+            resources = {
+               "Steel":0,
+               "Iridium":0,
+               "Hydrogen Crystal":0,
+               "Plasma Fluids":0,
+               "Arts":0
+            };
+         }
+         else
+         {
+            purifyArts();
+         }
       }
 
       private function addIndividualStat(stat:String, value:Number) : void 

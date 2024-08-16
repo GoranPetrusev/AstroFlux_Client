@@ -10,6 +10,7 @@ package core.hud.components.chat
    import goki.FileManager;
    import goki.PlayerConfig;
    import goki.AfkFarm;
+   import goki.AfkUtils;
    import sound.Playlist;
    import starling.core.Starling;
    import starling.display.Sprite;
@@ -214,7 +215,6 @@ package core.hud.components.chat
                g.camera.zoomFocus(PlayerConfig.values.zoomFactor,1);
                break;
             case "test":
-               MessageLog.write(g.me.artifactCount);
                break;
             case "autorec":
             case "autorecycle":
@@ -227,7 +227,7 @@ package core.hud.components.chat
                break;
             case "rec":
             case "recycle":
-               g.me.recycleCargo();
+               g.me.recycleCargo(true);
                break;
             case "reload":
                g.reload();

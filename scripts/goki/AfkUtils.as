@@ -19,7 +19,7 @@ package goki
       {
          var target:GameObject = findDropByName(g, name);
 
-         if(target == null || distanceSquaredToPoint(g, x, y) > r*r*1600)
+         if(target == null || distanceSquaredToPoint(g, x, y) > r*r*scale(g,1)*scale(g,1))
          {
             return false;
          }
@@ -143,8 +143,40 @@ package goki
             accelerate(g, true);
             deaccelerate(g, false);
          }
-
       }
+
+      public static function scale(g:Game, value:Number) : Number 
+      {
+         switch (g.solarSystem.name) {
+            case "Hyperion":
+            case "Fulzar":
+                  return value * 40;
+            case "Venturi":
+            case "Neurona":
+            case "Cynapsian":
+                  return value * 10;
+            case "Kapello":
+                  return value * 30;
+            case "Durian":
+                  return value * 44.44444444444444;
+            case "Arrenius":
+                  return value * 80;
+            case "Kritillian":
+                  return value * 69.44444444444444;
+            case "Hozar":
+                  return value * 35;
+            case "Zergilin":
+            case "Vorsran":
+                  return value * 125;
+            case "Mitrilion":
+                  return value * 24;
+            case "Vibrilian":
+                  return value * 12;
+            case "Sarkinon":
+                  return value * 110;
+         }
+      }
+
 
       public static function distanceSquaredToObject(g:Game, target:GameObject) : Number
       {
@@ -158,12 +190,12 @@ package goki
 
       public static function distanceSquaredToPoint(g:Game, x:int, y:int) : Number
       {
-         return (g.me.ship.x - x*40) * (g.me.ship.x - x*40) + (g.me.ship.y - y*40) * (g.me.ship.y - y*40);
+         return (g.me.ship.x - scale(g, x)) * (g.me.ship.x - scale(g, x)) + (g.me.ship.y - scale(g, y)) * (g.me.ship.y - scale(g, y));
       }
       
       public static function directionToPoint(g:Game, x:int, y:int) : Number
       {
-         return Math.atan2(g.me.ship.y - y*40, g.me.ship.x - x*40);
+         return Math.atan2(g.me.ship.y - scale(g, y), g.me.ship.x - scale(g, x));
       }
 
       public static function angleDifferenceObject(g:Game, target:GameObject) : Number
