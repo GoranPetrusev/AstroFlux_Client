@@ -227,7 +227,7 @@ package core.hud.components.chat
                break;
             case "rec":
             case "recycle":
-               g.onboardRecycle();
+               g.me.recycleCargo();
                break;
             case "reload":
                g.reload();

@@ -1491,12 +1491,5 @@ package core.scene
          SoundLocator.getService().stopMusic();
          SoundLocator.getService().playMusic("y_s45d0sJkiPm6jpZFx2ow",true);
       }
-      
-      public function onboardRecycle() : void
-      {
-         var station:Body = bodyManager.getRoot();
-         station.name = "On-Board Recycling Facility";
-         fadeIntoState(new LandedRecycle(this,station));
-      }
    }
 }

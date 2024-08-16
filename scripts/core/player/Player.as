@@ -2673,7 +2673,10 @@ package core.player
          }
          else
          {
-            MessageLog.write("<FONT COLOR=\'#ffff88\'>Successfully purified " + totalArtsPurified + " artifacts!</FONT>");
+            if(totalArtsPurified != 0)
+            {
+               MessageLog.write("<FONT COLOR=\'#ffff88\'>Successfully purified " + totalArtsPurified + " artifacts!</FONT>");
+            }
             currentlyPurifying = false;
             totalArtsPurified = 0;
          }
