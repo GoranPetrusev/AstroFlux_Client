@@ -40,16 +40,25 @@ package goki
       }
       
       private static var lootingWindow:Number = 0;
+      private static var buffer:Number = 0;
       public static function exefarm(g:Game) : void
       {
-         // Keep pushing the looting window forward by 50 seconds until the exe dies
+         if(g.me.stacksNumber == 0)
+         {
+            g.me.stack(100);
+            return;
+         }
+
+         // Keep pushing the looting window forward by 50sec until the exe dies
+         // 2sec buffer stops loot from getting picked up while exe is getting killed
          if(g.bossManager.bosses.length == 1)
          {
             lootingWindow = g.time + 50000;
+            buffer = g.time + 2000;
          }
 
          // Until game time exceeds the looting window, pick up gold crates and arts
-         if(g.time < lootingWindow)
+         if(g.time > buffer && g.time < lootingWindow)
          {
             if(AfkUtils.isPickingUpDropInZone(g,"Crate",-425,-100,75))
             {

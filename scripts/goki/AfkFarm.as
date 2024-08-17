@@ -36,15 +36,14 @@ package goki
          {
             return;
          }
-         try
+
+         if(game.me.ship != null)
          {
             callback(game);
          }
-         catch (e:Error)
+         else
          {
-            g.showErrorDialog(e.getStackTrace());
-            callback = null;
-            isRunning = false;
+            game.reload();
          }
       }
    }
