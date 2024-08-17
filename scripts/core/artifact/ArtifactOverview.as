@@ -113,7 +113,7 @@ package core.artifact
       
       private var purifyButton:Button;
       
-      private var autoTrainButton:Button;
+      // private var autoTrainButton:Button;
       
       private var isAutoTrainOn:Boolean;
       
@@ -262,11 +262,11 @@ package core.artifact
          upgradeButton.visible = false;
          upgradeButton.enabled = false;
          addChild(upgradeButton);
-         autoTrainButton = new Button(autoTrain,"Auto Train");
-         autoTrainButton.x = upgradeButton.x - autoTrainButton.width - 10;
-         autoTrainButton.y = 480;
-         autoTrainButton.visible = false;
-         addChild(autoTrainButton);
+         // autoTrainButton = new Button(autoTrain,"Auto Train");
+         // autoTrainButton.x = upgradeButton.x - autoTrainButton.width - 10;
+         // autoTrainButton.y = 480;
+         // autoTrainButton.visible = false;
+         // addChild(autoTrainButton);
          crewContainer = new Sprite();
          crewContainer.x = 390;
          crewContainer.y = 100;
@@ -1014,7 +1014,7 @@ package core.artifact
          upgradeButton.visible = !upgradeButton.visible;
          purifyButton.visible = !purifyButton.visible;
          toggleUpgradeButton.enabled = toggleUpgradeButton.visible;
-         autoTrainButton.visible = !autoTrainButton.visible;
+         // autoTrainButton.visible = !autoTrainButton.visible;
          cancelUpgradeButton.enabled = cancelUpgradeButton.visible;
          crewContainer.visible = !crewContainer.visible;
          upgradeButton.enabled = false;
@@ -1498,47 +1498,47 @@ package core.artifact
          }
       }
       
-      private function autoTrain(param1:TouchEvent = null) : void
-      {
-         autoTrainButton.enabled = true;
-         if(isAutoTrainOn)
-         {
-            g.showErrorDialog("Auto Train is already on. If you wish to turn it off just close the arts menu.");
-            return;
-         }
-         runAutoTrain();
-         isAutoTrainOn = true;
-      }
+      // private function autoTrain(param1:TouchEvent = null) : void
+      // {
+      //    autoTrainButton.enabled = true;
+      //    if(isAutoTrainOn)
+      //    {
+      //       g.showErrorDialog("Auto Train is already on. If you wish to turn it off just close the arts menu.");
+      //       return;
+      //    }
+      //    runAutoTrain();
+      //    isAutoTrainOn = true;
+      // }
       
-      private function runAutoTrain(depth:int = 0) : void
-      {
-         var artBox:*;
-         if(depth >= p.crewMembers.length)
-         {
-            return;
-         }
-         if(p.crewMembers[depth].isUpgrading)
-         {
-            TweenMax.delayedCall(3,function():void
-            {
-               runAutoTrain(depth + 1);
-            });
-            return;
-         }
-         for each(artBox in cargoBoxes)
-         {
-            if(artBox.a != null && !artBox.a.revealed && artBox.a.levelPotential <= 10 && artBox.a.upgraded <= 3)
-            {
-               selectedUpgradeBox = artBox;
-               selectedCrewMember = new CrewDisplayBoxNew(g,p.crewMembers[depth],2);
-               confirmUpgrade();
-               TweenMax.delayedCall(3,function():void
-               {
-                  runAutoTrain(depth + 1);
-               });
-               return;
-            }
-         }
-      }
+      // private function runAutoTrain(depth:int = 0) : void
+      // {
+      //    var artBox:*;
+      //    if(depth >= p.crewMembers.length)
+      //    {
+      //       return;
+      //    }
+      //    if(p.crewMembers[depth].isUpgrading)
+      //    {
+      //       TweenMax.delayedCall(3,function():void
+      //       {
+      //          runAutoTrain(depth + 1);
+      //       });
+      //       return;
+      //    }
+      //    for each(artBox in cargoBoxes)
+      //    {
+      //       if(artBox.a != null && !artBox.a.revealed && artBox.a.levelPotential <= 10 && artBox.a.upgraded <= 3)
+      //       {
+      //          selectedUpgradeBox = artBox;
+      //          selectedCrewMember = new CrewDisplayBoxNew(g,p.crewMembers[depth],2);
+      //          confirmUpgrade();
+      //          TweenMax.delayedCall(3,function():void
+      //          {
+      //             runAutoTrain(depth + 1);
+      //          });
+      //          return;
+      //       }
+      //    }
+      // }
    }
 }

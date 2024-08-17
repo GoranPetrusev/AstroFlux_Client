@@ -105,6 +105,7 @@ package core.hud.components.cargo
          if(PlayerConfig.autorec)
          { 
             g.me.recycleCargo(true);
+            ButtonCargo.serverSaysCargoIsFull = false;
          }
       }
       

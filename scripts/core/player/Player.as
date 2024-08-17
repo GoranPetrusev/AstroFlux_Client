@@ -2762,6 +2762,7 @@ package core.player
          }
          g.myCargo.spaceJunkCount = 0;
          g.hud.cargoButton.update();
+         g.hud.resourceBox.update();
          if(onlyRecycle)
          {
             MessageLog.write("<FONT COLOR=\'#b7ccd5\'><b>Steel: " + resources["Steel"] + "</b></FONT>\n<FONT COLOR=\'#8fe9fb\'><b>Hydrogen: " + resources["Hydrogen Crystal"] + "</b></FONT>\n<FONT COLOR=\'#b7d496\'><b>Plasma Fluids: " + resources["Plasma Fluids"] + "</b></FONT>\n<FONT COLOR=\'#79f036\'><b>Iridium: " + resources["Iridium"] + "</b></FONT>");            

@@ -166,7 +166,7 @@ package core.states.gameStates
          rotationSpeedText = new Text(rotationSlider.x + 120,rotationSlider.y + 10);
          rotationSpeedText.text = settings.rotationSpeed.toFixed(2);
          scrollArea.addChild(rotationSpeedText);
-         addHeader("Gameplay");
+         addHeader("Misc");
          iWantAllTimedMissions = new Check();
          iWantAllTimedMissions.isSelected = settings.iWantAllTimedMissions;
          iWantAllTimedMissions.addEventListener("change",function(param1:Event):void
@@ -174,9 +174,6 @@ package core.states.gameStates
             settings.iWantAllTimedMissions = iWantAllTimedMissions.isSelected;
          });
          addCheckbox(iWantAllTimedMissions,Localize.t("I want all timed missions"));
-         currentHeight = 10;
-         currentWidth = 380;
-         addHeader("Misc");
          showAllEncounters = new Check();
          showAllEncounters.isSelected = PlayerConfig.values.showAllEncounters;
          showAllEncounters.addEventListener("change",function(param1:Event):void
@@ -184,6 +181,9 @@ package core.states.gameStates
             PlayerConfig.values.showAllEncounters = showAllEncounters.isSelected;
          });
          addCheckbox(showAllEncounters,Localize.t("Show all encounters"));
+         currentHeight = 10;
+         currentWidth = 380;
+         addHeader("Gameplay");
          hpshBarsAlwaysOn = new Check();
          hpshBarsAlwaysOn.isSelected = PlayerConfig.values.barAlwaysShow;
          hpshBarsAlwaysOn.addEventListener("change",function(param1:Event):void
@@ -191,31 +191,18 @@ package core.states.gameStates
             PlayerConfig.values.barAlwaysShow = hpshBarsAlwaysOn.isSelected;
          });
          addCheckbox(hpshBarsAlwaysOn,Localize.t("Always show SH/HP bars"));
-         dmgTextSizeSlider = new Slider();
-         addSlider(dmgTextSizeSlider,(PlayerConfig.values.dmgTextSize - 1) * 0.5,Localize.t("Damage text scale"));
-         dmgTextSizeSlider.addEventListener("change",function(param1:Event):void
-         {
-            PlayerConfig.values.dmgTextSize = 1 + dmgTextSizeSlider.value * 2;
-         });
          hpshBarSizeSlider = new Slider();
          addSlider(hpshBarSizeSlider,(PlayerConfig.values.barSize - 1) * 0.25,Localize.t("SH/HP Bars scale"));
          hpshBarSizeSlider.addEventListener("change",function(param1:Event):void
          {
             PlayerConfig.values.barSize = 1 + hpshBarSizeSlider.value * 4;
          });
-         nMessagesInput = new InputText(currentWidth + 256,currentHeight - 4,40,20);
-         nMessagesInput.addEventListener("change",function(param1:Event):void
+         dmgTextSizeSlider = new Slider();
+         addSlider(dmgTextSizeSlider,(PlayerConfig.values.dmgTextSize - 1) * 0.5,Localize.t("Damage text scale"));
+         dmgTextSizeSlider.addEventListener("change",function(param1:Event):void
          {
-            PlayerConfig.values.maxChatMessages = nMessagesInput.text;
+            PlayerConfig.values.dmgTextSize = 1 + dmgTextSizeSlider.value * 2;
          });
-         addInputField("Max chat messages",nMessagesInput);
-         censorChat = new Check();
-         censorChat.isSelected = PlayerConfig.values.censorChat;
-         censorChat.addEventListener("change",function(param1:Event):void
-         {
-            PlayerConfig.values.censorChat = censorChat.isSelected;
-         });
-         addCheckbox(censorChat,"Censor profanities");
          dontKick = new Check();
          dontKick.isSelected = PlayerConfig.values.dontKick;
          dontKick.addEventListener("change",function(param1:Event):void
@@ -237,6 +224,20 @@ package core.states.gameStates
             PlayerConfig.values.autoReload = autoReload.isSelected;
          });
          addCheckbox(autoReload, "Automatically reload when disconnected");
+         addHeader("Chat");
+         nMessagesInput = new InputText(currentWidth + 256,currentHeight - 4,40,20);
+         nMessagesInput.addEventListener("change",function(param1:Event):void
+         {
+            PlayerConfig.values.maxChatMessages = nMessagesInput.text;
+         });
+         addInputField("Max chat messages",nMessagesInput);
+         censorChat = new Check();
+         censorChat.isSelected = PlayerConfig.values.censorChat;
+         censorChat.addEventListener("change",function(param1:Event):void
+         {
+            PlayerConfig.values.censorChat = censorChat.isSelected;
+         });
+         addCheckbox(censorChat,"Censor profanities");
       }
       
       private function addInputField(str:String, field:InputText) : void
