@@ -264,12 +264,12 @@ package core.states.gameStates
          soundManager.preCacheSound("nNNvkjb7O0ezA29C19_kmQ");
          soundManager.preCacheSound("d9sleGULzUCNGImfHOdkuA");
          soundManager.preCacheSound("f5msdkJp8EmqT0gXFokkKg");
-         TweenMax.fromTo(pod,1,{"x":g.stage.stageWidth / 2 + 1000 + bgr.width / 2},{
+         TweenMax.fromTo(pod,0.25,{"x":g.stage.stageWidth / 2 + 1000 + bgr.width / 2},{
             "x":g.stage.stageWidth / 2 + bgr.width / 2,
             "onComplete":callback
          });
          pod.rotation = -0.02;
-         floatTween = TweenMax.to(pod,1,{
+         floatTween = TweenMax.to(pod,0.25,{
             "rotation":0.02,
             "repeat":30,
             "yoyo":true,
@@ -288,7 +288,7 @@ package core.states.gameStates
          var callback:Function = param2;
          pod.y = 248;
          currentPod = pod;
-         TweenMax.fromTo(pod,1,{"x":pod.x},{
+         TweenMax.fromTo(pod,0.25,{"x":pod.x},{
             "x":400,
             "onComplete":function():void
             {
@@ -309,7 +309,7 @@ package core.states.gameStates
          animateCloseTracks(function():void
          {
             animateOpenTracks();
-            TweenMax.fromTo(pod,1,{"x":pod.x},{
+            TweenMax.fromTo(pod,0.25,{"x":pod.x},{
                "x":-1000,
                "onComplete":function():void
                {
@@ -326,7 +326,7 @@ package core.states.gameStates
          pod.animateOpen();
          animateOpenTracks(function():void
          {
-            TweenMax.delayedCall(2,callback);
+            TweenMax.delayedCall(0.5,callback);
          });
       }
       
@@ -334,7 +334,7 @@ package core.states.gameStates
       {
          var callback:Function = param1;
          soundManager.play("eucUcmDqTUudHmw_S7U5oQ");
-         TweenMax.fromTo(tracks1,0.5,{"y":tracks1.y},{
+         TweenMax.fromTo(tracks1,0.125,{"y":tracks1.y},{
             "y":tracks1.y - 40,
             "onComplete":function():void
             {
@@ -345,7 +345,7 @@ package core.states.gameStates
                }
             }
          });
-         TweenMax.fromTo(tracks2,0.5,{"y":tracks2.y},{"y":tracks2.y + 23});
+         TweenMax.fromTo(tracks2,0.125,{"y":tracks2.y},{"y":tracks2.y + 23});
       }
       
       private function animateCloseTracks(param1:Function = null, param2:Boolean = true) : void
@@ -360,7 +360,7 @@ package core.states.gameStates
          TweenMax.delayedCall(delay,function():void
          {
             soundManager.play("eucUcmDqTUudHmw_S7U5oQ");
-            TweenMax.fromTo(tracks1,0.5,{"y":tracks1.y},{
+            TweenMax.fromTo(tracks1,0.125,{"y":tracks1.y},{
                "y":tracks1.y + 40,
                "onComplete":function():void
                {
@@ -380,7 +380,7 @@ package core.states.gameStates
                   }
                }
             });
-            TweenMax.fromTo(tracks2,0.5,{"y":tracks2.y},{"y":tracks2.y - 23});
+            TweenMax.fromTo(tracks2,0.125,{"y":tracks2.y},{"y":tracks2.y - 23});
          });
       }
       
@@ -530,7 +530,7 @@ package core.states.gameStates
             nameText.format.size = 14;
             nameText.pivotX = nameText.width / 2;
             lootContainer.addChild(nameText);
-            TweenMax.fromTo(lootContainer,0.5,{
+            TweenMax.fromTo(lootContainer,0.125,{
                "y":300,
                "alpha":0
             },{
@@ -556,7 +556,7 @@ package core.states.gameStates
                nameText.format.horizontalAlign = "center";
                nameText.pivotX = nameText.width / 2;
                lootContainer.addChild(nameText);
-               TweenMax.fromTo(lootContainer,0.5,{
+               TweenMax.fromTo(lootContainer,0.125,{
                   "y":300,
                   "alpha":0
                },{
@@ -581,7 +581,7 @@ package core.states.gameStates
             nameText.text = name;
             nameText.pivotX = nameText.width / 2;
             lootContainer.addChild(nameText);
-            TweenMax.fromTo(lootContainer,0.5,{
+            TweenMax.fromTo(lootContainer,0.125,{
                "y":300,
                "alpha":0
             },{
@@ -605,7 +605,7 @@ package core.states.gameStates
             nameText.text = name;
             nameText.pivotX = nameText.width / 2;
             lootContainer.addChild(nameText);
-            TweenMax.fromTo(lootContainer,0.5,{
+            TweenMax.fromTo(lootContainer,0.125,{
                "y":300,
                "alpha":0
             },{
@@ -621,7 +621,7 @@ package core.states.gameStates
             nameText.text = count + " " + name;
             nameText.pivotX = nameText.width / 2;
             lootContainer.addChild(nameText);
-            TweenMax.fromTo(lootContainer,0.5,{
+            TweenMax.fromTo(lootContainer,0.125,{
                "y":300,
                "alpha":0
             },{
@@ -645,7 +645,7 @@ package core.states.gameStates
             preview3.x = nameText.x - nameText.width / 2;
             preview3.y = nameText.height / 2;
             lootContainer.y += 5;
-            TweenMax.fromTo(lootContainer,0.5,{
+            TweenMax.fromTo(lootContainer,0.125,{
                "y":300,
                "alpha":0
             },{
@@ -742,7 +742,7 @@ class Pod extends Sprite
    {
       var callback:Function = param1;
       center.enabled = true;
-      tween = TweenMax.fromTo(center,0.3,{
+      tween = TweenMax.fromTo(center,0.075,{
          "alpha":1,
          "scaleX":1,
          "scaleY":1
@@ -762,7 +762,7 @@ class Pod extends Sprite
             callback();
             tween.kill();
             SoundLocator.getService().play("3hVYqbNNSUWoDGk_pK1BdQ");
-            cTween = TweenMax.fromTo(center,0.5,{"color":16777215},{
+            cTween = TweenMax.fromTo(center,0.125,{"color":16777215},{
                "color":16711935,
                "yoyo":true,
                "repeat":-1
@@ -775,7 +775,7 @@ class Pod extends Sprite
    {
       var callback:Function = param1;
       cTween.kill();
-      TweenMax.fromTo(top,0.5,{"y":top.y},{
+      TweenMax.fromTo(top,0.125,{"y":top.y},{
          "y":top.y - 40,
          "onComplete":function():void
          {
@@ -785,8 +785,8 @@ class Pod extends Sprite
             }
          }
       });
-      TweenMax.fromTo(bottom,0.5,{"y":bottom.y},{"y":bottom.y + 23});
-      TweenMax.fromTo(center,2,{
+      TweenMax.fromTo(bottom,0.125,{"y":bottom.y},{"y":bottom.y + 23});
+      TweenMax.fromTo(center,0.5,{
          "rotation":1,
          "alpha":1,
          "scaleX":1,
@@ -803,7 +803,7 @@ class Pod extends Sprite
    public function animateClose(param1:Function = null) : void
    {
       var callback:Function = param1;
-      TweenMax.fromTo(top,0.5,{"y":top.y},{
+      TweenMax.fromTo(top,0.125,{"y":top.y},{
          "y":top.y + 40,
          "onComplete":function():void
          {
@@ -813,12 +813,12 @@ class Pod extends Sprite
             }
          }
       });
-      TweenMax.fromTo(bottom,0.5,{"y":bottom.y},{"y":bottom.y - 23});
+      TweenMax.fromTo(bottom,0.125,{"y":bottom.y},{"y":bottom.y - 23});
    }
    
    public function animateSpinColor(param1:uint) : void
    {
-      TweenMax.fromTo(center,2,{"color":16777215},{"color":param1});
+      TweenMax.fromTo(center,0.5,{"color":16777215},{"color":param1});
    }
    
    public function animateLootText(param1:String, param2:uint) : void
@@ -829,7 +829,7 @@ class Pod extends Sprite
       lootText.pivotY = lootText.height / 2;
       lootText.format.color = param2;
       lootText.x += 20;
-      TweenMax.fromTo(lootText,2,{
+      TweenMax.fromTo(lootText,0.5,{
          "scaleX":1,
          "scaleY":1,
          "alpha":1
