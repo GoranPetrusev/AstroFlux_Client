@@ -15,6 +15,8 @@ package goki
          super();
       }
 
+      private static var lastTurnReset:Number = 0;
+
       public static function isPickingUpDropInZone(g:Game, name:String, x:int, y:int, r:int) : Boolean
       {
          var target:GameObject = findDropByName(g, name);
@@ -58,18 +60,21 @@ package goki
          return null;
       }
 
-      public static function closestEnemyByName(g:Game, name:String) : EnemyShip
+      public static function closestEnemyByName(g:Game, ...names) : EnemyShip
       {
          var closestEnemy:EnemyShip = g.shipManager.enemies[0];
          for each (var currEnemy in g.shipManager.enemies)
          {
-            if(currEnemy.bodyName.indexOf(name) != -1 && distanceSquaredToObject(g, currEnemy) < distanceSquaredToObject(g, closestEnemy))
+            for each (var name in names)
             {
-               closestEnemy = currEnemy;
+               if(currEnemy.bodyName.indexOf(name) != -1 && distanceSquaredToObject(g, currEnemy) < distanceSquaredToObject(g, closestEnemy))
+               {
+                  closestEnemy = currEnemy;
+               }
             }
          }
 
-         return (closestEnemy.bodyName.indexOf(name) == -1) ? null : closestEnemy;
+         return closestEnemy;
       }
 
       public static function lookAtPoint(g:Game, x:int, y:int) : void
@@ -212,42 +217,58 @@ package goki
       
       public static function accelerate(g:Game, active:Boolean) : void
       {
-        if(!g.me.ship.usingBoost && g.me.ship.course.accelerate != active)
-        {
+         if(!g.me.ship.usingBoost && g.me.ship.course.accelerate != active)
+         {
             sendCommand(g,0,active);
-        }
+         }
       }
       
       public static function deaccelerate(g:Game, active:Boolean) : void
       {
-        if(!g.me.ship.usingBoost && g.me.ship.course.deaccelerate != active)
-        {
+         if(!g.me.ship.usingBoost && g.me.ship.course.deaccelerate != active)
+         {
             sendCommand(g,8,active);
-        }
+         }
       }
       
       public static function turnLeft(g:Game, active:Boolean) : void
       {
-        if(!g.me.ship.usingBoost && g.me.ship.course.rotateLeft != active)
-        {
+         if(g.time - lastTurnReset > 5000)
+         {
+            lastTurnReset = g.time;
+            sendCommand(g,1,false);
+            sendCommand(g,2,true);
+            sendCommand(g,2,false);
+            sendCommand(g,1,true);
+         }
+         if(!g.me.ship.usingBoost && g.me.ship.course.rotateLeft != active)
+         {
             sendCommand(g,1,active);
-        }
+         }
       }
       
       public static function turnRight(g:Game, active:Boolean) : void
       {
-        if(!g.me.ship.usingBoost && g.me.ship.course.rotateRight != active)
-        {
+         if(g.time - lastTurnReset > 5000)
+         {
+            lastTurnReset = g.time;
+            sendCommand(g,2,false);
+            sendCommand(g,1,true);
+            sendCommand(g,1,false);
+            sendCommand(g,2,true);
+         }
+         if(!g.me.ship.usingBoost && g.me.ship.course.rotateRight != active)
+         {
             sendCommand(g,2,active);
-        }
+         }
       }
       
       public static function fire(g:Game, active:Boolean) : void
       {
-        if(g.me.ship.isShooting != active)
-        {
+         if(g.me.ship.isShooting != active)
+         {
             sendCommand(g,3,active);
-        }
+         }
       }
       
       public static function boost(g:Game) : void

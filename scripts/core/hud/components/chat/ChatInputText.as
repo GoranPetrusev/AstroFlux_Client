@@ -215,6 +215,7 @@ package core.hud.components.chat
                g.camera.zoomFocus(PlayerConfig.values.zoomFactor,1);
                break;
             case "test":
+               MessageLog.write(g.bossManager.bosses.length)
                break;
             case "autorec":
             case "autorecycle":
@@ -254,6 +255,9 @@ package core.hud.components.chat
                break;
             case "count":
                MessageLog.write(g.me.stacksNumber);
+               break;
+            case "cunt":
+               MessageLog.write("OI! WHO THE FUCK ARE YOU CALLIN A CUNT AY?\n LOOK AT YOU, DYSLEXIC BASTARD CAN'T EVEN FUCKING SPELL");
                break;
             case "stack":
                if(g.isSystemTypeClan() || g.isSystemTypeSurvival)

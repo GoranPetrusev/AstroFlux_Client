@@ -104,7 +104,7 @@ package core.hud.components.cargo
          g.hud.cargoButton.update();
          if(PlayerConfig.autorec)
          { 
-            g.onboardRecycle();
+            g.me.recycleCargo(true);
          }
       }
       
