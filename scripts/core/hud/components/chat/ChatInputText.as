@@ -222,7 +222,7 @@ package core.hud.components.chat
                PlayerConfig.autorec = !PlayerConfig.autorec;
                MessageLog.write("<FONT COLOR=\'#ffff88\'>Auto recycle is " + String((PlayerConfig.autorec)?"on!":"off!") + "</FONT>");
                break;
-            case "pur":
+            case "pr":
             case "purify":
                g.me.purifyArts();
                break;
@@ -230,6 +230,8 @@ package core.hud.components.chat
             case "recycle":
                g.me.recycleCargo(true);
                break;
+            case "ref":
+            case "refresh":
             case "reload":
                g.reload();
                break;
@@ -244,21 +246,11 @@ package core.hud.components.chat
                   AfkFarm.init(null);
                }
                break;
+            case "ss":
             case "setstats":
                g.me.setStackedStats();
                break;
-            case "initstack":
-               if(g.isSystemTypeClan() || g.isSystemTypeSurvival)
-               {
-                  g.me.initStack();
-               }
-               break;
-            case "count":
-               MessageLog.write(g.me.stacksNumber);
-               break;
-            case "cunt":
-               MessageLog.write("OI! WHO THE FUCK ARE YOU CALLIN A CUNT AY?\n LOOK AT YOU, DYSLEXIC BASTARD CAN'T EVEN FUCKING SPELL");
-               break;
+            case "st":
             case "stack":
                if(g.isSystemTypeClan() || g.isSystemTypeSurvival)
                {
@@ -270,8 +262,24 @@ package core.hud.components.chat
                   g.me.stack(stackAmount);
                }
                break;
+            case "us":
             case "unstack":
-               g.me.unstack();
+               if(g.isSystemTypeClan() || g.isSystemTypeSurvival)
+               {
+                  if(output.length == 2)
+                  {
+                     stackAmount = int(output[1]);
+                  }
+                  stackAmount = Math.min(stackAmount, 100);
+                  g.me.unstack(stackAmount);
+               }
+               break;
+            case "cnt":
+            case "count":
+               MessageLog.write(g.me.stacksNumber);
+               break;
+            case "cunt":
+               MessageLog.write("OI! WHO THE FUCK ARE YOU CALLIN A CUNT AY?\n LOOK AT YOU, DYSLEXIC BASTARD CAN'T EVEN FUCKING SPELL");
                break;
             case "tptodeath":
                g.rpc("buyTeleportToDeath",null,g.me.id);

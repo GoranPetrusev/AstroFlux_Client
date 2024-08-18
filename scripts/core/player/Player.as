@@ -2547,27 +2547,6 @@ package core.player
          clanLogo = null;
       }
 
-      public function initStack() : void
-      {
-         if(g.room.data.systemType != "clan" && g.room.data.systemType != "survival")
-         {
-            return;
-         }
-
-         var currentShip:String = activeSkin;
-         g.send("changeSkin", "26D6095B-CAE9-0836-C135-EE930F7F23D1");
-         g.send("leaveBody");
-         g.send("changeArtifactSetup", 1);
-         g.send("changeSkin", "8MF0AISMwUiETtnF1GJO6g");
-         g.send("leaveBody");
-         g.send("changeArtifactSetup", 1);
-         g.send("changeSkin", "C5weu3O-OUqW-W2zuKbKXQ");
-         g.send("leaveBody");
-         g.send("changeArtifactSetup", 1);
-         g.send("changeSkin", currentShip);
-         g.send("leaveBody");
-      }
-
       public function stack(amount:int = 1) : void
       {
          if(g.room.data.systemType != "clan" && g.room.data.systemType != "survival")
@@ -2592,6 +2571,13 @@ package core.player
          }
 
          stacksNumber += amount;
+
+         g.send("changeSkin", "26D6095B-CAE9-0836-C135-EE930F7F23D1");
+         g.send("changeArtifactSetup", 1);
+         g.send("changeSkin", "8MF0AISMwUiETtnF1GJO6g");
+         g.send("changeArtifactSetup", 1);
+         g.send("changeSkin", "C5weu3O-OUqW-W2zuKbKXQ");
+         g.send("changeArtifactSetup", 1);
 
          while(amount--)
          {
@@ -2631,6 +2617,83 @@ package core.player
             g.send("toggleArtifact", currentArts[4]);
          }
          g.send("changeSkin", currentShip);
+         g.send("leaveBody");
+      }
+
+      public function unstack(amount:int = 1) : void
+      {
+         if(g.room.data.systemType != "clan" && g.room.data.systemType != "survival")
+         {
+            return;
+         }
+
+         var currentShip:String = activeSkin;
+         var currentSet:int = activeArtifactSetup;
+         var currentArts:Array = artifactSetups[currentSet];
+
+         for each(var art in currentArts)
+         {
+            if(stackedArts.hasOwnProperty(art))
+            {
+               stackedArts[art] -= amount;
+            }
+            else
+            {
+               stackedArts[art] = -amount;
+            }
+         }
+
+         stacksNumber -= amount;
+
+         var currentShip:String = activeSkin;
+         g.send("changeArtifactSetup", 1);
+         g.send("changeSkin", "26D6095B-CAE9-0836-C135-EE930F7F23D1");
+         g.send("changeArtifactSetup", currentSet);
+         g.send("changeSkin", "8MF0AISMwUiETtnF1GJO6g");
+         g.send("changeArtifactSetup", currentSet);
+         g.send("changeSkin", "C5weu3O-OUqW-W2zuKbKXQ");
+         g.send("changeArtifactSetup", currentSet);
+
+         while(amount--)
+         {
+            g.send("changeSkin", "26D6095B-CAE9-0836-C135-EE930F7F23D1");
+            g.send("changeArtifactSetup", 1);
+            g.send("changeSkin", "8MF0AISMwUiETtnF1GJO6g");
+            g.send("changeArtifactSetup", 1);
+            g.send("changeSkin", "C5weu3O-OUqW-W2zuKbKXQ");
+            g.send("changeArtifactSetup", 1);
+            g.send("toggleArtifact", currentArts[0]);
+            g.send("toggleArtifact", currentArts[1]);
+            g.send("toggleArtifact", currentArts[2]);
+            g.send("toggleArtifact", currentArts[3]);
+            g.send("toggleArtifact", currentArts[4]);
+            g.send("changeArtifactSetup", currentSet);
+            g.send("toggleArtifact", currentArts[0]);
+            g.send("toggleArtifact", currentArts[1]);
+            g.send("toggleArtifact", currentArts[2]);
+            g.send("toggleArtifact", currentArts[3]);
+            g.send("toggleArtifact", currentArts[4]);
+            g.send("changeSkin", "26D6095B-CAE9-0836-C135-EE930F7F23D1");
+            g.send("changeArtifactSetup", currentSet);
+            g.send("changeSkin", "8MF0AISMwUiETtnF1GJO6g");
+            g.send("changeArtifactSetup", currentSet);
+            g.send("changeSkin", "C5weu3O-OUqW-W2zuKbKXQ");
+            g.send("changeArtifactSetup", currentSet);
+            g.send("toggleArtifact", currentArts[0]);
+            g.send("toggleArtifact", currentArts[1]);
+            g.send("toggleArtifact", currentArts[2]);
+            g.send("toggleArtifact", currentArts[3]);
+            g.send("toggleArtifact", currentArts[4]);
+            g.send("changeArtifactSetup", 1);
+            g.send("toggleArtifact", currentArts[0]);
+            g.send("toggleArtifact", currentArts[1]);
+            g.send("toggleArtifact", currentArts[2]);
+            g.send("toggleArtifact", currentArts[3]);
+            g.send("toggleArtifact", currentArts[4]);
+
+         }
+         g.send("changeSkin", currentShip);
+         g.send("changeArtifactSetup", currentSet);
          g.send("leaveBody");
       }
 
@@ -3044,8 +3107,6 @@ package core.player
                   }
                   cnt++;
                }
-               break;
-            default:
                break;
          }
          g.hud.healthAndShield.update();

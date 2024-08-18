@@ -43,14 +43,14 @@ package core.states.gameStates
       {
          super.enter();
          ship = g.me.ship;
-         core.states.§gameStates:WarpJumpState§.ship.hideStats();
+         ship.hideStats();
          flashOverlay.width = g.stage.stageWidth;
          flashOverlay.height = g.stage.stageHeight;
          g.addChildToOverlay(flashOverlay);
          darkOverlay.width = g.stage.stageWidth;
          darkOverlay.height = g.stage.stageHeight;
          g.addChildToOverlay(darkOverlay);
-         core.states.§gameStates:WarpJumpState§.ship.enterWarpJump();
+         ship.enterWarpJump();
          loadCompleted();
          g.hud.show = false;
       }
@@ -61,15 +61,15 @@ package core.states.gameStates
          {
             warpJump();
          }
-         if(core.states.§gameStates:WarpJumpState§.ship.speed.length >= 800)
+         if(ship.speed.length >= 800)
          {
             if(!hyperDriveEngaged)
             {
                g.camera.trackStep = 100;
                g.parallaxManager.glow();
                TweenMax.to(flashOverlay,2,{"alpha":1});
-               core.states.§gameStates:WarpJumpState§.ship.movieClip.filter = new GlowFilter(16777215,1,20);
-               TweenMax.to(core.states.§gameStates:WarpJumpState§.ship.movieClip,2,{
+               ship.movieClip.filter = new GlowFilter(16777215,1,20);
+               TweenMax.to(ship.movieClip,2,{
                   "scaleX":20,
                   "onUpdate":function():void
                   {
@@ -78,15 +78,15 @@ package core.states.gameStates
                   {
                      g.camera.trackStep = 200;
                      g.parallaxManager.removeGlow();
-                     core.states.§gameStates:WarpJumpState§.ship.movieClip.filter.dispose();
-                     core.states.§gameStates:WarpJumpState§.ship.movieClip.filter = null;
+                     ship.movieClip.filter.dispose();
+                     ship.movieClip.filter = null;
                      TweenMax.to(darkOverlay,1,{"alpha":1});
-                     TweenMax.to(core.states.§gameStates:WarpJumpState§.ship.movieClip,1,{
+                     TweenMax.to(ship.movieClip,1,{
                         "scaleX":0,
                         "onUpdate":function():void
                         {
                         },
-                        "onComplete":core.states.§gameStates:WarpJumpState§.warpJump
+                        "onComplete":warpJump
                      });
                   }
                });
