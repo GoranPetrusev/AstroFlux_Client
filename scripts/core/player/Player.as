@@ -1020,7 +1020,8 @@ package core.player
          }
          else
          {
-            respawnNextReady = g.time + 10000;
+             // respawnNextReady = g.time + 10000;
+            respawnNextReady = g.time + 5000;
          }
          stateMachine.changeState(new Killed(this,g,param1));
          stacksNumber = 0;
