@@ -60,7 +60,7 @@ package core.states.gameStates
             if(me.respawnReady() && input.isKeyPressed(32))
             {
                g.me.respawnNextReady = 0;
-               g.send("respawn");
+               g.send("leaveBody");
             }
             return;
          }
