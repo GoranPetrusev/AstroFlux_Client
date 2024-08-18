@@ -19,7 +19,8 @@ package goki
          "censorChat":false,
          "dontKick":false,
          "disableScreenShake":true,
-         "autoReload":false
+         "autoReload":false,
+         "fastRespawn":false
       };
 
       public static var setupNames:Object = {};

@@ -75,6 +75,8 @@ package core.states.gameStates
 
       private var autoReload:Check;
 
+      private var fastRespawn:Check;
+
       public function SettingsGeneral(param1:Game)
       {
          super();
@@ -224,6 +226,13 @@ package core.states.gameStates
             PlayerConfig.values.autoReload = autoReload.isSelected;
          });
          addCheckbox(autoReload, "Automatically reload when disconnected");
+         fastRespawn = new Check();
+         fastRespawn.isSelected = PlayerConfig.values.fastRespawn;
+         fastRespawn.addEventListener("change",function(param1:Event):void
+         {
+            PlayerConfig.values.fastRespawn = fastRespawn.isSelected;
+         });
+         addCheckbox(fastRespawn,"Faster respawn");
          addHeader("Chat");
          nMessagesInput = new InputText(currentWidth + 256,currentHeight - 4,40,20);
          nMessagesInput.addEventListener("change",function(param1:Event):void
