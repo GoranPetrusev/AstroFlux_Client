@@ -170,10 +170,13 @@ package core.states.menuStates
          infoContainer.x = 410;
          infoContainer.y = 70;
          addChild(infoContainer);
-         var _loc14_:PlayerClanLogo;
-         (_loc14_ = new PlayerClanLogo(g,g.me)).x = 334;
-         _loc14_.y = 60;
-         addChild(_loc14_);
+         var _loc2_:Image = new Image(textureManager.getTextureGUIByTextureName("clan_logo3.png"));
+         _loc2_.y = 21;
+         _loc2_.color = 16711680;
+         _loc2_.x = 0;
+         _loc2_.scaleX = _loc2_.scaleY = 0.25;
+         _loc2_.rotation = -0.5 * 3.141592653589793;
+         infoContainer.addChild(_loc2_);
          var _loc12_:TextBitmap;
          (_loc12_ = new TextBitmap()).text = Util.formatAmount(g.me.rating);
          _loc12_.x = _loc2_.x + _loc2_.width + 10;
