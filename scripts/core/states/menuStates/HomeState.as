@@ -85,7 +85,7 @@ package core.states.menuStates
          loadPlayerInfo();
          weaponsContainer = new Box(280,70,"light",0.5,20);
          weaponsContainer.x = shipContainer.x;
-         weaponsContainer.y = shipContainer.y + shipContainer.height + 20;
+         weaponsContainer.y = shipContainer.y + shipContainer.height + 7;
          addChild(weaponsContainer);
          weaponsLabel = new TextBitmap(0,-3,Localize.t("Weapons"));
          weaponsLabel.format.color = 16689475;
@@ -106,7 +106,7 @@ package core.states.menuStates
          weaponsContainer.addChild(upgradeButton);
          artifactsContainer = new Box(280,70,"light",0.5,20);
          artifactsContainer.x = shipContainer.x;
-         artifactsContainer.y = weaponsContainer.y + 130;
+         artifactsContainer.y = weaponsContainer.y + weaponsContainer.height + 20;
          addChild(artifactsContainer);
          artifactLabel = new TextBitmap(0,-3,Localize.t("Artifacts"));
          artifactLabel.format.color = 16689475;
@@ -154,24 +154,14 @@ package core.states.menuStates
             sm.changeState(new CrewStateNew(g));
          });
          crewContainer.addChild(crewSelector);
-      }
-      
-      private function loadShipInfo() : void
-      {
-         shipContainer = new Box(280,164,"light",0.5,20);
-         shipContainer.x = 70;
-         shipContainer.y = 70;
-         addChild(shipContainer);
-         var _loc1_:Sprite = new Sprite();
-         _loc1_.width = shipContainer.width;
-         _loc1_.height = shipContainer.height;
-         shipContainer.addChild(_loc1_);
-         addStat(0,55,Localize.t("health"),p.ship.hpMax.toString(),_loc1_);
-         addStat(70,55,Localize.t("armor"),p.ship.armorThreshold.toString(),_loc1_);
-         addStat(140,55,Localize.t("shield"),p.ship.shieldHpMax.toString(),_loc1_);
-         addStat(0,104,Localize.t("health regen"),p.ship.hpRegen.toString(),_loc1_);
-         addStat(140,104,Localize.t("shield regen"),(1.75 * (p.ship.shieldRegen + p.ship.shieldRegenBonus)).toFixed(0),_loc1_);
-         drawShip();
+
+         var devText:TextBitmap = new TextBitmap(390, crewContainer.y + crewContainer.height, "Af Goki has been lovingly made by TheRealPancake, Kaiser (Primiano), Balisman and MAXI. Big thank you to the original pioneers for figuring most of this stuff out!");
+         devText.wordWrap = true;
+         devText.format.color = 11009932;
+         devText.size = 25;
+         devText.width = crewContainer.width;
+         devText.height = 100;
+         addChild(devText);
       }
       
       private function loadPlayerInfo() : void
@@ -184,13 +174,6 @@ package core.states.menuStates
          (_loc14_ = new PlayerClanLogo(g,g.me)).x = 334;
          _loc14_.y = 60;
          addChild(_loc14_);
-         var _loc2_:Image = new Image(textureManager.getTextureGUIByTextureName("clan_logo3.png"));
-         _loc2_.y = 21;
-         _loc2_.color = 16711680;
-         _loc2_.x = 0;
-         _loc2_.scaleX = _loc2_.scaleY = 0.25;
-         _loc2_.rotation = -0.5 * 3.141592653589793;
-         infoContainer.addChild(_loc2_);
          var _loc12_:TextBitmap;
          (_loc12_ = new TextBitmap()).text = Util.formatAmount(g.me.rating);
          _loc12_.x = _loc2_.x + _loc2_.width + 10;
@@ -245,9 +228,35 @@ package core.states.menuStates
          return "HomeState";
       }
       
+      private function loadShipInfo() : void
+      {
+         shipContainer = new Box(280,190,"light",0.5,20);
+         shipContainer.x = 70;
+         shipContainer.y = 70;
+         addChild(shipContainer);
+         var clanLogo:Image = new Image(p.clanLogo.texture);
+         clanLogo.x = -20;
+         clanLogo.y = shipContainer.height * 0.5 - 83;
+         clanLogo.color = p.clanLogoColor;
+         clanLogo.alpha = 0.22;
+         clanLogo.scaleX = clanLogo.scaleY = 1.2;
+         shipContainer.addChild(clanLogo);
+         var _loc1_:Sprite = new Sprite();
+         _loc1_.width = shipContainer.width;
+         _loc1_.height = shipContainer.height;
+         shipContainer.addChild(_loc1_);
+         var yOff:int = shipContainer.height - 63;
+         var xOff:int = 70;
+         addStat(xOff * 0 - 10, yOff, "health",p.ship.hpMax.toString(),_loc1_);
+         addStat(xOff * 1 - 10, yOff, "armor",p.ship.armorThreshold.toString(),_loc1_);
+         addStat(xOff * 2 - 10, yOff, "shield",p.ship.shieldHpMax.toString(),_loc1_);
+         addStat(xOff * 3 - 10, yOff, "shield regen",(1.75 * (p.ship.shieldRegen + p.ship.shieldRegenBonus)).toFixed(0),_loc1_);
+         drawShip();
+      }
+      
       private function drawShip() : void
       {
-         var xx:int;
+         var xx:int = 0;
          var supporterImage:Image;
          var playerName:TextBitmap;
          var skin:Object = dataManager.loadKey("Skins",p.activeSkin);
@@ -258,21 +267,29 @@ package core.states.menuStates
          shipImage.readjustSize();
          shipImage.pivotX = shipImage.width / 2;
          shipImage.pivotY = shipImage.height / 2;
-         shipImage.y = 0;
-         shipImage.x = shipImage.width / 2;
+         shipImage.x = shipContainer.width * 0.5 - 20;
+         shipImage.y = shipContainer.height * 0.5 - 22;
          shipContainer.addChild(shipImage);
          shipImage.filter = ShipFactory.createPlayerShipColorMatrixFilter(fleetObj);
-         xx = 15;
          if(g.me.hasSupporter())
          {
             supporterImage = new Image(textureManager.getTextureGUIByTextureName("icon_supporter.png"));
             supporterImage.x = shipImage.x + shipImage.width + 5;
             supporterImage.y = Math.round(shipImage.height / 2) - supporterImage.height / 2;
             shipContainer.addChild(supporterImage);
-            xx = 20;
+            xx = 5;
          }
-         playerName = new TextBitmap(shipImage.x + shipImage.width + xx,Math.round(shipImage.y) - 10,p.name,22);
+         playerName = new TextBitmap(shipImage.x + xx,-32,p.name,25);
+         playerName.x -= playerName.width * 0.5;
          playerName.useHandCursor = true;
+         var clanName:TextBitmap = new TextBitmap(playerName.x + playerName.width * 0.5, playerName.y + playerName.height - 7, p.clanName, 19);
+         clanName.x -= clanName.width * 0.5;
+         clanName.format.color = p.clanLogoColor;
+         shipContainer.addChild(clanName);
+         var clanRank:TextBitmap = new TextBitmap(playerName.x + playerName.width * 0.5, clanName.y + clanName.height - 7, p.clanRankName, 12);
+         clanRank.x -= clanRank.width * 0.5;
+         clanRank.format.color = p.clanLogoColor;
+         shipContainer.addChild(clanRank);
          new ToolTip(g,playerName,Localize.t("Click to change name."),null,"HomeState");
          playerName.addEventListener("touch",function(param1:TouchEvent):void
          {

@@ -44,6 +44,7 @@ It has been over a month since I undertook this project. There's now a team of c
 - [x] Rice up the settings menu
 - [x] Tidy up xp bar
 - [x] Stacking :P
+- [x] Unstacking
 - [x] Hacked Hangar
 - [x] Autofarm
 - [x] Quick Login
