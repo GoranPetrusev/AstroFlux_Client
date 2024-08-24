@@ -222,6 +222,14 @@ package core.hud.components.chat
                PlayerConfig.values.zoomFactor = output[1];
                g.camera.zoomFocus(PlayerConfig.values.zoomFactor,1);
                break;
+            case "test":
+               for(var key in g.me.completedMissions)
+               {
+                  var sec:Number = g.me.completedMissions[key]%60000/1000;
+                  var min:int = g.me.completedMissions[key]/60000;
+                  MessageLog.write(g.dataManager.loadKey("MissionTypes",key).title + " <FONT COLOR=\'#ff8888\'>" + min + ":" + sec.toFixed(3) + "</FONT>");
+               }
+               break;
             case "atlas":
                for(var str in TextureManager.textureAtlasDict)
                {
@@ -451,6 +459,20 @@ package core.hud.components.chat
                break;
             case "next":
                Playlist.next();
+               break;
+            case "get":
+               if(output[1] == "out of my head")
+               {
+                  MessageLog.write("Out of sight out of mind, ... right?");
+                  PlayerConfig.values.hideHim = true;
+               }
+               break;
+            case "nightmare":
+               if(output[1] == "fuel")
+               {
+                  MessageLog.write("<FONT COLOR=\'#555555\'>Chapter 6:</FONT> <FONT COLOR=\'#880000\'>heresy</FONT>");
+                  PlayerConfig.values.hideHim = false;
+               }
                break;
             default:
                MessageLog.write("invalid command, type /help for valid commands");

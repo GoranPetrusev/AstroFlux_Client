@@ -20,7 +20,8 @@ package goki
          "dontKick":false,
          "disableScreenShake":true,
          "autoReload":false,
-         "fastRespawn":false
+         "fastRespawn":false,
+         "hideHim":false
       };
 
       public static var setupNames:Object = {};

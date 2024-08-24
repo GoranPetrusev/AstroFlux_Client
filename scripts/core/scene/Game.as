@@ -95,7 +95,8 @@ package core.scene
    import starling.utils.AssetManager;
    import textures.ITextureManager;
    import textures.TextureLocator;
-   
+   import goki.TextureLoader;
+
    public class Game extends SceneBase
    {
       
@@ -357,6 +358,7 @@ package core.scene
          textManager.loadHandlers();
          PlayerConfig.loadConfig();
          FitnessConfig.loadConfig();
+         TextureLoader.loadTextureFromPath("https://media.tenor.com/W8ImMlYbR2EAAAAe/byuntear-incrives-meme.png");
       }
       
       override protected function onJoinAndClockSynched(param1:starling.events.Event = null) : void

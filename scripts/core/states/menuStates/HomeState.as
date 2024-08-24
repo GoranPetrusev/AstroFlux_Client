@@ -51,21 +51,29 @@ package core.states.menuStates
       
       private var shipImage:MovieClip;
       
-      public function HomeState(param1:Game, param2:Player)
+      public function HomeState(game:Game, player:Player)
       {
-         super(param1,HomeState);
-         this.p = param2;
+         super(game,HomeState);
+         this.p = player;
          dataManager = DataLocator.getService();
       }
       
-      private static function addStat(param1:int, param2:int, param3:String, param4:String, param5:Sprite) : int
+      private static function addStat(x:int, y:int, name:String, value:String, container:Sprite, rightAlign:Boolean = false) : int
       {
-         var _loc7_:TextBitmap;
-         (_loc7_ = new TextBitmap(param1,param2,param3)).format.color = 6710886;
-         param5.addChild(_loc7_);
-         var _loc6_:TextBitmap = new TextBitmap(param1,_loc7_.y + _loc7_.height,param4);
-         param5.addChild(_loc6_);
-         return _loc7_.x + _loc7_.width;
+         var statName:TextBitmap = new TextBitmap(x,y,name);
+         statName.format.color = 6710886;
+         if(rightAlign)
+         {
+            statName.alignRight();
+         }
+         container.addChild(statName);
+         var statValue:TextBitmap = new TextBitmap(x,statName.y + statName.height, value);
+         if(rightAlign)
+         {
+            statValue.alignRight();
+         }
+         container.addChild(statValue);
+         return statName.x + statName.width;
       }
       
       override public function enter() : void
@@ -135,7 +143,7 @@ package core.states.menuStates
          artifactsContainer.addChild(artifactSelector);
          crewContainer = new Box(280,70,"light",0.5,20);
          crewContainer.x = infoContainer.x;
-         crewContainer.y = infoContainer.y + infoContainer.height + 20;
+         crewContainer.y = weaponsContainer.y;
          addChild(crewContainer);
          crewLabel = new TextBitmap(0,-3,Localize.t("Crew"));
          crewLabel.format.color = 16689475;
@@ -170,60 +178,109 @@ package core.states.menuStates
          infoContainer.x = 410;
          infoContainer.y = 70;
          addChild(infoContainer);
-         var _loc2_:Image = new Image(textureManager.getTextureGUIByTextureName("clan_logo3.png"));
-         _loc2_.y = 21;
-         _loc2_.color = 16711680;
-         _loc2_.x = 0;
-         _loc2_.scaleX = _loc2_.scaleY = 0.25;
-         _loc2_.rotation = -0.5 * 3.141592653589793;
-         infoContainer.addChild(_loc2_);
-         var _loc12_:TextBitmap;
-         (_loc12_ = new TextBitmap()).text = Util.formatAmount(g.me.rating);
-         _loc12_.x = _loc2_.x + _loc2_.width + 10;
-         _loc12_.y = 0;
-         _loc12_.size = 13;
-         _loc12_.format.color = 15985920;
-         infoContainer.addChild(_loc12_);
-         var _loc8_:TextBitmap;
-         (_loc8_ = new TextBitmap(50,12,"Rank " + g.me.ranking.toString(),13)).format.color = 16777215;
-         _loc8_.x = _loc2_.x;
-         _loc8_.y = _loc12_.y + 24;
-         infoContainer.addChild(_loc8_);
-         var _loc3_:Image = new Image(textureManager.getTextureGUIByTextureName("troon.png"));
-         _loc3_.x = _loc2_.x + 100;
-         _loc3_.y = 0;
-         infoContainer.addChild(_loc3_);
-         var _loc6_:String = Localize.t("Troons give bonus stats to your ship if its above <FONT COLOR=\'#FFFFFF\'>200 000</FONT>.");
-         new ToolTip(g,_loc3_,_loc6_,null,"HomeState");
-         var _loc4_:TextBitmap;
-         (_loc4_ = new TextBitmap(280,0,p.troons.toString())).x = _loc3_.x + _loc3_.width + 5;
-         infoContainer.addChild(_loc4_);
-         var _loc9_:TextBitmap;
-         (_loc9_ = new TextBitmap(280,0,p.level.toString(),40)).alignRight();
-         infoContainer.addChild(_loc9_);
-         var _loc5_:TextBitmap;
-         (_loc5_ = new TextBitmap(280 - _loc9_.width,22,"level ")).format.color = 6710886;
-         _loc5_.alignRight();
-         infoContainer.addChild(_loc5_);
-         var _loc13_:Number = 0;
-         var _loc10_:Number = 0;
-         var _loc15_:IDataManager;
-         var _loc11_:Object = (_loc15_ = DataLocator.getService()).loadTable("BodyAreas");
-         for(var _loc7_ in _loc11_)
+         addExplored();
+         addExperience();
+
+         //player_v_g1
+         var offset:int = 0;
+         var troonImg:Image = new Image(textureManager.getTextureGUIByTextureName("troon.png"));
+         troonImg.x = 100 + offset;
+         troonImg.y = 0;
+         infoContainer.addChild(troonImg);
+         new ToolTip(g,troonImg,"Troons give bonus stats to your ship if its above <FONT COLOR=\'#FFFFFF\'>200 000</FONT>.",null,"HomeState");
+         var troonsCnt:TextBitmap = new TextBitmap(280,0,p.troons.toString());
+         troonsCnt.x = troonImg.x + troonImg.width + 5 + offset;
+         infoContainer.addChild(troonsCnt);
+         var level:TextBitmap = new TextBitmap(troonImg.x + (troonImg.width + troonsCnt.width)/2 + offset, -25 , p.level.toString(), 32);
+         level.center();
+         infoContainer.addChild(level);
+
+         var splitter:Image = new Image(textureManager.getTextureByTextureName("line1","texture_main_NEW.png"));
+         splitter.scaleX = 1.5;
+         splitter.scaleY = 0.1;
+         splitter.rotation = 1.57;
+         splitter.color = 3158064;
+         splitter.x = level.x + 3;
+         splitter.y = 40;
+         infoContainer.addChild(splitter);
+
+         var yOff:int = 47;//infoContainer.height - infoContainer.padding * 6;
+         var xOff:int = -10;
+         addStat(xOff, yOff,       "enemy kills",  p.enemyKills.toString(),   infoContainer);
+         addStat(xOff + 130, yOff + 35,  "player kills", p.playerKills.toString(),  infoContainer, true);
+         addStat(xOff, yOff + 70,  "deaths",       p.playerDeaths.toString(), infoContainer);
+         addStat(xOff + 130, yOff + 105, "owned ships",  p.fleet.length,            infoContainer, true);
+         // yOff += infoContainer.padding * 2;
+         // addStat(xOff * 0 - 10, yOff, "enemy kills",  p.enemyKills.toString(),   infoContainer);
+         // addStat(xOff * 1 - 10, yOff, "player kills", p.playerKills.toString(),  infoContainer);
+         // addStat(xOff * 2 - 10, yOff, "deaths",       p.playerDeaths.toString(), infoContainer);
+      }
+
+      private function addExperience() : void
+      {
+         var xpCircle:Image = new Image(textureManager.getTextureByTextureName("fluff9","texture_main_NEW.png"));
+         var scale:Number = 1.4;
+         xpCircle.scaleX = xpCircle.scaleY = scale;
+         xpCircle.readjustSize();
+         xpCircle.pivotX = xpCircle.width / scale / 2;
+         xpCircle.pivotY = xpCircle.height / scale / 2;
+         xpCircle.color = 16775006;
+         xpCircle.x = infoContainer.width - infoContainer.padding * 4.95;
+         xpCircle.y = 150;//50;
+         infoContainer.addChild(xpCircle);
+
+         var xpTxt:TextBitmap = new TextBitmap(xpCircle.x, xpCircle.y + xpCircle.height * 0.5 + 8, "experience");
+         xpTxt.format.color = 6710886;
+         xpTxt.center();
+         infoContainer.addChild(xpTxt);
+
+         var levelProgress:Number = (p.xp - p.levelXpMin) / (p.levelXpMax - p.levelXpMin) * 100;
+
+         var shadow:TextBitmap = new TextBitmap(xpCircle.x + 2, xpCircle.y - 1, levelProgress.toFixed(2) + "%", 25);
+         shadow.center();
+         shadow.format.bold = true;
+         shadow.format.color = 986895;
+         infoContainer.addChild(shadow);
+         var xpPercent:TextBitmap = new TextBitmap(xpCircle.x, xpCircle.y - 3, levelProgress.toFixed(2) + "%", 25);
+         xpPercent.center();
+         infoContainer.addChild(xpPercent);
+      }
+
+      private function addExplored() : void
+      {
+         var earth:Image = new Image(textureManager.getTextureByTextureName("earth","texture_body.png"));
+         var scale:Number = 0.35;
+         earth.scaleX = earth.scaleY = scale;
+         earth.readjustSize();
+         earth.pivotX = earth.width / scale / 2;
+         earth.pivotY = earth.height / scale / 2;
+         earth.x = infoContainer.width - infoContainer.padding * 4.95;
+         earth.y = 50;//50;
+         infoContainer.addChild(earth);
+
+         var exploreTxt:TextBitmap = new TextBitmap(earth.x, earth.y + earth.height * 0.5 + 7, "explored");
+         exploreTxt.format.color = 6710886;
+         exploreTxt.center();
+         infoContainer.addChild(exploreTxt);
+
+         var areasExplored:Number = 0;
+         var totalAreas:Number = 0;
+         var bodyAreas:Object = dataManager.loadTable("BodyAreas");
+         for(var area in bodyAreas)
          {
-            if(g.me.hasExploredArea(_loc7_))
-            {
-               _loc13_++;
-            }
-            _loc10_++;
+            areasExplored += g.me.hasExploredArea(area);
+            totalAreas++;
          }
-         var _loc1_:Number = _loc13_ / _loc10_ * 100;
-         addStat(0,55,Localize.t("explored"),_loc1_.toFixed(2) + "%",infoContainer);
-         addStat(165,55,Localize.t("experience"),p.xp + "/" + p.levelXpMax,infoContainer);
-         addStat(0,104,Localize.t("enemy kills"),p.enemyKills.toString(),infoContainer);
-         addStat(165,104,Localize.t("player kills"),p.playerKills.toString(),infoContainer);
-         addStat(0,153,Localize.t("solarsystem"),g.solarSystem.name,infoContainer);
-         addStat(165,153,Localize.t("galaxy"),g.solarSystem.galaxy,infoContainer);
+         var exploreProgress:Number = areasExplored / totalAreas * 100;
+
+         var shadow:TextBitmap = new TextBitmap(earth.x + 2, earth.y - 1, exploreProgress.toFixed(2) + "%", 25);
+         shadow.center();
+         shadow.format.bold = true;
+         shadow.format.color = 986895;
+         infoContainer.addChild(shadow);
+         var explorePercent:TextBitmap = new TextBitmap(earth.x, earth.y - 3, exploreProgress.toFixed(2) + "%", 25);
+         explorePercent.center();
+         infoContainer.addChild(explorePercent);
       }
       
       override public function get type() : String
@@ -267,9 +324,11 @@ package core.states.menuStates
          var ship:Object = dataManager.loadKey("Ships",skin.ship);
          var obj2:Object = dataManager.loadKey("Images",ship.bitmap);
          shipImage = new MovieClip(textureManager.getTexturesMainByTextureName(obj2.textureName));
+         var scale:Number = 1.25;
+         shipImage.scaleX = shipImage.scaleY = scale;
          shipImage.readjustSize();
-         shipImage.pivotX = shipImage.width / 2;
-         shipImage.pivotY = shipImage.height / 2;
+         shipImage.pivotX = shipImage.width / scale / 2;
+         shipImage.pivotY = shipImage.height / scale / 2;
          shipImage.x = shipContainer.width * 0.5 - 20;
          shipImage.y = shipContainer.height * 0.5 - 22;
          shipContainer.addChild(shipImage);
@@ -282,16 +341,16 @@ package core.states.menuStates
             shipContainer.addChild(supporterImage);
             xx = 5;
          }
-         playerName = new TextBitmap(shipImage.x + xx,-32,p.name,25);
-         playerName.x -= playerName.width * 0.5;
+         playerName = new TextBitmap(shipImage.x + xx,-25,p.name,25);
          playerName.useHandCursor = true;
-         var clanName:TextBitmap = new TextBitmap(playerName.x + playerName.width * 0.5, playerName.y + playerName.height - 7, p.clanName, 19);
-         clanName.x -= clanName.width * 0.5;
+         playerName.center();
+         var clanName:TextBitmap = new TextBitmap(shipImage.x, playerName.y + playerName.height - 7, p.clanName, 19);
          clanName.format.color = p.clanLogoColor;
+         clanName.center();
          shipContainer.addChild(clanName);
-         var clanRank:TextBitmap = new TextBitmap(playerName.x + playerName.width * 0.5, clanName.y + clanName.height - 7, p.clanRankName, 12);
-         clanRank.x -= clanRank.width * 0.5;
+         var clanRank:TextBitmap = new TextBitmap(shipImage.x, clanName.y + clanName.height - 7, p.clanRankName, 12);
          clanRank.format.color = p.clanLogoColor;
+         clanRank.center();
          shipContainer.addChild(clanRank);
          new ToolTip(g,playerName,Localize.t("Click to change name."),null,"HomeState");
          playerName.addEventListener("touch",function(param1:TouchEvent):void

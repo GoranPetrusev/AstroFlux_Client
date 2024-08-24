@@ -23,6 +23,7 @@ package core.hud.components
    import starling.events.TouchEvent;
    import textures.ITextureManager;
    import textures.TextureLocator;
+   import goki.PlayerConfig;
    
    public class CrewDetails extends Sprite
    {
@@ -113,7 +114,16 @@ package core.hud.components
          super();
          if(param2 == null)
          {
-            (_loc9_ = new Text(15,72,true)).text = Localize.t("You can unlock another crew slot in the ship overview.");
+            var txt:String;
+            if(PlayerConfig.values.hideHim)
+            {
+               txt = "You can unlock another crew slot in the ship overview.";
+            }
+            else
+            {
+               txt = "I have no mouth yet I must scream";
+            }
+            (_loc9_ = new Text(15,72,true)).text = txt;
             _loc9_.size = 14;
             _loc9_.width = 310;
             addChild(_loc9_);
