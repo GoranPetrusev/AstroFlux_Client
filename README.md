@@ -8,14 +8,13 @@ It has been over a month since I undertook this project. There's now a team of c
 - Autofarm; the base framework is layed out. All that's left is to improve it from here on
 
 ### Version 1.1
-- [ ] Fitness buffed by multiple equal lines
 - [ ] Rework chat
 - [ ] Fullscreen map
 - [ ] Rework pickup messages
 - [ ] Mute list
 - [ ] Rice up player list
 - [ ] Variable crew member skill point usage
-- [ ] Lock items from auto recycling
+- [ ] Lock junk from auto recycling
 
 ### Version 1.0
 - [x] MAKE KONGREGATE AND ARMOR GAMES ACCOUNTS WORK ON DEKSTOP VERSION
@@ -52,3 +51,4 @@ It has been over a month since I undertook this project. There's now a team of c
 ### Ideas
 - Updating feature
 - In-game wiki
+- Spice up star bg

@@ -249,8 +249,10 @@ package core.hud.components.chat
                g.me.purifyArts();
                break;
             case "rec":
-            case "recycle":
                g.me.recycleCargo(true);
+               break;
+            case "recycle":
+               g.onboardRecycle();
                break;
             case "ref":
             case "refresh":
