@@ -33,9 +33,9 @@ package textures
       
       private static const pathToTextures:String = "/textures/";
       
-      private static var xmlDict:Dictionary;
+      public static var xmlDict:Dictionary;
       
-      private static var textureAtlasDict:Dictionary = new Dictionary();
+      public static var textureAtlasDict:Dictionary = new Dictionary();
        
       
       private var pLoaded:int = 0;

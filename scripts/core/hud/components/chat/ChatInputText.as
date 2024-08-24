@@ -13,10 +13,18 @@ package core.hud.components.chat
    import goki.AfkUtils;
    import sound.Playlist;
    import starling.core.Starling;
-   import starling.display.Sprite;
    import starling.events.Event;
-   
-   public class ChatInputText extends Sprite
+   import starling.display.Sprite;
+   import goki.TextureLoader;
+   import goki.FileManager;
+   import core.solarSystem.Body;
+   import textures.TextureManager;
+   import textures.ITextureManager;
+   import textures.TextureLocator;
+   import starling.display.Image;
+   import core.hud.components.TextBitmap;
+
+   public class ChatInputText extends starling.display.Sprite
    {
       
       private static const SPAM_TIME_LIMIT:int = 1000;
@@ -214,8 +222,14 @@ package core.hud.components.chat
                PlayerConfig.values.zoomFactor = output[1];
                g.camera.zoomFocus(PlayerConfig.values.zoomFactor,1);
                break;
-            case "test":
-               MessageLog.write(g.bossManager.bosses.length)
+            case "atlas":
+               for(var str in TextureManager.textureAtlasDict)
+               {
+                  MessageLog.write(str);
+               }
+               break;
+            case "sprite":
+                  addSpriteSheet(output[1]);
                break;
             case "autorec":
             case "autorecycle":
@@ -443,6 +457,41 @@ package core.hud.components.chat
          }
          input.text = "";
          updateTab();
+      }
+
+      private function addSpriteSheet(atlas:String) : void
+      {
+         var spritesCanvas:Sprite = new Sprite();
+
+         var x:int = g.me.ship.x;
+         var y:int = g.me.ship.y;
+         var startX:int = x;
+         var startY:int = y;
+         var textureManager:ITextureManager = TextureLocator.getService();
+         for each(var name in TextureManager.textureAtlasDict[atlas].getNames())
+         {
+            var sprite:Image = new Image(textureManager.getTextureByTextureName(name,atlas));
+
+            sprite.pivotY = sprite.height/2;
+            sprite.pivotX = sprite.width/2;
+            sprite.x = x;
+            sprite.y = y;
+
+            y += AfkUtils.scale(g, 10);
+
+            if(y >= startY + AfkUtils.scale(g, 40))
+            {
+               y = startY;
+               x += AfkUtils.scale(g, 10);
+            }
+
+            var txt:TextBitmap = new TextBitmap(sprite.x, sprite.y + sprite.height/2 + 10, name, 20);
+            txt.x -= txt.width/2;
+
+            spritesCanvas.addChild(sprite);
+            spritesCanvas.addChild(txt);
+         }
+         g.addChildToCanvas(spritesCanvas);
       }
       
       private function reportPlayer(param1:String) : void

@@ -67,7 +67,7 @@ package goki
          {
             for each (var name in names)
             {
-               if(currEnemy.bodyName.indexOf(name) != -1 && distanceSquaredToObject(g, currEnemy) < distanceSquaredToObject(g, closestEnemy))
+               if(currEnemy.name.indexOf(name) != -1 && distanceSquaredToObject(g, currEnemy) < distanceSquaredToObject(g, closestEnemy))
                {
                   closestEnemy = currEnemy;
                }

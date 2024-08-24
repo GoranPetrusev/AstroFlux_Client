@@ -101,12 +101,12 @@ package core.hud.components.cargo
       private function handleServerSaysCargoIsFull(param1:Message) : void
       {
          ButtonCargo.serverSaysCargoIsFull = true;
-         g.hud.cargoButton.update();
          if(PlayerConfig.autorec)
          { 
             g.me.recycleCargo(true);
             ButtonCargo.serverSaysCargoIsFull = false;
          }
+         g.hud.cargoButton.update();
       }
       
       public function reloadCargoView(param1:Function = null) : void
