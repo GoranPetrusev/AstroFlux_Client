@@ -12,7 +12,8 @@ package goki
          "exe":exefarm,
          "mb":mbfarm,
          "icemoth":icemoth,
-         "blob":blob
+         "blob":blob,
+         "zher":zhersis
       };
        
       
@@ -84,8 +85,8 @@ package goki
          {
             if(Math.abs(AfkUtils.angleDifferencePoint(g, -425, -100)) > 3.05)  // If you're pointed roughly towards the spawn point, accelerate
             {
-               AfkUtils.accelerate(g,true);
                AfkUtils.deaccelerate(g,false);
+               AfkUtils.accelerate(g,true);
             }
             else  // If you're not pointing towards the spawn point, just deaccelerate
             {
@@ -95,8 +96,8 @@ package goki
          }
          else  // If far, accelerate towards it
          {
-            AfkUtils.accelerate(g,true);
             AfkUtils.deaccelerate(g,false);
+            AfkUtils.accelerate(g,true);
          }
          AfkUtils.lookAtPoint(g, -425, -100);
       }
@@ -142,8 +143,8 @@ package goki
             }
             if(Math.abs(AfkUtils.angleDifferencePoint(g, -785, 0)) > 3.05)
             {
-               AfkUtils.accelerate(g,true);
                AfkUtils.deaccelerate(g,false);
+               AfkUtils.accelerate(g,true);
             }
             else
             {
@@ -153,11 +154,32 @@ package goki
          }
          else
          {
-            AfkUtils.accelerate(g,true);
             AfkUtils.deaccelerate(g,false);
+            AfkUtils.accelerate(g,true);
          }
          AfkUtils.lookAtPoint(g, -785, 0);
          AfkUtils.fire(g, false);
+      }
+
+      public static function zhersis(g:Game) : void
+      {
+         if(AfkUtils.isPickingUpDropInZone(g, "Artifact", 40, 80, 10))
+         {
+            return;
+         }
+
+         var dst:Number = AfkUtils.distanceSquaredToPoint(g, 40, 80);
+         if(dst < 50*50)
+         {
+            AfkUtils.accelerate(g, false);
+            AfkUtils.deaccelerate(g,true);
+         }
+         else
+         {
+            AfkUtils.lookAtPoint(g, 40, 80);
+            AfkUtils.accelerateNonOrbitToPoint(g, 40, 80);
+         }
+         AfkUtils.fire(g, true);
       }
 
       public static function mbfarm(g:Game) : void

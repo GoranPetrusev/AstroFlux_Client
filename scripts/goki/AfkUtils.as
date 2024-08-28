@@ -83,13 +83,13 @@ package goki
          {
             if(angleDifferencePoint(g, x, y) < 0)
             {
-               turnLeft(g,true);
                turnRight(g,false);
+               turnLeft(g,true);
             }
             else
             {
-               turnRight(g,true);
                turnLeft(g,false);
+               turnRight(g,true);
             }
          }
          else
@@ -105,13 +105,13 @@ package goki
          {
             if(angleDifferenceObject(g, target) < 0)
             {
-               turnLeft(g,true);
                turnRight(g,false);
+               turnLeft(g,true);
             }
             else
             {
-               turnRight(g,true);
                turnLeft(g,false);
+               turnRight(g,true);
             }
          }
          else
@@ -130,8 +130,8 @@ package goki
          }
          else
          {
-            accelerate(g, true);
             deaccelerate(g, false);
+            accelerate(g, true);
          }
 
       }
@@ -145,8 +145,8 @@ package goki
          }
          else
          {
-            accelerate(g, true);
             deaccelerate(g, false);
+            accelerate(g, true);
          }
       }
 
