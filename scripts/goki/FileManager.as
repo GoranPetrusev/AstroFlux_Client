@@ -30,7 +30,25 @@ package goki
             return;
          }
       }
-      
+
+      public static function appendToFile(fileName:String, data:String) : void
+      {
+         var fileStream:*;
+         var file:*;
+         try
+         {
+            fileStream = new FileStream();
+            file = File.applicationStorageDirectory.resolvePath(fileName);
+            fileStream.open(file,FileMode.APPEND);
+            fileStream.writeUTFBytes(data);
+            fileStream.close();
+         }
+         catch(e:Error)
+         {
+            return;
+         }
+      }
+
       public static function readFromFile(fileName:String) : String
       {
          var str:String;

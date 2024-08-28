@@ -11,7 +11,8 @@ package goki
          "buglegs":buglegs,
          "exe":exefarm,
          "mb":mbfarm,
-         "icemoth":icemoth
+         "icemoth":icemoth,
+         "blob":blob
       };
        
       
@@ -100,6 +101,65 @@ package goki
          AfkUtils.lookAtPoint(g, -425, -100);
       }
       
+      private static var lureTimer:Number = 0;
+      private static var blobCnt:int = 0;
+      public static function blob(g:Game) : void
+      {
+         // Looting
+         if(AfkUtils.isPickingUpDropInZone(g, "Artifact", -775, 0, 15))
+         {
+            lureTimer = 0;
+            return;
+         }
+
+         // Killing
+         var dst:Number;
+         if(lureTimer != 0 && g.time > lureTimer)
+         {
+            blobCnt = 0;
+            AfkUtils.accelerateNonOrbitToPoint(g, -775, 0);
+
+            dst = AfkUtils.distanceSquaredToPoint(g, -775, 0);
+            if(dst < 100*100)
+            {
+               AfkUtils.fire(g, true);
+            }
+            return;
+         }
+
+         // Luring
+         blobCnt = 0;
+         dst = AfkUtils.distanceSquaredToPoint(g, -785, 0);
+         for each(var enemy in g.shipManager.enemies)
+         {
+            blobCnt += (enemy.name.indexOf("???") != -1);
+         }
+         if(dst < 75*75)
+         {
+            if(lureTimer == 0 && blobCnt == 8)
+            {
+               lureTimer = g.time + 5000;
+            }
+            if(Math.abs(AfkUtils.angleDifferencePoint(g, -785, 0)) > 3.05)
+            {
+               AfkUtils.accelerate(g,true);
+               AfkUtils.deaccelerate(g,false);
+            }
+            else
+            {
+               AfkUtils.accelerate(g,false);
+               AfkUtils.deaccelerate(g,true);
+            }
+         }
+         else
+         {
+            AfkUtils.accelerate(g,true);
+            AfkUtils.deaccelerate(g,false);
+         }
+         AfkUtils.lookAtPoint(g, -785, 0);
+         AfkUtils.fire(g, false);
+      }
+
       public static function mbfarm(g:Game) : void
       {
          if(AfkUtils.isPickingUpDropInZone(g,"Crate",116.5,0,75))

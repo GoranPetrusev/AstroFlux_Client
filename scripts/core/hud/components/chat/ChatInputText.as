@@ -239,12 +239,14 @@ package core.hud.components.chat
             case "sprite":
                   addSpriteSheet(output[1]);
                break;
+            case "ar":
             case "autorec":
             case "autorecycle":
                PlayerConfig.autorec = !PlayerConfig.autorec;
                MessageLog.write("<FONT COLOR=\'#ffff88\'>Auto recycle is " + String((PlayerConfig.autorec)?"on!":"off!") + "</FONT>");
                break;
             case "pr":
+            case "pur":
             case "purify":
                g.me.purifyArts();
                break;
@@ -260,6 +262,7 @@ package core.hud.components.chat
                g.reload();
                break;
             case "af":
+            case "afk":
             case "afkfarm":
                if(output.length == 2)
                {
@@ -274,6 +277,7 @@ package core.hud.components.chat
             case "setstats":
                g.me.setStackedStats();
                break;
+            case "s":
             case "st":
             case "stack":
                if(g.isSystemTypeClan() || g.isSystemTypeSurvival)
