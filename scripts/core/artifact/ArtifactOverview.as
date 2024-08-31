@@ -1131,6 +1131,8 @@ package core.artifact
          g.hideModalLoadingScreen();
          var success:Boolean = m.getBoolean(0);
          var j:int = 0;
+         var junk:String;
+         var amount:int;
          if(!success)
          {
             var reason:String = m.getString(1);
@@ -1165,6 +1167,14 @@ package core.artifact
          if(p.artifactCount < p.artifactLimit)
          {
             g.hud.hideArtifactLimitText();
+         }
+         i = 1;
+         while(i < m.length)
+         {
+            junk = m.getString(i);
+            amount = m.getInt(i + 1);
+            g.myCargo.addItem("Commodities",junk,amount);
+            i += 2;
          }
          g.hud.cargoButton.update();
          markedForRecycle.splice(0,markedForRecycle.length);
