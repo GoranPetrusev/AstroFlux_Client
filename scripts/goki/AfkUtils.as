@@ -21,7 +21,7 @@ package goki
       {
          var target:GameObject = findDropByName(g, name);
 
-         if(target == null || distanceSquaredToPoint(g, x, y) > r*r*scale(g,1)*scale(g,1))
+         if(target == null || distSquaredObjectToPoint(g, target, x, y) > r*r*scale(g,1)*scale(g,1))
          {
             return false;
          }
@@ -99,6 +99,28 @@ package goki
          }
       }
 
+      public static function lookAtPointRaw(g:Game, x:int, y:int) : void
+      {
+         if(Math.abs(angleDifferencePointRaw(g, x, y)) < 3.05)
+         {
+            if(angleDifferencePointRaw(g, x, y) < 0)
+            {
+               turnRight(g,false);
+               turnLeft(g,true);
+            }
+            else
+            {
+               turnLeft(g,false);
+               turnRight(g,true);
+            }
+         }
+         else
+         {
+            turnLeft(g,false);
+            turnRight(g,false);
+         }
+      }
+
       public static function lookAtObject(g:Game, target:GameObject) : void
       {
          if(Math.abs(angleDifferenceObject(g, target)) < 3.05)
@@ -138,7 +160,7 @@ package goki
 
       public static function accelerateNonOrbitToObject(g:Game, target:GameObject) : void
       {
-         if(Math.abs(angleDifferenceObject(g, target)) < 2.7)
+         if(Math.abs(angleDifferenceObject(g, target)) < 3.0)
          {
             accelerate(g, false);
             deaccelerate(g, true);
@@ -182,6 +204,10 @@ package goki
          }
       }
 
+      public static function distSquaredObjectToPoint(g:Game, target:GameObject, x:int, y:int) : Number
+      {
+         return (scale(g, x) - target.x) * (scale(g, x) - target.x) + (scale(g, y) - target.y) * (scale(g, y) - target.y);
+      }
 
       public static function distanceSquaredToObject(g:Game, target:GameObject) : Number
       {
@@ -203,6 +229,11 @@ package goki
          return Math.atan2(g.me.ship.y - scale(g, y), g.me.ship.x - scale(g, x));
       }
 
+      public static function directionToPointRaw(g:Game, x:int, y:int) : Number
+      {
+         return Math.atan2(g.me.ship.y - y, g.me.ship.x - x);
+      }
+
       public static function angleDifferenceObject(g:Game, target:GameObject) : Number
       {
          return Util.angleDifference(g.me.ship.course.rotation,directionToObject(g,target));
@@ -211,6 +242,11 @@ package goki
       public static function angleDifferencePoint(g:Game, x:int, y:int) : Number
       {
          return Util.angleDifference(g.me.ship.course.rotation,directionToPoint(g,x,y));
+      }
+
+      public static function angleDifferencePointRaw(g:Game, x:int, y:int) : Number
+      {
+         return Util.angleDifference(g.me.ship.course.rotation,directionToPointRaw(g,x,y));
       }
 
       // Commands

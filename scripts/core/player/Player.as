@@ -2617,7 +2617,6 @@ package core.player
             g.send("toggleArtifact", currentArts[4]);
          }
          g.send("changeSkin", currentShip);
-         g.send("leaveBody");
       }
 
       public function unstack(amount:int = 1) : void
@@ -2694,7 +2693,6 @@ package core.player
          }
          g.send("changeSkin", currentShip);
          g.send("changeArtifactSetup", currentSet);
-         g.send("leaveBody");
       }
 
       public function setStackedStats() : void

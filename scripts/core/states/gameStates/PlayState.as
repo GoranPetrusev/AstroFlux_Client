@@ -241,7 +241,6 @@ package core.states.gameStates
          checkWeaponChange();
          if(AfkFarm.isRunning)
          {
-            AfkFarm.run(g);
             return;
          }
          checkBoost();

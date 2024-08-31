@@ -13,7 +13,7 @@ package goki
          "mb":mbfarm,
          "icemoth":icemoth,
          "blob":blob,
-         "zher":zhersis
+         "z":zhersis
       };
        
       
