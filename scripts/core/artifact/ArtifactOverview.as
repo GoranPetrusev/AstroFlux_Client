@@ -1341,10 +1341,7 @@ package core.artifact
                a.upgraded += 1;
                a.upgrading = false;
                container = new Sprite();
-               if(!isAutoTrainOn)
-               {
-                  g.addChildToOverlay(container);
-               }
+               g.addChildToOverlay(container);
                overlay = new Quad(g.stage.stageWidth,g.stage.stageHeight,0);
                overlay.alpha = 0.4;
                container.addChild(overlay);
@@ -1434,7 +1431,6 @@ package core.artifact
                   {
                      acBox.showHint();
                   }
-                  acBox.setNotSelected();
                }
                for each(aBox in activeSlots)
                {
@@ -1444,13 +1440,6 @@ package core.artifact
                   }
                }
                reloadStats();
-               if(isAutoTrainOn)
-               {
-                  if(finishedCallback != null)
-                  {
-                     finishedCallback();
-                  }
-               }
             });
          }
          else
@@ -1465,10 +1454,6 @@ package core.artifact
             }
          }
          selectedUpgradeBox = null;
-         if(isAutoTrainOn)
-         {
-            runAutoTrain();
-         }
       }
       
       private function purifyArts(param1:TouchEvent = null) : void
