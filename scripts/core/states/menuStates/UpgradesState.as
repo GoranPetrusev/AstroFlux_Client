@@ -5,6 +5,7 @@ package core.states.menuStates
    import core.player.Player;
    import core.scene.Game;
    import core.states.DisplayState;
+   import goki.PlayerConfig;
    
    public class UpgradesState extends DisplayState
    {
@@ -16,7 +17,14 @@ package core.states.menuStates
       
       public function UpgradesState(param1:Game, param2:Player)
       {
-         super(param1,HomeState);
+         if(PlayerConfig.values.newHomeMenu)
+         {
+            super(param1,HomeStateNew);
+         }
+         else
+         {
+            super(param1,HomeState);
+         }
          this.p = param2;
       }
       

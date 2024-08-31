@@ -48,6 +48,7 @@ package core.hud
    import core.states.menuStates.CargoState;
    import core.states.menuStates.EncounterState;
    import core.states.menuStates.HomeState;
+   import core.states.menuStates.HomeStateNew;
    import data.KeyBinds;
    import playerio.Message;
    import starling.core.Starling;
@@ -236,7 +237,14 @@ package core.hud
          },"button_map.png");
          shipButton = new ButtonHud(function():void
          {
-            g.enterState(new MenuState(g,HomeState));
+            if(PlayerConfig.values.newHomeMenu)
+            {
+               g.enterState(new MenuState(g, HomeStateNew));
+            }
+            else
+            {
+               g.enterState(new MenuState(g, HomeState));
+            }
          },"button_ship.png");
          cargoButton = new ButtonCargo(g,function():void
          {

@@ -9,6 +9,7 @@ package core.states.gameStates
    import core.states.menuStates.CrewStateNew;
    import core.states.menuStates.FleetState;
    import core.states.menuStates.HomeState;
+   import core.states.menuStates.HomeStateNew;
    import core.tutorial.Tutorial;
    import data.DataLocator;
    import data.IDataManager;
@@ -22,6 +23,7 @@ package core.states.gameStates
    import starling.events.Event;
    import starling.events.TouchEvent;
    import textures.TextureLocator;
+   import goki.PlayerConfig;
    
    public class LandedState extends GameState
    {
@@ -89,7 +91,14 @@ package core.states.gameStates
          },"Fleet");
          shipButton = new ButtonExpandableHud(function():void
          {
-            showMenu(HomeState,shipButton);
+            if(PlayerConfig.values.newHomeMenu)
+            {
+               showMenu(HomeStateNew, shipButton);
+            }
+            else
+            {
+               showMenu(HomeState, shipButton);
+            }
             shipButton.enabled = true;
          },"Ship");
          cargoButton = new ButtonExpandableHud(function():void

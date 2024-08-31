@@ -21,7 +21,8 @@ package goki
          "disableScreenShake":true,
          "autoReload":false,
          "fastRespawn":false,
-         "hideHim":false
+         "hideHim":false,
+         "newHomeMenu":false
       };
 
       public static var setupNames:Object = {};

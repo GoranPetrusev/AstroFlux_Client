@@ -7,6 +7,7 @@ package core.states.menuStates
    import core.scene.Game;
    import core.states.DisplayState;
    import goki.FitnessConfig;
+   import goki.PlayerConfig;
    import starling.display.Quad;
    import starling.events.TouchEvent;
    
@@ -83,7 +84,14 @@ package core.states.menuStates
       public function FitnessState(param1:Game)
       {
          g = param1;
-         super(param1,HomeState);
+         if(PlayerConfig.values.newHomeMenu)
+         {
+            super(param1,HomeStateNew);
+         }
+         else
+         {
+            super(param1,HomeState);
+         }
          fitness = new InputText(0,0,0,0);
          strength = new InputText(0,0,0,0);
          lines = new InputText(0,0,0,0);

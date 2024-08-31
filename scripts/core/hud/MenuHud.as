@@ -10,11 +10,13 @@ package core.hud
    import core.states.menuStates.EncounterState;
    import core.states.menuStates.FleetState;
    import core.states.menuStates.HomeState;
+   import core.states.menuStates.HomeStateNew;
    import generics.Localize;
    import starling.display.Image;
    import starling.display.Sprite;
    import textures.ITextureManager;
    import textures.TextureLocator;
+   import goki.PlayerConfig;
    
    public class MenuHud extends Sprite
    {
@@ -104,7 +106,14 @@ package core.hud
          }
          else
          {
-            stateMachine.changeState(new HomeState(g,g.me));
+            if(PlayerConfig.values.newHomeMenu)
+            {
+               stateMachine.changeState(new HomeStateNew(g,g.me));
+            }
+            else
+            {
+               stateMachine.changeState(new HomeState(g,g.me));
+            }
          }
       }
    }

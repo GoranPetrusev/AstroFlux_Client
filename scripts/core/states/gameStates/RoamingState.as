@@ -10,6 +10,8 @@ package core.states.gameStates
    import core.states.menuStates.CargoState;
    import core.states.menuStates.EncounterState;
    import core.states.menuStates.HomeState;
+   import core.states.menuStates.HomeStateNew;
+   import goki.PlayerConfig;
    
    public class RoamingState extends PlayState
    {
@@ -143,7 +145,14 @@ package core.states.gameStates
          {
             if(keybinds.isEscPressed || keybinds.isInputPressed(2))
             {
-               g.enterState(new MenuState(g,HomeState));
+               if(PlayerConfig.values.newHomeMenu)
+               {
+                  g.enterState(new MenuState(g, HomeStateNew));
+               }
+               else
+               {
+                  g.enterState(new MenuState(g, HomeState));
+               }
                return;
             }
             if(keybinds.isInputPressed(7))

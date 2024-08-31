@@ -3,6 +3,7 @@ package core.states.gameStates
    import core.hud.components.InputText;
    import core.hud.components.Line;
    import core.hud.components.Text;
+   import core.hud.components.chat.MessageLog;
    import core.scene.Game;
    import core.scene.SceneBase;
    import data.Settings;
@@ -76,6 +77,8 @@ package core.states.gameStates
       private var autoReload:Check;
 
       private var fastRespawn:Check;
+
+      private var newHomeMenu:Check;
 
       public function SettingsGeneral(param1:Game)
       {
@@ -168,21 +171,6 @@ package core.states.gameStates
          rotationSpeedText = new Text(rotationSlider.x + 120,rotationSlider.y + 10);
          rotationSpeedText.text = settings.rotationSpeed.toFixed(2);
          scrollArea.addChild(rotationSpeedText);
-         addHeader("Misc");
-         iWantAllTimedMissions = new Check();
-         iWantAllTimedMissions.isSelected = settings.iWantAllTimedMissions;
-         iWantAllTimedMissions.addEventListener("change",function(param1:Event):void
-         {
-            settings.iWantAllTimedMissions = iWantAllTimedMissions.isSelected;
-         });
-         addCheckbox(iWantAllTimedMissions,Localize.t("I want all timed missions"));
-         showAllEncounters = new Check();
-         showAllEncounters.isSelected = PlayerConfig.values.showAllEncounters;
-         showAllEncounters.addEventListener("change",function(param1:Event):void
-         {
-            PlayerConfig.values.showAllEncounters = showAllEncounters.isSelected;
-         });
-         addCheckbox(showAllEncounters,Localize.t("Show all encounters"));
          currentHeight = 10;
          currentWidth = 380;
          addHeader("Gameplay");
@@ -238,6 +226,7 @@ package core.states.gameStates
          nMessagesInput.addEventListener("change",function(param1:Event):void
          {
             PlayerConfig.values.maxChatMessages = nMessagesInput.text;
+            MessageLog.extendedMaxLines = PlayerConfig.values.maxChatMessages;
          });
          addInputField("Max chat messages",nMessagesInput);
          censorChat = new Check();
@@ -247,6 +236,28 @@ package core.states.gameStates
             PlayerConfig.values.censorChat = censorChat.isSelected;
          });
          addCheckbox(censorChat,"Censor profanities");
+         addHeader("Misc");
+         iWantAllTimedMissions = new Check();
+         iWantAllTimedMissions.isSelected = settings.iWantAllTimedMissions;
+         iWantAllTimedMissions.addEventListener("change",function(param1:Event):void
+         {
+            settings.iWantAllTimedMissions = iWantAllTimedMissions.isSelected;
+         });
+         addCheckbox(iWantAllTimedMissions,Localize.t("I want all timed missions"));
+         showAllEncounters = new Check();
+         showAllEncounters.isSelected = PlayerConfig.values.showAllEncounters;
+         showAllEncounters.addEventListener("change",function(param1:Event):void
+         {
+            PlayerConfig.values.showAllEncounters = showAllEncounters.isSelected;
+         });
+         addCheckbox(showAllEncounters,Localize.t("Show all encounters"));
+         newHomeMenu = new Check();
+         newHomeMenu.isSelected = PlayerConfig.values.newHomeMenu;
+         newHomeMenu.addEventListener("change",function(param1:Event):void
+         {
+            PlayerConfig.values.newHomeMenu = newHomeMenu.isSelected;
+         });
+         addCheckbox(newHomeMenu,"New home menu");
       }
       
       private function addInputField(str:String, field:InputText) : void

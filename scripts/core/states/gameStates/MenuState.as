@@ -6,6 +6,7 @@ package core.states.gameStates
    import core.states.menuStates.CargoState;
    import core.states.menuStates.EncounterState;
    import core.states.menuStates.HomeState;
+   import core.states.menuStates.HomeStateNew;
    
    public class MenuState extends PlayState
    {
@@ -48,7 +49,7 @@ package core.states.gameStates
             return;
          }
          checkAccelerate(true);
-         if(menuHud.stateMachine.inState(CargoState) && keybinds.isInputPressed(7) || !g.blockHotkeys && menuHud.stateMachine.inState(HomeState) && keybinds.isInputPressed(2) || !g.blockHotkeys && menuHud.stateMachine.inState(ArtifactState2) && keybinds.isInputPressed(3) || !g.blockHotkeys && menuHud.stateMachine.inState(EncounterState) && keybinds.isInputPressed(4) || !g.blockHotkeys && keybinds.isEscPressed)
+         if(menuHud.stateMachine.inState(CargoState) && keybinds.isInputPressed(7) || !g.blockHotkeys && (menuHud.stateMachine.inState(HomeState) || menuHud.stateMachine.inState(HomeStateNew)) && keybinds.isInputPressed(2) || !g.blockHotkeys && menuHud.stateMachine.inState(ArtifactState2) && keybinds.isInputPressed(3) || !g.blockHotkeys && menuHud.stateMachine.inState(EncounterState) && keybinds.isInputPressed(4) || !g.blockHotkeys && keybinds.isEscPressed)
          {
             sm.revertState();
             menuHud.unload();
