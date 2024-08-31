@@ -134,7 +134,7 @@ package core.states.menuStates
             artifactsContainer.addChild(artifactSelector);
             crewContainer = new Box(280,70,"light",0.5,20);
             crewContainer.x = infoContainer.x;
-            crewContainer.y = infoContainer.y + infoContainer.height + 20;
+            crewContainer.y = weaponsContainer.y;
             addChild(crewContainer);
             crewLabel = new TextBitmap(0,-3,Localize.t("Crew"));
             crewLabel.format.color = 16689475;
@@ -157,7 +157,7 @@ package core.states.menuStates
         
         private function loadShipInfo() : void
         {
-            shipContainer = new Box(280,164,"light",0.5,20);
+            shipContainer = new Box(280,190,"light",0.5,20);
             shipContainer.x = 70;
             shipContainer.y = 70;
             addChild(shipContainer);
