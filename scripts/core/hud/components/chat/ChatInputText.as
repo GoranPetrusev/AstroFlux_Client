@@ -23,6 +23,7 @@ package core.hud.components.chat
    import textures.TextureLocator;
    import starling.display.Image;
    import core.hud.components.TextBitmap;
+   import core.hud.components.dialogs.PopupMessage;
 
    public class ChatInputText extends starling.display.Sprite
    {
@@ -223,6 +224,8 @@ package core.hud.components.chat
                g.camera.zoomFocus(PlayerConfig.values.zoomFactor,1);
                break;
             case "test":
+               break;
+            case "rec":
                for(var key in g.me.completedMissions)
                {
                   var sec:Number = g.me.completedMissions[key]%60000/1000;
@@ -239,16 +242,26 @@ package core.hud.components.chat
             case "sprite":
                   addSpriteSheet(output[1]);
                break;
+            case "hackhelp":
+               var helpBox:PopupMessage = new PopupMessage("Close", 5592405, 500);
+               helpBox.text = "<FONT COLOR=\'#ffff44\' SIZE=\'16\'>Commands!\n\n</FONT>/zoom @value - sets the exact zoom factor\n/s, /st, /stack @number - you need to own the ships Y2K V-16, Snowformer and Rocket Sled for stacking to work. You can buy them for 0 flux from the Hyperion hangar\n/us, /unstack - unstacks :P/ss, /setstats - use this after stacking to apply the stats\n/ar, /autorec, /autorecycle - toggle autorecycling\n/pr, /pur, /purify - purifies arts\n/rec - recycles everything without opening the recycling station menu\n/recycle - opens the recycling station menu so you can choose what to recycle\n/ref, /refresh, /reload - reconnects you to the system\n/af, /afk, /afkfarm @farmName - starts one of the available afk farms. There are currently 6 farms available:\nexe - executor (completely reworked from the previous af public client)\nz - zhersis (same as zfarm in af public)\nmb - motherbrain (not extensively tested)\nbuglegs - kills moths in Hozar and collects buglegs (hasn't been tested in other systems)\nblob - bloobs\nicemoth - just leave this on for the 888 kills mission :P\nUsage example: /af exe - will initiate executor afk farm. If you want to stop it just type in /af without anything else\nEnjoy!! ^^";
+               helpBox.addEventListener("close",function(param1:starling.events.Event):void
+               {
+                  helpBox.removeEventListeners();
+                  g.removeChildFromOverlay(helpBox);
+               });
+               g.addChildToOverlay(helpBox);
+               break;
             case "ar":
             case "autorec":
             case "autorecycle":
                PlayerConfig.autorec = !PlayerConfig.autorec;
-               MessageLog.write("<FONT COLOR=\'#ffff88\'>Auto recycle is " + String((PlayerConfig.autorec)?"on!":"off!") + "</FONT>");
+               MessageLog.write("<FONT COLOR=\'#ffff88\'>Auto recycle is " + ((PlayerConfig.autorec)?"on!":"off!") + "</FONT>");
                break;
             case "pr":
             case "pur":
             case "purify":
-               g.me.purifyArts();
+               g.me.purifyArts(true);
                break;
             case "rec":
                g.me.recycleCargo(true);
@@ -280,7 +293,7 @@ package core.hud.components.chat
             case "s":
             case "st":
             case "stack":
-               if(g.isSystemTypeClan() || g.isSystemTypeSurvival)
+               if(g.isSystemTypeClan() || g.isSystemTypeSurvival())
                {
                   if(output.length == 2)
                   {
@@ -292,7 +305,7 @@ package core.hud.components.chat
                break;
             case "us":
             case "unstack":
-               if(g.isSystemTypeClan() || g.isSystemTypeSurvival)
+               if(g.isSystemTypeClan() || g.isSystemTypeSurvival())
                {
                   if(output.length == 2)
                   {

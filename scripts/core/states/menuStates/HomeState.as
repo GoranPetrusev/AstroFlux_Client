@@ -153,6 +153,13 @@ package core.states.menuStates
             sm.changeState(new CrewStateNew(g));
             });
             crewContainer.addChild(crewSelector);
+            var devText:TextBitmap = new TextBitmap(390, crewContainer.y + crewContainer.height, "Af Goki has been lovingly made by TheRealPancake, Kaiser (Primiano), Balisman and MAXI. Big thank you to the original pioneers for figuring most of this stuff out!");
+            devText.wordWrap = true;
+            devText.format.color = 11009932;
+            devText.size = 25;
+            devText.width = crewContainer.width;
+            devText.height = 100;
+            addChild(devText);
         }
         
         private function loadShipInfo() : void

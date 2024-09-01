@@ -23,14 +23,14 @@ package core.hud.components.dialogs
       
       protected var bgr:Quad;
       
-      public function PopupMessage(param1:String = "OK", param2:uint = 5592405)
+      public function PopupMessage(param1:String = "OK", param2:uint = 5592405, w:int = 100)
       {
-         box = new Box(200,100,"highlight",1,15);
-         bgr = new Quad(100,100,570425344);
+         box = new Box(w,100,"highlight",1,15);
+         bgr = new Quad(w/2,100,570425344);
          super();
          textField = new Text();
          textField.size = 12;
-         textField.width = 300;
+         textField.width = w+100;
          textField.wordWrap = true;
          textField.color = 16777215;
          closeButton = new Button(close,param1);

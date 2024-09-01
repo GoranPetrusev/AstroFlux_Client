@@ -85,7 +85,7 @@ package core.hud.components
          {
             for each(s in body.obj.shopItems)
             {
-               if(s.available)
+               if(s.available || (body.name == "Hangar" && g.solarSystem.name == "Fulzar"))
                {
                   skins.push(s.item);
                }

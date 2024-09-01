@@ -2716,8 +2716,10 @@ package core.player
          "Arts":0
       };
       private var onlyRecycle:Boolean = false;
-      public function purifyArts() : void
+      private var onlyPurify:Boolean = false;
+      public function purifyArts(onlyPur:Boolean = false) : void
       {
+         onlyPurify = onlyPur;
          currentlyPurifying = true;
          var count:int = 0;
          var msg:Message = g.createMessage("bulkRecycle");
@@ -2806,7 +2808,14 @@ package core.player
             i += 2;
          }
          g.hud.cargoButton.update();
-         recycleCargo();            
+         if(onlyPurify)
+         {
+            purifyArts(true);
+         }
+         else
+         {
+            recycleCargo();
+         }
       }
 
       private function onRecycleMessage(msg:Message) : void
