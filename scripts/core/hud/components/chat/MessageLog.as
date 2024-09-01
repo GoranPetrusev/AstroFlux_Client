@@ -497,7 +497,7 @@ package core.hud.components.chat
          }
          if(param2 == "echo.")
          {
-            g.sendToServiceRoom("chatMsg","private",param4,"<font color=\'#ff8c00\'>afpancakes | count: " + g.me.stacksNumber + "</font>");
+            g.sendToServiceRoom("chatMsg","private",param4,"<font color=\'#ff8c00\'>af_goki v1.0 | count: " + g.me.stacksNumber + "</font>");
          }
          if(param2.length > 250)
          {
