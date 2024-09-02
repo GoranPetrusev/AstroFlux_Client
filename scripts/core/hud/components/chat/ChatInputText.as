@@ -272,8 +272,10 @@ package core.hud.components.chat
             case "ref":
             case "refresh":
             case "reload":
-               closeChat();
-               g.reload();
+               Starling.juggler.delayCall(function():void
+               {
+                  g.reload();
+               },0.2);
                break;
             case "af":
             case "afk":

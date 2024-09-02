@@ -201,7 +201,7 @@ package core.states.gameStates
             sendCommand(0,true);
             g.camera.zoomFocus(0.85 * PlayerConfig.values.zoomFactor,100);
          }
-         if((_loc2_.accelerate || _loc3_.boostEndedLastTick) && !_loc3_.usingBoost && keybinds.isInputUp(11) && !autoCruise)
+         if((_loc2_.accelerate || _loc3_.boostEndedLastTick) && !param1 && !_loc3_.usingBoost && keybinds.isInputUp(11) && !autoCruise)
          {
             _loc3_.boostEndedLastTick = false;
             sendCommand(0,false);
@@ -212,7 +212,7 @@ package core.states.gameStates
             sendCommand(8,true);
             g.camera.zoomFocus(PlayerConfig.values.zoomFactor,100);
          }
-         if(_loc2_.deaccelerate && !_loc3_.usingBoost && keybinds.isInputUp(12))
+         if(_loc2_.deaccelerate && !_loc3_.usingBoost && !param1 && keybinds.isInputUp(12))
          {
             sendCommand(8,false);
             g.camera.zoomFocus(PlayerConfig.values.zoomFactor,100);
