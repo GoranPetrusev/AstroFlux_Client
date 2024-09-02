@@ -435,16 +435,16 @@ package core.states.gameStates
       
       private function checkZoom() : void
       {
-         if(input.isKeyDown(74))
+         if(input.isKeyDown(PlayerConfig.values.zoomOutKey))
          {
             PlayerConfig.values.zoomFactor *= 0.98;
             g.camera.zoomFocus(PlayerConfig.values.zoomFactor,4);
          }
-         if(input.isKeyDown(75))
+         if(input.isKeyDown(PlayerConfig.values.zoomInKey))
          {
             PlayerConfig.values.zoomFactor /= 0.98;
             g.camera.zoomFocus(PlayerConfig.values.zoomFactor,4);
-            if(input.isKeyDown(74))
+            if(input.isKeyDown(PlayerConfig.values.zoomOutKey))
             {
                PlayerConfig.values.zoomFactor = 1;
                g.camera.zoomFocus(PlayerConfig.values.zoomFactor,4);

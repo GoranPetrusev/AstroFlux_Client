@@ -8,6 +8,7 @@ package core.states.gameStates
    import starling.display.Image;
    import starling.display.Sprite;
    import starling.events.Event;
+   import goki.PlayerConfig;
    
    public class SettingsState extends PlayState
    {
@@ -138,8 +139,9 @@ package core.states.gameStates
             container.removeChild(activePage,true);
          }
          clearBackground();
-         g.me.rotationSpeedMod = core.states.§gameStates:SettingsState§.settings.rotationSpeed;
+         g.me.rotationSpeedMod = settings.rotationSpeed;
          SceneBase.settings.save();
+         PlayerConfig.saveConfig();
          sm.revertState();
       }
    }

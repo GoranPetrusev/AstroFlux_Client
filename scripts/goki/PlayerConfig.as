@@ -9,8 +9,8 @@ package goki
       
       public static var values:Object = {
          "zoomFactor":"1.0",
-         "zoomInKey":"75",
-         "zoomOutKey":"74",
+         "zoomInKey":75,
+         "zoomOutKey":74,
          "showAllEncounters":true,
          "dmgTextSize":"1.0",
          "barSize":"1.0",
