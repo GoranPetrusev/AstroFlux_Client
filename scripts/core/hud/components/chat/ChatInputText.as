@@ -272,6 +272,7 @@ package core.hud.components.chat
             case "ref":
             case "refresh":
             case "reload":
+               closeChat();
                g.reload();
                break;
             case "af":
