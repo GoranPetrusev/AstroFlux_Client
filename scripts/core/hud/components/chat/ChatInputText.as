@@ -225,7 +225,7 @@ package core.hud.components.chat
                break;
             case "test":
                break;
-            case "rec":
+            case "records":
                for(var key in g.me.completedMissions)
                {
                   var sec:Number = g.me.completedMissions[key]%60000/1000;
