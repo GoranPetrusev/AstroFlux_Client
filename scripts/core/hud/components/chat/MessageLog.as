@@ -453,7 +453,7 @@ package core.hud.components.chat
       
       private var simple:ChatSimple;
       
-      private var advanced:ChatAdvanced;
+      public var advanced:ChatAdvanced;
       
       public function MessageLog(param1:Game)
       {
@@ -605,10 +605,11 @@ package core.hud.components.chat
                return "<FONT COLOR='#ff44ff'>[planet wars]</FONT>";
             case "[error]":
                return "<FONT COLOR='#C5403A'>[error]</FONT>";
+            case "[system]":
+               return "[system]";
             case "[death]":
             case "[loot]":
             case "[join_leave]":
-            case "[system]":
                return "";
             default:
                return msg;

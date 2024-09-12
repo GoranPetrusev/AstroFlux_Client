@@ -31,6 +31,7 @@ package core.hud.components.chat
          var layout:VerticalLayout = new VerticalLayout();
          layout.hasVariableItemDimensions = true;
          layout.horizontalAlign = HorizontalAlign.JUSTIFY;
+         layout.paddingBottom = 1;
          listScroll.layout = layout;
  
          listScroll.x = 10;
