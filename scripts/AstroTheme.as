@@ -18,6 +18,7 @@ package
    import flash.geom.Rectangle;
    import flash.text.TextFormat;
    import starling.core.Starling;
+   import starling.display.Quad;
    import starling.textures.Texture;
    import starling.textures.TextureAtlas;
    import textures.ITextureManager;
@@ -76,6 +77,7 @@ package
          this.getStyleProviderForClass(Label).setFunctionForStyleName("tooltip",labelTooltip);
          this.getStyleProviderForClass(Label).setFunctionForStyleName("chat",labelChat);
          this.getStyleProviderForClass(List).setFunctionForStyleName("shop",shopList);
+         this.getStyleProviderForClass(List).setFunctionForStyleName("chat",chatList);
          this.getStyleProviderForClass(DefaultListItemRenderer).setFunctionForStyleName("shop",shopItemRendererInitializer);
          this.getStyleProviderForClass(ToggleButton).setFunctionForStyleName("artifact_setup",artifactSetupButton);
          this.getStyleProviderForClass(ToggleButton).setFunctionForStyleName("chat_tab",chatTab);
@@ -127,15 +129,25 @@ package
          param1.textRendererProperties.wordWrap = true;
          param1.textRendererProperties.isHTML = true;
          param1.textRendererProperties.alpha = 0.7;
-         param1.touchable = false;
+         param1.touchable = true;
       }
       
-      private function shopList(param1:List) : void
+      protected function shopList(param1:List) : void
       {
          super.setListStyles(param1);
          param1.hasElasticEdges = false;
          param1.customItemRendererStyleName = "shop";
          param1.backgroundSkin = null;
+      }
+      
+      protected function chatList(param1:List) : void
+      {
+         super.setListStyles(param1);
+         var bg:Quad = new Quad(300,300, 0);
+         bg.alpha = 0.6;
+         param1.hasElasticEdges = false;
+         param1.customItemRendererStyleName = "chat";
+         param1.backgroundSkin = bg;
       }
       
       protected function shopItemRendererInitializer(param1:BaseDefaultItemRenderer) : void

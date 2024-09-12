@@ -227,6 +227,7 @@ package core.states.gameStates
          {
             PlayerConfig.values.maxChatMessages = nMessagesInput.text;
             MessageLog.extendedMaxLines = PlayerConfig.values.maxChatMessages;
+            g.messageLog.advanced.reload();
          });
          addInputField("Max chat messages",nMessagesInput);
          censorChat = new Check();

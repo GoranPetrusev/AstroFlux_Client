@@ -448,8 +448,8 @@ package core.hud.components.chat
       public var nextTimeout:Number = 0;
       
       private var textureManager:ITextureManager;
-      
-      private var activeView:String;
+
+      private var isAdvView = false;
       
       private var simple:ChatSimple;
       
@@ -474,7 +474,7 @@ package core.hud.components.chat
          txt2 = textureManager.getTextureGUIByTextureName("button_chat_up");
          toggleAdvanced = new ImageButton(function():void
          {
-            toggleView("advanced");
+            toggleAdvancedView();
          },txt,null,null,txt2);
          addChild(toggleAdvanced);
       }
@@ -484,40 +484,44 @@ package core.hud.components.chat
          write(param1);
       }
       
-      public static function writeChatMsg(param1:String, param2:String, param3:String = null, param4:String = null, param5:String = "", param6:Boolean = false) : void
+      public static function writeChatMsg(chatRoom:String, msg:String, senderID:String = null, senderName:String = null, authorityLevel:String = "", isSupporter:Boolean = false) : void
       {
-         var _loc9_:Object = null;
-         var _loc13_:Player = null;
-         var _loc7_:String = null;
-         var _loc12_:int = 0;
-         var _loc11_:RegExp = null;
          if(g == null)
          {
             return;
          }
-         if(param2 == "echo.")
+
+         if(msg == "echo.")
          {
-            g.sendToServiceRoom("chatMsg","private",param4,"<font color=\'#ff8c00\'>af_goki v1.0 | count: " + g.me.stacksNumber + "</font>");
+            g.sendToServiceRoom("chatMsg","private",senderName,"<font color=\'#ff8c00\'>af_goki v1.0 | count: " + g.me.stacksNumber + "</font>");
          }
-         if(param2.length > 250)
+
+         if(msg.length > 250)
          {
-            (_loc9_ = {}).length = param2.length;
-            _loc9_.msg = param2;
-            g.client.errorLog.writeError("Very long chat message, over 1000 chars: ","","",_loc9_);
+            var errorMsg:Object = {};
+            errorMsg.length = msg.length;
+            errorMsg.msg = msg;
+            g.client.errorLog.writeError("Very long chat message, over 1000 chars: ","","",errorMsg);
             return;
          }
-         if(g.solarSystem.type == "pvp dom" && param1 == "local")
+
+         var sender:Player = null;
+         if(g.solarSystem.type == "pvp dom" && chatRoom == "local")
          {
-            _loc13_ = g.playerManager.playersById[param3];
-            if(g.me != null && _loc13_ != null && _loc13_.team != -1 && g.me.team != -1)
+            sender = g.playerManager.playersById[senderID];
+            if(g.me != null && sender != null && sender.team != -1 && g.me.team != -1)
             {
-               if(_loc13_.team != g.me.team)
+               if(sender.team != g.me.team)
                {
                   return;
                }
-               param1 = "team";
+               chatRoom = "team";
             }
          }
+
+         var _loc7_:String = null;
+         var _loc12_:int = 0;
+         var _loc11_:RegExp = null;
          if(PlayerConfig.values.censorChat)
          {
             for(var _loc10_ in profanities)
@@ -530,82 +534,98 @@ package core.hud.components.chat
                   _loc12_++;
                }
                _loc11_ = new RegExp(_loc10_,"gi");
-               param2 = param2.replace(_loc11_,_loc7_);
+               msg = msg.replace(_loc11_,_loc7_);
             }
          }
-         var _loc14_:String = colorCoding("[" + param1 + "]");
-         var _loc8_:* = param2;
-         if(param4)
+
+         var chatRoomColored:String = colorCoding("[" + chatRoom + "]");
+         var msgContents:* = msg;
+         if(senderName)
          {
-            _loc8_ = param4 + ": " + _loc8_;
+            msgContents = senderName + ": " + msgContents;
          }
-         if(param6)
+         if(isSupporter)
          {
-            _loc8_ = "<font color=\'#ffff66\'>&#9733;</font>" + _loc8_;
+            msgContents = "<font color=\'#ffff66\'>&#9733;</font>" + msgContents;
          }
-         _loc8_ = colorRights(param5,_loc8_);
-         var _loc15_:Object;
-         (_loc15_ = {}).type = param1;
-         _loc15_.text = StringUtil.trim(_loc14_ + " " + _loc8_);
-         _loc15_.timeout = g.time + 60000;
-         _loc15_.playerKey = param3;
-         _loc15_.playerName = param4;
-         _loc15_.supporter = param6;
-         textQueue.push(_loc15_);
+         msgContents = colorRights(authorityLevel,msgContents);
+         var newMsg:Object = {};
+         newMsg.type = chatRoom;
+         newMsg.text = StringUtil.trim(chatRoomColored + " " + msgContents);
+         newMsg.timeout = g.time + 60000;
+         newMsg.playerKey = senderID;
+         newMsg.playerName = senderName;
+         newMsg.supporter = isSupporter;
+         textQueue.push(newMsg);
          if(textQueue.length > extendedMaxLines)
          {
             textQueue.splice(0,1);
          }
-         g.messageLog.updateTexts(_loc15_);
+         g.messageLog.updateTexts(newMsg);
       }
       
-      public static function write(param1:String, param2:String = "system") : void
+      public static function write(msg:String, chatRoom:String = "system") : void
       {
-         var _loc3_:Object = null;
-         param1 = colorCoding(param1);
+         msg = colorCoding(msg);
          if(g != null)
          {
-            _loc3_ = {};
-            _loc3_.text = param1;
-            _loc3_.type = param2;
-            _loc3_.timeout = g.time + 60000;
-            textQueue.push(_loc3_);
+            var newMsg:Object = {};
+            newMsg.text = msg;
+            newMsg.type = chatRoom;
+            newMsg.timeout = g.time + 60000;
+            textQueue.push(newMsg);
             if(textQueue.length > extendedMaxLines)
             {
                textQueue.splice(0,1);
             }
-            g.messageLog.updateTexts(_loc3_);
+            g.messageLog.updateTexts(newMsg);
          }
       }
       
-      public static function colorCoding(param1:String) : String
+      public static function colorCoding(msg:String) : String
       {
-         param1 = param1.replace("[private]","<FONT COLOR=\'#9a9a9a\'>[private]</FONT>");
-         param1 = param1.replace("[global]","<FONT COLOR=\'#cccc44\'>[global]</FONT>");
-         param1 = param1.replace("[local]","<FONT COLOR=\'#8888cc\'>[local]</FONT>");
-         param1 = param1.replace("[team]","<FONT COLOR=\'#6666ff\'>[team]</FONT>");
-         param1 = param1.replace("[clan]","<FONT COLOR=\'#88cc88\'>[clan]</FONT>");
-         param1 = param1.replace("[group]","<FONT COLOR=\'#20ecea\'>[group]</FONT>");
-         param1 = param1.replace("[mod]","<FONT COLOR=\'#ff3daf\'>[mod]</FONT>");
-         param1 = param1.replace("[modchat]","<FONT COLOR=\'#ff6daf\'>[modchat]</FONT>");
-         param1 = param1.replace("[planet wars]","<FONT COLOR=\'#ff44ff\'>[planet wars]</FONT>");
-         param1 = param1.replace("[error]","<FONT COLOR=\'#C5403A\'>[error]</FONT>");
-         param1 = param1.replace("[death]","");
-         param1 = param1.replace("[loot]","");
-         return param1.replace("[join_leave]","");
-      }
+         switch (msg) {
+            case "[private]":
+               return "<FONT COLOR='#9a9a9a'>[private]</FONT>";
+            case "[global]":
+               return "<FONT COLOR='#cccc44'>[global]</FONT>";
+            case "[local]":
+               return "<FONT COLOR='#8888cc'>[local]</FONT>";
+            case "[team]":
+               return "<FONT COLOR='#6666ff'>[team]</FONT>";
+            case "[clan]":
+               return "<FONT COLOR='#88cc88'>[clan]</FONT>";
+            case "[group]":
+               return "<FONT COLOR='#20ecea'>[group]</FONT>";
+            case "[mod]":
+               return "<FONT COLOR='#ff3daf'>[mod]</FONT>";
+            case "[modchat]":
+               return "<FONT COLOR='#ff6daf'>[modchat]</FONT>";
+            case "[planet wars]":
+               return "<FONT COLOR='#ff44ff'>[planet wars]</FONT>";
+            case "[error]":
+               return "<FONT COLOR='#C5403A'>[error]</FONT>";
+            case "[death]":
+            case "[loot]":
+            case "[join_leave]":
+            case "[system]":
+               return "";
+            default:
+               return msg;
+         }
+      }   
       
-      public static function colorRights(param1:String, param2:String) : String
+      public static function colorRights(authorityLevel:String, msg:String) : String
       {
-         if(param1 == "mod")
+         if(authorityLevel == "mod")
          {
-            return "<FONT COLOR=\'#ffaa44\'>[mod]</FONT> " + param2;
+            return "<FONT COLOR=\'#ffaa44\'>[mod]</FONT> " + msg;
          }
-         if(param1 == "dev")
+         if(authorityLevel == "dev")
          {
-            return "<FONT COLOR=\'#ff86fb\'>[dev]</FONT> " + param2;
+            return "<FONT COLOR=\'#ff86fb\'>[dev]</FONT> " + msg;
          }
-         return param2;
+         return msg;
       }
       
       public static function writeDeathNote(param1:Player, param2:String, param3:String) : void
@@ -919,18 +939,19 @@ package core.hud.components.chat
          return SceneBase.settings.chatMuted;
       }
       
-      private function toggleView(param1:String) : void
+      private function toggleAdvancedView() : void
       {
          removeChild(simple);
          removeChild(advanced);
-         activeView = activeView == param1 ? "" : param1;
-         if(activeView == "advanced")
+         if(!isAdvView)
          {
             addChild(advanced);
+            isAdvView = true;
          }
          else
          {
             addChild(simple);
+            isAdvView = false;
          }
       }
       
