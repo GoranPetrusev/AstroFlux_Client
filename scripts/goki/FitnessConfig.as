@@ -52,7 +52,7 @@ package goki
          "convHp":[2,-23.5,0.1],
          "kineticMulti":[0.9,5.5,1],
          "kineticResist":[1.1,5.5,1],
-         "powerMax":[2,-23.6,1],
+         "powerMax":[2,-24,1.5],
          "powerReg":[0.15,-2.15,0.1],
          "powerReg3":[0.15,6,0.1],
          "powerReg2":[0.15,3,0.1],
