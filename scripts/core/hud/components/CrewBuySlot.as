@@ -44,14 +44,7 @@ package core.hud.components
          _loc4_.size = 14;
          addChild(_loc4_);
          var _loc3_:ITextureManager = TextureLocator.getService();
-         if(PlayerConfig.values.hideHim)
-         {
-            img = new Image(_loc3_.getTextureGUIByKey("xsUjTub_WUKwn9VSbMrrbg"));
-         }
-         else
-         {
-            img = new Image(TextureLoader.localTextures["byuntear-incrives-meme.png"]);
-         }
+         img = new Image(_loc3_.getTextureGUIByKey("xsUjTub_WUKwn9VSbMrrbg"));
          img.height = 58;
          img.width = 52;
          var _loc2_:ColorMatrixFilter = new ColorMatrixFilter();

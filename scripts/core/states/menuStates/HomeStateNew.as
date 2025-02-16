@@ -294,13 +294,16 @@ package core.states.menuStates
          shipContainer.x = 70;
          shipContainer.y = 70;
          addChild(shipContainer);
-         var clanLogo:Image = new Image(p.clanLogo.texture);
-         clanLogo.x = -20;
-         clanLogo.y = shipContainer.height * 0.5 - 83;
-         clanLogo.color = p.clanLogoColor;
-         clanLogo.alpha = 0.22;
-         clanLogo.scaleX = clanLogo.scaleY = 1.2;
-         shipContainer.addChild(clanLogo);
+         if(p.clanId != "")
+         {
+            var clanLogo:Image = new Image(p.clanLogo.texture);
+            clanLogo.x = -20;
+            clanLogo.y = shipContainer.height * 0.5 - 83;
+            clanLogo.color = p.clanLogoColor;
+            clanLogo.alpha = 0.22;
+            clanLogo.scaleX = clanLogo.scaleY = 1.2;
+            shipContainer.addChild(clanLogo);
+         }
          var _loc1_:Sprite = new Sprite();
          _loc1_.width = shipContainer.width;
          _loc1_.height = shipContainer.height;

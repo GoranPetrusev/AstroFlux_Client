@@ -23,15 +23,9 @@ package core.hud.components
    import starling.events.TouchEvent;
    import textures.ITextureManager;
    import textures.TextureLocator;
-   import goki.PlayerConfig;
    
    public class CrewDetails extends Sprite
    {
-      
-      public static const IMAGES_SPECIALS:Vector.<String> = Vector.<String>(["spec_cold.png","spec_heat.png","spec_radiation.png","spec_first_contact.png","spec_trade.png","spec_collaboration.png","spec_kinetic.png","spec_energy.png","spec_bio_weapons.png"]);
-      
-      public static const IMAGES_SKILLS:Vector.<String> = Vector.<String>(["skill_environment.png","skill_diplomacy.png","skill_combat.png"]);
-      
       private static const HEIGHT:int = 58;
       
       private static const WIDTH:int = 52;
@@ -49,7 +43,10 @@ package core.hud.components
       public static const MODE_CANTINA:int = 1;
       
       public static const MODE_REPORT:int = 2;
-       
+      
+      public static const IMAGES_SPECIALS:Vector.<String> = Vector.<String>(["spec_cold.png","spec_heat.png","spec_radiation.png","spec_first_contact.png","spec_trade.png","spec_collaboration.png","spec_kinetic.png","spec_energy.png","spec_bio_weapons.png"]);
+      
+      public static const IMAGES_SKILLS:Vector.<String> = Vector.<String>(["skill_environment.png","skill_diplomacy.png","skill_combat.png"]);
       
       private var exploreTimer:HudTimer;
       
@@ -114,16 +111,8 @@ package core.hud.components
          super();
          if(param2 == null)
          {
-            var txt:String;
-            if(PlayerConfig.values.hideHim)
-            {
-               txt = "You can unlock another crew slot in the ship overview.";
-            }
-            else
-            {
-               txt = "I have no mouth yet I must scream";
-            }
-            (_loc9_ = new Text(15,72,true)).text = txt;
+            _loc9_ = new Text(15,72,true);
+            _loc9_.text = Localize.t("You can unlock another crew slot in the ship overview.");
             _loc9_.size = 14;
             _loc9_.width = 310;
             addChild(_loc9_);
@@ -133,16 +122,16 @@ package core.hud.components
          img = new Image(_loc6_.getTextureGUIByKey(param2.imageKey));
          img.x = 240;
          addChild(img);
-         var _loc8_:Text;
-         (_loc8_ = new Text(0,0)).text = param2.name;
+         var _loc8_:Text = new Text(0,0);
+         _loc8_.text = param2.name;
          _loc8_.color = 16623682;
          _loc8_.size = 26;
-         var _loc7_:Text;
-         (_loc7_ = new Text(0,35)).text = CrewMember.getRank(param2.rank);
+         var _loc7_:Text = new Text(0,35);
+         _loc7_.text = CrewMember.getRank(param2.rank);
          _loc7_.color = 16689475;
          addChild(_loc7_);
-         var _loc11_:TextBitmap;
-         (_loc11_ = new TextBitmap(0,_loc7_.y + 15,param2.missions + " " + Localize.t("missions"))).format.color = 6842472;
+         var _loc11_:TextBitmap = new TextBitmap(0,_loc7_.y + 15,param2.missions + " " + Localize.t("missions"));
+         _loc11_.format.color = 6842472;
          addChild(_loc11_);
          addChild(_loc8_);
          addChild(img);
@@ -331,8 +320,8 @@ package core.hud.components
       
       private function addText(param1:int, param2:int, param3:String, param4:uint) : Text
       {
-         var _loc5_:Text;
-         (_loc5_ = new Text(param1,param2)).size = 11;
+         var _loc5_:Text = new Text(param1,param2);
+         _loc5_.size = 11;
          _loc5_.font = "Verdana";
          _loc5_.text = param3;
          _loc5_.color = param4;
@@ -600,7 +589,7 @@ package core.hud.components
          {
             raiseButton = new ButtonHud(function():void
             {
-               raiseSkill(name,t2);
+               raiseSkill(t.text, t2);
             },"button_pay.png");
             raiseButtons.push(raiseButton);
             raiseButton.x = t2.x + 10;
@@ -847,8 +836,8 @@ package core.hud.components
          confirmTraining.removeEventListeners();
          g.rpc("startTraining",function(param1:Message):void
          {
-            var _loc4_:Boolean;
-            if(!(_loc4_ = param1.getBoolean(0)))
+            var _loc4_:Boolean = param1.getBoolean(0);
+            if(!_loc4_)
             {
                g.showErrorDialog(param1.getString(1),true);
                return;
@@ -970,3 +959,4 @@ package core.hud.components
       }
    }
 }
+
