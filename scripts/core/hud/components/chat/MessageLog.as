@@ -551,7 +551,7 @@ package core.hud.components.chat
          msgContents = colorRights(authorityLevel,msgContents);
          var newMsg:Object = {};
          newMsg.type = chatRoom;
-         newMsg.text = StringUtil.trim(chatRoomColored + " " + msgContents);
+         newMsg.text = StringUtil.trim(chatRoomColored + " " + msgContents) + " \0";
          newMsg.timeout = g.time + 60000;
          newMsg.playerKey = senderID;
          newMsg.playerName = senderName;
@@ -582,39 +582,22 @@ package core.hud.components.chat
          }
       }
       
-      public static function colorCoding(msg:String) : String
+      public static function colorCoding(param1:String) : String
       {
-         switch (msg) {
-            case "[private]":
-               return "<FONT COLOR='#9a9a9a'>[private]</FONT>";
-            case "[global]":
-               return "<FONT COLOR='#cccc44'>[global]</FONT>";
-            case "[local]":
-               return "<FONT COLOR='#8888cc'>[local]</FONT>";
-            case "[team]":
-               return "<FONT COLOR='#6666ff'>[team]</FONT>";
-            case "[clan]":
-               return "<FONT COLOR='#88cc88'>[clan]</FONT>";
-            case "[group]":
-               return "<FONT COLOR='#20ecea'>[group]</FONT>";
-            case "[mod]":
-               return "<FONT COLOR='#ff3daf'>[mod]</FONT>";
-            case "[modchat]":
-               return "<FONT COLOR='#ff6daf'>[modchat]</FONT>";
-            case "[planet wars]":
-               return "<FONT COLOR='#ff44ff'>[planet wars]</FONT>";
-            case "[error]":
-               return "<FONT COLOR='#C5403A'>[error]</FONT>";
-            case "[system]":
-               return "[system]";
-            case "[death]":
-            case "[loot]":
-            case "[join_leave]":
-               return "";
-            default:
-               return msg;
-         }
-      }   
+         param1 = param1.replace("[private]","<FONT COLOR=\'#9a9a9a\'>[private]</FONT>");
+         param1 = param1.replace("[global]","<FONT COLOR=\'#cccc44\'>[global]</FONT>");
+         param1 = param1.replace("[local]","<FONT COLOR=\'#8888cc\'>[local]</FONT>");
+         param1 = param1.replace("[team]","<FONT COLOR=\'#6666ff\'>[team]</FONT>");
+         param1 = param1.replace("[clan]","<FONT COLOR=\'#88cc88\'>[clan]</FONT>");
+         param1 = param1.replace("[group]","<FONT COLOR=\'#20ecea\'>[group]</FONT>");
+         param1 = param1.replace("[mod]","<FONT COLOR=\'#ff3daf\'>[mod]</FONT>");
+         param1 = param1.replace("[modchat]","<FONT COLOR=\'#ff6daf\'>[modchat]</FONT>");
+         param1 = param1.replace("[planet wars]","<FONT COLOR=\'#ff44ff\'>[planet wars]</FONT>");
+         param1 = param1.replace("[error]","<FONT COLOR=\'#C5403A\'>[error]</FONT>");
+         param1 = param1.replace("[death]","");
+         param1 = param1.replace("[loot]","");
+         return param1.replace("[join_leave]","");
+      }
       
       public static function colorRights(authorityLevel:String, msg:String) : String
       {
@@ -1006,14 +989,8 @@ package core.hud.components.chat
       
       public function updateTexts(param1:Object) : void
       {
-         if(contains(advanced))
-         {
-            advanced.updateText(param1);
-         }
-         else if(contains(simple))
-         {
-            simple.updateTexts();
-         }
+         advanced.updateText(param1);
+         simple.updateTexts();
       }
       
       override public function dispose() : void

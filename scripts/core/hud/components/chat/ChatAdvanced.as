@@ -33,6 +33,7 @@ package core.hud.components.chat
          layout.horizontalAlign = HorizontalAlign.JUSTIFY;
          layout.paddingBottom = 1;
          listScroll.layout = layout;
+         listScroll.layout.useVirtualLayout = true;
  
          listScroll.x = 10;
          listScroll.y = 10;
@@ -45,8 +46,6 @@ package core.hud.components.chat
 
          addChild(listScroll);
 
-         addEventListener("addedToStage",load);
-         addEventListener("removedFromStage",unload);
          listScroll.addEventListener("scrollStart", onScrollStart);
          listScroll.addEventListener("scrollComplete", onScrollComplete);
          listScroll.addEventListener("scroll", onNewMessage);
@@ -66,7 +65,7 @@ package core.hud.components.chat
       {
          if(isMaxScrollPosition)
          {
-            event.currentTarget.scrollToPosition(0, event.currentTarget.maxVerticalScrollPosition, 0.25);
+            event.currentTarget.scrollToPosition(0, event.currentTarget.maxVerticalScrollPosition, 0.15);
          }
       }
 
@@ -87,7 +86,7 @@ package core.hud.components.chat
             var later:Function;
             return later = function():void
             {
-               listScroll.scrollToPosition(0, listScroll.maxVerticalScrollPosition, 0.25);
+               listScroll.scrollToPosition(0, listScroll.maxVerticalScrollPosition, 0.05);
             };
          })(),0.05);
       }

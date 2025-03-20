@@ -216,7 +216,7 @@ package core.hud.components.chat
             }
             else
             {
-                this._label.text = null;
+                this._label.text = "";
             }
         }
  
