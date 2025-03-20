@@ -207,9 +207,9 @@ package core.states.menuStates
          var yOff:int = 47;//infoContainer.height - infoContainer.padding * 6;
          var xOff:int = -10;
          addStat(xOff, yOff,       "enemy kills",  p.enemyKills.toString(),   infoContainer);
-         addStat(xOff + 130, yOff + 35,  "player kills", p.playerKills.toString(),  infoContainer, true);
+         addStat(xOff + 127, yOff + 35,  "player kills", p.playerKills.toString(),  infoContainer, true);
          addStat(xOff, yOff + 70,  "deaths",       p.playerDeaths.toString(), infoContainer);
-         addStat(xOff + 130, yOff + 105, "owned ships",  p.fleet.length,            infoContainer, true);
+         addStat(xOff + 127, yOff + 105, "owned ships",  p.fleet.length,            infoContainer, true);
          // yOff += infoContainer.padding * 2;
          // addStat(xOff * 0 - 10, yOff, "enemy kills",  p.enemyKills.toString(),   infoContainer);
          // addStat(xOff * 1 - 10, yOff, "player kills", p.playerKills.toString(),  infoContainer);
@@ -255,7 +255,7 @@ package core.states.menuStates
          earth.pivotX = earth.width / scale / 2;
          earth.pivotY = earth.height / scale / 2;
          earth.x = infoContainer.width - infoContainer.padding * 4.95;
-         earth.y = 50;//50;
+         earth.y = 50;
          infoContainer.addChild(earth);
 
          var exploreTxt:TextBitmap = new TextBitmap(earth.x, earth.y + earth.height * 0.5 + 7, "explored");

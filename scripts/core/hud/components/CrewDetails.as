@@ -23,6 +23,7 @@ package core.hud.components
    import starling.events.TouchEvent;
    import textures.ITextureManager;
    import textures.TextureLocator;
+   import goki.PlayerConfig;
    
    public class CrewDetails extends Sprite
    {
@@ -111,8 +112,17 @@ package core.hud.components
          super();
          if(param2 == null)
          {
+            var txt:String;
+            if(PlayerConfig.values.hideHim)
+            {
+               txt = "You can unlock another crew slot in the ship overview.";
+            }
+            else
+            {
+               txt = "I have no mouth yet I must scream";
+            }
             _loc9_ = new Text(15,72,true);
-            _loc9_.text = Localize.t("You can unlock another crew slot in the ship overview.");
+            _loc9_.text = txt;
             _loc9_.size = 14;
             _loc9_.width = 310;
             addChild(_loc9_);
@@ -589,7 +599,7 @@ package core.hud.components
          {
             raiseButton = new ButtonHud(function():void
             {
-               raiseSkill(t.text, t2);
+               raiseSkill(name, t2);
             },"button_pay.png");
             raiseButtons.push(raiseButton);
             raiseButton.x = t2.x + 10;
